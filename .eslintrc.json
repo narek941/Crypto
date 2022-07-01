@@ -1,0 +1,100 @@
+{
+  "env": {
+    "browser": true,
+    "node": true,
+    "es2021": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "settings": {
+    "import/resolver": {
+      "typescript": {}
+    }
+  },
+  "plugins": ["react", "react-hooks", "@typescript-eslint", "prettier", "import"],
+  "rules": {
+    "react/prop-types": "off",
+    "react/display-name": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "no-console": ["error", { "allow": ["warn"] }],
+    "react/jsx-uses-react": "off",
+    "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/no-unused-vars": [
+      2,
+      {
+        "vars": "all",
+        "varsIgnorePattern": "^jsx$",
+        "argsIgnorePattern": "[Ii]gnored$"
+      }
+    ],
+    "@typescript-eslint/no-implicit-any-catch": "off",
+    "@typescript-eslint/no-empty-interface": "off",
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/no-use-before-define": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "import/order": [
+      "warn",
+      {
+        "newlines-between": "always",
+        "pathGroups": [
+          {
+            "pattern": "~/**",
+            "group": "external",
+            "position": "after"
+          }
+        ],
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          "unknown",
+          "parent",
+          "sibling",
+          "index",
+          "object",
+          "type"
+        ]
+      }
+    ],
+    "@typescript-eslint/no-var-requires": 0,
+    "@typescript-eslint/ban-types": [
+      "warn",
+      {
+        "types": {
+          "Array": "Use [] instead",
+          "Object": {
+            "message": "Use object instead",
+            "fixWith": "object"
+          },
+          "String": {
+            "message": "Use string instead",
+            "fixWith": "string"
+          },
+          "Number": {
+            "message": "Use number instead",
+            "fixWith": "number"
+          },
+          "Boolean": {
+            "message": "Use boolean instead",
+            "fixWith": "boolean"
+          }
+        }
+      }
+    ],
+    "@typescript-eslint/explicit-member-accessibility": "off"
+  }
+}

@@ -1,0 +1,28 @@
+.wrapper {
+  width: 100%;
+  position: relative;
+}
+
+.MuiTablePagination-toolbar {
+  display: flex;
+  padding: 0 !important;
+  align-items: center !important;
+  min-height: unset !important;
+  margin-top: 17px;
+}
+.MuiTablePagination-spacer,
+.MuiTablePagination-displayedRows {
+  display: none;
+}
+.MuiTablePagination-select {
+  margin: 0;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.MuiTablePagination-menuItem {
+  color: $primary-font !important;
+}
+.MuiTablePagination-selectIcon {
+  fill: $primary-font !important;
+}

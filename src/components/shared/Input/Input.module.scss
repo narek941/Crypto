@@ -1,0 +1,76 @@
+.container {
+  width: 100%;
+  color: $primary-font;
+  border: none;
+  outline: none;
+  padding: 16px 21px;
+  transition: all 0.1s;
+  background: $primary-input;
+  line-height: 100%;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  @extend %text-14;
+  @extend %flex-align;
+
+  &__isLabel {
+    padding: 11px 9px;
+  }
+
+  &::placeholder {
+    color: $primary-placeholder;
+  }
+  &:hover,
+  &:active,
+  &:focus {
+    background: $secondary-input;
+    border-color: $secondary;
+  }
+
+  // &:-webkit-autofill {
+  //   -webkit-box-shadow: 0 0 0px 1000px var($primary-input) inset !important;
+  //   -moz-box-shadow: 0 0 0 100px var($primary-input) inset !important;
+  //   box-shadow: 0 0 0 100px var($primary-input) inset !important;
+  //   -webkit-text-fill-color: var($primary-font) !important;
+  // }
+
+  &_with_icon {
+    padding-right: 50px;
+  }
+
+  &__inner {
+    gap: 6px;
+    flex-direction: column;
+    align-items: flex-start;
+    @extend %flex-align;
+
+    &__label {
+      @extend %text-14;
+    }
+    &__error {
+      margin-bottom: 0;
+    }
+
+    &_disabled {
+      background-color: gray;
+    }
+  }
+
+  &__error {
+    border-color: red !important;
+
+    &__text {
+      color: red;
+    }
+  }
+
+  &__right_icon {
+    right: 16px;
+    top: calc(50% - 12px);
+    cursor: pointer;
+    position: absolute;
+  }
+}
+.input {
+  position: relative;
+  width: 100%;
+}

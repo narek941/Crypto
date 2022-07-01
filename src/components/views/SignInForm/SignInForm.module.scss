@@ -1,0 +1,14 @@
+.signIn {
+  position: relative;
+  &__form {
+    margin-top: 48px;
+    &__group {
+      @extend %flex-column;
+      gap: 16px;
+
+      &__button {
+        @extend %flex-end;
+      }
+    }
+  }
+}

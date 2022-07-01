@@ -1,0 +1,99 @@
+.wrapper {
+  top: 0;
+  left: 0;
+  z-index: 4;
+  height: calc(100vh - 60px);
+  position: fixed;
+  min-width: $sidebar-min;
+  max-width: $sidebar-min;
+  transition: min-width 0.4s ease-in-out;
+  background-color: $sidebar-background;
+  @extend %sidebar-shadow;
+
+  &__active {
+    min-width: $sidebar-max;
+  }
+
+  &__burger {
+    padding: 24px;
+    @extend %flex-align;
+
+    :not(:last-child) {
+      min-width: 24px;
+      margin-right: 24px;
+      cursor: pointer;
+    }
+
+    svg:last-child {
+      display: none;
+    }
+
+    &_open svg {
+      display: block !important;
+    }
+  }
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background: $line;
+}
+
+.list {
+  min-height: 48px;
+  justify-content: left;
+  @extend %flex-align;
+
+  &__open {
+    justify-content: initial;
+    color: $secondary-alpha;
+  }
+
+  &__selected {
+    width: 100%;
+    position: relative;
+    color: $secondary !important;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50;
+      right: 0;
+      width: 2px;
+      height: 24px;
+      background-color: $secondary;
+      border-radius: 25px 0px 0px 25px;
+      opacity: 0;
+    }
+    &__open {
+      &::after {
+        opacity: 1;
+      }
+    }
+
+    svg path {
+      fill: $secondary;
+      fill-opacity: 1;
+    }
+  }
+  &__icon {
+    padding: 24px;
+    @extend %flex-center;
+
+    &__open {
+      margin-right: 3px;
+    }
+  }
+  &__text {
+    opacity: 0;
+    color: inherit;
+    transition: 0.4s ease;
+    display: none;
+
+    &__open {
+      opacity: 1;
+      display: block;
+    }
+  }
+}

@@ -1,0 +1,24 @@
+.signIn {
+  position: relative;
+
+  &__form {
+    margin-top: 32px;
+
+    &__group {
+      @extend %flex-column;
+      gap: 14px;
+      width: 100%;
+      margin: 0 auto;
+      max-width: 420px;
+
+      &__header {
+        @extend %text-20;
+        margin-bottom: 32px;
+        color: $primary-font;
+      }
+      &__button {
+        @extend %flex-end;
+      }
+    }
+  }
+}

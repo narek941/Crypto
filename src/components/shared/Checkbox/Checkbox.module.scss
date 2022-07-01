@@ -1,0 +1,81 @@
+.checkbox {
+  &-wrapper {
+    position: relative;
+    @extend %flex-align;
+
+    input {
+      margin: 0;
+      font: inherit;
+      flex: 1 0 24px;
+      color: $primary-check;
+      width: 100%;
+      border: 2px solid transparent;
+      height: 18px;
+      max-width: 18px;
+      appearance: none;
+      border-radius: 4px;
+      @extend %flex-center;
+    }
+
+    input {
+      &:before {
+        content: '';
+        width: 12px;
+        height: 12px;
+        transform: scale(0);
+        transition: 120ms transform ease-in-out;
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+      }
+
+      &:checked {
+        &::before {
+          transform: scale(1);
+        }
+      }
+    }
+  }
+
+  &-primary {
+    input {
+      border-color: $secondary-font;
+
+      &::before {
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg viewBox='0 0 15 11' fill='212121' fill-opacity='.6' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M5.73047 10.7812C6.00391 11.0547 6.46875 11.0547 6.74219 10.7812L14.7812 2.74219C15.0547 2.46875 15.0547 2.00391 14.7812 1.73047L13.7969 0.746094C13.5234 0.472656 13.0859 0.472656 12.8125 0.746094L6.25 7.30859L3.16016 4.24609C2.88672 3.97266 2.44922 3.97266 2.17578 4.24609L1.19141 5.23047C0.917969 5.50391 0.917969 5.96875 1.19141 6.24219L5.73047 10.7812Z' fill='%212121' fill-opacity='.6'/%3e%3c/svg%3e ");
+      }
+
+      &:checked {
+        border-color: $secondary-font;
+      }
+    }
+  }
+
+  &-default {
+    input {
+      border-color: #bfd3e4;
+
+      &:before {
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg viewBox='0 0 15 11' fill='212121' fill-opacity='.6' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M5.73047 10.7812C6.00391 11.0547 6.46875 11.0547 6.74219 10.7812L14.7812 2.74219C15.0547 2.46875 15.0547 2.00391 14.7812 1.73047L13.7969 0.746094C13.5234 0.472656 13.0859 0.472656 12.8125 0.746094L6.25 7.30859L3.16016 4.24609C2.88672 3.97266 2.44922 3.97266 2.17578 4.24609L1.19141 5.23047C0.917969 5.50391 0.917969 5.96875 1.19141 6.24219L5.73047 10.7812Z' fill='#212121' fill-opacity='.6'/%3e%3c/svg%3e ");
+      }
+
+      &:checked {
+        border-color: #0f43f9;
+      }
+    }
+  }
+
+  &-label {
+    margin-left: 4px;
+    @extend %text-12;
+    color: $secondary-font;
+  }
+
+  &-errorMsg {
+    left: 0;
+    color: $danger;
+    bottom: 0;
+    position: absolute;
+    transform: translate(0, 100%);
+    @extend %text-10;
+  }
+}

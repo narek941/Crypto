@@ -1,0 +1,23 @@
+.btn {
+  width: 100%;
+  padding: 9px;
+  border-radius: 4px;
+  @extend %text-14-bold;
+  &__small {
+    max-width: 116px;
+  }
+  &__middle {
+    max-width: 121px;
+  }
+  &__large {
+    max-width: 116px;
+  }
+  &__primary {
+    background: $secondary;
+    color: $white;
+    border: 1px solid $secondary-border;
+  }
+  &__secondary {
+    border: 1px solid $secondary;
+  }
+}

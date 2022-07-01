@@ -1,0 +1,32 @@
+.action {
+  gap: 4px;
+  right: 0;
+  color: $primary-font;
+  position: absolute;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+  cursor: pointer;
+  @extend %flex-align;
+
+  &__item {
+    gap: 2px;
+    margin: 0;
+    padding: 0 4px;
+    background: transparent;
+    @extend %flex-align;
+
+    &:disabled {
+      svg path {
+        fill: $disable;
+      }
+    }
+    &__text {
+      color: $primary-font;
+      @extend %text-14;
+    }
+    &__active {
+      font-weight: bold !important;
+    }
+  }
+}

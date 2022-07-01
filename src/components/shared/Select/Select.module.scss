@@ -1,0 +1,90 @@
+.select {
+  &-wrapper {
+    position: relative;
+    gap: 6px;
+    @extend %flex-column;
+  }
+
+  &-label {
+    @extend %text-14;
+  }
+
+  &-errorMsg {
+    left: 0;
+    color: $danger;
+    bottom: 0;
+    position: absolute;
+    transform: translate(0, 100%);
+    @extend %text-10;
+  }
+
+  &__dropdown {
+    position: absolute;
+    right: 12px;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    top: calc(50% - 12px);
+
+    &__open {
+      transform: rotate(180deg);
+    }
+  }
+
+  &__option {
+    background: $primary;
+
+    border-radius: 0 0 4px 4px;
+
+    border: {
+      top: none;
+      bottom: 1px solid #0097a7;
+      right: 1px solid #0097a7;
+      left: 1px solid #0097a7;
+    }
+    padding: 12px 10px;
+    color: $primary-font;
+    border-radius: 4px;
+    display: none;
+    @extend %text-14;
+    position: absolute;
+    width: 100%;
+    @extend %flex-column;
+    gap: 3px;
+    z-index: 1;
+    backdrop-filter: blur(24px);
+
+    &__item {
+      padding: 12px 10px;
+      cursor: pointer;
+      &:hover {
+        background-color: $secondary-border;
+      }
+    }
+
+    &__open {
+      display: block;
+      border-radius: 0 0 4px 4px;
+    }
+  }
+}
+
+.header {
+  margin: 0;
+  width: 100%;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 400;
+  appearance: none;
+  line-height: 100%;
+  border-radius: 4px;
+  position: relative;
+  background-color: $white;
+  border: 1px solid #0097a7;
+  color: $primary-placeholder;
+  padding: 12px 46px 12px 10px;
+
+  &__open {
+    border-radius: 4px 4px 0 0;
+  }
+}

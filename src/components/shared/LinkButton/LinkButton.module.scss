@@ -1,0 +1,24 @@
+.btn {
+  width: 100%;
+  padding: 10px 0;
+  border-radius: 4px;
+  @extend %flex-center;
+  @extend %text-14;
+
+  &__small {
+    max-width: 168px;
+  }
+  &__middle {
+    max-width: 116px;
+  }
+  &__large {
+    max-width: 116px;
+  }
+  &__primary {
+    @extend %text-14-bold;
+    background: transparent;
+    color: $primary-font;
+    border: 1px solid $secondary;
+    text-transform: uppercase;
+  }
+}

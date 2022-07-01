@@ -1,0 +1,62 @@
+// media queries vars
+$mobile-m: 375px;
+$tablet-m: 576px;
+$tablet: 768px;
+$tablet-l: 992px;
+$desktop: 1024px;
+$wide: 1200px;
+$wide-l: 1440px;
+
+//Font Families
+$primary_family: 'Roboto', sans-serif;
+
+// @extends
+%flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+%flex-align {
+  display: flex;
+  align-items: center;
+}
+
+%flex-justify-center {
+  display: flex;
+  justify-content: center;
+}
+
+%flex-justify-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+%flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+%flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+%flex-end {
+  display: flex;
+  justify-content: flex-end;
+}
+
+%text-ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+%sidebar-shadow {
+  backdrop-filter: blur(20px);
+  box-shadow: 0px 2px 25px rgba(0, 0, 0, 0.15);
+}
+
+$sidebar-min: 72px;
+$sidebar-max: 232px;

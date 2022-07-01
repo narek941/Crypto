@@ -1,0 +1,49 @@
+.wrapper {
+  padding: 40px;
+  width: 100%;
+}
+
+.signIn {
+  position: relative;
+  padding-left: 60px;
+  @extend %flex-between;
+
+  &__item {
+    &:first-child {
+      max-width: 400px;
+      width: 100%;
+    }
+
+    &__title {
+      color: $primary-font;
+      @extend %title-45;
+    }
+
+    &__subTitle {
+      margin-top: 8px;
+      @extend %text-14;
+      color: $secondary-font;
+    }
+
+    &__form {
+      margin-top: 48px;
+
+      &__group {
+        @extend %flex-column;
+        gap: 16px;
+
+        &__button {
+          @extend %flex-end;
+        }
+      }
+    }
+  }
+}
+
+.copyright {
+  padding: 0 129px;
+}
+
+.header {
+  cursor: pointer;
+}
