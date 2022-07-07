@@ -3,27 +3,34 @@
   overflow: hidden;
   padding: 24px;
 }
+.inner {
+  padding: var(--table-padding);
+  background-color: var(--ceil);
+  border-radius: 8px;
+}
 
 .table {
   border-collapse: collapse;
   border-spacing: 0;
   min-width: 750px;
   width: -webkit-fill-available;
+  border: 1px solid var(--table-border);
 
   &__header {
-    background: $secondary;
+    background: var(--table-header);
     border-radius: 4px 4px 0px 0px;
     display: table-header-group;
 
     &__secondary {
-      background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), #009688;
+      background: var(--table-header-secondary);
       border-radius: 4px 4px 0px 0px !important;
     }
     &__ceil {
       text-align: left;
-      color: $white;
+      color: var(--table-header-font);
       font-size: 13px !important;
       line-height: 16px;
+      border-bottom: none !important;
       padding: 14.5px 16px !important;
     }
   }
@@ -31,20 +38,32 @@
     display: table-row-group;
 
     &__row {
+      border-top: 1px solid var(--table-border);
+      background: var(--ceil);
+
       &:nth-child(even) {
-        background: $primary-input;
+        background: var(--ceil-even);
       }
 
       &__ceil {
-        padding: 16px !important;
+        padding: 14px !important;
         border-bottom: none !important;
         font-size: 13px !important;
         line-height: 16px !important;
+        color: var(--font);
 
         &__actions {
           gap: 6px;
           cursor: pointer;
+          color: var(--font);
           @extend %flex-align;
+
+          &__chart,
+          &__setting {
+            path {
+              fill: var(--icon-secondary-selected);
+            }
+          }
         }
       }
     }

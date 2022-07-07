@@ -1,0 +1,42 @@
+.popup {
+  top: 29px;
+  gap: 14px;
+  right: 0;
+  color: var(--popup-font);
+  border: 1px solid var(--popup-border);
+  padding: 16px;
+  position: absolute;
+  box-shadow: 0px 4px 4px var(--popup-background);
+  border-radius: 4px;
+  background-color: var(--popup-background);
+  backdrop-filter: blur(10px);
+  flex-direction: column;
+  display: none;
+
+  &__able {
+    display: flex !important;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: start;
+  }
+
+  &__switcher {
+    gap: 8px;
+    color: var(--font);
+    @extend %flex-align;
+  }
+
+  &__logout {
+    color: var(--font);
+
+    a:visited {
+      color: var(--font);
+    }
+  }
+}
+
+.activeLang {
+  color: var(--sidebar-selected);
+}

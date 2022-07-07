@@ -37,6 +37,12 @@ $primary_family: 'Roboto', sans-serif;
   flex-direction: column;
 }
 
+%flex-column-between {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 %flex-between {
   display: flex;
   align-items: center;

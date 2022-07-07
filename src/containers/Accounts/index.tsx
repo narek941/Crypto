@@ -12,7 +12,7 @@ const Accounts: React.FC = () => {
       type='primary'
       linkText='account'
       headCells={headCells}
-      linkTo={Routes.AddNewUser}
+      linkTo={Routes.Default}
     />
   );
 };

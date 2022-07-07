@@ -12,6 +12,20 @@ const Sidebar: React.FC = () => {
   const ref = useRef(null);
   const [open, setOpen] = useState(false);
 
+  const burgerClasses = classNames(styles.wrapper__burger, {
+    [styles.wrapper__burger_open]: open,
+  });
+
+  const wrapperClasses = classNames(styles.wrapper, { [styles.wrapper__active]: open });
+
+  const listIconClasses = classNames(styles.list__icon, {
+    [styles.list__icon__open]: open,
+  });
+
+  const listText = classNames(styles.list__text, {
+    [styles.list__text__open]: open,
+  });
+
   const handleDrawer = (): void => setOpen(!open);
   const handleClickOutside = (): void => setOpen(false);
 
@@ -32,29 +46,11 @@ const Sidebar: React.FC = () => {
           [styles.list__selected__open]: linkTo === location.pathname && open,
         })}
       >
-        <div
-          className={classNames(styles.list__icon, {
-            [styles.list__icon__open]: open,
-          })}
-        >
-          {icon}
-        </div>
-        <div
-          className={classNames(styles.list__text, {
-            [styles.list__text__open]: open,
-          })}
-        >
-          {text}
-        </div>
+        <div className={listIconClasses}>{icon}</div>
+        <div className={listText}>{text}</div>
       </div>
     </Link>
   ));
-
-  const burgerClasses = classNames(styles.wrapper__burger, {
-    [styles.wrapper__burger_open]: open,
-  });
-
-  const wrapperClasses = classNames(styles.wrapper, { [styles.wrapper__active]: open });
 
   return (
     <div ref={ref} className={wrapperClasses}>

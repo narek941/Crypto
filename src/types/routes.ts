@@ -15,4 +15,5 @@ export enum Routes {
   Accounts = '/accounts',
   Alerts = '/alerts',
   Users = '/users',
+  Default = '#',
 }

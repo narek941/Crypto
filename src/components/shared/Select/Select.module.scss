@@ -6,12 +6,13 @@
   }
 
   &-label {
+    color: var(--font);
     @extend %text-14;
   }
 
   &-errorMsg {
     left: 0;
-    color: $danger;
+    color: var(--danger);
     bottom: 0;
     position: absolute;
     transform: translate(0, 100%);
@@ -32,33 +33,31 @@
   }
 
   &__option {
-    background: $primary;
-
+    background: var(--select-option);
     border-radius: 0 0 4px 4px;
-
     border: {
       top: none;
-      bottom: 1px solid #0097a7;
-      right: 1px solid #0097a7;
-      left: 1px solid #0097a7;
+      left: 1px solid var(--select-border);
+      right: 1px solid var(--select-border);
+      bottom: 1px solid var(--select-border);
     }
-    padding: 12px 10px;
-    color: $primary-font;
-    border-radius: 4px;
-    display: none;
-    @extend %text-14;
-    position: absolute;
-    width: 100%;
-    @extend %flex-column;
     gap: 3px;
+    color: var(--select-font);
+    width: 100%;
     z-index: 1;
+    display: none;
+    padding: 12px 10px;
+    position: absolute;
+    border-radius: 4px;
     backdrop-filter: blur(24px);
+    @extend %text-14;
+    @extend %flex-column;
 
     &__item {
       padding: 12px 10px;
       cursor: pointer;
       &:hover {
-        background-color: $secondary-border;
+        background-color: var(--select-hover);
       }
     }
 
@@ -79,9 +78,9 @@
   line-height: 100%;
   border-radius: 4px;
   position: relative;
-  background-color: $white;
-  border: 1px solid #0097a7;
-  color: $primary-placeholder;
+  border: 1px solid var(--select-border);
+  color: var(--placeholder);
+  background-color: var(--select-background);
   padding: 12px 46px 12px 10px;
 
   &__open {

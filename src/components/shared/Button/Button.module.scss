@@ -3,21 +3,28 @@
   padding: 9px;
   border-radius: 4px;
   @extend %text-14-bold;
+
   &__small {
     max-width: 116px;
   }
+
   &__middle {
     max-width: 121px;
   }
+
   &__large {
     max-width: 116px;
   }
+
   &__primary {
-    background: $secondary;
-    color: $white;
-    border: 1px solid $secondary-border;
+    background: var(--button-background);
+    color: var(--button-color);
+    border: 1px solid var(--button-border);
   }
+
   &__secondary {
-    border: 1px solid $secondary;
+    background: var(--button-background-secondary);
+    color: var(--button-color);
+    border: 1px solid var(--button-border-secondary);
   }
 }

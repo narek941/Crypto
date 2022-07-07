@@ -9,7 +9,17 @@ import { ISelect } from './types';
 
 const Select = forwardRef(
   (
-    { id, name, label, error, className, color, placeholder, ...props }: ISelect,
+    {
+      id,
+      name,
+      label,
+      error,
+      className,
+      color,
+      placeholder,
+      data = ['admin', 'user'],
+      ...props
+    }: ISelect,
     ref: ForwardedRef<HTMLInputElement>,
   ): JSX.Element => {
     const getSelectClassName = (color: any): string => {
@@ -67,12 +77,15 @@ const Select = forwardRef(
             <DropDownIcon role='button' className={dropClassName} />
           </div>
           <div className={optionClassName}>
-            <div className={styles.select__option__item} onClick={(e) => handleSelect(e)}>
-              User
-            </div>
-            <div className={styles.select__option__item} onClick={(e) => handleSelect(e)}>
-              Admin
-            </div>
+            {data.map((item, index) => (
+              <div
+                key={index}
+                className={styles.select__option__item}
+                onClick={(e) => handleSelect(e)}
+              >
+                {item}
+              </div>
+            ))}
           </div>
         </div>
 

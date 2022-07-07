@@ -57,7 +57,7 @@ const AddUserForm: React.FC = () => {
             <Select {...addUserFormFields.accountType} {...formMethods.register('accountType')} />
             {!!errors.length && <FormErrorBox errors={errors} />}
             <div className={styles.signIn__form__group__button}>
-              <Button type='submit' color='primary' size='m'>
+              <Button type='submit' color='secondary' size='m'>
                 ADD USER
               </Button>
             </div>

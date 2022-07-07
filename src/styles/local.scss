@@ -140,6 +140,6 @@ body {
   font-weight: 400;
   -webkit-tap-highlight-color: transparent;
   user-select: none;
-  background-color: #faffff !important;
+  background-color: var(--background) !important;
   font-family: $primary_family;
 }

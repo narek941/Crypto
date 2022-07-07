@@ -1,7 +1,6 @@
 .action {
   gap: 4px;
   right: 0;
-  color: $primary-font;
   position: absolute;
   font-size: 14px;
   font-weight: 400;
@@ -9,6 +8,12 @@
   cursor: pointer;
   @extend %flex-align;
 
+  span {
+    color: var(--font);
+  }
+  svg path {
+    fill: var(--font);
+  }
   &__item {
     gap: 2px;
     margin: 0;
@@ -17,8 +22,11 @@
     @extend %flex-align;
 
     &:disabled {
+      span {
+        color: var(--disable);
+      }
       svg path {
-        fill: $disable;
+        fill: var(--disable);
       }
     }
     &__text {

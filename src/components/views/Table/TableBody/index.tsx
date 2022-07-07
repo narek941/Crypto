@@ -29,9 +29,9 @@ const TableBody = ({ rows, page, rowsPerPage, action = false }: ITableBodyProps)
 
             {action && (
               <TableCell className={actionCellClassnames} align='left'>
-                <ChartIcon />
-                <SettingIcon />
-                <BinIcon />
+                <ChartIcon className={styles.table__body__row__ceil__actions__chart} />
+                <SettingIcon className={styles.table__body__row__ceil__actions__setting} />
+                <BinIcon className={styles.table__body__row__ceil__actions__bin} />
               </TableCell>
             )}
           </TableRow>

@@ -39,13 +39,20 @@ const SignInForm: React.FC = () => {
     <FormWrapper {...{ formMethods }} onSubmit={handleSubmit(handleSignIn)}>
       <FormGroup className={styles.signIn__form__group}>
         <>
-          <Input {...signInFormFields.email} {...formMethods.register('email')} />
+          <Input
+            {...signInFormFields.email}
+            {...formMethods.register('email')}
+            className={styles.signIn__form__group__input}
+          />
           <Input
             {...signInFormFields.password}
             {...formMethods.register('password')}
             haveRightIcon={true}
+            className={styles.signIn__form__group__input}
           />
-          {!!errors.length && <FormErrorBox errors={errors} />}
+          {!!errors.length && (
+            <FormErrorBox errors={errors} className={styles.signIn__form__group__error} />
+          )}
 
           <Checkbox
             text='Remember me'

@@ -14,7 +14,7 @@
       &__header {
         @extend %text-20;
         margin-bottom: 32px;
-        color: $primary-font;
+        color: var(--font);
       }
       &__button {
         @extend %flex-end;

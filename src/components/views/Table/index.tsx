@@ -32,32 +32,34 @@ const Table = ({ rows, headCells, type, action, linkText, linkTo }: ITableProps)
   return (
     <div className={styles.wrapper}>
       <TableToolbar linkText={linkText} linkTo={linkTo} />
-      <table className={styles.table}>
-        <TableHead
-          order={order}
-          orderBy={orderBy}
-          onRequestSort={handleRequestSort}
-          rowCount={rows.length}
-          headCells={headCells}
-          type={type}
-        />
-        <TableBody
-          order={order}
-          orderBy={orderBy}
-          rows={rows}
-          page={page}
-          type={type}
-          action={action}
+      <div className={styles.inner}>
+        <table className={styles.table}>
+          <TableHead
+            order={order}
+            orderBy={orderBy}
+            onRequestSort={handleRequestSort}
+            rowCount={rows.length}
+            headCells={headCells}
+            type={type}
+          />
+          <TableBody
+            order={order}
+            orderBy={orderBy}
+            rows={rows}
+            page={page}
+            type={type}
+            action={action}
+            rowsPerPage={rowsPerPage}
+          />
+        </table>
+        <Pagination
+          handleChangePage={handleChangePage}
+          handleChangeRowsPerPage={handleChangeRowsPerPage}
+          currentPage={page}
           rowsPerPage={rowsPerPage}
+          totalCount={rows.length}
         />
-      </table>
-      <Pagination
-        handleChangePage={handleChangePage}
-        handleChangeRowsPerPage={handleChangeRowsPerPage}
-        currentPage={page}
-        rowsPerPage={rowsPerPage}
-        totalCount={rows.length}
-      />
+      </div>
     </div>
   );
 };

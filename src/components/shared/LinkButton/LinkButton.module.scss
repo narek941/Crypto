@@ -17,8 +17,8 @@
   &__primary {
     @extend %text-14-bold;
     background: transparent;
-    color: $primary-font;
-    border: 1px solid $secondary;
+    color: var(--link-color);
+    border: 1px solid var(--link-border);
     text-transform: uppercase;
   }
 }

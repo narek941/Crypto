@@ -20,7 +20,6 @@ const RouterProvider = () => {
       />
     ),
   );
-
   return (
     <BrowserRouter>
       <Routes>{renderRoutes}</Routes>
