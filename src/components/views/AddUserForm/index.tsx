@@ -20,7 +20,7 @@ import { addUserFormFields, addUserSchemaKeys } from './fields';
 const AddUserForm: React.FC = () => {
   const navigate = useNavigate();
   const [errors, setErrors] = useState<string[]>([]);
-  const { formMethods, handleSubmit } = useForm<keyof AddUserFormShape, AddUserFormShape>({
+  const { formMethods, handleSubmit, isValid } = useForm<keyof AddUserFormShape, AddUserFormShape>({
     schemaKeys: addUserSchemaKeys,
   });
 
@@ -57,7 +57,7 @@ const AddUserForm: React.FC = () => {
             <Select {...addUserFormFields.accountType} {...formMethods.register('accountType')} />
             {!!errors.length && <FormErrorBox errors={errors} />}
             <div className={styles.signIn__form__group__button}>
-              <Button type='submit' color='secondary' size='m'>
+              <Button type='submit' color='secondary' size='m' disabled={!isValid}>
                 ADD USER
               </Button>
             </div>

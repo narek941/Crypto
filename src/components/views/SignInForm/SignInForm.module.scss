@@ -6,7 +6,7 @@
 
     &__group {
       @extend %flex-column;
-      gap: 16px;
+      gap: 8px;
 
       &__error {
         color: var(--danger);
@@ -14,10 +14,19 @@
       }
 
       &__button {
+        margin-top: 8px;
         @extend %flex-end;
       }
+      &__checkbox {
+        margin-top: 8px;
+      }
+
       &__input {
         background-color: var(--input-background-secondary) !important;
+
+        &:last-child {
+          margin-top: 2px;
+        }
       }
     }
   }

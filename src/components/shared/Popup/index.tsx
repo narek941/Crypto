@@ -16,7 +16,7 @@ import { PopupProps } from './types';
 const Popup = ({ open }: PopupProps) => {
   const ref = useRef(null);
   const { t } = useTranslation();
-  const isDarkMode = useSelector((state: RootState) => state.themeSlice?.isDarkMode);
+  const isDarkMode = useSelector((state: RootState) => state.theme.isDarkMode);
   const popUpClasses = classNames(styles.popup, { [styles.popup__able]: open });
 
   const dispatch = useDispatch();

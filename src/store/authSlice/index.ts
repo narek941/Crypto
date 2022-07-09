@@ -1,17 +1,55 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { Slice } from '../../types';
+import * as authThunks from './thunks';
+import { reducerName, AuthStates } from './constants';
+import { AuthSliceState, UpdateAccessTokenAction } from './types';
 
-import { IAuthState } from './types';
-
-const initialState: IAuthState = {
-  token: '',
+const internalInitialState: AuthSliceState = {
+  error: null,
+  loading: AuthStates.IDLE,
+  accessToken: localStorage.getItem('accessToken') || '',
 };
 
-export const authSlice = createSlice({
-  name: Slice.Auth,
-  initialState,
-  reducers: {},
+const authSlice = createSlice({
+  name: reducerName,
+  initialState: internalInitialState,
+  reducers: {
+    updateAccessToken(state, action: PayloadAction<UpdateAccessTokenAction>) {
+      state.accessToken = action.payload.token;
+    },
+    reset: () => internalInitialState,
+  },
+  extraReducers: (builder) => {
+    builder.addCase(authThunks.signIn.pending, (state) => {
+      state.loading = AuthStates.LOADING;
+    });
+    builder.addCase(authThunks.signIn.fulfilled, (state, action) => {
+      state.error = null;
+      state.accessToken = action.payload.accessToken;
+      state.loading = AuthStates.IDLE;
+    });
+    builder.addCase(authThunks.signIn.rejected, (state, action) => {
+      state.loading = AuthStates.IDLE;
+      state.error = action.error;
+    });
+
+    builder.addCase(authThunks.signOut.pending, (state) => {
+      state.loading = AuthStates.LOADING;
+    });
+    builder.addCase(authThunks.signOut.fulfilled, () => internalInitialState);
+
+    builder.addCase(authThunks.signOut.rejected, (state, action) => {
+      state.loading = AuthStates.IDLE;
+      state.error = action.error;
+    });
+  },
 });
 
-export default authSlice.reducer;
+const { reducer, actions } = authSlice;
+
+export const authActions = {
+  ...actions,
+  ...authThunks,
+};
+
+export default reducer;

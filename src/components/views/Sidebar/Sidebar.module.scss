@@ -98,7 +98,7 @@
 
     svg path {
       fill: var(--icon-secondary);
-      fill-opacity: 0.2;
+      fill-opacity: var(--icon-primary-opacity);
     }
   }
   &__text {

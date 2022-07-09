@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
+import SignInForm from 'components/views/SignInForm';
 import { Routes } from 'types';
 import { LogoIcon } from 'icons';
 import Copyright from 'components/shared/Copyright';
 import ExternalImage from 'components/shared/ExternalImage';
-import SignInForm from 'components/views/SignInForm/SignInForm';
 
 import img from '../../assets/images/image-with-man.png';
 

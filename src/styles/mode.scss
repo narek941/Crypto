@@ -35,6 +35,7 @@
   --ceil-even: rgba(210, 210, 210, 0.2);
   --signIn-subtitle: rgba(33, 33, 33, 0.6);
   --icon-primary: #212121;
+  --icon-primary-opacity: 0.4;
   --icon-secondary-selected: #0097a7;
   --icon-secondary: #0097a7;
   --sidebar-line: #d6d6d6;
@@ -59,7 +60,7 @@
   --button-border-secondary: #413ac7;
   --checkbox-input: #6c7c7c;
   --checkbox-color: rgba(255, 255, 255, 1);
-  --danger: #8d0000;
+  --danger: #b22424;
   --copyright: #677a7a;
   --input-color: #ffffff;
   --input-background: rgba(56, 56, 56, 0.2);
@@ -84,10 +85,13 @@
   --ceil-even: rgba(56, 56, 56, 0.16);
   --signIn-subtitle: rgba(162, 191, 190, 0.8);
   --icon-primary: #ffffff;
+  --icon-primary-nav: #ffffff;
+
+  --icon-primary-opacity: 1;
   --icon-secondary-selected: #413ac7;
   --icon-secondary: #ffffff;
   --sidebar-line: #29292e;
-  --table-border: rgba(56, 56, 56, 0.16);
+  --table-border: #383838;
   --table-padding: 24px;
   --disable: #4c5853;
   --select-option: rgba(56, 56, 56, 0.2);

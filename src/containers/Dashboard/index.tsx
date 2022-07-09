@@ -1,7 +1,13 @@
 import React from 'react';
 
+import Chart from 'components/views/Chart';
+
 const Dashboard: React.FC = () => {
-  return <div>Dashboard</div>;
+  return (
+    <div>
+      <Chart />
+    </div>
+  );
 };
 
 export default Dashboard;
