@@ -9,7 +9,13 @@ import styles from '../Table.module.scss';
 
 import { ITableBodyProps } from './types';
 
-const TableBody = ({ rows, page, rowsPerPage, action = false }: ITableBodyProps) => {
+const TableBody = ({
+  rows,
+  page,
+  rowsPerPage,
+  action = false,
+  handleChartAction,
+}: ITableBodyProps) => {
   const actionCellClassnames = classNames(
     styles.table__body__row__ceil,
     styles.table__body__row__ceil__actions,
@@ -29,7 +35,10 @@ const TableBody = ({ rows, page, rowsPerPage, action = false }: ITableBodyProps)
 
             {action && (
               <TableCell className={actionCellClassnames} align='left'>
-                <ChartIcon className={styles.table__body__row__ceil__actions__chart} />
+                <ChartIcon
+                  className={styles.table__body__row__ceil__actions__chart}
+                  onClick={handleChartAction}
+                />
                 <SettingIcon className={styles.table__body__row__ceil__actions__setting} />
                 <BinIcon className={styles.table__body__row__ceil__actions__bin} />
               </TableCell>

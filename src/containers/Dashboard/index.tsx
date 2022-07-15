@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import Chart from 'components/views/Chart';
+import Modal from 'components/views/Modal';
 
 const Dashboard: React.FC = () => {
+  const [open, setOpen] = useState(false);
+
   return (
     <div>
-      <Chart />
+      <Modal open={open} setOpen={setOpen} />
     </div>
   );
 };

@@ -31,7 +31,7 @@ const Sidebar: React.FC = () => {
 
   useOnClickOutside(ref, handleClickOutside);
 
-  const renderList = navList.map(({ id, text, icon, linkTo }) => (
+  const renderList = navList.map(({ id, text, Icon, linkTo }) => (
     <Link
       key={id}
       className={classNames(styles.list, {
@@ -46,7 +46,9 @@ const Sidebar: React.FC = () => {
           [styles.list__selected__open]: linkTo === location.pathname && open,
         })}
       >
-        <div className={listIconClasses}>{icon}</div>
+        <div className={listIconClasses}>
+          <Icon />
+        </div>
         <div className={listText}>{text}</div>
       </div>
     </Link>

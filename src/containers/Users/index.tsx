@@ -1,7 +1,7 @@
 import React from 'react';
 
+import { Table } from 'components';
 import { Routes } from 'types/routes';
-import Table from 'components/views/Table';
 import { headCells, rows } from 'utils/table_users';
 
 const Users: React.FC = () => {

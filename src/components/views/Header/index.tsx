@@ -24,8 +24,8 @@ const Header = ({ text, isBackBtn = false }: IHeaderProps): JSX.Element => {
     <header className={styles.header}>
       <div className={styles.header__wrapper}>
         <div>
-          <div role='button' onClick={navigateHandler} className={styles.header__item__first}>
-            {isBackBtn && <ArrowLeftIcon />}
+          <div role='button' className={styles.header__item__first}>
+            {isBackBtn && <ArrowLeftIcon onClick={navigateHandler} />}
             <span className={styles.header__item__text}>{text}</span>
           </div>
         </div>

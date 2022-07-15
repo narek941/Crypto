@@ -1,5 +1,4 @@
-import LinkButton from 'components/shared/LinkButton';
-import Search from 'components/views/Search';
+import { LinkButton, Search } from 'components';
 
 import styles from './TableToolbar.module.scss';
 import { ITableToolbarProps } from './types';

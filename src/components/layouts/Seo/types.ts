@@ -3,6 +3,5 @@ export interface ISeoProps {
   children: JSX.Element;
   text: string;
   withHeader?: boolean;
-  withSidebar?: boolean;
   isBackBtn?: boolean;
 }

@@ -26,6 +26,8 @@
   --header-background: #faffff;
   --search-background: rgba(210, 210, 210, 0.2);
   --sidebar-background: rgba(255, 255, 255, 0.7);
+  --modal-header: rgba(255, 255, 255, 0.7);
+  --chart-line-border: #009688;
   --sidebar-font: rgba(0, 151, 167, 0.41);
   --sidebar-selected: #0097a7;
   --table-header: #0097a7;
@@ -47,6 +49,18 @@
   --popup-background: #ffffff;
   --popup-border: #0097a7;
   --popup-font: black;
+  --modal-info: rgba(33, 33, 33, 0.5);
+  --chart-1: #6794dc;
+  --chart-2: #6771dc;
+  --chart-3: #8067dc;
+  --chart-4: #c767dc;
+  --chart-5: #d0358f;
+  --chart-6: #67b7dc;
+  --chart-7: #14ab6c;
+  --chart-8: #fe8463;
+  --chart-9: #d7504b;
+  --bricks-header: #212121;
+  --export-text: #b3b3b3;
 }
 
 [data-theme='dark'] {
@@ -71,11 +85,12 @@
   --link-border: #413ac7;
   --select-border: #413ac7;
   --select-font: #ffffff;
-  --select-hover: rgba(56, 56, 56, 0.22);
+  --select-hover: rgba(245, 245, 245, 0.1);
   --header-border: #29292e;
   --header-background: #080808;
   --search-background: rgba(56, 56, 56, 0.2);
   --sidebar-background: rgba(56, 56, 56, 0.16);
+  --modal-header: rgba(56, 56, 56, 0.7);
   --sidebar-font: #ffffff;
   --sidebar-selected: #413ac7;
   --table-header: rgba(56, 56, 56, 0.16);
@@ -86,7 +101,7 @@
   --signIn-subtitle: rgba(162, 191, 190, 0.8);
   --icon-primary: #ffffff;
   --icon-primary-nav: #ffffff;
-
+  --chart-line-border: linear-gradient(266.81deg, #13ae6c 45.24%, rgba(19, 174, 108, 0.31) 77.29%);
   --icon-primary-opacity: 1;
   --icon-secondary-selected: #413ac7;
   --icon-secondary: #ffffff;
@@ -94,9 +109,23 @@
   --table-border: #383838;
   --table-padding: 24px;
   --disable: #4c5853;
-  --select-option: rgba(56, 56, 56, 0.2);
+  --select-option: linear-gradient(0deg, rgba(12, 0, 29, 0.02), rgba(12, 0, 29, 0.02)),
+    rgba(26, 24, 24, 0.9);
+  --select-hover: rgba(245, 245, 245, 0.1);
   --select-background: rgba(56, 56, 56, 0.2);
   --popup-background: rgba(0, 0, 0, 0.65);
   --popup-border: #23162e;
   --popup-font: #ab9ab7;
+  --modal-info: rgba(171, 154, 183, 0.3);
+  --chart-1: #552cae;
+  --chart-2: #ad90dc;
+  --chart-3: #787fbb;
+  --chart-4: #9158ff;
+  --chart-5: #ffffff;
+  --chart-6: #7181fe;
+  --chart-7: #1e71c0;
+  --chart-8: #413ac7;
+  --chart-9: #d7504b;
+  --bricks-header: #a2a2a2;
+  --export-text: #4c4b53;
 }

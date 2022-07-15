@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Table from 'components/views/Table';
+import { Table } from 'components';
 import { headCells, rows } from 'utils/alerts';
 
 const Alerts: React.FC = () => {

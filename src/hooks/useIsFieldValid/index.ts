@@ -1,6 +1,6 @@
-import { SchemaLike } from 'yup/lib/types';
-import { useState } from 'react';
 import * as Yup from 'yup';
+import { useState } from 'react';
+import { SchemaLike } from 'yup/lib/types';
 
 const useIsFieldValid = (schema: SchemaLike, fieldName: string, fieldValue: string): boolean => {
   const [isValid, setIsValid] = useState(false);

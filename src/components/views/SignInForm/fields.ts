@@ -1,4 +1,4 @@
-import { FormField } from '../../shared/forms/types';
+import { FormField } from '../../forms/types';
 
 import { SignInFormShape } from './types';
 

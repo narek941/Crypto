@@ -35,28 +35,38 @@
   &__option {
     background: var(--select-option);
     border-radius: 0 0 4px 4px;
-    border: {
-      top: none;
-      left: 1px solid var(--select-border);
-      right: 1px solid var(--select-border);
-      bottom: 1px solid var(--select-border);
-    }
+
     gap: 3px;
     color: var(--select-font);
     width: 100%;
     z-index: 1;
     display: none;
-    padding: 12px 10px;
     position: absolute;
     border-radius: 4px;
     backdrop-filter: blur(24px);
-    @extend %text-14;
+    text-transform: capitalize;
+    @extend %text-13;
     @extend %flex-column;
 
+    &__action {
+      padding: 6px 12px;
+      justify-content: start;
+      @extend %flex-align;
+      @extend %text-13;
+      cursor: pointer;
+      gap: 10px;
+
+      &__select {
+        color: #3700b3;
+      }
+    }
     &__item {
-      padding: 12px 10px;
+      padding: 6px 12px;
       cursor: pointer;
       &:hover {
+        background-color: var(--select-hover);
+      }
+      &__selected {
         background-color: var(--select-hover);
       }
     }
@@ -79,9 +89,10 @@
   border-radius: 4px;
   position: relative;
   border: 1px solid var(--select-border);
-  color: var(--placeholder);
+  color: var(--font);
   background-color: var(--select-background);
   padding: 12px 46px 12px 10px;
+  text-transform: capitalize;
 
   &__open {
     border-radius: 4px 4px 0 0;

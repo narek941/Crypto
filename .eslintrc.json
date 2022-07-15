@@ -25,6 +25,7 @@
   },
   "plugins": ["react", "react-hooks", "@typescript-eslint", "prettier", "import"],
   "rules": {
+    "prettier/prettier": ["error"],
     "react/prop-types": "off",
     "react/display-name": "off",
     "react-hooks/rules-of-hooks": "error",

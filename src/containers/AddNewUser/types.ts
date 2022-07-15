@@ -1,4 +1,4 @@
-export interface IAddUNewSerForm {
+export interface IAddUNewUSerForm {
   name: string;
   email: string;
   password: string;

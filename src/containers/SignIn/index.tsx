@@ -6,8 +6,7 @@ import { useTranslation } from 'react-i18next';
 import SignInForm from 'components/views/SignInForm';
 import { Routes } from 'types';
 import { LogoIcon } from 'icons';
-import Copyright from 'components/shared/Copyright';
-import ExternalImage from 'components/shared/ExternalImage';
+import { Copyright, ExternalImage } from 'components/';
 
 import img from '../../assets/images/image-with-man.png';
 
@@ -16,8 +15,9 @@ import styles from './SignIn.module.scss';
 import '../../i18';
 
 const SignIn: React.FC = () => {
-  const firstInnerClassNames = classNames(styles.signIn__inner, styles.signIn__inner__first);
   const { t } = useTranslation();
+
+  const firstInnerClassNames = classNames(styles.signIn__inner, styles.signIn__inner__first);
 
   return (
     <>
@@ -36,7 +36,7 @@ const SignIn: React.FC = () => {
                 <SignInForm />
               </div>
             </div>
-            <Link to={Routes.SignIn} className={styles.copyright}>
+            <Link to={Routes.Login} className={styles.copyright}>
               <Copyright />
             </Link>
           </div>

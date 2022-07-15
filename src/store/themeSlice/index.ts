@@ -2,8 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { Slice } from 'types';
 
-import { setDarkTheme, setLightTheme, setTheme } from './actions';
 import { InitialState } from './types';
+import { setDarkTheme, setLightTheme, setTheme } from './actions';
 
 const initialState: InitialState = {
   isDarkMode: false,
