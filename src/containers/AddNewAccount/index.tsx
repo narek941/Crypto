@@ -1,17 +1,17 @@
 import { SubmitHandler } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
 
-import AddForm from 'components/views/AddForm';
-import { AddFormShape } from 'components/views/AddForm/types';
 import { useAppDispatch } from 'hooks';
 import { authActions } from 'store/authSlice';
+import { AddAccountForm } from 'components';
+import { AddAccountFormShape } from 'components/views/AddAccountForm/types';
 
-import styles from './AddNewUser.module.scss';
+import styles from './AddNewAccount.module.scss';
 
 const AddNewAccount: React.FC = () => {
   const dispatch = useAppDispatch();
 
-  const handleSubmit: SubmitHandler<AddFormShape> = async (values) => {
+  const handleSubmit: SubmitHandler<AddAccountFormShape> = async (values) => {
     // eslint-disable-next-line no-console
     console.log(values, 'values');
     const body = {
@@ -23,7 +23,7 @@ const AddNewAccount: React.FC = () => {
   };
   return (
     <div className={styles.container}>
-      <AddForm onclick={handleSubmit} />
+      <AddAccountForm onclick={handleSubmit} />
     </div>
   );
 };

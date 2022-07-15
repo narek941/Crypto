@@ -12,6 +12,6 @@ export interface ISelect {
   error: ErrorType;
   defaultChecked?: boolean;
   color?: ColorType;
-  data: string[];
+  options: string[];
   [prop: string]: any;
 }

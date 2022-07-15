@@ -11,6 +11,18 @@ export const composeFormSchema = <K extends FormFieldNames>(fields: K[]): AnyObj
     rememberMe: Yup.bool().required(),
     name: Yup.string().required(),
     accountType: Yup.string(),
+    baseCurrency: Yup.string(),
+    startCapital: Yup.string(),
+    exchange: Yup.string(),
+    apiKey: Yup.string(),
+    apiSecret: Yup.string(),
+    maxDrawdown: Yup.string(),
+    maxPosition: Yup.string(),
+    maxRisk: Yup.string(),
+    allowedFirstPairs: Yup.string(),
+    allowedSecondPairs: Yup.string(),
+    stopLossOrder: Yup.bool(),
+    wrongCurrencyAlert: Yup.bool(),
   };
 
   const schema = fields.reduce(

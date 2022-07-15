@@ -5,14 +5,21 @@ import { Routes, Slice } from 'types';
 
 export const signIn = createAsyncThunk(
   `${Slice.Auth}/signIn`,
-  async (credentials: { email: string; password: string; navigate: any }, thunkAPI) => {
-    const { navigate, ...restCredentials } = credentials;
+  async (
+    credentials: { email: string; password: string; rememberMe?: boolean; navigate: any },
+    thunkAPI,
+  ) => {
+    const { navigate, rememberMe, ...restCredentials } = credentials;
 
     try {
       const response = await client.post('auth/login', restCredentials);
-
-      localStorage.setItem('accessToken', response.data.token);
-      localStorage.setItem('role', response.data.role);
+      if (rememberMe) {
+        localStorage.setItem('accessToken', response.data.token);
+        localStorage.setItem('role', response.data.role);
+      } else {
+        sessionStorage.setItem('accessToken', response.data.token);
+        sessionStorage.setItem('role', response.data.role);
+      }
       navigate(Routes.Dashboard);
 
       return {

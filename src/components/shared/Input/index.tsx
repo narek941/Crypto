@@ -1,8 +1,8 @@
 import React, { forwardRef, useMemo, useState, useCallback } from 'react';
 import classNames from 'classnames';
 
-import { EyeOpenIcon } from 'icons';
-import { EyeCloseIcon } from 'icons';
+import { EyeOpenIcon } from 'assets/icons';
+import { EyeCloseIcon } from 'assets/icons';
 
 import Typography from '../Typography';
 

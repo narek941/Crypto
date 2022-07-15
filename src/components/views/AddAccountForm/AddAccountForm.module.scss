@@ -1,0 +1,26 @@
+.form {
+  position: relative;
+
+  &__header {
+    @extend %text-18;
+    color: var(--font);
+  }
+  &__section {
+    @extend %flex-column;
+    gap: 14px;
+    width: 100%;
+    max-width: 525px;
+
+    &__item {
+      @extend %flex-align;
+      gap: 24px;
+      width: 100%;
+      div {
+        flex: 1;
+      }
+      &__add_button {
+        color: var(--font-secondary);
+      }
+    }
+  }
+}

@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { ArrowLeftIcon, AvatarIcon } from 'icons';
+import { ArrowLeftIcon, AvatarIcon } from 'assets/icons';
 import useOnClickOutside from 'hooks/useOutsideClick';
 
 import Popup from '../../shared/Popup';

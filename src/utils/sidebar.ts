@@ -1,5 +1,5 @@
 import { Routes } from 'types';
-import { AvatarMultipleIcon, ListIcon, BellIcon, DashboardIcon } from 'icons';
+import { AvatarMultipleIcon, ListIcon, BellIcon, DashboardIcon } from 'assets/icons';
 
 export const navList = [
   {

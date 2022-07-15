@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { SearchIcon } from 'icons';
+import { SearchIcon } from 'assets/icons';
 
 import styles from './Search.module.scss';
 

@@ -1,3 +1,4 @@
 .container {
-  padding-top: 48px;
+  padding: 48px 40px;
+  @extend %flex-column;
 }

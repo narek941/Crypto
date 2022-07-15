@@ -3,7 +3,7 @@ import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import classNames from 'classnames';
 
-import { BinIcon, ChartIcon, SettingIcon } from 'icons';
+import { BinIcon, ChartIcon, SettingIcon } from 'assets/icons';
 
 import styles from '../Table.module.scss';
 

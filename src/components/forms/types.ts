@@ -9,6 +9,7 @@ export type FormField<T extends FormFieldNames> = {
     label?: string;
     placeholder?: string;
     type?: HTMLInputTypeAttribute;
+    options?: string[];
   };
 };
 export interface IFormGroup {

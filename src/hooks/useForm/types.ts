@@ -1,7 +1,24 @@
 import { UseFormHandleSubmit } from 'react-hook-form/dist/types/form';
 import { UseFormProps as UseReactHookFormProps, UseFormReturn } from 'react-hook-form';
 
-export type FormFieldNames = 'email' | 'password' | 'rememberMe' | 'name' | 'accountType';
+export type FormFieldNames =
+  | 'email'
+  | 'password'
+  | 'rememberMe'
+  | 'name'
+  | 'accountType'
+  | 'baseCurrency'
+  | 'startCapital'
+  | 'exchange'
+  | 'apiKey'
+  | 'apiSecret'
+  | 'maxDrawdown'
+  | 'maxPosition'
+  | 'maxRisk'
+  | 'stopLossOrder'
+  | 'wrongCurrencyAlert'
+  | 'allowedFirstPairs'
+  | 'allowedSecondPairs';
 
 export type FieldShapeLookup<K extends FormFieldNames> = {
   [P in K]?: Record<FormFieldNames, unknown>[P];

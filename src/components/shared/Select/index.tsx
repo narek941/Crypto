@@ -1,7 +1,7 @@
 import { ForwardedRef, forwardRef, useState, useRef } from 'react';
 import classNames from 'classnames';
 
-import { DropDownIcon } from 'icons';
+import { DropDownIcon } from 'assets/icons';
 import useOnClickOutside from 'hooks/useOutsideClick';
 
 import styles from './Select.module.scss';
@@ -17,7 +17,7 @@ const Select = forwardRef(
       className,
       color = 'default',
       placeholder,
-      data = ['administrator', 'analyst', 'viewer'],
+      options = ['administrator', 'analyst', 'viewer'],
       onChange,
       onBlur,
       value,
@@ -86,7 +86,7 @@ const Select = forwardRef(
             <DropDownIcon role='button' className={dropClassName} />
           </div>
           <div className={optionClassName}>
-            {data.map((item, index) => (
+            {options.map((item, index) => (
               <div
                 key={index}
                 className={classNames(styles.select__option__item, {

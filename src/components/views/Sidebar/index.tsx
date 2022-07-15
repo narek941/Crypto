@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 
-import { BurgerIcon, LogoIcon } from 'icons';
+import { BurgerIcon, LogoIcon } from 'assets/icons';
 import useOnClickOutside from 'hooks/useOutsideClick';
 import { navList } from 'utils/sidebar';
 

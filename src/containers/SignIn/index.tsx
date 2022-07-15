@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import SignInForm from 'components/views/SignInForm';
 import { Routes } from 'types';
-import { LogoIcon } from 'icons';
+import { LogoIcon } from 'assets/icons';
 import { Copyright, ExternalImage } from 'components/';
 
 import img from '../../assets/images/image-with-man.png';

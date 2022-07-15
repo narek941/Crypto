@@ -1,12 +1,14 @@
+import AddNewAccount from 'containers/AddNewAccount';
+
 import {
-  ErrorContainer,
-  UsersContainer,
-  SignInContainer,
-  AlertsContainer,
-  AccountsContainer,
-  DashboardContainer,
-  AddNewUserContainer,
-  AccountsAnalyticsContainer,
+  Error,
+  Users,
+  SignIn,
+  Alerts,
+  Accounts,
+  Dashboard,
+  AddNewUser,
+  AccountsAnalytics,
 } from '../containers';
 import { RoutesProps, Routes } from '../types';
 
@@ -14,51 +16,58 @@ const routes: RoutesProps[] = [
   {
     path: Routes.Login,
     text: 'Sign in',
-    component: <SignInContainer />,
+    component: <SignIn />,
     withHeader: false,
   },
   {
     path: Routes.AddNewUser,
     text: 'Users management',
     isProtected: true,
-    component: <AddNewUserContainer />,
+    component: <AddNewUser />,
+    isBackBtn: true,
+  },
+  {
+    path: Routes.AddNewAccount,
+    text: 'Account settings',
+    isProtected: true,
+    component: <AddNewAccount />,
     isBackBtn: true,
   },
   {
     path: Routes.Dashboard,
     text: 'Dashboard',
     isProtected: true,
-    component: <DashboardContainer />,
+    component: <Dashboard />,
   },
   {
     path: Routes.Alerts,
     text: 'Alerts',
     isProtected: true,
-    component: <AlertsContainer />,
+    component: <Alerts />,
   },
   {
     path: Routes.Users,
     text: 'Users',
     isProtected: true,
-    component: <UsersContainer />,
+    component: <Users />,
   },
   {
     path: Routes.Accounts,
     text: 'Accounts',
     isProtected: true,
-    component: <AccountsContainer />,
+    component: <Accounts />,
   },
   {
     path: Routes.AccountsAnalytics,
     text: 'Accounts settings',
     isProtected: true,
-    component: <AccountsAnalyticsContainer />,
+    component: <AccountsAnalytics />,
   },
   {
     path: Routes.Error,
     text: 'Error',
     withHeader: false,
-    component: <ErrorContainer />,
+    component: <Error />,
   },
 ];
 
