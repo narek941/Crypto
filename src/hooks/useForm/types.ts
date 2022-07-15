@@ -18,7 +18,9 @@ export type FormFieldNames =
   | 'stopLossOrder'
   | 'wrongCurrencyAlert'
   | 'allowedFirstPairs'
-  | 'allowedSecondPairs';
+  | 'allowedSecondPairs'
+  | 'alertKey'
+  | 'alertValue';
 
 export type FieldShapeLookup<K extends FormFieldNames> = {
   [P in K]?: Record<FormFieldNames, unknown>[P];

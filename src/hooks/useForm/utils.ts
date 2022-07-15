@@ -6,10 +6,10 @@ import { FormFieldNames } from './types';
 
 export const composeFormSchema = <K extends FormFieldNames>(fields: K[]): AnyObjectSchema => {
   const schemaMap: Record<FormFieldNames, SchemaLike> = {
-    email: Yup.string().required(),
-    password: Yup.string().required(),
-    rememberMe: Yup.bool().required(),
-    name: Yup.string().required(),
+    email: Yup.string(),
+    password: Yup.string(),
+    rememberMe: Yup.bool(),
+    name: Yup.string(),
     accountType: Yup.string(),
     baseCurrency: Yup.string(),
     startCapital: Yup.string(),
@@ -23,6 +23,8 @@ export const composeFormSchema = <K extends FormFieldNames>(fields: K[]): AnyObj
     allowedSecondPairs: Yup.string(),
     stopLossOrder: Yup.bool(),
     wrongCurrencyAlert: Yup.bool(),
+    alertValue: Yup.string(),
+    alertKey: Yup.string(),
   };
 
   const schema = fields.reduce(

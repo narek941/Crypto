@@ -2,6 +2,9 @@ import { FormField } from '../../forms/types';
 
 import { AddAccountFormShape } from './types';
 
+const pairsList = ['usdt', 'usdc', 'busd', 'tusd'];
+const alertList = ['email', 'sms', 'telegram'];
+
 export const addAccountFormFields: FormField<keyof AddAccountFormShape> = {
   name: {
     name: 'name',
@@ -16,7 +19,7 @@ export const addAccountFormFields: FormField<keyof AddAccountFormShape> = {
     label: 'Base currency',
     id: 'addAccount.baseCurrency',
     placeholder: 'USDT',
-    options: ['1', '2'],
+    options: ['USDT'],
   },
   startCapital: {
     type: 'text',
@@ -31,7 +34,7 @@ export const addAccountFormFields: FormField<keyof AddAccountFormShape> = {
     label: 'Exchange',
     id: 'addAccount.exchange',
     placeholder: 'Binance',
-    options: ['1', '2'],
+    options: ['Binance'],
   },
   apiKey: {
     type: 'text',
@@ -69,14 +72,14 @@ export const addAccountFormFields: FormField<keyof AddAccountFormShape> = {
     placeholder: '',
   },
   stopLossOrder: {
-    type: 'radio',
+    type: 'checkbox',
     name: 'stopLossOrder',
     label: 'Stop-loss-order required',
     id: 'addAccount.stopLossOrder',
     placeholder: '',
   },
   wrongCurrencyAlert: {
-    type: 'radio',
+    type: 'checkbox',
     name: 'wrongCurrencyAlert',
     label: 'Wrong currency alert required',
     id: 'addAccount.wrongCurrencyAlert',
@@ -87,14 +90,29 @@ export const addAccountFormFields: FormField<keyof AddAccountFormShape> = {
     name: 'allowedFirstPairs',
     id: 'addAccount.allowedFirstPairs',
     placeholder: '',
-    options: ['1', '2'],
+    options: pairsList,
   },
   allowedSecondPairs: {
     type: 'select',
     name: 'allowedSecondPairs',
     id: 'addAccount.allowedSecondPairs',
     placeholder: '',
-    options: ['1', '2', '3'],
+    options: pairsList,
+  },
+
+  alertKey: {
+    type: 'select',
+    name: 'alertKey',
+    id: 'addAccount.alertKey',
+    placeholder: '',
+    options: alertList,
+  },
+  alertValue: {
+    type: 'text',
+    label: '',
+    name: 'alertValue',
+    id: 'addAccount.alertValue',
+    placeholder: '',
   },
 };
 

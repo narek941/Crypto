@@ -10,6 +10,8 @@ export type AddAccountFormShape = {
   maxRisk: string;
   allowedFirstPairs: string;
   allowedSecondPairs: string;
+  alertValue: string;
+  alertKey: string;
   stopLossOrder: boolean;
   wrongCurrencyAlert: boolean;
 };

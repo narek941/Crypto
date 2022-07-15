@@ -13,7 +13,9 @@ const AddNewAccount: React.FC = () => {
 
   const handleSubmit: SubmitHandler<AddAccountFormShape> = async (values) => {
     // eslint-disable-next-line no-console
-    console.log(values, 'values');
+    console.log(values);
+    // eslint-disable-next-line no-console
+    console.log(JSON.stringify(values), 'values');
     const body = {
       ...values,
       deviceToken: uuidv4(),

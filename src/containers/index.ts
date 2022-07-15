@@ -5,4 +5,5 @@ export { default as Alerts } from './Alerts';
 export { default as Accounts } from './Accounts';
 export { default as Dashboard } from './Dashboard';
 export { default as AddNewUser } from './AddNewUser';
+export { default as AddNewAccount } from './AddNewAccount';
 export { default as AccountsAnalytics } from './AccountsAnalytics';

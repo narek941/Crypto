@@ -23,6 +23,7 @@ const Input = forwardRef<any, IInputProps>(
       innerClassName = '',
       haveRightIcon = false,
       label,
+      isSmall,
       ...rest
     },
     ref,
@@ -32,6 +33,7 @@ const Input = forwardRef<any, IInputProps>(
       [styles.container__error]: !!error,
       [styles.container__isLabel]: label,
       [styles.container_with_icon]: !!RightIcon,
+      [styles.container__small]: isSmall,
     });
 
     const inputInnerClasses = classNames(styles.container__inner, {

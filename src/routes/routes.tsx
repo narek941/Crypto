@@ -1,5 +1,3 @@
-import AddNewAccount from 'containers/AddNewAccount';
-
 import {
   Error,
   Users,
@@ -8,6 +6,7 @@ import {
   Accounts,
   Dashboard,
   AddNewUser,
+  AddNewAccount,
   AccountsAnalytics,
 } from '../containers';
 import { RoutesProps, Routes } from '../types';

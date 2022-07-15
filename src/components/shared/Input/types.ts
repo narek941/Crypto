@@ -7,6 +7,7 @@ export interface IInputProps {
   error?: string;
   className?: string;
   disabled?: boolean;
+  isSmall?: boolean;
   placeholder?: string;
   haveRightIcon?: boolean;
   innerClassName?: string;

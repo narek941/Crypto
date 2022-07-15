@@ -2,25 +2,78 @@
   position: relative;
 
   &__header {
-    @extend %text-18;
     color: var(--font);
+    @extend %text-18;
   }
+
   &__section {
-    @extend %flex-column;
-    gap: 14px;
+    gap: 16px;
     width: 100%;
     max-width: 525px;
+    @extend %flex-column;
 
     &__item {
-      @extend %flex-align;
       gap: 24px;
       width: 100%;
+      position: relative;
+      @extend %flex-align;
+
       div {
         flex: 1;
       }
+
       &__add_button {
-        color: var(--font-secondary);
+        cursor: pointer;
+        color: var(--button-background-secondary);
+        @extend %text-14-bold;
       }
     }
   }
+
+  &__action {
+    gap: 18px;
+    width: 100%;
+    max-width: 525px;
+    @extend %flex-column;
+
+    &__item {
+      color: var(--font);
+      @extend %flex-between;
+    }
+  }
+
+  &__buttons {
+    gap: 24px;
+    align-items: center;
+    @extend %flex-end;
+
+    &__submit {
+      cursor: pointer;
+      text-transform: uppercase;
+      color: var(--font);
+      @extend %text-14-bold;
+    }
+
+    &__cancel {
+      cursor: pointer;
+      text-transform: uppercase;
+      color: #4c4b53;
+      @extend %text-14-bold;
+    }
+  }
+}
+
+.checkbox__text {
+  color: var(--font);
+}
+
+.disable {
+  color: var(--placeholder);
+}
+
+.bin {
+  position: absolute;
+  right: -41px;
+  top: calc(50% - 12px);
+  cursor: pointer;
 }

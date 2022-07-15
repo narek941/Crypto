@@ -1,4 +1,4 @@
-import { ForwardedRef, forwardRef, useState, useRef } from 'react';
+import { ForwardedRef, forwardRef, useState, useRef, useEffect } from 'react';
 import classNames from 'classnames';
 
 import { DropDownIcon } from 'assets/icons';
@@ -32,6 +32,10 @@ const Select = forwardRef(
       });
       return selectClass;
     };
+
+    useEffect(() => {
+      onChange(options[0]);
+    }, []);
 
     const selectRef = useRef(null);
 

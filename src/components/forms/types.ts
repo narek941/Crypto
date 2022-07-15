@@ -10,6 +10,7 @@ export type FormField<T extends FormFieldNames> = {
     placeholder?: string;
     type?: HTMLInputTypeAttribute;
     options?: string[];
+    checked?: boolean;
   };
 };
 export interface IFormGroup {
