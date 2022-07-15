@@ -9,17 +9,15 @@ import { RouterProvider } from './routes';
 
 import './styles/index.global.scss';
 
-const App = () => {
-  return (
-    <Provider store={store}>
-      <CssBaseline />
-      <ThemeProvider theme={CCPTheme}>
-        <ToastContextProvider>
-          <RouterProvider />
-        </ToastContextProvider>
-      </ThemeProvider>
-    </Provider>
-  );
-};
+const App = () => (
+  <Provider store={store}>
+    <CssBaseline />
+    <ThemeProvider theme={CCPTheme}>
+      <ToastContextProvider>
+        <RouterProvider />
+      </ToastContextProvider>
+    </ThemeProvider>
+  </Provider>
+);
 
 export default App;

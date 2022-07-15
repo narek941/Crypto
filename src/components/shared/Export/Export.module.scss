@@ -1,0 +1,12 @@
+.export {
+  gap: 6px;
+  cursor: pointer;
+  justify-content: end;
+  @extend %flex-align;
+
+  span {
+    color: var(--export-text);
+    text-transform: capitalize;
+    @extend %text-16-bold;
+  }
+}

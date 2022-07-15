@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 
 import { IUsePaginationRange } from './types';
+
 export const DOTS = '...';
 
 const range = (start: number, end: number) => {

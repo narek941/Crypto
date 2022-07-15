@@ -1,25 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { SubmitHandler } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
-import Checkbox from 'components/shared/Checkbox';
-import Button from 'components/shared/Button';
-import FormGroup from 'components/shared/forms/FormGroup';
-import Input from 'components/shared/Input';
-import FormWrapper from 'components/shared/forms/FormWrapper';
-import FormErrorBox from 'components/shared/forms/FormErrorBox';
-// import { valid_email, valid_password } from 'constants/global';
-import { useAppDispatch, useForm } from 'hooks';
-import { authActions } from 'store/authSlice';
+import { useAppDispatch, useAppSelector, useForm } from 'hooks';
+import { authActions, authSelectors } from 'store/authSlice';
+import { Button, Checkbox, Input } from 'components';
+import FormWrapper from 'components/forms/FormWrapper';
+import FormGroup from 'components/forms/FormGroup';
 
 import styles from './SignInForm.module.scss';
 import { SignInFormShape } from './types';
 import { signInFormFields, signInSchemaKeys } from './fields';
 
 const SignInForm: React.FC = () => {
+  const loginError = useAppSelector(authSelectors.selectAuthError) as string;
   const dispatch = useAppDispatch();
-  const [errors] = useState<string[]>([]);
   const navigate = useNavigate();
 
   const { formMethods, handleSubmit, isValid } = useForm<keyof SignInFormShape, SignInFormShape>({
@@ -60,9 +56,10 @@ const SignInForm: React.FC = () => {
             haveRightIcon={true}
             className={styles.signIn__form__group__input}
           />
-          {!!errors.length && (
+          {/* {!!errors.length && (
             <FormErrorBox errors={errors} className={styles.signIn__form__group__error} />
-          )}
+          )} */}
+          {!!loginError && <p className={styles.signIn__form__group__error}>{loginError}</p>}
 
           <Checkbox
             text='Remember me'

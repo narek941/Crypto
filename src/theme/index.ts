@@ -1,6 +1,6 @@
-import { createTheme, Theme } from '@mui/material';
 import { red } from '@mui/material/colors';
 import { deDE } from '@mui/material/locale';
+import { createTheme, Theme } from '@mui/material';
 
 export const CCPTheme: Theme = createTheme(
   {

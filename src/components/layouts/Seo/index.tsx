@@ -1,10 +1,7 @@
-import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import Sidebar from 'components/views/Sidebar';
-import Header from 'components/views/Header';
-import Container from 'components/shared/Container';
 import { setDarkTheme, setLightTheme } from 'store/themeSlice/actions';
+import { Container, Header, Sidebar } from 'components';
 
 import { ISeoProps } from './types';
 

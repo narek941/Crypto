@@ -1,19 +1,20 @@
 export type RoutesProps = {
   path: string;
-  component: JSX.Element;
   text: string;
-  withHeader?: boolean;
-  withSidebar?: boolean;
   isBackBtn?: boolean;
+  withHeader?: boolean;
+  isProtected?: boolean;
+  component: JSX.Element;
 };
 
 export enum Routes {
-  SignIn = '/',
   Error = '*',
-  AddNewUser = '/add-new-user',
-  Dashboard = '/dashboard',
-  Accounts = '/accounts',
-  Alerts = '/alerts',
-  Users = '/users',
   Default = '#',
+  Dashboard = '/',
+  Users = '/users',
+  Login = '/login',
+  Alerts = '/alerts',
+  Accounts = '/accounts',
+  AddNewUser = '/add-new-user',
+  AccountsAnalytics = 'accounts-analytics',
 }

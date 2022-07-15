@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 
 type errorType = any | null;
 
-export type colorType = 'default' | 'primary';
+export type ColorType = 'default' | 'primary';
 
 export interface ICheckbox {
   id: string;
@@ -11,6 +11,6 @@ export interface ICheckbox {
   text: ReactNode | string | null | undefined;
   error: errorType;
   defaultChecked?: boolean;
-  color?: colorType;
+  color?: ColorType;
   [prop: string]: any;
 }

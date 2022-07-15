@@ -1,12 +1,13 @@
 import { useRef } from 'react';
 import classNames from 'classnames';
-import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
-import { RootState, Routes } from 'types';
+import { RootState } from 'types';
 import { setTheme } from 'store/themeSlice/actions';
+import { useAppDispatch } from 'hooks';
+import { authActions } from 'store/authSlice';
 
 import ToggleSwitch from '../ToggleSwitch';
 
@@ -16,12 +17,16 @@ import { PopupProps } from './types';
 const Popup = ({ open }: PopupProps) => {
   const ref = useRef(null);
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
   const isDarkMode = useSelector((state: RootState) => state.theme.isDarkMode);
   const popUpClasses = classNames(styles.popup, { [styles.popup__able]: open });
-
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const handleChange = () => {
     dispatch(setTheme());
+  };
+
+  const handleLogOut = () => {
+    dispatch(authActions.signOut(navigate));
   };
 
   return (
@@ -33,7 +38,9 @@ const Popup = ({ open }: PopupProps) => {
         <span>Dark</span>
       </div>
       <div className={styles.popup__logout}>
-        <Link to={Routes.SignIn}>Log out</Link>
+        <div role='button' onClick={handleLogOut}>
+          Log out
+        </div>
       </div>
     </div>
   );

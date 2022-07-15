@@ -11,6 +11,7 @@
       &__error {
         color: var(--danger);
         @extend %text-14;
+        letter-spacing: -0.01em;
       }
 
       &__button {

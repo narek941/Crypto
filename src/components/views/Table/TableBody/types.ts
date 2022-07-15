@@ -10,4 +10,5 @@ export interface ITableBodyProps {
   rowsPerPage: number;
   type?: TypeType;
   action?: boolean;
+  handleChartAction?: () => void;
 }

@@ -52,6 +52,12 @@ $primary_family: 'Roboto', sans-serif;
   display: flex;
   justify-content: flex-end;
 }
+%flex-align-start {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
 
 %text-ellipsis {
   overflow: hidden;
@@ -61,6 +67,10 @@ $primary_family: 'Roboto', sans-serif;
 
 %sidebar-shadow {
   backdrop-filter: blur(20px);
+  box-shadow: 0px 2px 25px rgba(0, 0, 0, 0.15);
+}
+%modal-shadow {
+  backdrop-filter: blur(10px);
   box-shadow: 0px 2px 25px rgba(0, 0, 0, 0.15);
 }
 

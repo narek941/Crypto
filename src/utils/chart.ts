@@ -15,17 +15,19 @@ export const chartData = {
       label: 'Trading Pairs Chart',
       data: [20, 18, 15, 15, 10, 10, 5, 5, 2],
       customTooltips: true,
-      backgroundColor: [
-        '#6794DC',
-        '#6771DC',
-        '#8067DC',
-        '#C767DC',
-        '#D0358F',
-        '#67B7DC',
-        '#14AB6C',
-        '#FE8463',
-        '#D7504B',
-      ],
+      backgroundColor: [],
     },
   ],
 };
+
+export const chartColor = [
+  '#6794DC',
+  '#6771DC',
+  '#8067DC',
+  '#C767DC',
+  '#D0358F',
+  '#67B7DC',
+  '#14AB6C',
+  '#FE8463',
+  '#D7504B',
+];

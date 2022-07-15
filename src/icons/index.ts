@@ -7,6 +7,7 @@ export { ReactComponent as CloseIcon } from './close.svg';
 export { ReactComponent as AvatarIcon } from './avatar.svg';
 export { ReactComponent as FilterIcon } from './filter.svg';
 export { ReactComponent as ExportIcon } from './export.svg';
+export { ReactComponent as CloseModalIcon } from './close_modal.svg';
 export { ReactComponent as SearchIcon } from './search.svg';
 export { ReactComponent as BurgerIcon } from './burger.svg';
 export { ReactComponent as SettingIcon } from './setting.svg';
