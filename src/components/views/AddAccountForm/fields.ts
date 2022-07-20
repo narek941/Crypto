@@ -2,8 +2,9 @@ import { FormField } from '../../forms/types';
 
 import { AddAccountFormShape } from './types';
 
-const pairsList = ['usdt', 'usdc', 'busd', 'tusd'];
-const alertList = ['email', 'sms', 'telegram'];
+export const currencyList = ['usdt', 'usdc', 'busd', 'tusd'];
+export const alertList = ['email', 'sms', 'telegram'];
+export const refreshIntervalList = ['3m', '5m', '7m', '9m', '15m', '30m'];
 
 export const addAccountFormFields: FormField<keyof AddAccountFormShape> = {
   name: {
@@ -50,6 +51,14 @@ export const addAccountFormFields: FormField<keyof AddAccountFormShape> = {
     id: 'addAccount.apiSecret',
     placeholder: '',
   },
+  refreshInterval: {
+    type: 'select',
+    name: 'refreshInterval',
+    label: 'Refresh Interval',
+    id: 'addAccount.refreshInterval',
+    placeholder: '',
+    options: refreshIntervalList,
+  },
   maxDrawdown: {
     type: 'text',
     name: 'maxDrawdown',
@@ -90,14 +99,14 @@ export const addAccountFormFields: FormField<keyof AddAccountFormShape> = {
     name: 'allowedFirstPairs',
     id: 'addAccount.allowedFirstPairs',
     placeholder: '',
-    options: pairsList,
+    options: currencyList,
   },
   allowedSecondPairs: {
     type: 'select',
     name: 'allowedSecondPairs',
     id: 'addAccount.allowedSecondPairs',
     placeholder: '',
-    options: pairsList,
+    options: currencyList,
   },
 
   alertKey: {

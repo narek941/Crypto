@@ -5,6 +5,7 @@ export type AddAccountFormShape = {
   exchange: string;
   apiKey: string;
   apiSecret: string;
+  refreshInterval: number;
   maxDrawdown: string;
   maxPosition: string;
   maxRisk: string;

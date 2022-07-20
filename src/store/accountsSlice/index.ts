@@ -9,7 +9,16 @@ import { AccountsSliceState } from './types';
 const internalInitialState: AccountsSliceState = {
   error: null,
   loading: AccountStates.IDLE,
+  totalCount: 0,
+  list: [],
+  filter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '' },
 };
+export type IFilterPayload =
+  | { skip: number }
+  | { take: number }
+  | { sort: string }
+  | { search: string }
+  | { order: 'DESC' | 'ASC' };
 
 const accountsSlice = createSlice({
   name: Slice.Accounts,

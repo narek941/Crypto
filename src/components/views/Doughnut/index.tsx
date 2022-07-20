@@ -33,13 +33,14 @@ const Doughnut: React.FC = () => {
           '#DC67AB',
           '#D6504D',
         ],
-        borderWidth: 2,
+        borderWidth: 0,
       },
     ],
   };
   const options: any = {
     cutout: '90%',
     responsive: false,
+    spacing: 4,
 
     plugins: {
       legend: {

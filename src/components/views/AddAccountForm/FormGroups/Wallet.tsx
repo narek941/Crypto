@@ -21,6 +21,12 @@ const AddAccountForm = ({ formMethods }: any) => {
         />
         <Input {...addAccountFormFields.apiKey} {...formMethods.register('apiKey')} />
         <Input {...addAccountFormFields.apiSecret} {...formMethods.register('apiSecret')} />
+        <Controller
+          control={formMethods.control}
+          {...formMethods.register('refreshInterval')}
+          name={addAccountFormFields.refreshInterval.name as keyof AddAccountFormShape}
+          render={({ field }) => <Select {...addAccountFormFields.refreshInterval} {...field} />}
+        />
       </>
     </FormGroup>
   );

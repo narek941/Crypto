@@ -97,6 +97,8 @@
     border: 1px solid var(--select-border);
   }
   &__open {
+    background-color: var(--select-option);
+
     border-radius: 4px 4px 0 0;
     border: 1px solid var(--select-border);
   }

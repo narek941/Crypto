@@ -8710,6 +8710,13 @@ react-use-websocket@^4.2.0:
   resolved "https://registry.yarnpkg.com/react-use-websocket/-/react-use-websocket-4.2.0.tgz#658c4e44ee5e0fc3d29a66c2a753a72754a5db87"
   integrity sha512-ZovaTlc/tWX6a590fi3kMWImhyoWj46BWJWvO5oucZJzRnVVhYtes2D9g+5MKXjSdR7Es3456hB89v4/1pcBKg==
 
+react-useportal@^1.0.17:
+  version "1.0.17"
+  resolved "https://registry.yarnpkg.com/react-useportal/-/react-useportal-1.0.17.tgz#dcea1de8aa6d1ebd4bb3bb08075180a0e620f718"
+  integrity sha512-IS1NC+qQtp8e9Z9f8EPpW5whU85VuaT9Vxzw20vAAfKoRB9dlsnFmZ8NeNkbjNaue7Iy64Qsafs73M7qvkMzoA==
+  dependencies:
+    use-ssr "^1.0.22"
+
 react@^18.3.0-next-8e35b5060-20220706:
   version "18.3.0-next-8e35b5060-20220706"
   resolved "https://registry.yarnpkg.com/react/-/react-18.3.0-next-8e35b5060-20220706.tgz#57c7c65040d17b3c26957a976bbbc6bbce3a6aee"
@@ -10150,6 +10157,11 @@ uri-js@^4.2.2:
   integrity sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==
   dependencies:
     punycode "^2.1.0"
+
+use-ssr@^1.0.22:
+  version "1.0.24"
+  resolved "https://registry.yarnpkg.com/use-ssr/-/use-ssr-1.0.24.tgz#213a3df58f5ab9268e6fe1a57ad0a9de91e514d1"
+  integrity sha512-0MFps7ezL57/3o0yl4CvrHLlp9z20n1rQZV/lSRz7if+TUoM6POU1XdOvEjIgjgKeIhTEye1U0khrIYWCTWw4g==
 
 use-sync-external-store@^1.0.0:
   version "1.2.0"

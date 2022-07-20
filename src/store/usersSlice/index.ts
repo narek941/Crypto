@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 import { Slice } from 'types';
 
@@ -17,19 +17,7 @@ const usersSlice = createSlice({
   reducers: {
     reset: () => internalInitialState,
   },
-  extraReducers: (builder) => {
-    builder.addCase(usersThunks.getUsers.pending, (state) => {
-      state.loading = UserStates.LOADING;
-    });
-    builder.addCase(usersThunks.getUsers.fulfilled, (state) => {
-      state.error = null;
-      state.loading = UserStates.IDLE;
-    });
-    builder.addCase(usersThunks.getUsers.rejected, (state, action: PayloadAction<any>) => {
-      state.loading = UserStates.IDLE;
-      state.error = action.payload.error;
-    });
-  },
+  // extraReducers: (builder) => {},
 });
 
 const { reducer, actions } = usersSlice;

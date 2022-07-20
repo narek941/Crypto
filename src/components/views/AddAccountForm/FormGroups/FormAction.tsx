@@ -2,8 +2,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
+import { Switch } from '@mui/material';
 
-import { Button, ToggleSwitch } from 'components';
+import { Button } from 'components';
 import FormGroup from 'components/forms/FormGroup';
 import { Routes } from 'types';
 
@@ -30,7 +31,7 @@ const FormAction = ({ formMethods, isValid }: any) => {
         <div className={styles.form__action}>
           <div className={styles.form__action__item}>
             <p className={firstCheckboxTextClass}>Stop-loss-order required</p>
-            <ToggleSwitch
+            <Switch
               {...addAccountFormFields.stopLossOrder}
               checked={firstCheckbox}
               {...formMethods.register('stopLossOrder')}
@@ -39,7 +40,8 @@ const FormAction = ({ formMethods, isValid }: any) => {
           </div>
           <div className={styles.form__action__item}>
             <p className={secondCheckboxTextClass}>Wrong currency alert required</p>
-            <ToggleSwitch
+            <Switch
+              className={styles.switch}
               {...addAccountFormFields.wrongCurrencyAlert}
               {...formMethods.register('wrongCurrencyAlert')}
               checked={secondCheckbox}

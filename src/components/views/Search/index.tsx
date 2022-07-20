@@ -1,19 +1,21 @@
-import * as React from 'react';
+import { useForm } from 'react-hook-form';
 
 import { SearchIcon } from 'assets/icons';
 
 import styles from './Search.module.scss';
 
-const Search = () => {
+const Search = ({ onClick }: any) => {
+  const { register, handleSubmit } = useForm() as any;
+
   return (
-    <div className={styles.search}>
+    <form className={styles.search} onSubmit={handleSubmit(onClick)}>
       <div className={styles.search__icon}>
-        <SearchIcon />
+        <SearchIcon type='submit' role='button' />
       </div>
       <div>
-        <input className={styles.search__input} placeholder='Search'></input>
+        <input {...register('search')} className={styles.search__input} placeholder='Search' />
       </div>
-    </div>
+    </form>
   );
 };
 export default Search;

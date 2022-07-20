@@ -10,16 +10,21 @@ import SelectGroup from './SelectGroup';
 
 const TradeSetting = ({ formMethods }: any) => {
   const [pairs, setPairs] = useState<{ id: string }[]>([{ id: uuidv4() }]);
-  const [destination, setDestination] = useState<{ id: string }[]>([{ id: uuidv4() }]);
+  const initialDestination = { id: uuidv4(), type: '', emailAddress: '', phoneNumber: '' };
+  const [destination, setDestination] = useState<
+    { id: string; type: string; emailAddress?: string; phoneNumber?: string }[]
+  >([initialDestination]);
 
   const addPair = () => {
     setPairs([...pairs, { id: uuidv4() }]);
   };
   const addDestination = () => {
-    setDestination([...destination, { id: uuidv4() }]);
+    setDestination([...destination, initialDestination]);
   };
 
   const removeDestination = (id: string) => {
+    // eslint-disable-next-line no-console
+    console.log(id, destination, 'id');
     const filteredPairs = destination.filter((item) => item.id !== id);
     setDestination(filteredPairs);
   };
@@ -46,6 +51,8 @@ const TradeSetting = ({ formMethods }: any) => {
       <FormGroup className={styles.form__section}>
         <>
           <div className={styles.form__header}>Trade Settings</div>
+          <p className={styles.form__section__item__subtitle}>Allowed Pairs</p>
+
           {renderPairs}
           <div role='button' onClick={addPair} className={styles.form__section__item__add_button}>
             + Add pair

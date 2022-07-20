@@ -24,8 +24,13 @@
 
       &__add_button {
         cursor: pointer;
-        color: var(--button-background-secondary);
+        color: #0097a7;
         @extend %text-14-bold;
+      }
+
+      &__subtitle {
+        color: var(--font);
+        @extend %subtitle-16;
       }
     }
   }
@@ -50,7 +55,8 @@
     &__submit {
       cursor: pointer;
       text-transform: uppercase;
-      color: var(--font);
+      color: #ffffff;
+      background-color: #0097a7;
       @extend %text-14-bold;
     }
 

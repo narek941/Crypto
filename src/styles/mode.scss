@@ -19,7 +19,7 @@
   --input-border: #0097a7;
   --link-color: #212121;
   --link-border: #0097a7;
-  --select-border: #0097a7;
+  --select-border: #3700b3;
   --select-font: #212121;
   --select-hover: rgba(88, 195, 190, 0.1);
   --header-border: #e9e9e9;
@@ -41,11 +41,11 @@
   --icon-secondary-selected: #0097a7;
   --icon-secondary: #0097a7;
   --sidebar-line: #d6d6d6;
-  --table-border: transparent;
+  --table-border: #e9e9e9;
   --table-padding: 0;
   --disable: #4c5853;
   --select-option: #faffff;
-  --select-background: #ffffff;
+  --select-background: rgba(210, 210, 210, 0.2);
   --popup-background: #ffffff;
   --popup-border: #0097a7;
   --popup-font: black;
@@ -61,6 +61,11 @@
   --chart-9: #d7504b;
   --bricks-header: #212121;
   --export-text: #b3b3b3;
+  --after-background: rgba(255, 255, 255, 0.7);
+  --add-button: #413ac7;
+  --empty-text: #080808;
+  --alert-font: #080808;
+  --cancel: #4c4b53;
 }
 
 [data-theme='dark'] {
@@ -128,4 +133,9 @@
   --chart-9: #d7504b;
   --bricks-header: #a2a2a2;
   --export-text: #4c4b53;
+  --after-background: #474646;
+  --add-button: #0097a7;
+  --empty-text: #ffffff;
+  --alert-font: #ffffff;
+  --cancel: #9a99a6;
 }

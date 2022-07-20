@@ -26,10 +26,6 @@
     background: var(--table-header);
     display: table-header-group;
 
-    &__secondary {
-      background: var(--table-header-secondary);
-    }
-
     &__ceil {
       text-align: left;
       color: var(--table-header-font);
@@ -63,15 +59,39 @@
         border-color: var(--table-border) !important;
 
         &__actions {
-          gap: 6px;
+          gap: 6px !important;
           cursor: pointer;
           color: var(--font);
-          @extend %flex-align;
+          display: flex !important;
+          align-items: center !important;
 
           &__chart,
           &__setting {
             path {
               fill: var(--icon-secondary-selected);
+            }
+          }
+          &__chart,
+          &__bin,
+          &__block,
+          &__setting {
+            position: relative;
+            &:hover {
+              span {
+                display: flex;
+              }
+            }
+            span {
+              position: absolute;
+              bottom: -30px;
+              left: 0;
+              display: none;
+              padding: 5px 8px;
+              color: var(--font);
+              border-radius: 4px;
+              width: max-content;
+              background-color: var(--after-background);
+              @extend %text-12;
             }
           }
         }

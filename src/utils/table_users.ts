@@ -55,7 +55,6 @@ export function stableSort<T>(array: T[], comparator: (a: T, b: T) => number) {
   });
   return stabilizedThis.map((el) => el[0]);
 }
-
 export const headCells: HeadCell[] = [
   {
     id: 'id',
@@ -70,21 +69,27 @@ export const headCells: HeadCell[] = [
     label: 'Name',
   },
   {
-    id: 'message',
+    id: 'email',
     numeric: true,
     disablePadding: false,
-    label: 'Message',
+    label: 'Email',
   },
   {
-    id: 'alertTime',
+    id: 'accountType',
     numeric: true,
     disablePadding: false,
-    label: 'Alert Time',
+    label: 'Account Type',
   },
   {
-    id: 'alertTigger',
+    id: 'status',
     numeric: true,
     disablePadding: false,
-    label: 'Alerts trigger',
+    label: 'Status',
+  },
+  {
+    id: 'actions',
+    numeric: true,
+    disablePadding: false,
+    label: 'Actions',
   },
 ];

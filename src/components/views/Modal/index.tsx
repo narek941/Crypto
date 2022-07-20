@@ -76,7 +76,7 @@ const Modal = ({ open, setOpen }: IModalProps): JSX.Element => {
       <div className={styles.inner}>
         <div>{renderModalList}</div>
         <div>{renderModalChartList}</div>
-        <Link className={linkClass} to={Routes.Error}>
+        <Link className={linkClass} to={Routes.AccountsAnalytics}>
           more details
         </Link>
       </div>

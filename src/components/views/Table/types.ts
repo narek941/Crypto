@@ -30,9 +30,17 @@ export interface ITableProps {
   rows: RowsType[];
   headCells: HeadCell[];
   type: TypeType;
-  action?: boolean;
+  action: 'users' | 'accounts' | 'alerts';
   linkText?: 'user' | 'account';
   linkTo?: Routes;
+  users?: boolean;
+  handleClose?: () => void;
+  skip: number;
+  take: number;
+  sort?: string;
+  order?: string;
+  search?: string;
+  totalCount: number;
 }
 export interface UserData {
   id: string;
@@ -40,6 +48,12 @@ export interface UserData {
   message: string;
   alertTigger: string;
   alertTime: string;
+  email: string;
+  accountType: string;
+  status: string;
+  action?: string;
 }
 
 export type Order = 'asc' | 'desc';
+
+export type IStatus = 'ACTIVE' | 'BLOCKED' | 'EMAIL_VERIFICATION';

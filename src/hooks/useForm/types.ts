@@ -12,6 +12,7 @@ export type FormFieldNames =
   | 'exchange'
   | 'apiKey'
   | 'apiSecret'
+  | 'refreshInterval'
   | 'maxDrawdown'
   | 'maxPosition'
   | 'maxRisk'
