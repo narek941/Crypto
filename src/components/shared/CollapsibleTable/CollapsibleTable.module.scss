@@ -1,11 +1,13 @@
 .container {
   padding: 24px;
-  margin: 24px;
+  box-shadow: 0px 2px 25px 2px rgba(0, 0, 0, 0.12) !important;
+  border-radius: 8px;
 
   &__header {
     background: var(--table-header) !important;
     display: table-header-group;
     border: 1px solid var(--table-border);
+    border-style: hidden;
 
     &__ceil {
       text-align: left;
@@ -26,6 +28,7 @@
   &__body {
     &__row {
       border-bottom: 1px solid var(--table-border);
+
       td {
         background-color: var(--sidebar-background) !important;
       }
@@ -37,7 +40,7 @@
       }
 
       &__ceil {
-        padding: 14px !important;
+        // padding: 14px !important;
         font-size: 13px !important;
         line-height: 16px !important;
         color: var(--font) !important;
@@ -50,7 +53,7 @@
 .ceil {
   color: var(--font) !important;
   @extend %text-13;
-  padding: 14px !important;
+  // padding: 14px !important;
   font-size: 13px !important;
   line-height: 16px !important;
 
@@ -63,6 +66,10 @@
   border: 1px solid var(--table-border);
   border-radius: 8px;
   overflow-y: scroll;
+  border-collapse: collapse;
+  border-style: hidden;
+  box-shadow: 0 0 0 1px var(--table-border);
+  overflow: hidden;
 }
 
 .open {
@@ -77,4 +84,26 @@
   // background-color: var(--ceil);
   // border-radius: 8px;
   // border: 1px solid var(--table-border);
+}
+
+.tabs {
+  gap: 32px;
+  font-size: 16px;
+  line-height: 20px;
+  color: var(--cancel);
+  justify-content: start;
+  padding: 16px 0 0;
+  @extend %flex-align;
+  @extend %text-16-bold;
+  margin: 10px 0;
+
+  &__selected {
+    padding-bottom: 22px;
+    border-bottom: 2px solid var(--tab-selected-border);
+  }
+
+  span {
+    padding-bottom: 24px;
+    cursor: pointer;
+  }
 }

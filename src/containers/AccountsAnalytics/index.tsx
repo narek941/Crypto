@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import moment from 'moment';
+import { isUndefined } from 'lodash';
 
 import { useAppDispatch } from 'hooks';
 import { Bricks, Chart, CollapsibleTable, Doughnut, Export } from 'components';
-import { accountsAnalyticsData, accountsAnalyticsLineChart } from 'utils/table';
+import { accountsAnalyticsLineChart } from 'utils/table';
 import { accountsActions } from 'store/accountsSlice';
 import { RootState } from 'types';
 import { accountsFilterUpdate } from 'store/accountsSlice/thunks';
@@ -16,9 +18,10 @@ const AccountsAnalytics: React.FC = () => {
   const [page, setPage] = useState(0);
   const dispatch = useAppDispatch();
   const { id } = useParams();
+  const convertedId = Number(id);
   const [orderBy, setOrderBy] = useState<KeyOfData>('id');
 
-  const { accountsFilter } = useSelector((state: RootState) => state.accounts);
+  const { accountsFilter, accountById } = useSelector((state: RootState) => state.accounts);
 
   const handleRequestSort = (event: React.MouseEvent<unknown>, property: KeyOfData) => {
     const isAsc = orderBy === property && accountsFilter.order === 'ASC';
@@ -39,10 +42,6 @@ const AccountsAnalytics: React.FC = () => {
     dispatch(accountsFilterUpdate({ take: parseInt(event.target.value), skip: 0 }));
   };
 
-  const renderBricks = accountsAnalyticsData.map(({ name, value, moreInfo }: any, index) => (
-    <Bricks key={index} header={name} value={value} moreText={moreInfo} />
-  ));
-
   const renderLineCharts = accountsAnalyticsLineChart.map((item: any, index) => (
     <Chart key={index} />
   ));
@@ -52,15 +51,55 @@ const AccountsAnalytics: React.FC = () => {
   ));
 
   useEffect(() => {
-    dispatch(accountsActions.getAccountsAnalytics({ ...accountsFilter, id: id as string }));
+    dispatch(accountsActions.getWalletOpenOrders({ ...accountsFilter, id: id as string }));
   }, [id, accountsFilter, dispatch]);
+
+  useEffect(() => {
+    dispatch(accountsActions.getAccountSummary(convertedId));
+    dispatch(accountsActions.getAccountById(convertedId));
+
+    return () => {
+      dispatch(accountsActions.removeAccountById());
+    };
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className={styles.analytics}>
       <div className={styles.analytics__export}>
         <Export />
       </div>
-      <div className={styles.analytics__bricks__wrapper}>{renderBricks}</div>
+      <div className={styles.analytics__bricks__wrapper}>
+        <Bricks header='Seed Capital' value={accountById.startCapitalInBaseCurrency} />
+        <Bricks
+          header='Performance'
+          value={
+            !isUndefined(accountById.statistics?.productivityInPercent)
+              ? `${accountById.statistics?.productivityInPercent}%`
+              : ''
+          }
+        />
+        <Bricks
+          header='Current Capital, USDT'
+          value={accountById.statistics?.startCapitalInBaseCurrency}
+          moreText={
+            !isUndefined(accountById.statistics?.refreshDate)
+              ? `Updated at ${moment(accountById.statistics?.refreshDate).format(
+                  'DD.MM.YYYY HH:MM:SS',
+                )}`
+              : ''
+          }
+        />
+        <Bricks
+          header='Current open profit'
+          value={accountById.statistics?.currentOpenProfitInBaseCurrency}
+        />
+        <Bricks
+          header='Earned capital, USDT'
+          value={accountById.statistics?.earnedCapitalInBaseCurrency}
+        />
+      </div>
       <div className={styles.analytics__chart}>{renderLineCharts}</div>
       <div className={styles.analytics__chart}>{renderDoughnutCharts}</div>
       <CollapsibleTable

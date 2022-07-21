@@ -10,10 +10,8 @@ const Bricks: FC<IBricks> = ({ className, header, value, moreText }) => {
   return (
     <div className={bricksClass}>
       <p className={styles.bricks__header}>{header}</p>
-      <p className={styles.bricks__value}>
-        {value}
-        {moreText && <span className={styles.bricks__moreText}>{moreText}</span>}
-      </p>
+      <p className={styles.bricks__value}>{value}</p>
+      {moreText && <span className={styles.bricks__moreText}>{moreText}</span>}
     </div>
   );
 };

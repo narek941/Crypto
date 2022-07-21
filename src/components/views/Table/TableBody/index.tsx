@@ -31,7 +31,11 @@ const TableBody = ({
   );
   const [delID, setID] = useState<number | null>(null);
 
-  const renderActions = (status: IStatus, id: number) => {
+  const renderActions = (status: IStatus, id: number, isLastItem: boolean) => {
+    const tooltipClasses = classNames({
+      [styles.table__body__row__ceil__actions__bin__users_last]: isLastItem,
+    });
+
     switch (action) {
       case 'accounts':
         return (
@@ -77,13 +81,14 @@ const TableBody = ({
                 action={'user'}
                 handleUnblock={handleUnblock}
                 handleBlock={handleBlock}
+                tooltipClasses={tooltipClasses}
               />
               <Link
                 to={`${Routes.EditUser}/${id}`}
                 className={styles.table__body__row__ceil__actions__setting}
               >
                 <EditIcon />
-                <span>Edit user</span>
+                <span className={tooltipClasses}>Edit user</span>
               </Link>
               {status !== 'DELETED' && handleClose && (
                 <div
@@ -94,7 +99,7 @@ const TableBody = ({
                   }}
                 >
                   <BinIcon />
-                  <span>Delete user</span>
+                  <span className={tooltipClasses}>Delete user</span>
                 </div>
               )}
             </>
@@ -111,6 +116,7 @@ const TableBody = ({
       <tbody className={styles.table__body}>
         {rows.map(({ id, email, role, status, username }: any, index) => {
           const arr = [id, username, email, role, status];
+          const isLastItem = index === rows.length - 1;
 
           return (
             <TableRow className={styles.table__body__row} tabIndex={id} key={index}>
@@ -121,7 +127,7 @@ const TableBody = ({
                   </TableCell>
                 );
               })}
-              <>{renderActions(status, id)}</>
+              <>{renderActions(status, id, isLastItem)}</>
             </TableRow>
           );
         })}

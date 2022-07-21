@@ -15,9 +15,10 @@
   font-size: 14px;
   line-height: 26px;
 }
+
 %subtitle-16 {
   font-weight: 400;
-  font-size: 16x;
+  font-size: 16px;
   line-height: 100%;
 }
 
@@ -74,12 +75,6 @@
   font-size: 14px;
   line-height: 16px;
 }
-
-%button-14 {
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 20px;
-}
 %header-text {
   font-weight: 500;
   font-size: 24px;
@@ -99,4 +94,9 @@
   font-weight: 600;
   font-size: 32px;
   line-height: 38px;
+}
+%button-14 {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
 }

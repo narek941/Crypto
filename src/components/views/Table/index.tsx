@@ -175,14 +175,14 @@ const Table = ({
             </table>
             {!totalCount && <EmptyData />}
           </div>
-          <Pagination
-            handleChangePage={handleChangePage}
-            handleChangeRowsPerPage={handleChangeRowsPerPage}
-            currentPage={page}
-            rowsPerPage={take}
-            totalCount={totalCount}
-          />
         </div>
+        <Pagination
+          handleChangePage={handleChangePage}
+          handleChangeRowsPerPage={handleChangeRowsPerPage}
+          currentPage={page}
+          rowsPerPage={take}
+          totalCount={totalCount}
+        />
       </div>
       <Modal
         open={openChart}

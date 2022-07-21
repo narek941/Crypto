@@ -6,7 +6,6 @@
 
 .inner {
   padding: var(--table-padding);
-  background-color: var(--ceil);
   border-radius: 8px;
 }
 
@@ -41,16 +40,17 @@
 
     &__row {
       background: var(--ceil);
-      border-bottom: 1px solid var(--table-border);
+
+      &:not(:last-of-type) {
+        border-bottom: 1px solid var(--table-border);
+      }
 
       &:nth-child(even) {
         background: var(--ceil-even);
       }
 
       &:last-child {
-        td {
-          border: none;
-        }
+        border: none;
       }
 
       &__ceil {
@@ -89,6 +89,7 @@
                 @extend %text-12;
               }
             }
+
             span {
               position: absolute;
               bottom: -30px;
@@ -100,6 +101,15 @@
               width: max-content;
               background-color: var(--after-background);
               @extend %text-12;
+            }
+
+            &__span_last {
+              bottom: 30px !important;
+              left: -65px !important;
+            }
+
+            &__users_last {
+              bottom: 30px !important;
             }
           }
         }

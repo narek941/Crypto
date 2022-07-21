@@ -16,7 +16,7 @@ const Modal = ({ id, open, setOpen, modalList }: IModalProps): JSX.Element => {
   const ref = useRef(null);
 
   const headerClass = classNames(styles.item, styles.item__header);
-  const linkClass = classNames(styles.item, styles.link);
+  const linkClass = classNames(styles.link, styles.item);
   const modalClass = classNames(styles.wrapper, {
     [styles.wrapper__open]: open,
   });

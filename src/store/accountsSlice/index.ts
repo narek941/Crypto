@@ -11,11 +11,12 @@ const internalInitialState: AccountsSliceState = {
   loading: AccountStates.IDLE,
   totalCount: 0,
   list: [],
-  accountsAnalytics: [],
-  accountsAnalyticsTotalCount: 0,
+  openOrders: [],
+  openOrdersTotalCount: 0,
   coins: [],
   accountsFilter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '' },
   accountById: {},
+  summary: {},
 };
 export type IFilterPayload =
   | { skip: number }
@@ -63,14 +64,20 @@ const accountsSlice = createSlice({
       state.accountById = {};
     });
     builder.addCase(
-      accountsThunks.getAccountsAnalytics.fulfilled,
+      accountsThunks.getWalletOpenOrders.fulfilled,
       (state, action: PayloadAction<any>) => {
-        state.accountsAnalytics = action.payload.list;
-        state.accountsAnalyticsTotalCount = action.payload.totalCount;
+        state.openOrders = action.payload.list;
+        state.openOrdersTotalCount = action.payload.totalCount;
       },
     );
     builder.addCase(accountsThunks.getCoins.fulfilled, (state, action) => {
       state.coins = action.payload.coins;
+    });
+    builder.addCase(accountsThunks.getAccountSummary.fulfilled, (state, action) => {
+      state.accountById = {
+        ...state.accountById,
+        statistics: action.payload.summary,
+      };
     });
   },
 });

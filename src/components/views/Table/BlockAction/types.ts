@@ -6,4 +6,5 @@ export interface IBlockAction {
   handleUnblock: (id: number) => void;
   handleBlock: (id: number) => void;
   action: 'user' | 'account';
+  tooltipClasses?: string;
 }

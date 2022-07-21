@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
@@ -12,140 +12,101 @@ import Paper from '@mui/material/Paper';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
 import classNames from 'classnames';
+import { v4 as uuid4 } from 'uuid';
 
 import { TableDropdownIcon } from 'assets/icons';
 import { EmptyData, Pagination } from 'components';
 import { RootState } from 'types';
+import { useAppDispatch } from 'hooks';
+import { accountsActions } from 'store/accountsSlice';
 
 import styles from './CollapsibleTable.module.scss';
 
-function createData(
-  ID: string,
-  Created: string,
-  Pair: string,
-  Side: string,
-  Value: string,
-  ValueUSDT: string,
-  Received: string,
-  ReceivedUSDT: string,
-  Fee: string,
-  FeeUSDT: string,
-  share: string,
-  Updated: string,
-) {
-  return {
-    ID,
-    Created,
-    Pair,
-    Side,
-    Value,
-    ValueUSDT,
-    Received,
-    ReceivedUSDT,
-    Fee,
-    FeeUSDT,
-    share,
-    Updated,
-    history: [
-      {
-        date: '2020-01-05',
-        customerId: '11091700',
-        amount: '3',
-      },
-      {
-        date: '2020-01-02',
-        customerId: 'Anonymous',
-        amount: '1',
-      },
-    ],
-  };
-}
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const rows = [
-  createData(
-    '11',
-    '22.02.2022 16:20:01',
-    'BTCUSDT',
-    'Sell',
-    '0,112 BTC',
-    '4,567',
-    '0,112 BTC',
-    '4,567',
-    '1,11 BTC',
-    '1,112',
-    '34%',
-    '22.01.2022 ..',
-  ),
-];
-
 const headArr = [
   'ID',
-  ' Created',
+  'Created',
   'Pair',
   'Side',
   'Value',
   'ValueUSDT',
-  ' Received',
-  'ReceivedUSDT',
+  'Received',
+  'Received, USDT',
   'Fee',
   'FeeUSDT',
-  'share',
+  'Share',
   'Updated',
 ];
 
 const Row = ({ row }: any) => {
-  // eslint-disable-next-line no-console
-  console.log(row, 'item?.coinsPair?.name}');
-
+  const dispatch = useAppDispatch();
   const [open, setOpen] = React.useState(false);
+  const [wallerOrder, setWallerOrder] = React.useState<any | null>();
 
+  const accounts = useSelector((state: RootState) => state.accounts);
+
+  const id = accounts.accountById?.wallets?.length && accounts.accountById.wallets[0]?.id;
   const collapseClass = classNames({ [styles.open]: open });
+
+  const handleCollapse = async (orderId: number) => {
+    if (!open) {
+      const wallerOrderTrades = await dispatch(
+        accountsActions.getWalletOrderTrades({ walletId: id, orderId }),
+      ).unwrap();
+
+      if (wallerOrderTrades.orderTrades[0]) {
+        setWallerOrder(wallerOrderTrades.orderTrades[0]);
+      }
+      setOpen(true);
+    } else {
+      setOpen(false);
+    }
+  };
+
   return (
     <React.Fragment>
       <TableRow className={styles.container__body__row}>
         <TableCell className={styles.ceil}>
-          <IconButton aria-label='expand row' size='small' onClick={() => setOpen(!open)}>
+          <IconButton aria-label='expand row' size='small' onClick={() => handleCollapse(row.id)}>
             <TableDropdownIcon />
           </IconButton>
         </TableCell>
         <>
-          <TableCell align='left' className={styles.ceil} key={row.id}>
+          <TableCell align='left' className={styles.ceil} key={uuid4()}>
             {row.id}
           </TableCell>
 
-          <TableCell align='left' className={styles.ceil} key={row.id}>
+          <TableCell align='left' className={styles.ceil} key={uuid4()}>
             {moment(row.createdAt).format('MM.DD.YY')}
           </TableCell>
 
-          <TableCell align='left' className={styles.ceil} key={row.id}>
+          <TableCell align='left' className={styles.ceil} key={uuid4()}>
             {row?.coinsPair?.name}
           </TableCell>
-          <TableCell align='left' className={styles.ceil} key={row.id}>
+          <TableCell align='left' className={styles.ceil} key={uuid4()}>
             {row.side}
           </TableCell>
-          <TableCell align='left' className={styles.ceil} key={row.id}>
-            {row.totalPrice}
+          <TableCell align='left' className={styles.ceil} key={uuid4()}>
+            {row.value}
           </TableCell>
-          <TableCell align='left' className={styles.ceil} key={row.id}>
-            {row.totalPriceInBaseCurrency}
+          <TableCell align='left' className={styles.ceil} key={uuid4()}>
+            {row.valueInBaseCurrency}
           </TableCell>
-          <TableCell align='left' className={styles.ceil} key={row.id}>
-            {'-'}
+          <TableCell align='left' className={styles.ceil} key={uuid4()}>
+            {row.tradesTotalPriceSum || 0}
           </TableCell>
-          <TableCell align='left' className={styles.ceil} key={row.id}>
-            {'-'}
+          <TableCell align='left' className={styles.ceil} key={uuid4()}>
+            {row.tradesTotalPriceInBaseCurrencySum || 0}
           </TableCell>
-          <TableCell align='left' className={styles.ceil} key={row.id}>
-            {row.fees}
+          <TableCell align='left' className={styles.ceil} key={uuid4()}>
+            {row.feesSum || 0}
           </TableCell>
-          <TableCell align='left' className={styles.ceil} key={row.id}>
-            {row.feesInBaseCurrency}
+          <TableCell align='left' className={styles.ceil} key={uuid4()}>
+            {row.feesSumInBaseCurrency || 0}
           </TableCell>
-          <TableCell align='left' className={styles.ceil} key={row.id}>
-            {'-'}
+          <TableCell align='left' className={styles.ceil} key={uuid4()}>
+            {row.relativePercentageToAccount || 0}
           </TableCell>
-          <TableCell align='left' className={styles.ceil} key={row.id}>
+          <TableCell align='left' className={styles.ceil} key={uuid4()}>
             {moment(row.updatedAt).format('MM.DD.YY')}
           </TableCell>
         </>
@@ -156,29 +117,35 @@ const Row = ({ row }: any) => {
             <Box sx={{ margin: 1 }}>
               <Table size='small' aria-label='purchases' className={collapseClass}>
                 <TableBody className={styles.container__body}>
-                  <TableRow className={styles.container__body__row}>
-                    <TableCell className={styles.container__body__row__ceil} align='left'>
-                      22.02.2022 19:20:01
-                    </TableCell>
-                    <TableCell className={styles.container__body__row__ceil} align='left'>
-                      0,412 USDT
-                    </TableCell>
-                    <TableCell className={styles.container__body__row__ceil} align='left'>
-                      0,112 BTC
-                    </TableCell>
-                    <TableCell className={styles.container__body__row__ceil} align='left'>
-                      22,11 USDT
-                    </TableCell>
-                    <TableCell className={styles.container__body__row__ceil} align='left'>
-                      1,112 BTC
-                    </TableCell>
-                    <TableCell className={styles.container__body__row__ceil} align='left'>
-                      4,567 USDT
-                    </TableCell>
-                    <TableCell className={styles.container__body__row__ceil} align='left'>
-                      11,1 USDT
-                    </TableCell>
-                  </TableRow>
+                  {wallerOrder ? (
+                    <>
+                      <TableRow className={styles.container__body__row}>
+                        <TableCell className={styles.container__body__row__ceil} align='left'>
+                          {moment(wallerOrder?.createdAt).format('MM.DD.YY')}
+                        </TableCell>
+                        <TableCell className={styles.container__body__row__ceil} align='left'>
+                          {wallerOrder.price}
+                        </TableCell>
+                        <TableCell className={styles.container__body__row__ceil} align='left'>
+                          {wallerOrder.totalPrice} BTC
+                        </TableCell>
+                        <TableCell className={styles.container__body__row__ceil} align='left'>
+                          {wallerOrder.totalPriceInBaseCurrency} USDT
+                        </TableCell>
+                        <TableCell className={styles.container__body__row__ceil} align='left'>
+                          {wallerOrder.amount} BTC
+                        </TableCell>
+                        <TableCell className={styles.container__body__row__ceil} align='left'>
+                          {wallerOrder.fees} USDT
+                        </TableCell>
+                        <TableCell className={styles.container__body__row__ceil} align='left'>
+                          {wallerOrder.feesInBaseCurrency} USDT
+                        </TableCell>
+                      </TableRow>
+                    </>
+                  ) : (
+                    <EmptyData />
+                  )}
                 </TableBody>
               </Table>
             </Box>
@@ -190,12 +157,20 @@ const Row = ({ row }: any) => {
 };
 
 const CollapsibleTable = ({ handleChangePage, handleChangeRowsPerPage, page }: any) => {
-  const { accountsFilter, accountsAnalytics, accountsAnalyticsTotalCount } = useSelector(
+  const { accountsFilter, openOrders, openOrdersTotalCount } = useSelector(
     (state: RootState) => state.accounts,
   );
 
   return (
     <TableContainer component={Paper} className={styles.container}>
+      <div className={styles.tabs}>
+        <span className={styles.tabs__selected}>Open orders</span>
+        <span>Wallet</span>
+        <span>Inflows & Outflows</span>
+        <span>Orders History</span>
+        <span>Trades</span>
+        <span>Alerts</span>
+      </div>
       <div className={styles.wrapper}>
         <Table aria-label='collapsible table' className={styles.inner}>
           <TableHead className={styles.container__header}>
@@ -209,18 +184,18 @@ const CollapsibleTable = ({ handleChangePage, handleChangeRowsPerPage, page }: a
             </TableRow>
           </TableHead>
           <TableBody>
-            {accountsAnalytics.map((row) => (
+            {openOrders.map((row) => (
               <Row row={row} key={row.id} />
             ))}
           </TableBody>
         </Table>
-        {!accountsAnalyticsTotalCount && <EmptyData />}
+        {!openOrdersTotalCount && <EmptyData />}
         <Pagination
           handleChangePage={handleChangePage}
           handleChangeRowsPerPage={handleChangeRowsPerPage}
           currentPage={page}
           rowsPerPage={accountsFilter?.take}
-          totalCount={accountsAnalyticsTotalCount}
+          totalCount={openOrdersTotalCount}
         />
       </div>
     </TableContainer>

@@ -1,6 +1,6 @@
 export const isServer = typeof window === 'undefined';
 
-export const parseAddAccount = (body: any) => ({
+export const parseAddAccount = (body: any): any => ({
   status: 'ACTIVE',
   name: body.name,
   startCapitalInBaseCurrency: body.startCapital,

@@ -9,9 +9,10 @@ export type AccountsSliceState = {
   error?: SerializedError | null;
   totalCount: number;
   list: any[];
-  accountsAnalytics: any[];
-  accountsAnalyticsTotalCount: number;
+  openOrders: any[];
+  openOrdersTotalCount: number;
   accountsFilter: IFilter;
   accountById: any;
   coins: any[];
+  summary: any;
 };

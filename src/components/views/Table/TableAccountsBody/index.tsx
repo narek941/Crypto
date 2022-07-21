@@ -37,7 +37,12 @@ const TableAccountBody = ({
     id: number,
     statistics: any,
     startCapitalInBaseCurrency: any,
+    isLastItem: boolean,
   ) => {
+    const tooltipClasses = classNames({
+      [styles.table__body__row__ceil__actions__bin__span_last]: isLastItem,
+    });
+
     switch (action) {
       case 'accounts':
         return (
@@ -54,7 +59,7 @@ const TableAccountBody = ({
                       })
                     }
                   />
-                  <span>Account analytics</span>
+                  <span className={tooltipClasses}>Account analytics</span>
                 </div>
               )}
               <Link
@@ -62,7 +67,7 @@ const TableAccountBody = ({
                 to={`${Routes.EditAccount}/${id}`}
               >
                 <SettingIcon />
-                <span>Account settings</span>
+                <span className={tooltipClasses}>Account settings</span>
               </Link>
               <BlockAction
                 status={status}
@@ -70,6 +75,7 @@ const TableAccountBody = ({
                 action='account'
                 handleUnblock={handleUnblock}
                 handleBlock={handleBlock}
+                tooltipClasses={tooltipClasses}
               />
 
               {status !== 'DELETED' && handleClose && (
@@ -81,7 +87,7 @@ const TableAccountBody = ({
                   }}
                 >
                   <BinIcon />
-                  <span>Delete account</span>
+                  <span className={tooltipClasses}>Delete account</span>
                 </div>
               )}
             </>
@@ -97,6 +103,7 @@ const TableAccountBody = ({
                 action='user'
                 handleUnblock={handleUnblock}
                 handleBlock={handleBlock}
+                tooltipClasses={tooltipClasses}
               />
               <Link
                 to={Routes.AddNewUser}
@@ -104,7 +111,7 @@ const TableAccountBody = ({
                 className={styles.table__body__row__ceil__actions__setting}
               >
                 <EditIcon />
-                <span>Account settings</span>
+                <span className={tooltipClasses}>Account settings</span>
               </Link>
               {status !== 'DELETED' && handleClose && (
                 <div
@@ -115,7 +122,7 @@ const TableAccountBody = ({
                   }}
                 >
                   <BinIcon />
-                  <span>Delete account</span>
+                  <span className={tooltipClasses}>Delete account</span>
                 </div>
               )}
             </>
@@ -133,6 +140,7 @@ const TableAccountBody = ({
         {rows.map(
           ({ id, startCapitalInBaseCurrency, name, createdAt, status, statistics }: any, index) => {
             const formattedDate = moment(createdAt).format('MM.DD.YY');
+            const isLastItem = index === rows.length - 1;
 
             return (
               <TableRow className={styles.table__body__row} tabIndex={id} key={index}>
@@ -169,7 +177,7 @@ const TableAccountBody = ({
                 <TableCell className={styles.table__body__row__ceil} align='left'>
                   {status}
                 </TableCell>
-                {renderActions(status, id, statistics, startCapitalInBaseCurrency)}
+                {renderActions(status, id, statistics, startCapitalInBaseCurrency, isLastItem)}
               </TableRow>
             );
           },

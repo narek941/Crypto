@@ -11,4 +11,5 @@ export enum Slice {
   Theme = 'theme',
   Alerts = 'alerts',
   Accounts = 'accounts',
+  Wallets = 'wallets',
 }
