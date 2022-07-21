@@ -53,9 +53,9 @@ export const blockUser = createAsyncThunk(
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      const { filter } = thunkAPI.getState().admin;
+      const { usersFilter } = thunkAPI.getState().admin;
 
-      await thunkAPI.dispatch(getUsersList(filter)).unwrap();
+      await thunkAPI.dispatch(getUsersList(usersFilter)).unwrap();
 
       return response;
     } catch {
@@ -72,9 +72,9 @@ export const unblockUser = createAsyncThunk(
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      const { filter } = thunkAPI.getState().admin;
+      const { usersFilter } = thunkAPI.getState().admin;
 
-      await thunkAPI.dispatch(getUsersList(filter)).unwrap();
+      await thunkAPI.dispatch(getUsersList(usersFilter)).unwrap();
 
       return {
         list: response.data.list,
@@ -177,9 +177,9 @@ export const deleteAccount = createAsyncThunk(
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      const { filter } = thunkAPI.getState().admin;
+      const { accountsFilter } = thunkAPI.getState().admin;
 
-      await thunkAPI.dispatch(accountsActions.getAccountList(filter)).unwrap();
+      await thunkAPI.dispatch(accountsActions.getAccountList(accountsFilter)).unwrap();
 
       return response;
     } catch {
@@ -189,16 +189,16 @@ export const deleteAccount = createAsyncThunk(
 );
 
 export const blockAccount = createAsyncThunk(
-  `${Slice.Admin}/users/block`,
+  `${Slice.Admin}/accounts/block`,
   async (userID: number, thunkAPI) => {
     try {
       const response = await client.put(`/admin/accounts/${userID}/block`);
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      const { filter } = thunkAPI.getState().admin;
+      const { accountsFilter } = thunkAPI.getState().admin;
 
-      await thunkAPI.dispatch(accountsActions.getAccountList(filter)).unwrap();
+      await thunkAPI.dispatch(accountsActions.getAccountList(accountsFilter)).unwrap();
 
       return response;
     } catch {
@@ -215,9 +215,9 @@ export const unblockAccount = createAsyncThunk(
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      const { filter } = thunkAPI.getState().admin;
+      const { accountsFilter } = thunkAPI.getState().admin;
 
-      await thunkAPI.dispatch(accountsActions.getAccountList(filter)).unwrap();
+      await thunkAPI.dispatch(accountsActions.getAccountList(accountsFilter)).unwrap();
 
       return {
         list: response.data.list,
