@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { BurgerIcon, LogoIcon } from 'assets/icons';
 import useOnClickOutside from 'hooks/useOutsideClick';
 import { navList } from 'utils/sidebar';
+import { Routes } from 'types';
 
 import styles from './Sidebar.module.scss';
 
@@ -35,15 +36,24 @@ const Sidebar: React.FC = () => {
     <Link
       key={id}
       className={classNames(styles.list, {
-        [styles.list__wrapper]: linkTo === location.pathname && open,
+        [styles.list__wrapper]:
+          linkTo === Routes.Dashboard
+            ? location.pathname === linkTo
+            : location.pathname.includes(linkTo) && open,
       })}
       to={linkTo}
     >
       <div
         className={classNames(styles.list, {
           [styles.list__open]: open,
-          [styles.list__selected]: linkTo === location.pathname,
-          [styles.list__selected__open]: linkTo === location.pathname && open,
+          [styles.list__selected]:
+            linkTo === Routes.Dashboard
+              ? location.pathname === linkTo
+              : location.pathname.includes(linkTo),
+          [styles.list__selected__open]:
+            linkTo === Routes.Dashboard
+              ? location.pathname === linkTo && open
+              : location.pathname.includes(linkTo) && open,
         })}
       >
         <div className={listIconClasses}>

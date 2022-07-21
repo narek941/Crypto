@@ -1,6 +1,5 @@
 import 'react-toastify/dist/ReactToastify.css';
 import { v4 as uuidv4 } from 'uuid';
-import { useState } from 'react';
 import { useFieldArray } from 'react-hook-form';
 
 import FormGroup from 'components/forms/FormGroup';
@@ -19,12 +18,18 @@ const TradeSetting = ({ formMethods }: any) => {
     },
   };
   const initialDestination = { id: uuidv4(), type: '', emailAddress: '', phoneNumber: '' };
-  const [destination, setDestination] = useState<
-    { id: string; type: string; emailAddress?: string; phoneNumber?: string }[]
-  >([initialDestination]);
+
   const { fields, append, remove } = useFieldArray({
     control: formMethods.control,
     name: 'allowedPairs',
+  });
+  const {
+    fields: alertsDestinationsFields,
+    append: appendAlertsDestinations,
+    remove: removeAlertsDestinations,
+  } = useFieldArray({
+    control: formMethods.control,
+    name: 'alertsDestinations',
   });
 
   const addPair = () => {
@@ -32,20 +37,17 @@ const TradeSetting = ({ formMethods }: any) => {
   };
 
   const addDestination = () => {
-    setDestination([...destination, initialDestination]);
+    appendAlertsDestinations(initialDestination);
   };
 
-  const removeDestination = (id: string) => {
-    const filteredPairs = destination.filter((item) => item.id !== id);
-
-    setDestination(filteredPairs);
-  };
-
-  const renderAlerts = destination.map(({ id }) => (
+  const renderAlerts = alertsDestinationsFields.map(({ id }, index) => (
     <SelectGroup
       key={id}
       id={id}
-      removePair={removeDestination}
+      index={index}
+      leftInputName='type'
+      rightInputName='emailAddress'
+      removePair={() => removeAlertsDestinations(index)}
       secondInput='input'
       formMethods={formMethods}
     />

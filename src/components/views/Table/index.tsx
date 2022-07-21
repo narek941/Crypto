@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import moment from 'moment';
 
 import { useAppDispatch } from 'hooks';
 import { usersFilterUpdate } from 'store/adminSlice/thunks';
@@ -34,6 +35,15 @@ const Table = ({
   const [openChart, setOpenChart] = useState(false);
   const dispatch = useAppDispatch();
   const [orderBy, setOrderBy] = useState<KeyOfData>('id');
+  const [selectedAccountData, setSelectedAccountData] = useState<{
+    id: number | null;
+    statistics: any | null;
+    startCapitalInBaseCurrency: any | null;
+  }>({
+    id: null,
+    statistics: null,
+    startCapitalInBaseCurrency: null,
+  });
 
   const handleRequestSort = (event: React.MouseEvent<unknown>, property: KeyOfData) => {
     const isAsc = orderBy === property && order === 'ASC';
@@ -64,9 +74,8 @@ const Table = ({
     }
   };
 
-  const handleChartAction = (id: number) => {
-    // eslint-disable-next-line no-console
-    console.log(id);
+  const handleChartAction = (accountData: any) => {
+    setSelectedAccountData(accountData);
     setOpenChart(true);
   };
 
@@ -89,7 +98,9 @@ const Table = ({
         }),
       );
     } else {
-      dispatch(accountsFilterUpdate({ search: { name: value.search } }));
+      dispatch(
+        accountsFilterUpdate({ search: { id: Number(value.search) || -1, name: value.search } }),
+      );
     }
   };
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -173,7 +184,41 @@ const Table = ({
           />
         </div>
       </div>
-      <Modal open={openChart} setOpen={setOpenChart} />
+      <Modal
+        open={openChart}
+        id={selectedAccountData.id}
+        setOpen={setOpenChart}
+        modalList={[
+          {
+            id: 1,
+            key: 'Seed Capital',
+            value: selectedAccountData.startCapitalInBaseCurrency,
+          },
+          {
+            id: 2,
+            key: 'Current open profit, USDT',
+            value: selectedAccountData.statistics?.currentOpenProfitInBaseCurrency,
+          },
+          {
+            id: 3,
+            key: 'Earned capital, USDT',
+            value: selectedAccountData.statistics?.earnedCapitalInBaseCurrency,
+          },
+          {
+            id: 4,
+            key: 'Performance',
+            value: `${selectedAccountData.statistics?.productivityInPercent}%`,
+          },
+          {
+            id: 5,
+            key: 'Current Capital, USDT',
+            value: selectedAccountData.statistics?.startCapitalInBaseCurrency,
+            info: `Updated at ${moment(selectedAccountData.statistics?.refreshDate).format(
+              'DD.MM.YYYY HH:MM:SS',
+            )}`,
+          },
+        ]}
+      />
     </>
   );
 };

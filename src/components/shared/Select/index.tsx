@@ -1,4 +1,4 @@
-import { ForwardedRef, forwardRef, useState, useRef, useEffect } from 'react';
+import { ForwardedRef, forwardRef, useState, useRef } from 'react';
 import classNames from 'classnames';
 
 import { DropDownIcon } from 'assets/icons';
@@ -48,15 +48,12 @@ const Select = forwardRef(
 
     const headerClassName: string = classNames(styles.header, {
       [styles.header__open]: isOpen,
+      [styles.select__placeholder]: !currentOption?.label,
     });
 
     const selectClassName: string = getSelectClassName(color);
 
     const selectClass: string = classNames(selectClassName);
-
-    useEffect(() => {
-      onChange(options[0]);
-    }, []);
 
     const toggleDrop = () => {
       setIsOpen(!isOpen);
@@ -92,17 +89,24 @@ const Select = forwardRef(
             <DropDownIcon role='button' className={dropClassName} />
           </div>
           <div className={optionClassName}>
-            {options.map((item, index) => (
-              <div
-                key={index}
-                className={classNames(styles.select__option__item, {
-                  [styles.select__option__item__selected]: item === value,
-                })}
-                onClick={() => handleSelect(item.value)}
-              >
-                {item.label}
-              </div>
-            ))}
+            <div
+              style={{
+                maxHeight: 211,
+                overflowY: 'scroll',
+              }}
+            >
+              {options.map((item, index) => (
+                <div
+                  key={index}
+                  className={classNames(styles.select__option__item, {
+                    [styles.select__option__item__selected]: item === value,
+                  })}
+                  onClick={() => handleSelect(item.value)}
+                >
+                  {item.label}
+                </div>
+              ))}
+            </div>
             <div className={styles.select__option__action}>
               <div className={styles.select__option__action__cancel} onClick={handleCancel}>
                 cancel

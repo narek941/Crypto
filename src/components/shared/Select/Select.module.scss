@@ -32,6 +32,10 @@
     }
   }
 
+  &__placeholder {
+    color: var(--placeholder-select) !important;
+  }
+
   &__option {
     gap: 3px;
     color: var(--select-font);

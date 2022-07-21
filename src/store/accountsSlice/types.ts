@@ -11,4 +11,5 @@ export type AccountsSliceState = {
   list: any[];
   accountsFilter: IFilter;
   accountById: any;
+  coins: any[];
 };

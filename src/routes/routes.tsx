@@ -33,7 +33,21 @@ const routes: RoutesProps[] = [
     isBackBtn: true,
   },
   {
+    path: `${Routes.Accounts}/analytics/:id`,
+    text: 'Account analytics',
+    isProtected: true,
+    isBackBtn: true,
+    component: <AccountsAnalytics />,
+  },
+  {
     path: Routes.AddNewAccount,
+    text: 'Account settings',
+    isProtected: true,
+    component: <AddNewAccount />,
+    isBackBtn: true,
+  },
+  {
+    path: `${Routes.EditAccount}/:id`,
     text: 'Account settings',
     isProtected: true,
     component: <AddNewAccount />,
@@ -62,12 +76,6 @@ const routes: RoutesProps[] = [
     text: 'Accounts',
     isProtected: true,
     component: <Accounts />,
-  },
-  {
-    path: Routes.AccountsAnalytics,
-    text: 'Accounts settings',
-    isProtected: true,
-    component: <AccountsAnalytics />,
   },
   {
     path: Routes.Error,

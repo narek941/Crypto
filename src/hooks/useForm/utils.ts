@@ -32,8 +32,7 @@ export const composeFormSchema = <K extends FormFieldNames>(fields: K[]): AnyObj
     allowedPairs: Yup.array(),
     stopLossOrder: Yup.bool(),
     wrongCurrencyAlert: Yup.bool(),
-    alertValue: Yup.string(),
-    alertKey: Yup.string(),
+    alertsDestinations: Yup.array(),
   };
 
   const schema = fields.reduce(
