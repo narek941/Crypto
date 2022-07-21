@@ -37,6 +37,25 @@ export const getAccountById = createAsyncThunk(
   },
 );
 
+export const getAccountsAnalytics = createAsyncThunk(
+  `${Slice.Accounts}/accounts-analytics`,
+  async (
+    credentials: { skip: number; take: number; sort: string; order: string; search: string },
+    thunkAPI,
+  ) => {
+    try {
+      const response = await client.get('/accounts/1/trades-list', { params: { ...credentials } });
+
+      return {
+        list: response.data.list,
+        totalCount: response.data.totalCount,
+      };
+    } catch {
+      return thunkAPI.rejectWithValue({ error: '* Incorrect' });
+    }
+  },
+);
+
 export const accountsFilterUpdate = createAction<Partial<IFilter>>('accountsFilter');
 
 export const removeAccountById = createAction('removeAccountByID');
