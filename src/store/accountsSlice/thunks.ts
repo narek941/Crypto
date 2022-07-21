@@ -41,11 +41,22 @@ export const getAccountById = createAsyncThunk(
 export const getAccountsAnalytics = createAsyncThunk(
   `${Slice.Accounts}/accounts-analytics`,
   async (
-    credentials: { skip: number; take: number; sort: string; order: string; search: string },
+    credentials: {
+      skip: number;
+      take: number;
+      sort: string;
+      order: string;
+      search: string;
+      id: string;
+    },
     thunkAPI,
   ) => {
+    const { id, ...restCredentials } = credentials;
+
     try {
-      const response = await client.get('/accounts/1/trades-list', { params: { ...credentials } });
+      const response = await client.get(`/accounts/${id}/trades-list`, {
+        params: { ...restCredentials },
+      });
 
       return {
         list: response.data.list,

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 import { useAppDispatch } from 'hooks';
 import { Bricks, Chart, CollapsibleTable, Doughnut, Export } from 'components';
@@ -14,6 +15,7 @@ import styles from './AccountsAnalytics.module.scss';
 const AccountsAnalytics: React.FC = () => {
   const [page, setPage] = useState(0);
   const dispatch = useAppDispatch();
+  const { id } = useParams();
   const [orderBy, setOrderBy] = useState<KeyOfData>('id');
 
   const { accountsFilter } = useSelector((state: RootState) => state.accounts);
@@ -50,8 +52,8 @@ const AccountsAnalytics: React.FC = () => {
   ));
 
   useEffect(() => {
-    dispatch(accountsActions.getAccountsAnalytics(accountsFilter));
-  }, [accountsFilter, dispatch]);
+    dispatch(accountsActions.getAccountsAnalytics({ ...accountsFilter, id: id as string }));
+  }, [id, accountsFilter, dispatch]);
 
   return (
     <div className={styles.analytics}>
