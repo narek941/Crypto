@@ -7,8 +7,14 @@ export interface ITableBodyProps {
   orderBy?: string;
   rows: RowsType[];
   page: number;
+  open: boolean;
   rowsPerPage: number;
   type?: TypeType;
-  action?: boolean;
-  handleChartAction?: () => void;
+  action: 'users' | 'accounts' | 'alerts';
+  handleChartAction?: (id: number) => void;
+  handleClose?: () => void;
+  toggleAlertOpen?: () => void;
+  handleBlock: (id: number) => void;
+  handleUnblock: (id: number) => void;
+  handleDelete: (id: number) => Promise<void>;
 }

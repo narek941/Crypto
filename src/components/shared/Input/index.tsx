@@ -1,8 +1,8 @@
 import React, { forwardRef, useMemo, useState, useCallback } from 'react';
 import classNames from 'classnames';
 
-import { EyeOpenIcon } from 'icons';
-import { EyeCloseIcon } from 'icons';
+import { EyeOpenIcon } from 'assets/icons';
+import { EyeCloseIcon } from 'assets/icons';
 
 import Typography from '../Typography';
 
@@ -23,6 +23,7 @@ const Input = forwardRef<any, IInputProps>(
       innerClassName = '',
       haveRightIcon = false,
       label,
+      isSmall,
       ...rest
     },
     ref,
@@ -32,6 +33,7 @@ const Input = forwardRef<any, IInputProps>(
       [styles.container__error]: !!error,
       [styles.container__isLabel]: label,
       [styles.container_with_icon]: !!RightIcon,
+      [styles.container__small]: isSmall,
     });
 
     const inputInnerClasses = classNames(styles.container__inner, {
@@ -85,12 +87,12 @@ const Input = forwardRef<any, IInputProps>(
               />
             )}
           </div>
+          {error && (
+            <Typography type='Small' className={styles.container__error__text}>
+              {error}
+            </Typography>
+          )}
         </div>
-        {error && (
-          <Typography type='Small' className={styles.container__error__text}>
-            {error}
-          </Typography>
-        )}
       </>
     );
   },

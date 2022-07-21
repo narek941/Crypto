@@ -1,29 +1,37 @@
 import { SubmitHandler } from 'react-hook-form';
-import { v4 as uuidv4 } from 'uuid';
+import { useLocation } from 'react-router-dom';
 
-import AddForm from 'components/views/AddForm';
-import { AddFormShape } from 'components/views/AddForm/types';
 import { useAppDispatch } from 'hooks';
-import { authActions } from 'store/authSlice';
+import { AddAccountForm } from 'components';
+import { AddAccountFormShape } from 'components/views/AddAccountForm/types';
+import { adminActions } from 'store/adminSlice';
+import { parseAddAccount } from 'utils/common';
+import { accountsActions } from 'store/accountsSlice';
 
-import styles from './AddNewUser.module.scss';
+import styles from './AddNewAccount.module.scss';
 
 const AddNewAccount: React.FC = () => {
   const dispatch = useAppDispatch();
 
-  const handleSubmit: SubmitHandler<AddFormShape> = async (values) => {
-    // eslint-disable-next-line no-console
-    console.log(values, 'values');
-    const body = {
-      ...values,
-      deviceToken: uuidv4(),
-    } as any;
+  const { state }: any = useLocation();
+  const { id } = state || {};
 
-    dispatch(authActions.addNewUser(body));
+  const handleSubmit: SubmitHandler<AddAccountFormShape> = async (values) => {
+    // eslint-disable-next-line no-console
+    console.log(values);
+    // eslint-disable-next-line no-console
+    const body = parseAddAccount(values);
+    dispatch(adminActions.addNewAccount(body));
   };
+
+  if (id) {
+    dispatch(accountsActions.getAccountById(id));
+    // eslint-disable-next-line no-console
+  }
+
   return (
     <div className={styles.container}>
-      <AddForm onclick={handleSubmit} />
+      <AddAccountForm onclick={handleSubmit} isEditable={id && true} />
     </div>
   );
 };

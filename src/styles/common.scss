@@ -19,7 +19,9 @@
   padding-top: 0 !important;
   padding-bottom: 0 !important;
 }
-
+.MuiTableCell-root {
+  border: none !important;
+}
 .MuiTablePagination-menuItem {
   color: var(--font) !important;
 }
@@ -37,4 +39,45 @@
 
 .MuiTablePagination-selectIcon {
   fill: var(--font) !important;
+}
+
+.MuiSwitch-track {
+  background-color: linear-gradient(0deg, rgba(0, 151, 167, 0.1), rgba(0, 151, 167, 0.1)), #ffffff !important;
+}
+
+.Mui-checked + .MuiSwitch-track {
+  background-color: #0097a7 !important;
+}
+
+.MuiSwitch-switchBase {
+  padding: 9px 0 !important;
+
+  &:hover {
+    background-color: transparent !important;
+  }
+}
+
+.MuiSwitch-switchBase:hover {
+  background-color: none !important;
+}
+
+.MuiSwitch-root {
+  padding: 12px 0 !important;
+  width: 51px !important;
+}
+
+.MuiSwitch-thumb {
+  background-color: #c4c4c4;
+}
+
+.MuiSwitch-switchBase.Mui-checked {
+  transform: translateX(31px) !important;
+}
+
+.Mui-checked {
+  color: #c4c4c4 !important;
+
+  &:hover {
+    background-color: transparent !important;
+  }
 }

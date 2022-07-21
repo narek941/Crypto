@@ -12,7 +12,7 @@ const Typography: React.FC<ITypographyProps & React.HTMLAttributes<HTMLOrSVGElem
   align = 'left',
   type = 'Regular',
   variant = 'Text',
-  color = 'white',
+  color,
   ...rest
 }) => {
   const alignKey = FontStyles[`text_${align}` as keyof typeof FontStyles];

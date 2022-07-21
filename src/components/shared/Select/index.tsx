@@ -1,7 +1,7 @@
-import { ForwardedRef, forwardRef, useState, useRef } from 'react';
+import { ForwardedRef, forwardRef, useState, useRef, useEffect } from 'react';
 import classNames from 'classnames';
 
-import { DropDownIcon } from 'icons';
+import { DropDownIcon } from 'assets/icons';
 import useOnClickOutside from 'hooks/useOutsideClick';
 
 import styles from './Select.module.scss';
@@ -17,7 +17,7 @@ const Select = forwardRef(
       className,
       color = 'default',
       placeholder,
-      data = ['administrator', 'analyst', 'viewer'],
+      options,
       onChange,
       onBlur,
       value,
@@ -25,6 +25,11 @@ const Select = forwardRef(
     }: ISelect,
     ref: ForwardedRef<HTMLInputElement>,
   ): JSX.Element => {
+    const selectRef = useRef(null);
+    const [isOpen, setIsOpen] = useState(false);
+
+    const currentOption = options.find((option) => option.value === value);
+
     const getSelectClassName = (color: ColorType): string => {
       const selectClass: string = classNames(styles['select-wrapper'], className, {
         [styles['select-primary']]: color === 'primary',
@@ -32,10 +37,6 @@ const Select = forwardRef(
       });
       return selectClass;
     };
-
-    const selectRef = useRef(null);
-
-    const [isOpen, setIsOpen] = useState(false);
 
     const dropClassName: string = classNames(styles.select__dropdown, {
       [styles.select__dropdown__open]: isOpen,
@@ -53,6 +54,10 @@ const Select = forwardRef(
 
     const selectClass: string = classNames(selectClassName);
 
+    useEffect(() => {
+      onChange(options[0]);
+    }, []);
+
     const toggleDrop = () => {
       setIsOpen(!isOpen);
     };
@@ -64,16 +69,17 @@ const Select = forwardRef(
       }
     };
 
+    useOnClickOutside(selectRef, handleClickOutside);
+
     const handleCancel = () => {
       onChange('');
       setIsOpen(false);
       onBlur();
     };
+
     const handleSelect = (selectedItem: string) => {
       onChange(selectedItem);
     };
-
-    useOnClickOutside(selectRef, handleClickOutside);
 
     return (
       <div className={selectClass} ref={ref}>
@@ -82,19 +88,19 @@ const Select = forwardRef(
         </label>
         <div ref={selectRef} className={styles.wrapper} id={id} {...props}>
           <div onClick={toggleDrop} className={headerClassName}>
-            {value || placeholder}
+            {currentOption?.label || placeholder}
             <DropDownIcon role='button' className={dropClassName} />
           </div>
           <div className={optionClassName}>
-            {data.map((item, index) => (
+            {options.map((item, index) => (
               <div
                 key={index}
                 className={classNames(styles.select__option__item, {
                   [styles.select__option__item__selected]: item === value,
                 })}
-                onClick={() => handleSelect(item)}
+                onClick={() => handleSelect(item.value)}
               >
-                {item}
+                {item.label}
               </div>
             ))}
             <div className={styles.select__option__action}>

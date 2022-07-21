@@ -1,7 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Fragment } from 'react';
 
-import { Seo, ProtectedRoute } from 'components';
+import { Seo, ProtectedRoute, PublicRoute } from 'components';
 
 import { RoutesProps } from '../types';
 
@@ -10,7 +9,7 @@ import routes from './routes';
 const RouterProvider = () => {
   const renderRoutes = routes.map(
     ({ path, component, text, isProtected, withHeader, isBackBtn }: RoutesProps) => {
-      const RouteWrapper = isProtected ? ProtectedRoute : Fragment;
+      const RouteWrapper = isProtected ? ProtectedRoute : PublicRoute;
 
       return (
         <Route

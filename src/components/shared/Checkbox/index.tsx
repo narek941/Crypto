@@ -1,7 +1,7 @@
 import React, { ForwardedRef, forwardRef } from 'react';
 import classNames from 'classnames';
 
-import { CheckIcon } from 'icons';
+import { CheckIcon } from 'assets/icons';
 
 import styles from './Checkbox.module.scss';
 import { ICheckbox } from './types';

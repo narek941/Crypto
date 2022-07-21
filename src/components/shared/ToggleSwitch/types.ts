@@ -1,4 +1,4 @@
 export interface IToggleSwitchProps {
   checked: boolean;
-  onChange: () => void;
+  onChange?: () => void;
 }

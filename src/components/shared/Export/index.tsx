@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import classNames from 'classnames';
 
-import { ExportIcon } from 'icons';
+import { ExportIcon } from 'assets/icons';
 
 import { IExport } from './types';
 import styles from './Export.module.scss';

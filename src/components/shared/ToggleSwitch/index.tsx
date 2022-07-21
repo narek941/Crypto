@@ -3,7 +3,7 @@ import React from 'react';
 import { IToggleSwitchProps } from './types';
 import styles from './ToggleSwitch.module.scss';
 
-const ToggleSwitch = ({ checked, onChange }: IToggleSwitchProps) => {
+const ToggleSwitch = ({ checked = false, onChange }: IToggleSwitchProps) => {
   return (
     <label className={styles.toggle__switch}>
       <input type='checkbox' checked={checked} onChange={onChange} />

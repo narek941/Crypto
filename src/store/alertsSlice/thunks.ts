@@ -1,13 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { clientWithToken } from 'api';
+import { client } from 'api';
 import { Slice } from 'types';
 
 export const getAlertList = createAsyncThunk(
-  `${Slice.Alerts}/alerts`,
+  `${Slice.Alerts}`,
   async (credentials: { skip: number; take: number; sort: string; order: string }, thunkAPI) => {
     try {
-      const response = await clientWithToken.get('alerts', { params: { ...credentials } });
+      const response = await client.get('alerts', { params: { ...credentials } });
 
       return {
         list: response.data.list,

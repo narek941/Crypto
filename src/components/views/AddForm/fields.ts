@@ -2,6 +2,21 @@ import { FormField } from '../../forms/types';
 
 import { AddFormShape } from './types';
 
+export const AccountTypeOptions = [
+  {
+    label: 'Administrator',
+    value: 'ADMIN',
+  },
+  {
+    label: 'Analyst',
+    value: 'ANALYST',
+  },
+  {
+    label: 'Viewer',
+    value: 'VIEWER',
+  },
+];
+
 export const addFormFields: FormField<keyof AddFormShape> = {
   name: {
     name: 'name',
@@ -24,12 +39,20 @@ export const addFormFields: FormField<keyof AddFormShape> = {
     id: 'addUser.password',
     placeholder: 'Enter Password',
   },
+  emptyPassword: {
+    name: 'emptyPassword',
+    type: 'password',
+    label: 'Password',
+    id: 'addUser.password',
+    placeholder: 'Enter Password',
+  },
   accountType: {
     type: 'select',
     name: 'accountType',
     label: 'Account type',
     id: 'signIn.accountType',
     placeholder: 'Choose Type',
+    options: AccountTypeOptions,
   },
 };
 

@@ -1,72 +1,175 @@
 import React, { useState } from 'react';
 
+import { useAppDispatch } from 'hooks';
+import { usersFilterUpdate } from 'store/adminSlice/thunks';
+import { EmptyData } from 'components';
+import { adminActions } from 'store/adminSlice';
+import { accountsFilterUpdate } from 'store/accountsSlice/thunks';
+
 import Pagination from '../Pagination';
 import Modal from '../Modal';
 
 import TableHead from './TableHead';
 import styles from './Table.module.scss';
 import TableBody from './TableBody';
-import { ITableProps, Order, KeyOfData } from './types';
+import { ITableProps, KeyOfData } from './types';
 import TableToolbar from './TableToolbar';
+import TableAccountBody from './TableAccountsBody';
 
-const Table = ({ rows, headCells, type, action, linkText, linkTo }: ITableProps) => {
-  const [order, setOrder] = useState<Order>('asc');
-  const [orderBy, setOrderBy] = useState<KeyOfData>('id');
+const Table = ({
+  rows = [],
+  headCells,
+  type,
+  action,
+  linkText,
+  linkTo,
+  take,
+  order,
+  totalCount,
+}: ITableProps) => {
+  const [open, setOpen] = useState(false);
+
+  const toggleAlertOpen = () => setOpen(!open);
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [openChart, setOpenChart] = useState(false);
+  const dispatch = useAppDispatch();
+  const [orderBy, setOrderBy] = useState<KeyOfData>('id');
 
   const handleRequestSort = (event: React.MouseEvent<unknown>, property: KeyOfData) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
+    const isAsc = orderBy === property && order === 'ASC';
+    const orderText = isAsc ? 'DESC' : 'ASC';
+    if (action === 'users') {
+      dispatch(usersFilterUpdate({ order: orderText }));
+    } else {
+      dispatch(accountsFilterUpdate({ order: orderText }));
+    }
+
     setOrderBy(property);
   };
 
   const handleChangePage = (event: unknown, newPage: number) => {
+    if (action === 'users') {
+      dispatch(usersFilterUpdate({ skip: Number(newPage) * take }));
+    } else {
+      dispatch(accountsFilterUpdate({ skip: Number(newPage) * take }));
+    }
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
+    if (action === 'users') {
+      dispatch(usersFilterUpdate({ take: parseInt(event.target.value), skip: 0 }));
+    } else {
+      dispatch(accountsFilterUpdate({ take: parseInt(event.target.value), skip: 0 }));
+    }
   };
 
-  const handleChartAction = () => {
+  const handleChartAction = (id: number) => {
+    // eslint-disable-next-line no-console
+    console.log(id);
     setOpenChart(true);
   };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const handleSearch = (value: any) => {
+    if (action === 'users') {
+      dispatch(
+        usersFilterUpdate({
+          search: {
+            role: value.search,
+            email: value.search,
+            status: value.search,
+            username: value.search,
+            id: Number(value.search) || -1,
+          },
+        }),
+      );
+    } else {
+      dispatch(accountsFilterUpdate({ search: { name: value.search } }));
+    }
+  };
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const handleBlock = async (id: number) => {
+    if (action === 'users') {
+      await dispatch(adminActions.blockUser(id)).unwrap();
+    } else {
+      await dispatch(adminActions.blockAccount(id)).unwrap();
+    }
+  };
+
+  const handleUnblock = async (id: number) => {
+    if (action === 'users') {
+      await dispatch(adminActions.unblockUser(id)).unwrap();
+    } else {
+      await dispatch(adminActions.unblockAccount(id)).unwrap();
+    }
+  };
+
+  const handleDelete = async (id: number) => {
+    if (action === 'users') {
+      await dispatch(adminActions.deleteUser(id)).unwrap();
+    } else {
+      await dispatch(adminActions.deleteAccount(id)).unwrap();
+    }
+  };
+
   return (
     <>
       <div className={styles.wrapper}>
-        <TableToolbar linkText={linkText} linkTo={linkTo} />
+        <TableToolbar linkText={linkText} linkTo={linkTo} onClick={handleSearch} />
         <div className={styles.inner}>
           <div className={styles.table__wrapper}>
             <table className={styles.table}>
               <TableHead
-                order={order}
-                orderBy={orderBy}
                 onRequestSort={handleRequestSort}
                 rowCount={rows.length}
                 headCells={headCells}
                 type={type}
               />
-              <TableBody
-                order={order}
-                orderBy={orderBy}
-                rows={rows}
-                page={page}
-                type={type}
-                action={action}
-                handleChartAction={handleChartAction}
-                rowsPerPage={rowsPerPage}
-              />
+              {!!totalCount && action === 'users' ? (
+                <TableBody
+                  handleDelete={handleDelete}
+                  rows={rows}
+                  page={page}
+                  type={type}
+                  action={action}
+                  open={open}
+                  handleChartAction={handleChartAction}
+                  rowsPerPage={take}
+                  handleClose={handleClose}
+                  toggleAlertOpen={toggleAlertOpen}
+                  handleBlock={handleBlock}
+                  handleUnblock={handleUnblock}
+                />
+              ) : (
+                <TableAccountBody
+                  handleDelete={handleDelete}
+                  rows={rows}
+                  page={page}
+                  type={type}
+                  action={action}
+                  open={open}
+                  handleChartAction={handleChartAction}
+                  rowsPerPage={take}
+                  handleClose={handleClose}
+                  toggleAlertOpen={toggleAlertOpen}
+                  handleBlock={handleBlock}
+                  handleUnblock={handleUnblock}
+                />
+              )}
             </table>
+            {!totalCount && <EmptyData />}
           </div>
           <Pagination
             handleChangePage={handleChangePage}
             handleChangeRowsPerPage={handleChangeRowsPerPage}
             currentPage={page}
-            rowsPerPage={rowsPerPage}
-            totalCount={rows.length}
+            rowsPerPage={take}
+            totalCount={totalCount}
           />
         </div>
       </div>

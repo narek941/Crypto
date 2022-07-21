@@ -9,13 +9,7 @@ import styles from '../Table.module.scss';
 
 import { ITableHeadProps } from './types';
 
-const TableHeadWrapper = ({
-  order,
-  orderBy,
-  onRequestSort,
-  headCells,
-  type = 'primary',
-}: ITableHeadProps) => {
+const TableHeadWrapper = ({ onRequestSort, headCells, type = 'primary' }: ITableHeadProps) => {
   const createSortHandler = (property: KeyOfData) => (event: React.MouseEvent<unknown>) => {
     onRequestSort(event, property);
   };
@@ -27,11 +21,7 @@ const TableHeadWrapper = ({
     <TableHead>
       <TableRow className={headerClass}>
         {headCells.map((headCell) => (
-          <TableCell
-            key={headCell.id}
-            className={styles.table__header__ceil}
-            sortDirection={orderBy === headCell.id ? order : false}
-          >
+          <TableCell key={headCell.id} className={styles.table__header__ceil}>
             <div onClick={createSortHandler(headCell.id)}>{headCell.label}</div>
           </TableCell>
         ))}
