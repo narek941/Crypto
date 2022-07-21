@@ -14,7 +14,7 @@ import moment from 'moment';
 import classNames from 'classnames';
 
 import { TableDropdownIcon } from 'assets/icons';
-import { Pagination } from 'components';
+import { EmptyData, Pagination } from 'components';
 import { RootState } from 'types';
 
 import styles from './CollapsibleTable.module.scss';
@@ -196,30 +196,33 @@ const CollapsibleTable = ({ handleChangePage, handleChangeRowsPerPage, page }: a
 
   return (
     <TableContainer component={Paper} className={styles.container}>
-      <Table aria-label='collapsible table' className={styles.inner}>
-        <TableHead className={styles.container__header}>
-          <TableRow className={styles.container__header__row}>
-            <TableCell className={styles.container__header__ceil}>More</TableCell>
-            {headArr.map((item) => (
-              <TableCell align='left' className={styles.container__header__ceil} key={item}>
-                {item}
-              </TableCell>
+      <div className={styles.wrapper}>
+        <Table aria-label='collapsible table' className={styles.inner}>
+          <TableHead className={styles.container__header}>
+            <TableRow className={styles.container__header__row}>
+              <TableCell className={styles.container__header__ceil}>More</TableCell>
+              {headArr.map((item) => (
+                <TableCell align='left' className={styles.container__header__ceil} key={item}>
+                  {item}
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {accountsAnalytics.map((row) => (
+              <Row row={row} key={row.id} />
             ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {accountsAnalytics.map((row) => (
-            <Row row={row} key={row.id} />
-          ))}
-        </TableBody>
-      </Table>
-      <Pagination
-        handleChangePage={handleChangePage}
-        handleChangeRowsPerPage={handleChangeRowsPerPage}
-        currentPage={page}
-        rowsPerPage={accountsFilter?.take}
-        totalCount={accountsAnalyticsTotalCount}
-      />
+          </TableBody>
+        </Table>
+        {!accountsAnalyticsTotalCount && <EmptyData />}
+        <Pagination
+          handleChangePage={handleChangePage}
+          handleChangeRowsPerPage={handleChangeRowsPerPage}
+          currentPage={page}
+          rowsPerPage={accountsFilter?.take}
+          totalCount={accountsAnalyticsTotalCount}
+        />
+      </div>
     </TableContainer>
   );
 };

@@ -28,6 +28,7 @@ export const getAccountById = createAsyncThunk(
   async (userID: number, thunkAPI) => {
     try {
       const response = await client.get(`/accounts/${userID}`);
+
       return {
         account: response.data,
       };
@@ -49,6 +50,21 @@ export const getAccountsAnalytics = createAsyncThunk(
       return {
         list: response.data.list,
         totalCount: response.data.totalCount,
+      };
+    } catch {
+      return thunkAPI.rejectWithValue({ error: '* Incorrect' });
+    }
+  },
+);
+
+export const getCoins = createAsyncThunk(
+  `${Slice.Accounts}/accounts/coins`,
+  async (_, thunkAPI) => {
+    try {
+      const response = await client.get('/admin/exchange/1/supported-cryptocurrencies');
+
+      return {
+        coins: response.data.list,
       };
     } catch {
       return thunkAPI.rejectWithValue({ error: '* Incorrect' });

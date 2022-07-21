@@ -32,7 +32,7 @@ const Input = forwardRef<any, IInputProps>(
       [className]: className,
       [styles.container__error]: !!error,
       [styles.container__isLabel]: label,
-      [styles.container_with_icon]: !!RightIcon,
+      [styles.container_with_icon]: haveRightIcon,
       [styles.container__small]: isSmall,
     });
 

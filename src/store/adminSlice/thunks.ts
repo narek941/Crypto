@@ -2,7 +2,7 @@ import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
 
 import { client } from 'api';
-import { Routes, Slice } from 'types';
+import { Slice } from 'types';
 import { IFilter } from 'types/api';
 
 import { accountsActions } from '../accountsSlice';
@@ -10,12 +10,23 @@ import { accountsActions } from '../accountsSlice';
 export const addNewAccount = createAsyncThunk(
   `${Slice.Admin}/accounts`,
   async (credentials: any, thunkAPI) => {
-    const { navigate, ...restCredentials } = credentials;
-
     try {
-      const response = await client.post('/accounts', restCredentials);
+      const response = await client.post('/admin/accounts', credentials);
 
-      navigate(Routes.Accounts);
+      return {
+        response: response.data,
+      };
+    } catch {
+      return thunkAPI.rejectWithValue({ error: 'You can not add accounts' });
+    }
+  },
+);
+
+export const updateAccount = createAsyncThunk(
+  `${Slice.Admin}/accounts/update`,
+  async ({ credentials, accountId }: any, thunkAPI) => {
+    try {
+      const response = await client.put(`/admin/accounts/${accountId}`, credentials);
 
       return {
         response: response.data,

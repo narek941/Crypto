@@ -61,7 +61,7 @@
         border-color: var(--table-border) !important;
 
         &__actions {
-          gap: 6px !important;
+          gap: 16px !important;
           cursor: pointer;
           color: var(--font);
           display: flex !important;
@@ -92,7 +92,7 @@
             span {
               position: absolute;
               bottom: -30px;
-              left: 0;
+              left: -24px;
               display: none;
               padding: 5px 8px;
               color: var(--font);

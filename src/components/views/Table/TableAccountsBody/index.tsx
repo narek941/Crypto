@@ -32,7 +32,12 @@ const TableAccountBody = ({
   );
   const [delID, setID] = useState<number | null>(null);
 
-  const renderActions = (status: IStatus, id: number) => {
+  const renderActions = (
+    status: IStatus,
+    id: number,
+    statistics: any,
+    startCapitalInBaseCurrency: any,
+  ) => {
     switch (action) {
       case 'accounts':
         return (
@@ -40,14 +45,21 @@ const TableAccountBody = ({
             <>
               {handleChartAction && (
                 <div className={styles.table__body__row__ceil__actions__chart}>
-                  <ChartIcon onClick={() => handleChartAction(id)} />
+                  <ChartIcon
+                    onClick={() =>
+                      handleChartAction({
+                        id,
+                        statistics,
+                        startCapitalInBaseCurrency,
+                      })
+                    }
+                  />
                   <span>Account analytics</span>
                 </div>
               )}
               <Link
                 className={styles.table__body__row__ceil__actions__setting}
-                to={Routes.AddNewAccount}
-                state={{ id }}
+                to={`${Routes.EditAccount}/${id}`}
               >
                 <SettingIcon />
                 <span>Account settings</span>
@@ -131,10 +143,10 @@ const TableAccountBody = ({
                   {name}
                 </TableCell>
                 <TableCell className={styles.table__body__row__ceil} align='left'>
-                  {statistics.startCapitalInBaseCurrency + 'USDT'}
+                  {statistics.startCapitalInBaseCurrency + ' USDT'}
                 </TableCell>
                 <TableCell className={styles.table__body__row__ceil} align='left'>
-                  {startCapitalInBaseCurrency + 'USDT'}
+                  {startCapitalInBaseCurrency + ' USDT'}
                 </TableCell>
                 <TableCell className={styles.table__body__row__ceil} align='left'>
                   {formattedDate}
@@ -143,21 +155,21 @@ const TableAccountBody = ({
                   {statistics.currentOpenProfitInBaseCurrency + ' %'}
                 </TableCell>
                 <TableCell className={styles.table__body__row__ceil} align='left'>
-                  {statistics.currentOpenProfitInBaseCurrency + 'USDT'}
-                </TableCell>
-                <TableCell className={styles.table__body__row__ceil} align='left'>
-                  {statistics.numberDailyTransactions}
-                </TableCell>
-                <TableCell className={styles.table__body__row__ceil} align='left'>
-                  {statistics.numberDailyTransactions + 'USDT'}
+                  {statistics.earnedCapitalInBaseCurrency + ' USDT'}
                 </TableCell>
                 <TableCell className={styles.table__body__row__ceil} align='left'>
                   {statistics.earnedCapitalInPercent + ' %'}
                 </TableCell>
                 <TableCell className={styles.table__body__row__ceil} align='left'>
+                  {statistics.currentOpenProfitInBaseCurrency + ' USDT'}
+                </TableCell>
+                <TableCell className={styles.table__body__row__ceil} align='left'>
+                  {statistics.numberDailyTransactions}
+                </TableCell>
+                <TableCell className={styles.table__body__row__ceil} align='left'>
                   {status}
                 </TableCell>
-                {renderActions(status, id)}
+                {renderActions(status, id, statistics, startCapitalInBaseCurrency)}
               </TableRow>
             );
           },

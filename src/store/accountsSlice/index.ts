@@ -13,6 +13,7 @@ const internalInitialState: AccountsSliceState = {
   list: [],
   accountsAnalytics: [],
   accountsAnalyticsTotalCount: 0,
+  coins: [],
   accountsFilter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '' },
   accountById: {},
 };
@@ -68,6 +69,9 @@ const accountsSlice = createSlice({
         state.accountsAnalyticsTotalCount = action.payload.totalCount;
       },
     );
+    builder.addCase(accountsThunks.getCoins.fulfilled, (state, action) => {
+      state.coins = action.payload.coins;
+    });
   },
 });
 
