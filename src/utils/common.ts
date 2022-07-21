@@ -1,12 +1,24 @@
 export const isServer = typeof window === 'undefined';
 
 export const parseAddAccount = (body: any) => ({
+  status: 'ACTIVE',
   name: body.name,
   startCapitalInBaseCurrency: body.startCapital,
+  baseCurrency: {
+    id: 508,
+  },
+  allowedCurrencies: [
+    {
+      id: 1,
+      currency: {
+        id: 508,
+      },
+    },
+  ],
   wallets: [
     {
       platform: {
-        id: 5,
+        id: 1,
       },
       apiKey: body.apiKey,
       apiSecret: body.apiSecret,
@@ -19,36 +31,8 @@ export const parseAddAccount = (body: any) => ({
         shortTradeAllowed: true,
         stopLossOrderRequired: body.stopLossOrder,
       },
-      // statistic: {
-      //   currentCapitalInBtc: 0,
-      //   profitLoss: 0,
-      //   refreshDate: '2022-05-20T13:05:55.901Z',
-      //   currentCapitalInBaseCurrency: 0,
-      //   profitLossInBaseCurrency: 0,
-      // },
     },
   ],
-  baseCurrency: {
-    id: 1,
-  },
   alertsDestinations: body.alertsDestinations,
-  allowedCurrencies: [
-    {
-      currency: {
-        id: 6,
-      },
-    },
-  ],
   allowedPairs: body.allowedPairs,
-  statistics: {
-    startCapitalInBaseCurrency: '',
-    currentCapitalInBaseCurrency: '0',
-    capitalRefreshDate: '',
-    currentOpenProfitInBaseCurrency: '',
-    earnedCapitalInBaseCurrency: '',
-    earnedCapitalInPercent: '',
-    productivityInPercent: '',
-    id: 7,
-  },
-  status: 'ACTIVE',
 });
