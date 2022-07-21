@@ -1,5 +1,3 @@
-import { SerializedError } from '@reduxjs/toolkit';
-
 import { IFilter } from 'types/api';
 
 import { AdminStates } from './constants';
@@ -7,12 +5,14 @@ import { AdminStates } from './constants';
 export type AdminSliceState = {
   accessToken: string;
   loading: AdminStates;
-  error?: SerializedError | null;
+  error?: any;
   role: string | null;
   twoFactorAdminEnabled: boolean;
   list?: any[];
   totalCount: number;
-  filter: IFilter;
+  usersFilter: IFilter;
+  accountsFilter: IFilter;
+  userById: any;
 };
 
 export type UpdateAccessTokenAction = {

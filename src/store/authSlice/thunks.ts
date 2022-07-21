@@ -39,6 +39,8 @@ export const signOut = createAsyncThunk(
     try {
       localStorage.removeItem('accessToken');
       localStorage.removeItem('role');
+      sessionStorage.removeItem('accessToken');
+      sessionStorage.removeItem('role');
       navigate(Routes.Login);
     } catch (error) {
       const { message } = error as Error;

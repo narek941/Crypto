@@ -1,35 +1,33 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
+import { Table } from 'components';
+import { useAppDispatch } from 'hooks';
 import { headCells } from 'utils/table';
 import { RootState, Routes } from 'types';
-import { useAppDispatch } from 'hooks';
 import { accountsActions } from 'store/accountsSlice';
-import { Table } from 'components';
 
 const Accounts = () => {
-  const { list, filter, totalCount } = useSelector((state: RootState) => state.accounts);
-  const { skip, take, sort, order, search } = filter;
-
   const dispatch = useAppDispatch();
+  const { list, totalCount, accountsFilter } = useSelector((state: RootState) => state.accounts);
+
+  const { take, order } = accountsFilter;
+
   useEffect(() => {
-    dispatch(accountsActions.getAccountList({ skip: 0, take: 10, sort: 'id', order: 'ASC' }));
-  }, [dispatch, skip, take, sort, order, search]);
+    dispatch(accountsActions.getAccountList(accountsFilter));
+  }, [dispatch, accountsFilter]);
 
   return (
     <Table
-      rows={list || []}
-      action='accounts'
+      take={take}
+      order={order}
       type='primary'
+      action='accounts'
+      rows={list || []}
       linkText='account'
       headCells={headCells}
-      linkTo={Routes.AddNewAccount}
-      skip={skip}
-      take={take}
-      sort={sort}
-      order={order}
-      search={search}
       totalCount={totalCount}
+      linkTo={Routes.AddNewAccount}
     />
   );
 };

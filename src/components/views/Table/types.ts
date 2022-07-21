@@ -35,11 +35,8 @@ export interface ITableProps {
   linkTo?: Routes;
   users?: boolean;
   handleClose?: () => void;
-  skip: number;
   take: number;
-  sort?: string;
   order?: string;
-  search?: string;
   totalCount: number;
 }
 export interface UserData {
@@ -56,4 +53,4 @@ export interface UserData {
 
 export type Order = 'asc' | 'desc';
 
-export type IStatus = 'ACTIVE' | 'BLOCKED' | 'EMAIL_VERIFICATION';
+export type IStatus = 'ACTIVE' | 'DELETED' | 'BLOCKED' | 'EMAIL_VERIFICATION';

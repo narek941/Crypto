@@ -25,6 +25,7 @@
   &__header {
     background: var(--table-header);
     display: table-header-group;
+    border-bottom: 1px solid var(--table-border);
 
     &__ceil {
       text-align: left;
@@ -40,6 +41,7 @@
 
     &__row {
       background: var(--ceil);
+      border-bottom: 1px solid var(--table-border);
 
       &:nth-child(even) {
         background: var(--ceil-even);
@@ -79,6 +81,12 @@
             &:hover {
               span {
                 display: flex;
+                z-index: 10;
+                background-color: #474646;
+                color: #fff;
+                padding: 5px 8px;
+                border-radius: 4px;
+                @extend %text-12;
               }
             }
             span {

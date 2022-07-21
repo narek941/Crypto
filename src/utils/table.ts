@@ -364,17 +364,18 @@ export const headCells: HeadCell[] = [
     disablePadding: false,
     label: 'Open Profit',
   },
-  {
-    id: 'status',
-    numeric: true,
-    disablePadding: false,
-    label: 'Status',
-  },
+
   {
     id: 'trades',
     numeric: true,
     disablePadding: false,
     label: 'Avg.Trades',
+  },
+  {
+    id: 'status',
+    numeric: true,
+    disablePadding: false,
+    label: 'Status',
   },
   {
     id: 'actions',

@@ -4,6 +4,11 @@ type ErrorType = any | null;
 
 export type ColorType = 'default' | 'primary';
 
+export type Option = {
+  label: string;
+  value: string;
+};
+
 export interface ISelect {
   id: string;
   className?: string;
@@ -12,6 +17,6 @@ export interface ISelect {
   error: ErrorType;
   defaultChecked?: boolean;
   color?: ColorType;
-  options: string[];
+  options: Option[];
   [prop: string]: any;
 }

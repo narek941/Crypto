@@ -11,9 +11,11 @@
   span {
     color: var(--font);
   }
+
   svg path {
     fill: var(--font);
   }
+
   &__item {
     gap: 2px;
     margin: 0;
@@ -25,14 +27,17 @@
       span {
         color: var(--disable);
       }
+
       svg path {
         fill: var(--disable);
       }
     }
+
     &__text {
       color: $primary-font;
       @extend %text-14;
     }
+
     &__active {
       font-weight: bold !important;
     }

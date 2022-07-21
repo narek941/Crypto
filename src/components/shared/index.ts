@@ -12,4 +12,5 @@ export { default as LinkButton } from './LinkButton';
 export { default as ToggleSwitch } from './ToggleSwitch';
 export { default as ExternalImage } from './ExternalImage';
 export { default as DeleteAlert } from './DeleteAlert';
+export { default as PublicRoute } from './PublicRoute';
 export { default as ProtectedRoute } from './ProtectedRoute';

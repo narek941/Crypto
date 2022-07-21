@@ -9,6 +9,6 @@ export interface IFilter {
   skip: number;
   take: number;
   sort: string;
-  search: string;
+  search: any;
   order: 'DESC' | 'ASC';
 }

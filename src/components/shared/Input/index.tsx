@@ -87,12 +87,12 @@ const Input = forwardRef<any, IInputProps>(
               />
             )}
           </div>
+          {error && (
+            <Typography type='Small' className={styles.container__error__text}>
+              {error}
+            </Typography>
+          )}
         </div>
-        {error && (
-          <Typography type='Small' className={styles.container__error__text}>
-            {error}
-          </Typography>
-        )}
       </>
     );
   },

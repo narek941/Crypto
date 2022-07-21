@@ -43,6 +43,7 @@
     backdrop-filter: blur(24px);
     text-transform: capitalize;
     background: var(--select-option);
+    box-shadow: var(--option-shadow);
     @extend %text-13;
     @extend %flex-column;
 

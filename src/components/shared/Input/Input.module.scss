@@ -60,21 +60,24 @@
     border-color: var(--danger) !important;
 
     &__text {
+      margin-top: 4px;
       color: var(--danger);
+      @extend %text-14;
     }
   }
 
   &__right_icon {
     right: 16px;
-    top: calc(50% - 12px);
     cursor: pointer;
     position: absolute;
+    top: calc(50% - 12px);
   }
 }
 .input {
-  position: relative;
   width: 100%;
   color: var(--font);
+  position: relative;
+
   &::placeholder {
     color: var(--placeholder);
   }

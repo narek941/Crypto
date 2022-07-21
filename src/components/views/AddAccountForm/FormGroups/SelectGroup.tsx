@@ -12,9 +12,20 @@ export interface ISelectGroup {
   id: string;
   secondInput?: 'select' | 'input';
   formMethods: any;
+  leftInputName?: string;
+  rightInputName?: string;
+  index?: number;
 }
 
-const SelectGroup = ({ removePair, id, secondInput = 'select', formMethods }: ISelectGroup) => {
+const SelectGroup = ({
+  removePair,
+  id,
+  index,
+  secondInput = 'select',
+  formMethods,
+  leftInputName,
+  rightInputName,
+}: ISelectGroup) => {
   return (
     <div>
       <div className={styles.form__section__item}>
@@ -22,18 +33,16 @@ const SelectGroup = ({ removePair, id, secondInput = 'select', formMethods }: IS
           <>
             <Controller
               control={formMethods.control}
-              name={(addAccountFormFields.allowedFirstPairs.name + id) as keyof AddAccountFormShape}
+              name={`allowedPairs[${index}].${leftInputName}.id` as any}
               render={({ field }) => (
-                <Select {...addAccountFormFields.allowedFirstPairs} {...field} multiple={true} />
+                <Select {...addAccountFormFields.allowedPairs} {...field} multiple={true} />
               )}
             />
             <Controller
               control={formMethods.control}
-              name={
-                (addAccountFormFields.allowedSecondPairs.name + id) as keyof AddAccountFormShape
-              }
+              name={`allowedPairs[${index}].${rightInputName}.id` as any}
               render={({ field }) => (
-                <Select {...addAccountFormFields.allowedSecondPairs} {...field} multiple={true} />
+                <Select {...addAccountFormFields.allowedPairs} {...field} multiple={true} />
               )}
             />
           </>

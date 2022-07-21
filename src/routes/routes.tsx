@@ -26,6 +26,13 @@ const routes: RoutesProps[] = [
     isBackBtn: true,
   },
   {
+    path: `${Routes.EditUser}/:id`,
+    text: 'Users management',
+    isProtected: true,
+    component: <AddNewUser />,
+    isBackBtn: true,
+  },
+  {
     path: Routes.AddNewAccount,
     text: 'Account settings',
     isProtected: true,

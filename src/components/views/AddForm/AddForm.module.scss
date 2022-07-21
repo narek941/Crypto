@@ -18,6 +18,26 @@
       }
       &__button {
         @extend %flex-end;
+        gap: 24px;
+      }
+      &__edit {
+        @extend %flex-end;
+        gap: 24px;
+        margin-top: 16px;
+
+        &__cancel {
+          padding: 0;
+          color: var(--cancel);
+          @extend %text-14-bold;
+        }
+        &__save {
+          color: #004f33;
+          border: none;
+          padding: 0;
+          background-color: transparent;
+          max-width: fit-content;
+          @extend %text-14-bold;
+        }
       }
     }
   }

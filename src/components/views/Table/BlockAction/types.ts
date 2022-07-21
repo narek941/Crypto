@@ -5,4 +5,5 @@ export interface IBlockAction {
   id: number;
   handleUnblock: (id: number) => void;
   handleBlock: (id: number) => void;
+  action: 'user' | 'account';
 }

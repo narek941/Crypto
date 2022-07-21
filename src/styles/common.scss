@@ -19,7 +19,9 @@
   padding-top: 0 !important;
   padding-bottom: 0 !important;
 }
-
+.MuiTableCell-root {
+  border: none !important;
+}
 .MuiTablePagination-menuItem {
   color: var(--font) !important;
 }

@@ -11,7 +11,8 @@ const internalInitialState: AccountsSliceState = {
   loading: AccountStates.IDLE,
   totalCount: 0,
   list: [],
-  filter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '' },
+  accountsFilter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '' },
+  accountById: {},
 };
 export type IFilterPayload =
   | { skip: number }
@@ -42,6 +43,21 @@ const accountsSlice = createSlice({
     builder.addCase(accountsThunks.getAccountList.rejected, (state, action: PayloadAction<any>) => {
       state.loading = AccountStates.IDLE;
       state.error = action.payload.error;
+    });
+    builder.addCase(accountsThunks.accountsFilterUpdate, (state, action) => {
+      const accountsFilter = state.accountsFilter;
+      state.accountsFilter = { ...accountsFilter, ...action.payload };
+    });
+    builder.addCase(
+      accountsThunks.getAccountById.fulfilled,
+      (state, action: PayloadAction<any>) => {
+        state.error = null;
+        state.loading = AccountStates.IDLE;
+        state.accountById = action.payload.account;
+      },
+    );
+    builder.addCase(accountsThunks.removeAccountById, (state) => {
+      state.accountById = {};
     });
   },
 });

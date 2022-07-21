@@ -1,6 +1,7 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, isAnyOf, PayloadAction } from '@reduxjs/toolkit';
 
 import { Slice } from 'types';
+import { errorReducer, pendingReducer } from 'utils/extraReducers';
 
 import * as adminThunks from './thunks';
 import { AdminStates } from './constants';
@@ -13,9 +14,12 @@ const internalInitialState: AdminSliceState = {
   twoFactorAdminEnabled: false,
   list: [],
   totalCount: 0,
-  accessToken: localStorage.getItem('accessToken') || '',
-  filter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '' },
+  accessToken: localStorage.getItem('accessToken') || sessionStorage.getItem('accessToken') || '',
+  usersFilter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '' },
+  accountsFilter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '' },
+  userById: {},
 };
+
 export type IFilterPayload =
   | { skip: number }
   | { take: number }
@@ -33,56 +37,80 @@ const adminSlice = createSlice({
     reset: () => internalInitialState,
   },
   extraReducers: (builder) => {
-    builder.addCase(adminThunks.addNewAccount.pending, (state) => {
-      state.loading = AdminStates.LOADING;
-    });
     builder.addCase(adminThunks.addNewAccount.fulfilled, (state) => {
       state.error = null;
       state.loading = AdminStates.IDLE;
     });
-    builder.addCase(adminThunks.addNewAccount.rejected, (state, action: PayloadAction<any>) => {
-      state.loading = AdminStates.IDLE;
-      state.error = action.payload.error;
-    });
-    builder.addCase(adminThunks.getUsersList.pending, (state) => {
-      state.loading = AdminStates.LOADING;
-    });
+
     builder.addCase(adminThunks.getUsersList.fulfilled, (state, action: PayloadAction<any>) => {
       state.error = null;
       state.loading = AdminStates.IDLE;
       state.list = action.payload.list;
       state.totalCount = action.payload.totalCount;
     });
-    builder.addCase(adminThunks.getUsersList.rejected, (state, action: PayloadAction<any>) => {
-      state.loading = AdminStates.IDLE;
-      state.error = action.payload.error;
+
+    builder.addCase(adminThunks.usersFilterUpdate, (state, action) => {
+      const usersFilter = state.usersFilter;
+      state.usersFilter = { ...usersFilter, ...action.payload };
     });
-    builder.addCase(adminThunks.filtersUpdate, (state, action) => {
-      const filter = state.filter;
-      state.filter = { ...filter, ...action.payload };
-    });
-    builder.addCase(adminThunks.blockUser.pending, (state) => {
-      state.loading = AdminStates.LOADING;
-    });
+
     builder.addCase(adminThunks.blockUser.fulfilled, (state) => {
       state.error = null;
       state.loading = AdminStates.IDLE;
     });
-    builder.addCase(adminThunks.blockUser.rejected, (state, action: PayloadAction<any>) => {
-      state.loading = AdminStates.IDLE;
-      state.error = action.payload.error;
-    });
-    builder.addCase(adminThunks.deleteUser.pending, (state) => {
-      state.loading = AdminStates.LOADING;
-    });
+
     builder.addCase(adminThunks.deleteUser.fulfilled, (state) => {
       state.error = null;
       state.loading = AdminStates.IDLE;
     });
-    builder.addCase(adminThunks.deleteUser.rejected, (state, action: PayloadAction<any>) => {
+
+    builder.addCase(adminThunks.getUserById.fulfilled, (state, action: PayloadAction<any>) => {
+      state.error = null;
       state.loading = AdminStates.IDLE;
-      state.error = action.payload.error;
+      state.userById = action.payload.user;
     });
+
+    builder.addCase(adminThunks.removeUserById, (state) => {
+      state.userById = {};
+    });
+
+    builder.addMatcher(
+      isAnyOf(
+        adminThunks.addNewAccount.pending,
+        adminThunks.getUsersList.pending,
+        adminThunks.blockUser.pending,
+        adminThunks.deleteUser.pending,
+        adminThunks.blockAccount.pending,
+        adminThunks.deleteAccount.pending,
+        adminThunks.getUserById.pending,
+        adminThunks.unblockAccount.pending,
+        adminThunks.unblockUser.pending,
+        adminThunks.updateUserEmail.pending,
+        adminThunks.updateUserPassword.pending,
+        adminThunks.updateUserRole.pending,
+        adminThunks.updateUsername.pending,
+      ),
+      pendingReducer,
+    );
+
+    builder.addMatcher(
+      isAnyOf(
+        adminThunks.addNewAccount.rejected,
+        adminThunks.getUsersList.rejected,
+        adminThunks.blockUser.rejected,
+        adminThunks.deleteUser.rejected,
+        adminThunks.blockAccount.rejected,
+        adminThunks.deleteAccount.rejected,
+        adminThunks.getUserById.rejected,
+        adminThunks.unblockAccount.rejected,
+        adminThunks.unblockUser.rejected,
+        adminThunks.updateUserEmail.rejected,
+        adminThunks.updateUserPassword.rejected,
+        adminThunks.updateUserRole.rejected,
+        adminThunks.updateUsername.rejected,
+      ),
+      errorReducer,
+    );
   },
 });
 

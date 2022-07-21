@@ -2,6 +2,7 @@ import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import classNames from 'classnames';
 import { useState } from 'react';
+import moment from 'moment';
 import { Link } from 'react-router-dom';
 
 import { BinIcon, ChartIcon, EditIcon, SettingIcon } from 'assets/icons';
@@ -12,9 +13,9 @@ import styles from '../Table.module.scss';
 import { IStatus } from '../types';
 import BlockAction from '../BlockAction';
 
-import { ITableBodyProps } from './types';
+import { ITableAccountBodyProps } from './types';
 
-const TableBody = ({
+const TableAccountBody = ({
   rows,
   action,
   open,
@@ -24,7 +25,7 @@ const TableBody = ({
   handleBlock,
   handleUnblock,
   handleDelete,
-}: ITableBodyProps) => {
+}: ITableAccountBodyProps) => {
   const actionCellClassnames = classNames(
     styles.table__body__row__ceil,
     styles.table__body__row__ceil__actions,
@@ -43,10 +44,14 @@ const TableBody = ({
                   <span>Account analytics</span>
                 </div>
               )}
-              <div className={styles.table__body__row__ceil__actions__setting}>
+              <Link
+                className={styles.table__body__row__ceil__actions__setting}
+                to={Routes.AddNewAccount}
+                state={{ id }}
+              >
                 <SettingIcon />
                 <span>Account settings</span>
-              </div>
+              </Link>
               <BlockAction
                 status={status}
                 id={id}
@@ -55,12 +60,15 @@ const TableBody = ({
                 handleBlock={handleBlock}
               />
 
-              {handleClose && (
+              {status !== 'DELETED' && handleClose && (
                 <div
                   className={styles.table__body__row__ceil__actions__bin}
-                  onClick={toggleAlertOpen}
+                  onClick={() => {
+                    setID(id);
+                    toggleAlertOpen && toggleAlertOpen();
+                  }}
                 >
-                  {status !== 'DELETED' && <BinIcon />}
+                  <BinIcon />
                   <span>Delete account</span>
                 </div>
               )}
@@ -74,16 +82,17 @@ const TableBody = ({
               <BlockAction
                 status={status}
                 id={id}
-                action={'user'}
+                action='user'
                 handleUnblock={handleUnblock}
                 handleBlock={handleBlock}
               />
               <Link
-                to={`${Routes.EditUser}/${id}`}
+                to={Routes.AddNewUser}
+                state={{ id }}
                 className={styles.table__body__row__ceil__actions__setting}
               >
                 <EditIcon />
-                <span>Edit user</span>
+                <span>Account settings</span>
               </Link>
               {status !== 'DELETED' && handleClose && (
                 <div
@@ -94,7 +103,7 @@ const TableBody = ({
                   }}
                 >
                   <BinIcon />
-                  <span>Delete user</span>
+                  <span>Delete account</span>
                 </div>
               )}
             </>
@@ -109,22 +118,50 @@ const TableBody = ({
   return (
     <>
       <tbody className={styles.table__body}>
-        {rows.map(({ id, email, role, status, username }: any, index) => {
-          const arr = [id, username, email, role, status];
+        {rows.map(
+          ({ id, startCapitalInBaseCurrency, name, createdAt, status, statistics }: any, index) => {
+            const formattedDate = moment(createdAt).format('MM.DD.YY');
 
-          return (
-            <TableRow className={styles.table__body__row} tabIndex={id} key={index}>
-              {arr.map((item: string) => {
-                return (
-                  <TableCell className={styles.table__body__row__ceil} key={item} align='left'>
-                    {item}
-                  </TableCell>
-                );
-              })}
-              <>{renderActions(status, id)}</>
-            </TableRow>
-          );
-        })}
+            return (
+              <TableRow className={styles.table__body__row} tabIndex={id} key={index}>
+                <TableCell className={styles.table__body__row__ceil} align='left'>
+                  {id}
+                </TableCell>
+                <TableCell className={styles.table__body__row__ceil} align='left'>
+                  {name}
+                </TableCell>
+                <TableCell className={styles.table__body__row__ceil} align='left'>
+                  {statistics.startCapitalInBaseCurrency + 'USDT'}
+                </TableCell>
+                <TableCell className={styles.table__body__row__ceil} align='left'>
+                  {startCapitalInBaseCurrency + 'USDT'}
+                </TableCell>
+                <TableCell className={styles.table__body__row__ceil} align='left'>
+                  {formattedDate}
+                </TableCell>
+                <TableCell className={styles.table__body__row__ceil} align='left'>
+                  {statistics.currentOpenProfitInBaseCurrency + ' %'}
+                </TableCell>
+                <TableCell className={styles.table__body__row__ceil} align='left'>
+                  {statistics.currentOpenProfitInBaseCurrency + 'USDT'}
+                </TableCell>
+                <TableCell className={styles.table__body__row__ceil} align='left'>
+                  {statistics.numberDailyTransactions}
+                </TableCell>
+                <TableCell className={styles.table__body__row__ceil} align='left'>
+                  {statistics.numberDailyTransactions + 'USDT'}
+                </TableCell>
+                <TableCell className={styles.table__body__row__ceil} align='left'>
+                  {statistics.earnedCapitalInPercent + ' %'}
+                </TableCell>
+                <TableCell className={styles.table__body__row__ceil} align='left'>
+                  {status}
+                </TableCell>
+                {renderActions(status, id)}
+              </TableRow>
+            );
+          },
+        )}
         <DeleteAlert
           open={open}
           handleClose={() => handleClose && handleClose()}
@@ -136,4 +173,4 @@ const TableBody = ({
   );
 };
 
-export default TableBody;
+export default TableAccountBody;

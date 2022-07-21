@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 
 import { useAppDispatch } from 'hooks';
-import { filtersUpdate } from 'store/adminSlice/thunks';
+import { usersFilterUpdate } from 'store/adminSlice/thunks';
 import { EmptyData } from 'components';
 import { adminActions } from 'store/adminSlice';
+import { accountsFilterUpdate } from 'store/accountsSlice/thunks';
 
 import Pagination from '../Pagination';
 import Modal from '../Modal';
@@ -13,6 +14,7 @@ import styles from './Table.module.scss';
 import TableBody from './TableBody';
 import { ITableProps, KeyOfData } from './types';
 import TableToolbar from './TableToolbar';
+import TableAccountBody from './TableAccountsBody';
 
 const Table = ({
   rows = [],
@@ -36,17 +38,30 @@ const Table = ({
   const handleRequestSort = (event: React.MouseEvent<unknown>, property: KeyOfData) => {
     const isAsc = orderBy === property && order === 'ASC';
     const orderText = isAsc ? 'DESC' : 'ASC';
-    dispatch(filtersUpdate({ order: orderText }));
+    if (action === 'users') {
+      dispatch(usersFilterUpdate({ order: orderText }));
+    } else {
+      dispatch(accountsFilterUpdate({ order: orderText }));
+    }
+
     setOrderBy(property);
   };
 
   const handleChangePage = (event: unknown, newPage: number) => {
-    dispatch(filtersUpdate({ skip: Number(newPage) * take }));
+    if (action === 'users') {
+      dispatch(usersFilterUpdate({ skip: Number(newPage) * take }));
+    } else {
+      dispatch(accountsFilterUpdate({ skip: Number(newPage) * take }));
+    }
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(filtersUpdate({ take: parseInt(event.target.value) }));
+    if (action === 'users') {
+      dispatch(usersFilterUpdate({ take: parseInt(event.target.value), skip: 0 }));
+    } else {
+      dispatch(accountsFilterUpdate({ take: parseInt(event.target.value), skip: 0 }));
+    }
   };
 
   const handleChartAction = (id: number) => {
@@ -61,17 +76,45 @@ const Table = ({
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleSearch = (value: any) => {
-    // dispatch(filtersUpdate({ search: value.search }));
+    if (action === 'users') {
+      dispatch(
+        usersFilterUpdate({
+          search: {
+            role: value.search,
+            email: value.search,
+            status: value.search,
+            username: value.search,
+            id: Number(value.search) || -1,
+          },
+        }),
+      );
+    } else {
+      dispatch(accountsFilterUpdate({ search: { name: value.search } }));
+    }
   };
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const handleBlock = (id: number) => {
-    dispatch(adminActions.blockUser(id));
+  const handleBlock = async (id: number) => {
+    if (action === 'users') {
+      await dispatch(adminActions.blockUser(id)).unwrap();
+    } else {
+      await dispatch(adminActions.blockAccount(id)).unwrap();
+    }
   };
-  const handleUnblock = (id: number) => {
-    dispatch(adminActions.unblockUser(id));
+
+  const handleUnblock = async (id: number) => {
+    if (action === 'users') {
+      await dispatch(adminActions.unblockUser(id)).unwrap();
+    } else {
+      await dispatch(adminActions.unblockAccount(id)).unwrap();
+    }
   };
+
   const handleDelete = async (id: number) => {
-    await dispatch(adminActions.deleteUser(id)).unwrap();
+    if (action === 'users') {
+      await dispatch(adminActions.deleteUser(id)).unwrap();
+    } else {
+      await dispatch(adminActions.deleteAccount(id)).unwrap();
+    }
   };
 
   return (
@@ -87,8 +130,23 @@ const Table = ({
                 headCells={headCells}
                 type={type}
               />
-              {!!totalCount && (
+              {!!totalCount && action === 'users' ? (
                 <TableBody
+                  handleDelete={handleDelete}
+                  rows={rows}
+                  page={page}
+                  type={type}
+                  action={action}
+                  open={open}
+                  handleChartAction={handleChartAction}
+                  rowsPerPage={take}
+                  handleClose={handleClose}
+                  toggleAlertOpen={toggleAlertOpen}
+                  handleBlock={handleBlock}
+                  handleUnblock={handleUnblock}
+                />
+              ) : (
+                <TableAccountBody
                   handleDelete={handleDelete}
                   rows={rows}
                   page={page}

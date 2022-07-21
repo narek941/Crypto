@@ -4,7 +4,7 @@ import styles from '../Table.module.scss';
 
 import { IBlockAction } from './types';
 
-const BlockAction = ({ status, id, handleUnblock, handleBlock }: IBlockAction) => {
+const BlockAction = ({ status, id, handleUnblock, handleBlock, action }: IBlockAction) => {
   return (
     <>
       {status == 'BLOCKED' ? (
@@ -13,7 +13,7 @@ const BlockAction = ({ status, id, handleUnblock, handleBlock }: IBlockAction) =
           onClick={() => handleUnblock(id)}
         >
           <UnblockIcon />
-          <span>Unblock account</span>
+          <span>Unblock {action}</span>
         </div>
       ) : (
         <div
@@ -21,7 +21,7 @@ const BlockAction = ({ status, id, handleUnblock, handleBlock }: IBlockAction) =
           onClick={() => handleBlock(id)}
         >
           <AccountBlockIcon />
-          <span>Block account</span>
+          <span>Block {action}</span>
         </div>
       )}
     </>

@@ -1,6 +1,7 @@
 import { HTMLInputTypeAttribute, SyntheticEvent } from 'react';
 
 import { FormFieldNames } from 'hooks/useForm/types';
+import { Option } from 'components/shared/Select/types';
 
 export type FormField<T extends FormFieldNames> = {
   [FieldName in T]: {
@@ -9,10 +10,11 @@ export type FormField<T extends FormFieldNames> = {
     label?: string;
     placeholder?: string;
     type?: HTMLInputTypeAttribute;
-    options?: string[];
+    options?: Option[];
     checked?: boolean;
   };
 };
+
 export interface IFormGroup {
   children: JSX.Element | string;
   space?: 's' | 'm' | 'l';

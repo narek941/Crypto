@@ -15,7 +15,8 @@ export enum Routes {
   Login = '/login',
   Alerts = '/alerts',
   Accounts = '/accounts',
-  AddNewUser = '/add-new-user',
+  EditUser = '/users/edit',
+  AddNewUser = '/users/create',
   AddNewAccount = '/add-new-account',
   AccountsAnalytics = 'accounts-analytics',
 }

@@ -11,7 +11,7 @@ const internalInitialState: AuthSliceState = {
   error: null,
   loading: AuthStates.IDLE,
   twoFactorAuthEnabled: false,
-  accessToken: localStorage.getItem('accessToken') || '',
+  accessToken: localStorage.getItem('accessToken') || sessionStorage.getItem('accessToken') || '',
 };
 
 const authSlice = createSlice({

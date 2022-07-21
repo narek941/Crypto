@@ -8,13 +8,16 @@ const DeleteAlert = ({ open, handleClose, handleDelete, id }: AlertProps) => {
   const [deleted, setDeleted] = useState<boolean>(false);
   const popUpClasses = classNames(styles.wrapper, { [styles.wrapper__open]: open });
 
-  // eslint-disable-next-line no-console
-  console.log(deleted, 'deleted');
   const handleDeleteClick = async () => {
     if (id) {
       await handleDelete(id);
       setDeleted(true);
     }
+  };
+
+  const handleContinueClick = () => {
+    handleClose();
+    setDeleted(false);
   };
 
   return (
@@ -40,7 +43,11 @@ const DeleteAlert = ({ open, handleClose, handleDelete, id }: AlertProps) => {
               </div>
             </>
           ) : (
-            <div role='button' onClick={handleClose} className={styles.popup__action__continue}>
+            <div
+              role='button'
+              onClick={handleContinueClick}
+              className={styles.popup__action__continue}
+            >
               Continue
             </div>
           )}
@@ -49,4 +56,5 @@ const DeleteAlert = ({ open, handleClose, handleDelete, id }: AlertProps) => {
     </div>
   );
 };
+
 export default DeleteAlert;

@@ -8,24 +8,23 @@ import { alertsActions } from 'store/alertsSlice';
 import { RootState } from 'types';
 
 const Alerts = () => {
-  const { list, filter, totalCount } = useSelector((state: RootState) => state.alerts);
-  const { skip, take, sort, order, search } = filter;
   const dispatch = useAppDispatch();
+  const { list, filter, totalCount } = useSelector((state: RootState) => state.alerts);
+
+  const { take, order } = filter;
+
   useEffect(() => {
-    dispatch(alertsActions.getAlertList({ skip: 0, take: 10, sort: 'id', order: 'ASC' }));
-  }, [skip, take, sort, order, search, dispatch]);
+    dispatch(alertsActions.getAlertList(filter));
+  }, [dispatch, filter]);
 
   return (
     <Table
-      rows={list || []}
-      headCells={headCells}
+      take={take}
+      order={order}
       type='primary'
       action='alerts'
-      skip={skip}
-      take={take}
-      sort={sort}
-      order={order}
-      search={search}
+      rows={list || []}
+      headCells={headCells}
       totalCount={totalCount}
     />
   );

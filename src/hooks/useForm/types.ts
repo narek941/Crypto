@@ -4,6 +4,7 @@ import { UseFormProps as UseReactHookFormProps, UseFormReturn } from 'react-hook
 export type FormFieldNames =
   | 'email'
   | 'password'
+  | 'emptyPassword'
   | 'rememberMe'
   | 'name'
   | 'accountType'
@@ -18,8 +19,7 @@ export type FormFieldNames =
   | 'maxRisk'
   | 'stopLossOrder'
   | 'wrongCurrencyAlert'
-  | 'allowedFirstPairs'
-  | 'allowedSecondPairs'
+  | 'allowedPairs'
   | 'alertKey'
   | 'alertValue';
 

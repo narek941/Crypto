@@ -1,6 +1,7 @@
 import 'react-toastify/dist/ReactToastify.css';
 import { v4 as uuidv4 } from 'uuid';
 import { useState } from 'react';
+import { useFieldArray } from 'react-hook-form';
 
 import FormGroup from 'components/forms/FormGroup';
 
@@ -9,28 +10,35 @@ import styles from '../AddAccountForm.module.scss';
 import SelectGroup from './SelectGroup';
 
 const TradeSetting = ({ formMethods }: any) => {
-  const [pairs, setPairs] = useState<{ id: string }[]>([{ id: uuidv4() }]);
+  const initialPair = {
+    from: {
+      id: uuidv4(),
+    },
+    to: {
+      id: uuidv4(),
+    },
+  };
   const initialDestination = { id: uuidv4(), type: '', emailAddress: '', phoneNumber: '' };
   const [destination, setDestination] = useState<
     { id: string; type: string; emailAddress?: string; phoneNumber?: string }[]
   >([initialDestination]);
+  const { fields, append, remove } = useFieldArray({
+    control: formMethods.control,
+    name: 'allowedPairs',
+  });
 
   const addPair = () => {
-    setPairs([...pairs, { id: uuidv4() }]);
+    append(initialPair);
   };
+
   const addDestination = () => {
     setDestination([...destination, initialDestination]);
   };
 
   const removeDestination = (id: string) => {
-    // eslint-disable-next-line no-console
-    console.log(id, destination, 'id');
     const filteredPairs = destination.filter((item) => item.id !== id);
+
     setDestination(filteredPairs);
-  };
-  const removePair = (id: string) => {
-    const filteredPairs = pairs.filter((item) => item.id !== id);
-    setPairs(filteredPairs);
   };
 
   const renderAlerts = destination.map(({ id }) => (
@@ -42,8 +50,16 @@ const TradeSetting = ({ formMethods }: any) => {
       formMethods={formMethods}
     />
   ));
-  const renderPairs = pairs.map(({ id }) => (
-    <SelectGroup key={id} id={id} removePair={removePair} formMethods={formMethods} />
+  const renderPairs = fields.map(({ id }, index) => (
+    <SelectGroup
+      key={id}
+      id={id}
+      index={index}
+      leftInputName='from'
+      rightInputName='to'
+      formMethods={formMethods}
+      removePair={() => remove(index)}
+    />
   ));
 
   return (
