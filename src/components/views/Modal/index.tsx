@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { Doughnut } from 'react-chartjs-2';
 import { Link } from 'react-router-dom';
 
-import { modalChartList, modalList } from 'utils/modal';
+import { modalChartList } from 'utils/modal';
 import { CloseModalIcon } from 'assets/icons';
 import useOnClickOutside from 'hooks/useOutsideClick';
 import { chartColor } from 'utils/chart';
@@ -12,7 +12,7 @@ import { Routes } from 'types';
 import styles from './Modal.module.scss';
 import { IModalProps } from './types';
 
-const Modal = ({ open, setOpen }: IModalProps): JSX.Element => {
+const Modal = ({ id, open, setOpen, modalList }: IModalProps): JSX.Element => {
   const ref = useRef(null);
 
   const headerClass = classNames(styles.item, styles.item__header);
@@ -76,7 +76,7 @@ const Modal = ({ open, setOpen }: IModalProps): JSX.Element => {
       <div className={styles.inner}>
         <div>{renderModalList}</div>
         <div>{renderModalChartList}</div>
-        <Link className={linkClass} to={Routes.AccountsAnalytics}>
+        <Link className={linkClass} to={`${Routes.Accounts}/analytics/${id}`}>
           more details
         </Link>
       </div>

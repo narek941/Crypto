@@ -12,13 +12,12 @@ export type AddAccountFormShape = {
   maxPosition: string;
   maxRisk: string;
   allowedPairs: any[];
-  alertValue: string;
-  alertKey: string;
+  alertsDestinations: any[];
   stopLossOrder: boolean;
   wrongCurrencyAlert: boolean;
 };
 
 export interface IAddAccount {
-  onclick: SubmitHandler<AddAccountFormShape>;
+  onClick: SubmitHandler<AddAccountFormShape>;
   isEditable?: boolean;
 }

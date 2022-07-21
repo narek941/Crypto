@@ -2,16 +2,12 @@
   margin-top: 10px;
   @extend %flex-column;
   gap: 24px;
-
-  &__export {
-    margin-bottom: 28px;
-  }
+  padding-left: 96px;
 
   &__bricks__wrapper {
     display: grid;
     grid-gap: 24px;
-    grid-template-columns: 400px 400px 293px;
-    justify-content: center;
+    padding-right: 8px;
 
     div:nth-child(3) {
       grid-column: 3;

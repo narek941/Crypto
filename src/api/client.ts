@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import { Routes } from 'types';
+
 const initialConfig = {
   baseURL: process.env.REACT_APP_API_URL,
 };
@@ -20,5 +22,22 @@ client.interceptors.request.use((config: any) => {
 
   return config;
 });
+
+client.interceptors.response.use(
+  (response: any) => {
+    return response;
+  },
+  (error: any) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('role');
+      sessionStorage.removeItem('accessToken');
+      sessionStorage.removeItem('role');
+      window.location.href = Routes.Login;
+    }
+
+    return Promise.reject(error);
+  },
+);
 
 export default client;

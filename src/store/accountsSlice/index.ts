@@ -11,6 +11,7 @@ const internalInitialState: AccountsSliceState = {
   loading: AccountStates.IDLE,
   totalCount: 0,
   list: [],
+  coins: [],
   accountsFilter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '' },
   accountById: {},
 };
@@ -58,6 +59,9 @@ const accountsSlice = createSlice({
     );
     builder.addCase(accountsThunks.removeAccountById, (state) => {
       state.accountById = {};
+    });
+    builder.addCase(accountsThunks.getCoins.fulfilled, (state, action) => {
+      state.coins = action.payload.coins;
     });
   },
 });

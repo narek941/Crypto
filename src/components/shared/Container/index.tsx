@@ -1,11 +1,24 @@
 import React, { FC } from 'react';
 import classNames from 'classnames';
+import { useLocation, useParams } from 'react-router-dom';
+
+import { Routes } from 'types';
 
 import styles from './Container.module.scss';
 import { IContainer } from './types';
 
 const Container: FC<IContainer> = ({ children, className }) => {
-  const containerClass: string = classNames(styles.container, className);
+  const { pathname } = useLocation();
+  const params = useParams();
+  const containerClass: string = classNames(
+    styles.container,
+    {
+      [styles.container__analytics]: pathname === `${Routes.Accounts}/${params.id}`,
+    },
+    className,
+  );
+
   return <div className={containerClass}>{children}</div>;
 };
+
 export default Container;

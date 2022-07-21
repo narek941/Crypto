@@ -1,10 +1,13 @@
 import { Controller } from 'react-hook-form';
+import { useMemo } from 'react';
+import { isString } from 'lodash';
 
 import { Input, Select } from 'components';
 import { BinIcon } from 'assets/icons';
+import { useAppSelector } from 'hooks';
+import { RootState } from 'types';
 
 import { addAccountFormFields } from '../fields';
-import { AddAccountFormShape } from '../types';
 import styles from '../AddAccountForm.module.scss';
 
 export interface ISelectGroup {
@@ -26,6 +29,22 @@ const SelectGroup = ({
   leftInputName,
   rightInputName,
 }: ISelectGroup) => {
+  const coins = useAppSelector((state: RootState) => state.accounts.coins);
+  const currentAlertDestination = formMethods.watch(`alertsDestinations[${index}]`);
+  const type = isString(currentAlertDestination?.type)
+    ? currentAlertDestination?.type
+    : currentAlertDestination?.type.value;
+  const isEmailInput = type === 'EMAIL';
+
+  const coinOptions = useMemo(
+    () =>
+      coins.map((coin) => ({
+        label: coin.name,
+        value: coin.id,
+      })),
+    [coins],
+  );
+
   return (
     <div>
       <div className={styles.form__section__item}>
@@ -35,14 +54,24 @@ const SelectGroup = ({
               control={formMethods.control}
               name={`allowedPairs[${index}].${leftInputName}.id` as any}
               render={({ field }) => (
-                <Select {...addAccountFormFields.allowedPairs} {...field} multiple={true} />
+                <Select
+                  {...addAccountFormFields.allowedPairs}
+                  {...field}
+                  options={coinOptions}
+                  multiple={true}
+                />
               )}
             />
             <Controller
               control={formMethods.control}
               name={`allowedPairs[${index}].${rightInputName}.id` as any}
               render={({ field }) => (
-                <Select {...addAccountFormFields.allowedPairs} {...field} multiple={true} />
+                <Select
+                  {...addAccountFormFields.allowedPairs}
+                  {...field}
+                  options={coinOptions}
+                  multiple={true}
+                />
               )}
             />
           </>
@@ -50,12 +79,28 @@ const SelectGroup = ({
           <>
             <Controller
               control={formMethods.control}
-              name={(addAccountFormFields.alertKey.name + id) as keyof AddAccountFormShape}
+              name={`alertsDestinations[${index}].${leftInputName}` as any}
               render={({ field }) => (
-                <Select {...addAccountFormFields.alertKey} {...field} multiple={true} />
+                <Select {...addAccountFormFields.alertsDestinations} {...field} multiple={true} />
               )}
             />
-            <Input {...addAccountFormFields.alertValue} isSmall={true} />
+            <Controller
+              control={formMethods.control}
+              name={
+                `alertsDestinations[${index}].${
+                  isEmailInput ? rightInputName : 'phoneNumber'
+                }` as any
+              }
+              render={({ field }) => (
+                <Input
+                  {...addAccountFormFields.alertsDestinations}
+                  isSmall={true}
+                  {...field}
+                  placeholder={!type ? '' : isEmailInput ? 'Enter Email' : 'Enter Mobile Number'}
+                  type={isEmailInput ? 'email' : 'tel'}
+                />
+              )}
+            />
           </>
         )}
 

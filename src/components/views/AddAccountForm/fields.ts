@@ -9,9 +9,9 @@ export const currencyList = [
   { value: 'tusd', label: 'TUSD' },
 ];
 export const alertList = [
-  { value: 'email', label: 'Email' },
-  { value: 'sms', label: 'SMS' },
-  { value: 'telegram', label: 'Telegram' },
+  { value: 'EMAIL', label: 'Email' },
+  { value: 'SMS', label: 'SMS' },
+  { value: 'TELEGRAM', label: 'Telegram' },
 ];
 export const refreshIntervalList = [
   { value: '3m', label: '3m' },
@@ -121,22 +121,14 @@ export const addAccountFormFields: FormField<keyof AddAccountFormShape> = {
     type: 'select',
     name: 'allowedPairs',
     id: 'addAccount.allowedPairs',
-    placeholder: '',
-    options: currencyList,
+    placeholder: 'Choose currency',
   },
-  alertKey: {
+  alertsDestinations: {
     type: 'select',
-    name: 'alertKey',
-    id: 'addAccount.alertKey',
-    placeholder: '',
+    name: 'alertsDestinations',
+    id: 'addAccount.alertsDestinations',
+    placeholder: 'Choose destination',
     options: alertList,
-  },
-  alertValue: {
-    type: 'text',
-    label: '',
-    name: 'alertValue',
-    id: 'addAccount.alertValue',
-    placeholder: '',
   },
 };
 

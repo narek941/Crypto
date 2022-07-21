@@ -1,5 +1,4 @@
 import 'react-toastify/dist/ReactToastify.css';
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import { Switch } from '@mui/material';
@@ -12,8 +11,8 @@ import styles from '../AddAccountForm.module.scss';
 import { addAccountFormFields } from '../fields';
 
 const FormAction = ({ formMethods, isValid }: any) => {
-  const [firstCheckbox, setFirstCheckbox] = useState<boolean>(false);
-  const [secondCheckbox, setSecondCheckbox] = useState<boolean>(false);
+  const firstCheckbox = formMethods.watch('stopLossOrder');
+  const secondCheckbox = formMethods.watch('wrongCurrencyAlert');
 
   const firstCheckboxTextClass = classNames(styles.checkbox__text, {
     [styles.disable]: !firstCheckbox,
@@ -21,9 +20,6 @@ const FormAction = ({ formMethods, isValid }: any) => {
   const secondCheckboxTextClass = classNames(styles.checkbox__text, {
     [styles.disable]: !secondCheckbox,
   });
-
-  const firstHandleChange = () => setFirstCheckbox(!firstCheckbox);
-  const secondHandleChange = () => setSecondCheckbox(!secondCheckbox);
 
   return (
     <FormGroup>
@@ -33,9 +29,8 @@ const FormAction = ({ formMethods, isValid }: any) => {
             <p className={firstCheckboxTextClass}>Stop-loss-order required</p>
             <Switch
               {...addAccountFormFields.stopLossOrder}
-              checked={firstCheckbox}
               {...formMethods.register('stopLossOrder')}
-              onChange={firstHandleChange}
+              checked={firstCheckbox}
             />
           </div>
           <div className={styles.form__action__item}>
@@ -45,7 +40,6 @@ const FormAction = ({ formMethods, isValid }: any) => {
               {...addAccountFormFields.wrongCurrencyAlert}
               {...formMethods.register('wrongCurrencyAlert')}
               checked={secondCheckbox}
-              onChange={secondHandleChange}
             />
           </div>
 
