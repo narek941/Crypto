@@ -1,9 +1,9 @@
 .container {
-  @extend %text-13;
   color: var(--empty-text);
   padding: 21.5px 16px;
   display: flex;
   border-left: var(--table);
+  @extend %text-13;
 
   span {
     white-space: nowrap;

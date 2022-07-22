@@ -5,7 +5,7 @@ import moment from 'moment';
 import { isUndefined } from 'lodash';
 
 import { useAppDispatch } from 'hooks';
-import { Bricks, Chart, CollapsibleTable, Doughnut, Export } from 'components';
+import { Bricks, Chart, OrdersTable, Doughnut, Export } from 'components';
 import { accountsAnalyticsLineChart } from 'utils/table';
 import { accountsActions } from 'store/accountsSlice';
 import { RootState } from 'types';
@@ -102,7 +102,7 @@ const AccountsAnalytics: React.FC = () => {
       </div>
       <div className={styles.analytics__chart}>{renderLineCharts}</div>
       <div className={styles.analytics__chart}>{renderDoughnutCharts}</div>
-      <CollapsibleTable
+      <OrdersTable
         handleRequestSort={handleRequestSort}
         handleChangePage={handleChangePage}
         handleChangeRowsPerPage={handleChangeRowsPerPage}
