@@ -14,4 +14,4 @@ export { default as ExternalImage } from './ExternalImage';
 export { default as DeleteAlert } from './DeleteAlert';
 export { default as PublicRoute } from './PublicRoute';
 export { default as ProtectedRoute } from './ProtectedRoute';
-export { default as CollapsibleTable } from './CollapsibleTable';
+export { default as OrdersTable } from './OrdersTable';
