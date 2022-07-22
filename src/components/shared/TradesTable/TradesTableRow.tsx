@@ -12,7 +12,7 @@ const TradesTableRow = ({ row }: any) => {
       <TableRow className={styles.container__body__row}>
         <>
           <TableCell align='left' className={styles.ceil} key={uuid4()}>
-            {moment(row.createdAt).format('MM.DD.YY')}
+            {moment(row.createdAt).format('DD.MM.YYYY HH:MM:SS')}
           </TableCell>
 
           <TableCell align='left' className={styles.ceil} key={uuid4()}>

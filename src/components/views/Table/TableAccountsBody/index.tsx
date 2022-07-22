@@ -139,7 +139,7 @@ const TableAccountBody = ({
       <tbody className={styles.table__body}>
         {rows.map(
           ({ id, startCapitalInBaseCurrency, name, createdAt, status, statistics }: any, index) => {
-            const formattedDate = moment(createdAt).format('MM.DD.YY');
+            const formattedDate = moment(createdAt).format('DD.MM.YYYY HH:MM:SS');
             const isLastItem = index === rows.length - 1;
 
             return (

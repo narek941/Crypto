@@ -47,9 +47,9 @@ const OrdersTableRow = ({ row }: any) => {
 
   return (
     <React.Fragment>
-      <TableRow className={styles.container__body__row}>
+      <TableRow className={styles.container__body__row} onClick={() => handleCollapse(row.id)}>
         <TableCell className={styles.ceil}>
-          <IconButton aria-label='expand row' size='small' onClick={() => handleCollapse(row.id)}>
+          <IconButton aria-label='expand row' size='small'>
             <TableDropdownIcon className={dropdownClass} />
           </IconButton>
         </TableCell>
@@ -59,7 +59,7 @@ const OrdersTableRow = ({ row }: any) => {
           </TableCell>
 
           <TableCell align='left' className={styles.ceil} key={uuid4()}>
-            {moment(row.createdAt).format('MM.DD.YY')}
+            {moment(row.creationTime).format('DD.MM.YYYY HH:MM:SS')}
           </TableCell>
 
           <TableCell align='left' className={styles.ceil} key={uuid4()}>
@@ -90,7 +90,7 @@ const OrdersTableRow = ({ row }: any) => {
             {row.relativePercentageToAccount || 0}
           </TableCell>
           <TableCell align='left' className={styles.ceil} key={uuid4()}>
-            {moment(row.updatedAt).format('MM.DD.YY')}
+            {moment(row.lastOperationTime).format('DD.MM.YYYY HH:MM:SS')}
           </TableCell>
         </>
       </TableRow>
@@ -101,7 +101,7 @@ const OrdersTableRow = ({ row }: any) => {
           className={styles.collapse__ceil}
         >
           <Collapse in={open} timeout='auto' unmountOnExit>
-            <Box sx={{ margin: 1 }}>
+            <Box>
               {wallerOrder ? (
                 <>
                   <Table size='small' aria-label='purchases' className={collapseClass}>
@@ -154,7 +154,7 @@ const OrdersTableRow = ({ row }: any) => {
                   </Table>
                 </>
               ) : (
-                <EmptyData className={styles.empty} />
+                <EmptyData className={styles.empty} text={'This order has no trades yet.'} />
               )}
             </Box>
           </Collapse>

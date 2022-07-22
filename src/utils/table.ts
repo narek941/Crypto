@@ -449,15 +449,15 @@ export const accountsAnalyticsLineChart = [
 
 export const orderTradesHeader: { id: number; value: string }[] = [
   { id: 1, value: 'ID' },
-  { id: 2, value: 'Created' },
+  { id: 2, value: 'Created at' },
   { id: 3, value: 'Pair' },
   { id: 4, value: 'Side' },
   { id: 5, value: 'Value' },
-  { id: 6, value: 'Value USDT' },
+  { id: 6, value: 'Value, USDT' },
   { id: 7, value: 'Received' },
   { id: 8, value: 'Received, USDT' },
   { id: 9, value: 'Fee' },
-  { id: 10, value: 'Fee USDT' },
+  { id: 10, value: 'Fee, USDT' },
   { id: 11, value: 'Share' },
   { id: 12, value: 'Updated' },
 ];
