@@ -1,3 +1,4 @@
+import { OrdersTable } from 'components';
 import { HeadCell, Order } from 'components/views/Table/types';
 
 export const rows = [
@@ -459,4 +460,26 @@ export const orderTradesHeader: { id: number; value: string }[] = [
   { id: 10, value: 'Fee USDT' },
   { id: 11, value: 'Share' },
   { id: 12, value: 'Updated' },
+];
+
+export const tradesHeader: { id: number; value: string }[] = [
+  { id: 1, value: 'Time' },
+  { id: 2, value: 'Currency pair' },
+  { id: 3, value: 'Side' },
+  { id: 4, value: 'Price' },
+  { id: 5, value: 'Amount, BTC' },
+  { id: 6, value: 'Value USDT' },
+  { id: 7, value: 'Total price' },
+  { id: 8, value: 'Total price, USDT' },
+  { id: 9, value: 'Fees' },
+  { id: 10, value: 'Fees USDT' },
+];
+
+export const tabList: { id: number; name: string; Component?: typeof OrdersTable }[] = [
+  { id: 0, name: ' Open orders' },
+  { id: 1, name: 'Wallet' },
+  { id: 2, name: 'Inflows & Outflows' },
+  { id: 3, name: 'Orders History' },
+  { id: 4, name: 'Trades' },
+  { id: 5, name: 'Alerts' },
 ];

@@ -1,0 +1,9 @@
+.tab {
+  padding-bottom: 24px;
+  cursor: pointer;
+
+  &__selected {
+    padding-bottom: 22px;
+    border-bottom: 2px solid var(--tab-selected-border);
+  }
+}

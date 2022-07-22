@@ -17,6 +17,8 @@ const internalInitialState: AccountsSliceState = {
   accountsFilter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '' },
   accountById: {},
   summary: {},
+  tradesList: [],
+  tradesTotalCount: 0,
 };
 export type IFilterPayload =
   | { skip: number }
@@ -78,6 +80,10 @@ const accountsSlice = createSlice({
         ...state.accountById,
         statistics: action.payload.summary,
       };
+    });
+    builder.addCase(accountsThunks.getWalletTradesList.fulfilled, (state, action) => {
+      state.tradesList = action.payload.list;
+      state.tradesTotalCount = action.payload.totalCount;
     });
   },
 });

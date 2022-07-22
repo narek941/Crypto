@@ -53,8 +53,8 @@ export const getAccountSummary = createAsyncThunk(
   },
 );
 
-export const getAccountsAnalytics = createAsyncThunk(
-  `${Slice.Accounts}/accounts-analytics`,
+export const getWalletTradesList = createAsyncThunk(
+  `${Slice.Accounts}/wallet-trades`,
   async (
     credentials: {
       skip: number;

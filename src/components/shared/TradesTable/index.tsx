@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { useSelector } from 'react-redux';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { EmptyData, Pagination } from 'components';
 import { RootState } from 'types';
-import { orderTradesHeader } from 'utils/table';
+import { tradesHeader } from 'utils/table';
 import { useAppDispatch } from 'hooks';
 import { accountsActions } from 'store/accountsSlice';
 import { accountsFilterUpdate } from 'store/accountsSlice/thunks';
 
-import OrdersTableRow from './OrdersTableRow';
-import styles from './OrdersTable.module.scss';
+import TradesTableRow from './TradesTableRow';
+import styles from './TradesTable.module.scss';
 
-const OrdersTable = () => {
-  const { accountsFilter, openOrders, openOrdersTotalCount } = useSelector(
+const TradesTable = () => {
+  const { accountsFilter, tradesList, tradesTotalCount } = useSelector(
     (state: RootState) => state.accounts,
   );
   const { id } = useParams();
@@ -49,17 +49,17 @@ const OrdersTable = () => {
 
   useEffect(() => {
     dispatch(
-      accountsActions.getWalletOpenOrders({ ...accountsFilter, id: convertedId as string | any }),
+      accountsActions.getWalletTradesList({ ...accountsFilter, id: convertedId as string | any }),
     );
   }, [convertedId, accountsFilter, dispatch]);
+
   return (
     <>
       <div className={styles.wrapper}>
-        <Table aria-label='collapsible table' className={styles.inner}>
+        <Table className={styles.inner}>
           <TableHead className={styles.container__header}>
             <TableRow className={styles.container__header__row}>
-              <TableCell className={styles.container__header__ceil}>More</TableCell>
-              {orderTradesHeader.map(({ id, value }) => (
+              {tradesHeader.map(({ id, value }) => (
                 <TableCell align='left' className={styles.container__header__ceil} key={id}>
                   {value}
                 </TableCell>
@@ -67,12 +67,12 @@ const OrdersTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {openOrders.map((row) => (
-              <OrdersTableRow row={row} key={row.id} />
+            {tradesList.map((row) => (
+              <TradesTableRow row={row} key={row.id} />
             ))}
           </TableBody>
         </Table>
-        {!openOrdersTotalCount && <EmptyData />}
+        {!tradesTotalCount && <EmptyData />}
       </div>
 
       <Pagination
@@ -80,9 +80,9 @@ const OrdersTable = () => {
         handleChangeRowsPerPage={handleChangeRowsPerPage}
         currentPage={page}
         rowsPerPage={accountsFilter?.take}
-        totalCount={openOrdersTotalCount}
+        totalCount={tradesTotalCount}
       />
     </>
   );
 };
-export default OrdersTable;
+export default TradesTable;

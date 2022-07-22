@@ -15,4 +15,6 @@ export type AccountsSliceState = {
   accountById: any;
   coins: any[];
   summary: any;
+  tradesList: any[];
+  tradesTotalCount: number;
 };
