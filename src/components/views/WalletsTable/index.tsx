@@ -63,7 +63,7 @@ const WalletsTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {list.map(({ row }: any) => (
+            {list.map((row) => (
               <WalletsTableRow row={row} key={row.id} />
             ))}
           </TableBody>

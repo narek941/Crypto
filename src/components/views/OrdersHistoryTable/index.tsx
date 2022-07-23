@@ -12,13 +12,13 @@ import { RootState } from 'types';
 import { orderHistoryTradesHeader } from 'utils/table';
 import { useAppDispatch } from 'hooks';
 import { walletsActions } from 'store/walletsSlice';
-import { openOrdersFilterUpdate } from 'store/walletsSlice/thunks';
+import { recordsFilterUpdate } from 'store/walletsSlice/thunks';
 
 import styles from './OrdersHistoryTable.module.scss';
 import OrdersHistoryTableRow from './OrdersHistoryTableRow';
 
 const OrdersHistoryTable = () => {
-  const { filter, list, totalCount } = useSelector((state: RootState) => state.wallets.openOrders);
+  const { filter, list, totalCount } = useSelector((state: RootState) => state.wallets.records);
   const { id } = useParams();
   const convertedId = Number(id);
 
@@ -30,23 +30,23 @@ const OrdersHistoryTable = () => {
   //   const isAsc = orderBy === property && accountsFilter.order === 'ASC';
   //   const orderText = isAsc ? 'DESC' : 'ASC';
 
-  //   dispatch(openOrdersFilterUpdate({ order: orderText }));
+  //   dispatch(recordsFilterUpdate({ order: orderText }));
 
   //   setOrderBy(property);
   // };
 
   const handleChangePage = (event: unknown, newPage: number) => {
-    dispatch(openOrdersFilterUpdate({ skip: Number(newPage) * filter.take }));
+    dispatch(recordsFilterUpdate({ skip: Number(newPage) * filter.take }));
 
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(openOrdersFilterUpdate({ take: parseInt(event.target.value), skip: 0 }));
+    dispatch(recordsFilterUpdate({ take: parseInt(event.target.value), skip: 0 }));
   };
 
   useEffect(() => {
-    dispatch(walletsActions.getWalletOpenOrders({ ...filter, id: convertedId as string | any }));
+    dispatch(walletsActions.getWalletRecords({ ...filter, id: convertedId as string | any }));
   }, [convertedId, filter, dispatch]);
   return (
     <>
@@ -54,7 +54,6 @@ const OrdersHistoryTable = () => {
         <Table className={styles.inner}>
           <TableHead className={styles.container__header}>
             <TableRow className={styles.container__header__row}>
-              <TableCell className={styles.container__header__ceil}>More</TableCell>
               {orderHistoryTradesHeader.map(({ id, value }) => (
                 <TableCell align='left' className={styles.container__header__ceil} key={id}>
                   {value}
@@ -63,7 +62,7 @@ const OrdersHistoryTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {list.map(({ row }: any) => (
+            {list.map((row) => (
               <OrdersHistoryTableRow row={row} key={row.id} />
             ))}
           </TableBody>

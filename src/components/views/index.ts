@@ -10,8 +10,8 @@ export { default as SignInForm } from './SignInForm';
 export { default as AddUserForm } from './AddUserForm';
 export { default as TradesTable } from './TradesTable';
 export { default as OrdersTable } from './OrdersTable';
+export { default as InflowsTable } from './InflowsTable';
 export { default as WalletsTable } from './WalletsTable';
 export { default as AnalyticsTabs } from './AnalyticsTabs';
 export { default as AddAccountForm } from './AddAccountForm';
-
 export { default as OrdersHistoryTable } from './OrdersHistoryTable';

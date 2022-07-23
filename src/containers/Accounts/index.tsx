@@ -9,7 +9,9 @@ import { accountsActions } from 'store/accountsSlice';
 
 const Accounts = () => {
   const dispatch = useAppDispatch();
-  const { list, totalCount, filter } = useSelector((state: RootState) => state.accounts);
+  const { list, totalCount, filter } = useSelector(
+    (state: RootState) => state.accounts.accountsList,
+  );
 
   const { take, order } = filter;
 

@@ -8,44 +8,33 @@ import styles from './InflowsTable.module.scss';
 
 const InflowsTableRow = ({ row }: any) => {
   return (
-    <React.Fragment>
+    <>
       <TableRow className={styles.container__body__row}>
         <>
           <TableCell align='left' className={styles.ceil} key={uuid4()}>
-            {moment(row.createdAt).format('DD.MM.YYYY HH:MM:SS')}
-          </TableCell>
-
-          <TableCell align='left' className={styles.ceil} key={uuid4()}>
-            {row?.coinsPair?.name}
-          </TableCell>
-
-          <TableCell align='left' className={styles.ceil} key={uuid4()}>
-            {row.side}
+            {row?.type}
           </TableCell>
           <TableCell align='left' className={styles.ceil} key={uuid4()}>
-            {row.price}
+            {row?.id}
           </TableCell>
           <TableCell align='left' className={styles.ceil} key={uuid4()}>
-            {row.amount}
+            {row.coin.name}
           </TableCell>
           <TableCell align='left' className={styles.ceil} key={uuid4()}>
-            {row.value}
+            {row?.amount}
           </TableCell>
           <TableCell align='left' className={styles.ceil} key={uuid4()}>
-            {row.totalPrice || 0}
+            {row.network}
           </TableCell>
           <TableCell align='left' className={styles.ceil} key={uuid4()}>
-            {row.totalPriceInBaseCurrency || 0}
+            {row?.transactionFee}
           </TableCell>
           <TableCell align='left' className={styles.ceil} key={uuid4()}>
-            {row.fees || 0}
-          </TableCell>
-          <TableCell align='left' className={styles.ceil} key={uuid4()}>
-            {row.feesInBaseCurrency || 0}
+            {moment(row.insertTime).format('DD.MM.YYYY HH:MM:SS')}
           </TableCell>
         </>
       </TableRow>
-    </React.Fragment>
+    </>
   );
 };
 

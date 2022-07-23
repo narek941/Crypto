@@ -12,7 +12,7 @@ import { RootState } from 'types';
 import { orderTradesHeader } from 'utils/table';
 import { useAppDispatch } from 'hooks';
 import { walletsActions } from 'store/walletsSlice';
-import { accountsFilterUpdate } from 'store/accountsSlice/thunks';
+import { openOrdersFilterUpdate } from 'store/walletsSlice/thunks';
 
 import OrdersTableRow from './OrdersTableRow';
 import styles from './OrdersTable.module.scss';
@@ -30,19 +30,19 @@ const OrdersTable = () => {
   //   const isAsc = orderBy === property && filter.order === 'ASC';
   //   const orderText = isAsc ? 'DESC' : 'ASC';
 
-  //   dispatch(accountsFilterUpdate({ order: orderText }));
+  //   dispatch(openOrdersFilterUpdate({ order: orderText }));
 
   //   setOrderBy(property);
   // };
 
   const handleChangePage = (event: unknown, newPage: number) => {
-    dispatch(accountsFilterUpdate({ skip: Number(newPage) * filter.take }));
+    dispatch(openOrdersFilterUpdate({ skip: Number(newPage) * filter.take }));
 
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(accountsFilterUpdate({ take: parseInt(event.target.value), skip: 0 }));
+    dispatch(openOrdersFilterUpdate({ take: parseInt(event.target.value), skip: 0 }));
   };
 
   useEffect(() => {

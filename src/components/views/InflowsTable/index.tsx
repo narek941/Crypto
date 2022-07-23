@@ -5,24 +5,26 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { v4 as uuid4 } from 'uuid';
 
 import { EmptyData, Pagination } from 'components';
 import { RootState } from 'types';
 import { inflowHeader } from 'utils/table';
 import { useAppDispatch } from 'hooks';
-import { accountsActions } from 'store/accountsSlice';
-import { accountsFilterUpdate } from 'store/accountsSlice/thunks';
+import { walletsActions } from 'store/walletsSlice';
+import { inflowFilterUpdate } from 'store/walletsSlice/thunks';
 
 import InflowsTableRow from './InflowsTableRow';
 import styles from './InflowsTable.module.scss';
 
 const InflowsTable = () => {
-  const { filter, list, totalCount } = useSelector((state: RootState) => state.wallets.orderTrades);
-  const { id } = useParams();
-  const convertedId = Number(id);
-
+  const accounts = useSelector((state: RootState) => state.accounts);
+  const { filter, list, totalCount } = useSelector((state: RootState) => state.wallets.inflow);
+  const walletId = accounts.accountById?.wallets?.length && accounts.accountById.wallets[0]?.id;
+  // const { id } = useParams();
+  // const convertedId = Number(id);
   const [page, setPage] = useState(0);
+
   const dispatch = useAppDispatch();
   // const [orderBy, setOrderBy] = useState<KeyOfData>('id');
 
@@ -30,24 +32,24 @@ const InflowsTable = () => {
   //   const isAsc = orderBy === property && filter.order === 'ASC';
   //   const orderText = isAsc ? 'DESC' : 'ASC';
 
-  //   dispatch(accountsFilterUpdate({ order: orderText }));
+  //   dispatch(inflowFilterUpdate({ order: orderText }));
 
   //   setOrderBy(property);
   // };
 
   const handleChangePage = (event: unknown, newPage: number) => {
-    dispatch(accountsFilterUpdate({ skip: Number(newPage) * filter.take }));
+    dispatch(inflowFilterUpdate({ skip: Number(newPage) * filter.take }));
 
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(accountsFilterUpdate({ take: parseInt(event.target.value), skip: 0 }));
+    dispatch(inflowFilterUpdate({ take: parseInt(event.target.value), skip: 0 }));
   };
 
   useEffect(() => {
-    dispatch(accountsActions.getAccountTradesList({ ...filter, id: convertedId as string | any }));
-  }, [convertedId, filter, dispatch]);
+    dispatch(walletsActions.getWalletInflow({ ...filter, walletId: walletId as string | any }));
+  }, [walletId, filter, dispatch]);
 
   return (
     <>
@@ -62,11 +64,13 @@ const InflowsTable = () => {
               ))}
             </TableRow>
           </TableHead>
-          <TableBody>
-            {list.map(({ row }: any) => (
-              <InflowsTableRow row={row} key={row.id} />
-            ))}
-          </TableBody>
+          {totalCount && (
+            <TableBody>
+              {list?.map((row) => (
+                <InflowsTableRow row={row} key={uuid4()} />
+              ))}
+            </TableBody>
+          )}
         </Table>
         {!totalCount && <EmptyData />}
       </div>

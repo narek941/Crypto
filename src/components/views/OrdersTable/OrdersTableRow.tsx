@@ -24,6 +24,7 @@ const OrdersTableRow = ({ row }: any): JSX.Element => {
   const [open, setOpen] = useState(false);
   const [wallerOrder, setWallerOrder] = useState<any | null>();
   const accounts = useSelector((state: RootState) => state.accounts);
+  const { filter } = useSelector((state: RootState) => state.wallets.orders);
 
   const id = accounts.accountById?.wallets?.length && accounts.accountById.wallets[0]?.id;
   const collapseClass = classNames({ [styles.open]: open });
@@ -32,7 +33,7 @@ const OrdersTableRow = ({ row }: any): JSX.Element => {
   const handleCollapse = async (orderId: number) => {
     if (!open) {
       const wallerOrderTrades = await dispatch(
-        walletsActions.getWalletOrderTrades({ walletId: id, orderId }),
+        walletsActions.getWalletOrderTrades({ walletId: id, orderId, ...filter }),
       ).unwrap();
 
       if (wallerOrderTrades.list) {

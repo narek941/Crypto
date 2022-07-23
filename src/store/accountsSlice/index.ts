@@ -10,14 +10,18 @@ import { AccountsSliceState } from './types';
 const internalInitialState: AccountsSliceState = {
   error: null,
   loading: AccountStates.IDLE,
-  totalCount: 0,
-  list: [],
-  openOrders: [],
-  openOrdersTotalCount: 0,
   coins: [],
-  filter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '' },
   accountById: {},
-  summary: {},
+  accountsList: {
+    totalCount: 0,
+    list: [],
+    filter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '' },
+  },
+  trades: {
+    totalCount: 0,
+    list: [],
+    filter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '' },
+  },
 };
 
 const accountsSlice = createSlice({
@@ -32,15 +36,18 @@ const accountsSlice = createSlice({
       (state, action: PayloadAction<any>) => {
         state.error = null;
         state.loading = AccountStates.IDLE;
-        state.list = action.payload.list;
-        state.totalCount = action.payload.totalCount;
+        state.accountsList.list = action.payload.list;
+        state.accountsList.totalCount = action.payload.totalCount;
       },
     );
 
-    builder.addCase(accountsThunks.accountsFilterUpdate, (state, action) => {
-      const filter = state.filter;
-      state.filter = { ...filter, ...action.payload };
-    });
+    builder.addCase(
+      accountsThunks.getAccountTradesList.fulfilled,
+      (state, action: PayloadAction<any>) => {
+        state.trades.list = action.payload.list;
+        state.trades.totalCount = action.payload.totalCount;
+      },
+    );
 
     builder.addCase(
       accountsThunks.getAccountById.fulfilled,
@@ -56,15 +63,27 @@ const accountsSlice = createSlice({
         ...state.accountById,
         statistics: action.payload.summary,
       };
-      builder.addCase(accountsThunks.removeAccountById, (state) => {
-        state.accountById = {};
-      });
     });
+
+    builder.addCase(accountsThunks.removeAccountById, (state) => {
+      state.accountById = {};
+    });
+
+    builder.addCase(accountsThunks.accountsFilterUpdate, (state, action) => {
+      const filter = state.accountsList.filter;
+      state.accountsList.filter = { ...filter, ...action.payload };
+    });
+    builder.addCase(accountsThunks.accountsTradesFilterUpdate, (state, action) => {
+      const filter = state.trades.filter;
+      state.trades.filter = { ...filter, ...action.payload };
+    });
+
     builder.addMatcher(
       isAnyOf(
         accountsThunks.getAccountSummary.pending,
         accountsThunks.getAccountList.pending,
         accountsThunks.getAccountById.pending,
+        accountsThunks.getAccountTradesList.pending,
       ),
       pendingReducer,
     );
@@ -74,6 +93,7 @@ const accountsSlice = createSlice({
         accountsThunks.getAccountSummary.rejected,
         accountsThunks.getAccountList.rejected,
         accountsThunks.getAccountById.rejected,
+        accountsThunks.getAccountTradesList.rejected,
       ),
       errorReducer,
     );

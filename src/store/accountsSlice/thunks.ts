@@ -54,7 +54,7 @@ export const getAccountSummary = createAsyncThunk(
 );
 
 export const getAccountTradesList = createAsyncThunk(
-  `${Slice.Accounts}/wallet-trades`,
+  `${Slice.Accounts}/account-trades`,
   async (
     credentials: {
       skip: number;
@@ -84,5 +84,6 @@ export const getAccountTradesList = createAsyncThunk(
 );
 
 export const accountsFilterUpdate = createAction<Partial<IFilter>>('accountsFilter');
+export const accountsTradesFilterUpdate = createAction<Partial<IFilter>>('accountsTradesFilter');
 
 export const removeAccountById = createAction('removeAccountByID');

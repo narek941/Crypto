@@ -63,7 +63,7 @@ const AnalyticsAlertTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {list.map(({ row }: any) => (
+            {list.map((row) => (
               <AnalyticsAlertTableRow row={row} key={row.id} />
             ))}
           </TableBody>

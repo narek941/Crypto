@@ -12,13 +12,13 @@ import { RootState } from 'types';
 import { tradesHeader } from 'utils/table';
 import { useAppDispatch } from 'hooks';
 import { accountsActions } from 'store/accountsSlice';
-import { accountsFilterUpdate } from 'store/accountsSlice/thunks';
+import { accountsTradesFilterUpdate } from 'store/accountsSlice/thunks';
 
 import TradesTableRow from './TradesTableRow';
 import styles from './TradesTable.module.scss';
 
 const TradesTable = () => {
-  const { filter, list, totalCount } = useSelector((state: RootState) => state.wallets.orderTrades);
+  const { filter, list, totalCount } = useSelector((state: RootState) => state.accounts.trades);
   const { id } = useParams();
   const convertedId = Number(id);
 
@@ -30,19 +30,19 @@ const TradesTable = () => {
   //   const isAsc = orderBy === property && filter.order === 'ASC';
   //   const orderText = isAsc ? 'DESC' : 'ASC';
 
-  //   dispatch(accountsFilterUpdate({ order: orderText }));
+  //   dispatch(accountsTradesFilterUpdate({ order: orderText }));
 
   //   setOrderBy(property);
   // };
 
   const handleChangePage = (event: unknown, newPage: number) => {
-    dispatch(accountsFilterUpdate({ skip: Number(newPage) * filter.take }));
+    dispatch(accountsTradesFilterUpdate({ skip: Number(newPage) * filter.take }));
 
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(accountsFilterUpdate({ take: parseInt(event.target.value), skip: 0 }));
+    dispatch(accountsTradesFilterUpdate({ take: parseInt(event.target.value), skip: 0 }));
   };
 
   useEffect(() => {
@@ -63,7 +63,7 @@ const TradesTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {list.map(({ row }: any) => (
+            {list.map((row) => (
               <TradesTableRow row={row} key={row.id} />
             ))}
           </TableBody>
