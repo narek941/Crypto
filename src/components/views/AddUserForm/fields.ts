@@ -1,6 +1,6 @@
 import { FormField } from '../../forms/types';
 
-import { AddFormShape } from './types';
+import { AddUserFormShape } from './types';
 
 export const AccountTypeOptions = [
   {
@@ -17,7 +17,7 @@ export const AccountTypeOptions = [
   },
 ];
 
-export const addFormFields: FormField<keyof AddFormShape> = {
+export const addUserFormFields: FormField<keyof AddUserFormShape> = {
   name: {
     name: 'name',
     type: 'text',
@@ -56,4 +56,4 @@ export const addFormFields: FormField<keyof AddFormShape> = {
   },
 };
 
-export const addSchemaKeys = Object.keys(addFormFields) as (keyof AddFormShape)[];
+export const addSchemaKeys = Object.keys(addUserFormFields) as (keyof AddUserFormShape)[];

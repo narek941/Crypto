@@ -11,10 +11,8 @@ export type AccountsSliceState = {
   list: any[];
   openOrders: any[];
   openOrdersTotalCount: number;
-  accountsFilter: IFilter;
+  filter: IFilter;
   accountById: any;
   coins: any[];
   summary: any;
-  tradesList: any[];
-  tradesTotalCount: number;
 };

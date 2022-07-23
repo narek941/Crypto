@@ -9,13 +9,13 @@ import { accountsActions } from 'store/accountsSlice';
 
 const Accounts = () => {
   const dispatch = useAppDispatch();
-  const { list, totalCount, accountsFilter } = useSelector((state: RootState) => state.accounts);
+  const { list, totalCount, filter } = useSelector((state: RootState) => state.accounts);
 
-  const { take, order } = accountsFilter;
+  const { take, order } = filter;
 
   useEffect(() => {
-    dispatch(accountsActions.getAccountList(accountsFilter));
-  }, [dispatch, accountsFilter]);
+    dispatch(accountsActions.getAccountList(filter));
+  }, [dispatch, filter]);
 
   return (
     <Table

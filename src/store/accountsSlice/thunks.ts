@@ -53,7 +53,7 @@ export const getAccountSummary = createAsyncThunk(
   },
 );
 
-export const getWalletTradesList = createAsyncThunk(
+export const getAccountTradesList = createAsyncThunk(
   `${Slice.Accounts}/wallet-trades`,
   async (
     credentials: {
@@ -70,68 +70,6 @@ export const getWalletTradesList = createAsyncThunk(
 
     try {
       const response = await client.get(`/accounts/${id}/trades-list`, {
-        params: { ...restCredentials },
-      });
-
-      return {
-        list: response.data.list,
-        totalCount: response.data.totalCount,
-      };
-    } catch {
-      return thunkAPI.rejectWithValue({ error: '* Incorrect' });
-    }
-  },
-);
-
-export const getCoins = createAsyncThunk(
-  `${Slice.Accounts}/accounts/coins`,
-  async (_, thunkAPI) => {
-    try {
-      const response = await client.get('/admin/exchange/1/supported-cryptocurrencies');
-
-      return {
-        coins: response.data.list,
-      };
-    } catch {
-      return thunkAPI.rejectWithValue({ error: '* Incorrect' });
-    }
-  },
-);
-
-export const getWalletOrderTrades = createAsyncThunk(
-  `${Slice.Accounts}/accounts/order`,
-  async ({ walletId, orderId }: any, thunkAPI) => {
-    try {
-      const response = await client.get(
-        `/wallets/${walletId}/orders/${orderId}/trades?skip=0&take=10&sort=id&order=ASC&search={}`,
-      );
-
-      return {
-        orderTrades: response.data.list,
-      };
-    } catch {
-      return thunkAPI.rejectWithValue({ error: '* Incorrect' });
-    }
-  },
-);
-
-export const getWalletOpenOrders = createAsyncThunk(
-  `${Slice.Wallets}/open-orders`,
-  async (
-    credentials: {
-      skip: number;
-      take: number;
-      sort: string;
-      order: string;
-      search: string;
-      id: string;
-    },
-    thunkAPI,
-  ) => {
-    const { id, ...restCredentials } = credentials;
-
-    try {
-      const response = await client.get(`/wallets/${id}/orders/open`, {
         params: { ...restCredentials },
       });
 

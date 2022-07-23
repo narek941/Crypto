@@ -1,6 +1,6 @@
 import { SubmitHandler } from 'react-hook-form';
 
-export type AddFormShape = {
+export type AddUserFormShape = {
   name: string;
   email: string;
   password: string;
@@ -9,6 +9,6 @@ export type AddFormShape = {
 };
 
 export interface IAddUser {
-  onClick: SubmitHandler<AddFormShape>;
+  onClick: SubmitHandler<AddUserFormShape>;
   isEditable?: boolean;
 }

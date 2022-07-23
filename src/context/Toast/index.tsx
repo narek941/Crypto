@@ -9,7 +9,7 @@ import { IToastContext, ToastContextProviderProps } from './types';
 export const ToastContext = createContext<IToastContext | null>(null);
 
 export const ToastContextProvider: React.FC<ToastContextProviderProps> = ({ children }) => {
-  const { isDarkMode } = useSelector((state: RootState) => state.theme);
+  const { isDarkMode } = useSelector((state: RootState) => state.auth);
   const activeMode = isDarkMode ? 'dark' : 'light';
 
   return (

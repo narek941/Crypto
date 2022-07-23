@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import classNames from 'classnames';
 
-import styles from './DeleteAlert.module.scss';
+import styles from './Alert.module.scss';
 import { AlertProps } from './types';
 
-const DeleteAlert = ({ open, handleClose, handleDelete, id }: AlertProps) => {
+const Alert = ({ open, handleClose, handleDelete, id }: AlertProps) => {
   const [deleted, setDeleted] = useState<boolean>(false);
   const popUpClasses = classNames(styles.wrapper, { [styles.wrapper__open]: open });
 
@@ -57,4 +57,4 @@ const DeleteAlert = ({ open, handleClose, handleDelete, id }: AlertProps) => {
   );
 };
 
-export default DeleteAlert;
+export default Alert;

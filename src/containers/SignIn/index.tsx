@@ -3,10 +3,9 @@ import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
-import SignInForm from 'components/views/SignInForm';
 import { Routes } from 'types';
 import { LogoIcon } from 'assets/icons';
-import { Copyright, ExternalImage } from 'components/';
+import { Copyright, ExternalImage, SignInForm } from 'components';
 
 import img from '../../assets/images/image-with-man.png';
 

@@ -7,10 +7,10 @@ import { useSelector } from 'react-redux';
 
 import { useAppDispatch } from 'hooks';
 import { AppDispatch, RootState, Routes } from 'types';
-import AddForm from 'components/views/AddForm';
+import { AddUserForm } from 'components';
 import { adminActions } from 'store/adminSlice';
 import { usersActions } from 'store/usersSlice';
-import { AddFormShape } from 'components/views/AddForm/types';
+import { AddUserFormShape } from 'components/views/AddUserForm/types';
 
 import styles from './AddNewUser.module.scss';
 
@@ -23,7 +23,7 @@ const AddNewUser = () => {
     (state: RootState) => state.admin.userById,
   );
 
-  const handleSubmit: SubmitHandler<AddFormShape> = async (values) => {
+  const handleSubmit: SubmitHandler<AddUserFormShape> = async (values) => {
     const body = {
       ...values,
       deviceToken: uuidv4(),
@@ -77,7 +77,7 @@ const AddNewUser = () => {
 
   return (
     <div className={styles.container}>
-      <AddForm onClick={handleSubmit} isEditable={!!id} />
+      <AddUserForm onClick={handleSubmit} isEditable={!!id} />
     </div>
   );
 };

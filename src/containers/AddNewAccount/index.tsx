@@ -33,7 +33,7 @@ const AddNewAccount: React.FC = () => {
   };
 
   useEffect(() => {
-    dispatch(accountsActions.getCoins());
+    dispatch(adminActions.getCoins());
 
     if (id) {
       dispatch(accountsActions.getAccountById(id));
@@ -42,8 +42,6 @@ const AddNewAccount: React.FC = () => {
         dispatch(accountsActions.removeAccountById());
       };
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

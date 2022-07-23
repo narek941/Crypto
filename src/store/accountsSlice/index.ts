@@ -1,6 +1,7 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, isAnyOf, PayloadAction } from '@reduxjs/toolkit';
 
 import { Slice } from 'types';
+import { pendingReducer, errorReducer } from 'utils/extraReducers';
 
 import * as accountsThunks from './thunks';
 import { AccountStates } from './constants';
@@ -14,18 +15,10 @@ const internalInitialState: AccountsSliceState = {
   openOrders: [],
   openOrdersTotalCount: 0,
   coins: [],
-  accountsFilter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '' },
+  filter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '' },
   accountById: {},
   summary: {},
-  tradesList: [],
-  tradesTotalCount: 0,
 };
-export type IFilterPayload =
-  | { skip: number }
-  | { take: number }
-  | { sort: string }
-  | { search: string }
-  | { order: 'DESC' | 'ASC' };
 
 const accountsSlice = createSlice({
   name: Slice.Accounts,
@@ -34,9 +27,6 @@ const accountsSlice = createSlice({
     reset: () => internalInitialState,
   },
   extraReducers: (builder) => {
-    builder.addCase(accountsThunks.getAccountList.pending, (state) => {
-      state.loading = AccountStates.LOADING;
-    });
     builder.addCase(
       accountsThunks.getAccountList.fulfilled,
       (state, action: PayloadAction<any>) => {
@@ -46,14 +36,12 @@ const accountsSlice = createSlice({
         state.totalCount = action.payload.totalCount;
       },
     );
-    builder.addCase(accountsThunks.getAccountList.rejected, (state, action: PayloadAction<any>) => {
-      state.loading = AccountStates.IDLE;
-      state.error = action.payload.error;
-    });
+
     builder.addCase(accountsThunks.accountsFilterUpdate, (state, action) => {
-      const accountsFilter = state.accountsFilter;
-      state.accountsFilter = { ...accountsFilter, ...action.payload };
+      const filter = state.filter;
+      state.filter = { ...filter, ...action.payload };
     });
+
     builder.addCase(
       accountsThunks.getAccountById.fulfilled,
       (state, action: PayloadAction<any>) => {
@@ -62,29 +50,33 @@ const accountsSlice = createSlice({
         state.accountById = action.payload.account;
       },
     );
-    builder.addCase(accountsThunks.removeAccountById, (state) => {
-      state.accountById = {};
-    });
-    builder.addCase(
-      accountsThunks.getWalletOpenOrders.fulfilled,
-      (state, action: PayloadAction<any>) => {
-        state.openOrders = action.payload.list;
-        state.openOrdersTotalCount = action.payload.totalCount;
-      },
-    );
-    builder.addCase(accountsThunks.getCoins.fulfilled, (state, action) => {
-      state.coins = action.payload.coins;
-    });
+
     builder.addCase(accountsThunks.getAccountSummary.fulfilled, (state, action) => {
       state.accountById = {
         ...state.accountById,
         statistics: action.payload.summary,
       };
+      builder.addCase(accountsThunks.removeAccountById, (state) => {
+        state.accountById = {};
+      });
     });
-    builder.addCase(accountsThunks.getWalletTradesList.fulfilled, (state, action) => {
-      state.tradesList = action.payload.list;
-      state.tradesTotalCount = action.payload.totalCount;
-    });
+    builder.addMatcher(
+      isAnyOf(
+        accountsThunks.getAccountSummary.pending,
+        accountsThunks.getAccountList.pending,
+        accountsThunks.getAccountById.pending,
+      ),
+      pendingReducer,
+    );
+
+    builder.addMatcher(
+      isAnyOf(
+        accountsThunks.getAccountSummary.rejected,
+        accountsThunks.getAccountList.rejected,
+        accountsThunks.getAccountById.rejected,
+      ),
+      errorReducer,
+    );
   },
 });
 

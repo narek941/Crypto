@@ -13,6 +13,7 @@ const internalInitialState: AdminSliceState = {
   loading: AdminStates.IDLE,
   twoFactorAdminEnabled: false,
   list: [],
+  coins: [],
   totalCount: 0,
   accessToken: localStorage.getItem('accessToken') || sessionStorage.getItem('accessToken') || '',
   usersFilter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '' },
@@ -74,6 +75,10 @@ const adminSlice = createSlice({
       state.userById = {};
     });
 
+    builder.addCase(adminThunks.getCoins.fulfilled, (state, action) => {
+      state.coins = action.payload.coins;
+    });
+
     builder.addMatcher(
       isAnyOf(
         adminThunks.addNewAccount.pending,
@@ -89,6 +94,7 @@ const adminSlice = createSlice({
         adminThunks.updateUserPassword.pending,
         adminThunks.updateUserRole.pending,
         adminThunks.updateUsername.pending,
+        adminThunks.getCoins.pending,
       ),
       pendingReducer,
     );
@@ -108,6 +114,7 @@ const adminSlice = createSlice({
         adminThunks.updateUserPassword.rejected,
         adminThunks.updateUserRole.rejected,
         adminThunks.updateUsername.rejected,
+        adminThunks.getCoins.rejected,
       ),
       errorReducer,
     );

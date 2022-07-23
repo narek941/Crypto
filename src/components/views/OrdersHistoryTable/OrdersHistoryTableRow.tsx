@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
@@ -11,19 +11,18 @@ import moment from 'moment';
 import classNames from 'classnames';
 import { v4 as uuid4 } from 'uuid';
 
+import { EmptyData } from 'components';
 import { TableDropdownIcon } from 'assets/icons';
 import { useAppDispatch } from 'hooks';
-import { accountsActions } from 'store/accountsSlice';
+import { walletsActions } from 'store/walletsSlice';
 import { RootState } from 'types';
 
-import EmptyData from '../EmptyData';
+import styles from './OrdersHistoryTable.module.scss';
 
-import styles from './OrdersTable.module.scss';
-
-const OrdersTableRow = ({ row }: any) => {
+const OrdersHistoryTableRow = ({ row }: any): JSX.Element => {
   const dispatch = useAppDispatch();
-  const [open, setOpen] = React.useState(false);
-  const [wallerOrder, setWallerOrder] = React.useState<any | null>();
+  const [open, setOpen] = useState(false);
+  const [wallerOrder, setWallerOrder] = useState<any | null>();
   const accounts = useSelector((state: RootState) => state.accounts);
 
   const id = accounts.accountById?.wallets?.length && accounts.accountById.wallets[0]?.id;
@@ -33,11 +32,11 @@ const OrdersTableRow = ({ row }: any) => {
   const handleCollapse = async (orderId: number) => {
     if (!open) {
       const wallerOrderTrades = await dispatch(
-        accountsActions.getWalletOrderTrades({ walletId: id, orderId }),
+        walletsActions.getWalletOrderTrades({ walletId: id, orderId }),
       ).unwrap();
 
-      if (wallerOrderTrades.orderTrades[0]) {
-        setWallerOrder(wallerOrderTrades.orderTrades[0]);
+      if (wallerOrderTrades.list) {
+        setWallerOrder(wallerOrderTrades.list);
       }
       setOpen(true);
     } else {
@@ -46,7 +45,7 @@ const OrdersTableRow = ({ row }: any) => {
   };
 
   return (
-    <React.Fragment>
+    <>
       <TableRow className={styles.container__body__row} onClick={() => handleCollapse(row.id)}>
         <TableCell className={styles.ceil}>
           <IconButton aria-label='expand row' size='small'>
@@ -106,50 +105,54 @@ const OrdersTableRow = ({ row }: any) => {
                 <>
                   <Table size='small' aria-label='purchases' className={collapseClass}>
                     <TableBody className={styles.container__body}>
-                      <TableRow className={styles.container__body__row}>
-                        <TableCell
-                          className={styles.container__body__row__ceil__collapse}
-                          align='left'
-                        >
-                          {moment(wallerOrder?.createdAt).format('MM.DD.YY')}
-                        </TableCell>
-                        <TableCell
-                          className={styles.container__body__row__ceil__collapse}
-                          align='left'
-                        >
-                          {wallerOrder.price}
-                        </TableCell>
-                        <TableCell
-                          className={styles.container__body__row__ceil__collapse}
-                          align='left'
-                        >
-                          {wallerOrder.totalPrice} BTC
-                        </TableCell>
-                        <TableCell
-                          className={styles.container__body__row__ceil__collapse}
-                          align='left'
-                        >
-                          {wallerOrder.totalPriceInBaseCurrency} USDT
-                        </TableCell>
-                        <TableCell
-                          className={styles.container__body__row__ceil__collapse}
-                          align='left'
-                        >
-                          {wallerOrder.amount} BTC
-                        </TableCell>
-                        <TableCell
-                          className={styles.container__body__row__ceil__collapse}
-                          align='left'
-                        >
-                          {wallerOrder.fees} USDT
-                        </TableCell>
-                        <TableCell
-                          className={styles.container__body__row__ceil__collapse}
-                          align='left'
-                        >
-                          {wallerOrder.feesInBaseCurrency} USDT
-                        </TableCell>
-                      </TableRow>
+                      {wallerOrder.map(({ item }: any) => (
+                        <>
+                          <TableRow className={styles.container__body__row} key={uuid4()}>
+                            <TableCell
+                              className={styles.container__body__row__ceil__collapse}
+                              align='left'
+                            >
+                              {moment(item?.createdAt).format('MM.DD.YY')}
+                            </TableCell>
+                            <TableCell
+                              className={styles.container__body__row__ceil__collapse}
+                              align='left'
+                            >
+                              {item.price}
+                            </TableCell>
+                            <TableCell
+                              className={styles.container__body__row__ceil__collapse}
+                              align='left'
+                            >
+                              {item.totalPrice} BTC
+                            </TableCell>
+                            <TableCell
+                              className={styles.container__body__row__ceil__collapse}
+                              align='left'
+                            >
+                              {item.totalPriceInBaseCurrency} USDT
+                            </TableCell>
+                            <TableCell
+                              className={styles.container__body__row__ceil__collapse}
+                              align='left'
+                            >
+                              {item.amount} BTC
+                            </TableCell>
+                            <TableCell
+                              className={styles.container__body__row__ceil__collapse}
+                              align='left'
+                            >
+                              {item.fees} USDT
+                            </TableCell>
+                            <TableCell
+                              className={styles.container__body__row__ceil__collapse}
+                              align='left'
+                            >
+                              {item.feesInBaseCurrency} USDT
+                            </TableCell>
+                          </TableRow>
+                        </>
+                      ))}
                     </TableBody>
                   </Table>
                 </>
@@ -160,8 +163,8 @@ const OrdersTableRow = ({ row }: any) => {
           </Collapse>
         </TableCell>
       </TableRow>
-    </React.Fragment>
+    </>
   );
 };
 
-export default OrdersTableRow;
+export default OrdersHistoryTableRow;

@@ -1,0 +1,113 @@
+.container {
+  &__header {
+    background: var(--collapse-table-header) !important;
+    display: table-header-group;
+    border: 1px solid var(--collapse-table-border);
+    border-style: hidden;
+
+    &__ceil {
+      text-align: left;
+      color: var(--table-header-font) !important;
+      font-size: 13px !important;
+      line-height: 16px;
+      padding: 14.5px 16px !important;
+      border-color: var(--collapse-table-border) !important;
+    }
+    &__row {
+      display: table-header-group;
+      border-bottom: 1px solid var(--collapse-table-border);
+    }
+  }
+
+  &__body {
+    &__row {
+      border-bottom: 1px solid var(--collapse-table-border);
+
+      td {
+        background-color: var(--collapse-table-background) !important;
+      }
+
+      &:last-child {
+        td {
+          border: none;
+        }
+      }
+
+      &__ceil {
+        font-size: 13px !important;
+        line-height: 16px !important;
+        color: var(--font) !important;
+        border-color: var(--collapse-table-border) !important;
+      }
+    }
+  }
+}
+.ceil {
+  color: var(--font) !important;
+  @extend %text-13;
+  font-size: 13px !important;
+  line-height: 16px !important;
+  border-color: var(--collapse-table-border) !important;
+}
+.inner {
+  padding: var(--table-padding);
+  border-radius: 8px;
+  border: 1px solid var(--collapse-table-border);
+  border-radius: 8px;
+  overflow-y: scroll;
+  border-collapse: collapse;
+  border-style: hidden;
+  box-shadow: 0 0 0 1px var(--collapse-table-border);
+  overflow: hidden;
+}
+
+.open {
+  background-color: rgba(0, 151, 167, 0.05) !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  border: none;
+}
+
+.tabs {
+  gap: 32px;
+  font-size: 16px;
+  line-height: 20px;
+  color: var(--cancel);
+  justify-content: start;
+  padding: 16px 0 0;
+  @extend %flex-align;
+  @extend %text-16-bold;
+  margin: 10px 0;
+
+  &__selected {
+    padding-bottom: 22px;
+    border-bottom: 2px solid var(--tab-selected-border);
+  }
+
+  span {
+    padding-bottom: 24px;
+    cursor: pointer;
+  }
+}
+
+.collapse {
+  &__ceil {
+    background-color: var(--order-table-collapsed) !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    border: none;
+  }
+}
+
+.wrapper {
+  border: 1px solid var(--table-border);
+  border-radius: 8px;
+}
+
+.dropdown {
+  transform: rotate(180deg);
+
+  path {
+    fill: var(--icon-selected) !important;
+  }
+}

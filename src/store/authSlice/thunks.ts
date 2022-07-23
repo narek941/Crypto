@@ -1,4 +1,4 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 
 import { client } from 'api';
 import { Routes, Slice } from 'types';
@@ -49,3 +49,7 @@ export const signOut = createAsyncThunk(
     }
   },
 );
+
+export const setDarkTheme = createAction('auth/setDarkTheme');
+export const setLightTheme = createAction('auth/setLightTheme');
+export const setTheme = createAction('auth/setTheme');

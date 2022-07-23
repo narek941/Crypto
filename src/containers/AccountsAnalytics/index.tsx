@@ -4,16 +4,15 @@ import { useParams } from 'react-router-dom';
 import moment from 'moment';
 import { isUndefined } from 'lodash';
 
+import { RootState } from 'types';
 import { useAppDispatch } from 'hooks';
-import { Bricks, Chart, Doughnut, Export } from 'components';
 import { accountsAnalyticsLineChart } from 'utils/table';
 import { accountsActions } from 'store/accountsSlice';
-import { RootState } from 'types';
-import AnalyticsTabs from 'components/views/AnalyticsTabs';
+import { Bricks, Chart, Doughnut, Export, AnalyticsTabs } from 'components';
 
 import styles from './AccountsAnalytics.module.scss';
 
-const AccountsAnalytics: React.FC = () => {
+const AccountsAnalytics = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const { id } = useParams();
   const convertedId = Number(id);

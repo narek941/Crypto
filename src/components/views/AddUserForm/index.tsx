@@ -10,16 +10,16 @@ import FormWrapper from 'components/forms/FormWrapper';
 import FormGroup from 'components/forms/FormGroup';
 import { RootState, Routes } from 'types';
 
-import { AddFormShape, IAddUser } from './types';
-import { AccountTypeOptions, addFormFields, addSchemaKeys } from './fields';
-import styles from './AddForm.module.scss';
+import { AddUserFormShape, IAddUser } from './types';
+import { AccountTypeOptions, addUserFormFields, addSchemaKeys } from './fields';
+import styles from './AddUserForm.module.scss';
 import 'react-toastify/dist/ReactToastify.css';
 
-const AddForm = ({ onClick, isEditable = false }: IAddUser) => {
+const AddUserForm = ({ onClick, isEditable = false }: IAddUser) => {
   const { username, email, role } = useSelector((state: RootState) => state.admin.userById);
   const adminErrors = useSelector((state: RootState) => state.admin.error);
 
-  const addFormDefaultValues = useMemo(
+  const addUserFormDefaultValues = useMemo(
     () =>
       isEditable
         ? {
@@ -30,16 +30,16 @@ const AddForm = ({ onClick, isEditable = false }: IAddUser) => {
         : {},
     [email, isEditable, role, username],
   );
-  const { formMethods, handleSubmit, isValid } = useForm<keyof AddFormShape, AddFormShape>({
+  const { formMethods, handleSubmit, isValid } = useForm<keyof AddUserFormShape, AddUserFormShape>({
     schemaKeys: addSchemaKeys,
-    defaultValues: addFormDefaultValues,
+    defaultValues: addUserFormDefaultValues,
   });
 
   useEffect(() => {
     if (isEditable) {
-      formMethods.reset(addFormDefaultValues);
+      formMethods.reset(addUserFormDefaultValues);
     }
-  }, [addFormDefaultValues, formMethods, isEditable]);
+  }, [addUserFormDefaultValues, formMethods, isEditable]);
 
   return (
     <>
@@ -52,13 +52,13 @@ const AddForm = ({ onClick, isEditable = false }: IAddUser) => {
 
             <Input
               error={formMethods.formState.errors.name?.message || adminErrors?.username}
-              {...addFormFields.name}
+              {...addUserFormFields.name}
               {...formMethods.register('name')}
             />
 
             <Input
               error={formMethods.formState.errors.email?.message || adminErrors?.email}
-              {...addFormFields.email}
+              {...addUserFormFields.email}
               {...formMethods.register('email')}
             />
             <Input
@@ -67,14 +67,14 @@ const AddForm = ({ onClick, isEditable = false }: IAddUser) => {
                 formMethods.formState.errors.password?.message ||
                 adminErrors?.password
               }
-              {...(isEditable ? addFormFields.emptyPassword : addFormFields.password)}
+              {...(isEditable ? addUserFormFields.emptyPassword : addUserFormFields.password)}
               {...formMethods.register(isEditable ? 'emptyPassword' : 'password')}
               haveRightIcon={true}
             />
             <Controller
               control={formMethods.control}
-              name={addFormFields.accountType.name as keyof AddFormShape}
-              render={({ field }) => <Select {...addFormFields.accountType} {...field} />}
+              name={addUserFormFields.accountType.name as keyof AddUserFormShape}
+              render={({ field }) => <Select {...addUserFormFields.accountType} {...field} />}
             />
 
             {!isEditable ? (
@@ -106,4 +106,4 @@ const AddForm = ({ onClick, isEditable = false }: IAddUser) => {
   );
 };
 
-export default AddForm;
+export default AddUserForm;

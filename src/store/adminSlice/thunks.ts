@@ -257,4 +257,16 @@ export const getUserById = createAsyncThunk(
   },
 );
 
+export const getCoins = createAsyncThunk(`${Slice.Admin}/coins`, async (_, thunkAPI) => {
+  try {
+    const response = await client.get('/admin/exchange/1/supported-cryptocurrencies');
+
+    return {
+      coins: response.data.list,
+    };
+  } catch {
+    return thunkAPI.rejectWithValue({ error: '* Incorrect' });
+  }
+});
+
 export const removeUserById = createAction('removeUserByID');

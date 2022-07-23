@@ -3,8 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { ArrowLeftIcon, AvatarIcon } from 'assets/icons';
 import useOnClickOutside from 'hooks/useOutsideClick';
-
-import Popup from '../../shared/Popup';
+import { Popup } from 'components';
 
 import styles from './Header.module.scss';
 import { IHeaderProps } from './types';

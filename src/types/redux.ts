@@ -13,3 +13,10 @@ export enum Slice {
   Accounts = 'accounts',
   Wallets = 'wallets',
 }
+
+export type IFilterPayload =
+  | { skip: number }
+  | { take: number }
+  | { sort: string }
+  | { search: string }
+  | { order: 'DESC' | 'ASC' };

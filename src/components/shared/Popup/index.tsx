@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { RootState } from 'types';
-import { setTheme } from 'store/themeSlice/actions';
 import { useAppDispatch } from 'hooks';
 import { authActions } from 'store/authSlice';
 
@@ -18,11 +17,12 @@ const Popup = ({ open }: PopupProps) => {
   const ref = useRef(null);
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const isDarkMode = useSelector((state: RootState) => state.theme.isDarkMode);
+  const isDarkMode = useSelector((state: RootState) => state.auth.isDarkMode);
   const popUpClasses = classNames(styles.popup, { [styles.popup__able]: open });
   const navigate = useNavigate();
+
   const handleChange = () => {
-    dispatch(setTheme());
+    dispatch(authActions.setTheme());
   };
 
   const handleLogOut = () => {
