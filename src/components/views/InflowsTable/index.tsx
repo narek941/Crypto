@@ -64,7 +64,7 @@ const InflowsTable = () => {
               ))}
             </TableRow>
           </TableHead>
-          {totalCount && (
+          {!!totalCount && (
             <TableBody>
               {list?.map((row) => (
                 <InflowsTableRow row={row} key={uuid4()} />
