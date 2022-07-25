@@ -5,22 +5,21 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
 
 import { EmptyData, Pagination } from 'components';
 import { RootState } from 'types';
 import { orderHistoryTradesHeader } from 'utils/table';
 import { useAppDispatch } from 'hooks';
 import { walletsActions } from 'store/walletsSlice';
-import { recordsFilterUpdate } from 'store/walletsSlice/thunks';
 
 import styles from './OrdersHistoryTable.module.scss';
 import OrdersHistoryTableRow from './OrdersHistoryTableRow';
 
 const OrdersHistoryTable = () => {
-  const { filter, list, totalCount } = useSelector((state: RootState) => state.wallets.records);
-  const { id } = useParams();
-  const convertedId = Number(id);
+  const accounts = useSelector((state: RootState) => state.accounts);
+  const { filter, list, totalCount } = useSelector((state: RootState) => state.wallets.orders);
+
+  const walletId = accounts.accountById?.wallets?.length && accounts.accountById.wallets[0]?.id;
 
   const [page, setPage] = useState(0);
   const dispatch = useAppDispatch();
@@ -36,18 +35,21 @@ const OrdersHistoryTable = () => {
   // };
 
   const handleChangePage = (event: unknown, newPage: number) => {
-    dispatch(recordsFilterUpdate({ skip: Number(newPage) * filter.take }));
+    dispatch(walletsActions.ordersFilterUpdate({ skip: Number(newPage) * filter.take }));
 
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(recordsFilterUpdate({ take: parseInt(event.target.value), skip: 0 }));
+    if (totalCount) {
+      dispatch(walletsActions.ordersFilterUpdate({ take: parseInt(event.target.value), skip: 0 }));
+    }
   };
 
   useEffect(() => {
-    dispatch(walletsActions.getWalletRecords({ ...filter, id: convertedId as string | any }));
-  }, [convertedId, filter, dispatch]);
+    dispatch(walletsActions.getWalletOrders({ ...filter, id: walletId }));
+  }, [walletId, filter, dispatch]);
+
   return (
     <>
       <div className={styles.wrapper}>

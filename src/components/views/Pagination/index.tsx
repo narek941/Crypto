@@ -1,5 +1,4 @@
 import { TablePagination } from '@mui/material';
-import React from 'react';
 import classNames from 'classnames';
 
 import styles from './Pagination.module.scss';

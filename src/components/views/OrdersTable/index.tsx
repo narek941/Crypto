@@ -35,19 +35,19 @@ const OrdersTable = () => {
   //   setOrderBy(property);
   // };
 
-  const handleChangePage = (event: unknown, newPage: number) => {
+  const handleChangePage = (_event: unknown, newPage: number) => {
     dispatch(openOrdersFilterUpdate({ skip: Number(newPage) * filter.take }));
 
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(openOrdersFilterUpdate({ take: parseInt(event.target.value), skip: 0 }));
+    if (totalCount) {
+      dispatch(openOrdersFilterUpdate({ take: parseInt(event.target.value), skip: 0 }));
+    }
   };
 
   useEffect(() => {
-    // eslint-disable-next-line no-console
-    console.log('tmtav');
     dispatch(walletsActions.getWalletOpenOrders({ ...filter, id: convertedId as string | any }));
   }, [convertedId, filter, dispatch]);
 

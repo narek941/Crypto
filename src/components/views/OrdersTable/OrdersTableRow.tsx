@@ -9,7 +9,6 @@ import TableRow from '@mui/material/TableRow';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
 import classNames from 'classnames';
-import { v4 as uuid4 } from 'uuid';
 
 import { EmptyData } from 'components';
 import { TableDropdownIcon } from 'assets/icons';
@@ -53,46 +52,42 @@ const OrdersTableRow = ({ row }: any): JSX.Element => {
             <TableDropdownIcon className={dropdownClass} />
           </IconButton>
         </TableCell>
-        <>
-          <TableCell align='left' className={styles.ceil} key={uuid4()}>
-            {row.id}
-          </TableCell>
-
-          <TableCell align='left' className={styles.ceil} key={uuid4()}>
-            {moment(row.creationTime).format('DD.MM.YYYY HH:MM:SS')}
-          </TableCell>
-
-          <TableCell align='left' className={styles.ceil} key={uuid4()}>
-            {row?.coinsPair?.name}
-          </TableCell>
-          <TableCell align='left' className={styles.ceil} key={uuid4()}>
-            {row.side}
-          </TableCell>
-          <TableCell align='left' className={styles.ceil} key={uuid4()}>
-            {row.value}
-          </TableCell>
-          <TableCell align='left' className={styles.ceil} key={uuid4()}>
-            {row.valueInBaseCurrency}
-          </TableCell>
-          <TableCell align='left' className={styles.ceil} key={uuid4()}>
-            {row.tradesTotalPriceSum || 0}
-          </TableCell>
-          <TableCell align='left' className={styles.ceil} key={uuid4()}>
-            {row.tradesTotalPriceInBaseCurrencySum || 0}
-          </TableCell>
-          <TableCell align='left' className={styles.ceil} key={uuid4()}>
-            {row.feesSum || 0}
-          </TableCell>
-          <TableCell align='left' className={styles.ceil} key={uuid4()}>
-            {row.feesSumInBaseCurrency || 0}
-          </TableCell>
-          <TableCell align='left' className={styles.ceil} key={uuid4()}>
-            {row.relativePercentageToAccount || 0}
-          </TableCell>
-          <TableCell align='left' className={styles.ceil} key={uuid4()}>
-            {moment(row.lastOperationTime).format('DD.MM.YYYY HH:MM:SS')}
-          </TableCell>
-        </>
+        <TableCell align='left' className={styles.ceil}>
+          {row.id}
+        </TableCell>
+        <TableCell align='left' className={styles.ceil}>
+          {moment(row.creationTime).format('DD.MM.YYYY HH:MM:SS')}
+        </TableCell>
+        <TableCell align='left' className={styles.ceil}>
+          {row?.coinsPair?.name}
+        </TableCell>
+        <TableCell align='left' className={styles.ceil}>
+          {row.side}
+        </TableCell>
+        <TableCell align='left' className={styles.ceil}>
+          {row.value}
+        </TableCell>
+        <TableCell align='left' className={styles.ceil}>
+          {row.valueInBaseCurrency}
+        </TableCell>
+        <TableCell align='left' className={styles.ceil}>
+          {row.tradesTotalPriceSum || 0}
+        </TableCell>
+        <TableCell align='left' className={styles.ceil}>
+          {row.tradesTotalPriceInBaseCurrencySum || 0}
+        </TableCell>
+        <TableCell align='left' className={styles.ceil}>
+          {row.feesSum || 0}
+        </TableCell>
+        <TableCell align='left' className={styles.ceil}>
+          {row.feesSumInBaseCurrency || 0}
+        </TableCell>
+        <TableCell align='left' className={styles.ceil}>
+          {row.relativePercentageToAccount || 0}
+        </TableCell>
+        <TableCell align='left' className={styles.ceil}>
+          {moment(row.lastOperationTime).format('DD.MM.YYYY HH:MM:SS')}
+        </TableCell>
       </TableRow>
       <TableRow>
         <TableCell
@@ -103,56 +98,54 @@ const OrdersTableRow = ({ row }: any): JSX.Element => {
           <Collapse in={open} timeout='auto' unmountOnExit>
             <Box>
               {wallerOrder ? (
-                <>
-                  <Table size='small' aria-label='purchases' className={collapseClass}>
-                    <TableBody className={styles.container__body}>
-                      <TableRow className={styles.container__body__row}>
-                        <TableCell
-                          className={styles.container__body__row__ceil__collapse}
-                          align='left'
-                        >
-                          {moment(wallerOrder?.createdAt).format('MM.DD.YY')}
-                        </TableCell>
-                        <TableCell
-                          className={styles.container__body__row__ceil__collapse}
-                          align='left'
-                        >
-                          {wallerOrder.price}
-                        </TableCell>
-                        <TableCell
-                          className={styles.container__body__row__ceil__collapse}
-                          align='left'
-                        >
-                          {wallerOrder.totalPrice} BTC
-                        </TableCell>
-                        <TableCell
-                          className={styles.container__body__row__ceil__collapse}
-                          align='left'
-                        >
-                          {wallerOrder.totalPriceInBaseCurrency} USDT
-                        </TableCell>
-                        <TableCell
-                          className={styles.container__body__row__ceil__collapse}
-                          align='left'
-                        >
-                          {wallerOrder.amount} BTC
-                        </TableCell>
-                        <TableCell
-                          className={styles.container__body__row__ceil__collapse}
-                          align='left'
-                        >
-                          {wallerOrder.fees} USDT
-                        </TableCell>
-                        <TableCell
-                          className={styles.container__body__row__ceil__collapse}
-                          align='left'
-                        >
-                          {wallerOrder.feesInBaseCurrency} USDT
-                        </TableCell>
-                      </TableRow>
-                    </TableBody>
-                  </Table>
-                </>
+                <Table size='small' aria-label='purchases' className={collapseClass}>
+                  <TableBody className={styles.container__body}>
+                    <TableRow className={styles.container__body__row}>
+                      <TableCell
+                        className={styles.container__body__row__ceil__collapse}
+                        align='left'
+                      >
+                        {moment(wallerOrder?.createdAt).format('MM.DD.YY')}
+                      </TableCell>
+                      <TableCell
+                        className={styles.container__body__row__ceil__collapse}
+                        align='left'
+                      >
+                        {wallerOrder.price}
+                      </TableCell>
+                      <TableCell
+                        className={styles.container__body__row__ceil__collapse}
+                        align='left'
+                      >
+                        {wallerOrder.totalPrice} BTC
+                      </TableCell>
+                      <TableCell
+                        className={styles.container__body__row__ceil__collapse}
+                        align='left'
+                      >
+                        {wallerOrder.totalPriceInBaseCurrency} USDT
+                      </TableCell>
+                      <TableCell
+                        className={styles.container__body__row__ceil__collapse}
+                        align='left'
+                      >
+                        {wallerOrder.amount} BTC
+                      </TableCell>
+                      <TableCell
+                        className={styles.container__body__row__ceil__collapse}
+                        align='left'
+                      >
+                        {wallerOrder.fees} USDT
+                      </TableCell>
+                      <TableCell
+                        className={styles.container__body__row__ceil__collapse}
+                        align='left'
+                      >
+                        {wallerOrder.feesInBaseCurrency} USDT
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
               ) : (
                 <EmptyData className={styles.empty} text={'This order has no trades yet.'} />
               )}

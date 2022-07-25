@@ -19,4 +19,9 @@ export type AccountsSliceState = {
     list: any[];
     filter: IFilter;
   };
+  alerts: {
+    totalCount: number;
+    list: any[];
+    filter: IFilter;
+  };
 };

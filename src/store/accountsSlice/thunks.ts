@@ -83,7 +83,40 @@ export const getAccountTradesList = createAsyncThunk(
   },
 );
 
+export const getAccountAlerts = createAsyncThunk(
+  `${Slice.Accounts}/account-alerts`,
+  async (
+    credentials: {
+      skip: number;
+      take: number;
+      sort: string;
+      order: string;
+      search: string;
+      id: string;
+    },
+    thunkAPI,
+  ) => {
+    const { id, ...restCredentials } = credentials;
+
+    try {
+      const response = await client.get(`/accounts/${id}/alerts`, {
+        params: { ...restCredentials },
+      });
+
+      return {
+        list: response.data.list,
+        totalCount: response.data.totalCount,
+      };
+    } catch {
+      return thunkAPI.rejectWithValue({ error: '* Incorrect' });
+    }
+  },
+);
+
 export const accountsFilterUpdate = createAction<Partial<IFilter>>('accountsFilter');
 export const accountsTradesFilterUpdate = createAction<Partial<IFilter>>('accountsTradesFilter');
+export const accountsAlertsFilterUpdate = createAction<Partial<IFilter>>(
+  'accountsAlertsFilterUpdate',
+);
 
 export const removeAccountById = createAction('removeAccountByID');

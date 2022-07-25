@@ -218,11 +218,10 @@ export const tradesHeader: { id: number; value: string }[] = [
   { id: 3, value: 'Side' },
   { id: 4, value: 'Price' },
   { id: 5, value: 'Amount, BTC' },
-  { id: 6, value: 'Value USDT' },
   { id: 7, value: 'Total price' },
   { id: 8, value: 'Total price, USDT' },
   { id: 9, value: 'Fees' },
-  { id: 10, value: 'Fees USDT' },
+  { id: 10, value: 'Fees, USDT' },
 ];
 
 export const walletHeader: { id: number; value: string }[] = [
@@ -242,11 +241,11 @@ export const walletAssetsHeader: { id: number; value: string }[] = [
 ];
 
 export const inflowHeader: { id: number; value: string }[] = [
-  { id: 1, value: 'Time' },
+  { id: 1, value: 'Type' },
   { id: 2, value: 'ID' },
   { id: 3, value: 'Asset' },
   { id: 4, value: 'Amount' },
-  { id: 5, value: 'Amount,USDT' },
+  { id: 5, value: 'Amount, USDT' },
   { id: 6, value: 'Fees' },
   { id: 7, value: 'Time' },
 ];

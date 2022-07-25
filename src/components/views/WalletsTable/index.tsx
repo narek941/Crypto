@@ -26,8 +26,6 @@ const WalletsTable = () => {
 
   const walletId = accounts.accountById?.wallets?.length && accounts.accountById.wallets[0]?.id;
 
-  // eslint-disable-next-line no-console
-  console.log(walletId, 'walletId');
   // const [orderBy, setOrderBy] = useState<KeyOfData>('id');
 
   // const handleRequestSort = (event: React.MouseEvent<unknown>, property: KeyOfData) => {
@@ -39,14 +37,16 @@ const WalletsTable = () => {
   //   setOrderBy(property);
   // };
 
-  const handleChangePage = (event: unknown, newPage: number) => {
+  const handleChangePage = (_event: unknown, newPage: number) => {
     dispatch(walletsActions.recordsFilterUpdate({ skip: Number(newPage) * filter.take }));
 
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(walletsActions.recordsFilterUpdate({ take: parseInt(event.target.value), skip: 0 }));
+    if (totalCount) {
+      dispatch(walletsActions.recordsFilterUpdate({ take: parseInt(event.target.value), skip: 0 }));
+    }
   };
 
   useEffect(() => {

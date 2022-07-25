@@ -12,20 +12,21 @@ import { RootState } from 'types';
 import { analyticsAlertHeader } from 'utils/table';
 import { useAppDispatch } from 'hooks';
 import { accountsActions } from 'store/accountsSlice';
-import { accountsFilterUpdate } from 'store/accountsSlice/thunks';
 
-import FilterWrapper from '../FilterWrapper';
+// import FilterWrapper from '../FilterWrapper';
 
 import AnalyticsAlertTableRow from './AnalyticsAlertTableRow';
 import styles from './AnalyticsAlertTable.module.scss';
 
 const AnalyticsAlertTable = () => {
-  const { filter, list, totalCount } = useSelector((state: RootState) => state.wallets.orderTrades);
   const { id } = useParams();
-  const convertedId = Number(id);
+  const dispatch = useAppDispatch();
+  const { filter, list, totalCount } = useSelector((state: RootState) => state.accounts.alerts);
 
   const [page, setPage] = useState(0);
-  const dispatch = useAppDispatch();
+
+  const convertedId = Number(id);
+
   // const [orderBy, setOrderBy] = useState<KeyOfData>('id');
 
   // const handleRequestSort = (event: React.MouseEvent<unknown>, property: KeyOfData) => {
@@ -37,24 +38,28 @@ const AnalyticsAlertTable = () => {
   //   setOrderBy(property);
   // };
 
-  const handleChangePage = (event: unknown, newPage: number) => {
-    dispatch(accountsFilterUpdate({ skip: Number(newPage) * filter.take }));
+  const handleChangePage = (_event: unknown, newPage: number) => {
+    dispatch(accountsActions.accountsAlertsFilterUpdate({ skip: Number(newPage) * filter.take }));
 
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(accountsFilterUpdate({ take: parseInt(event.target.value), skip: 0 }));
+    if (totalCount) {
+      dispatch(
+        accountsActions.accountsAlertsFilterUpdate({ take: parseInt(event.target.value), skip: 0 }),
+      );
+    }
   };
 
   useEffect(() => {
-    dispatch(accountsActions.getAccountTradesList({ ...filter, id: convertedId as string | any }));
+    dispatch(accountsActions.getAccountAlerts({ ...filter, id: convertedId as string | any }));
   }, [convertedId, filter, dispatch]);
 
   return (
     <>
       <div className={styles.wrapper}>
-        <FilterWrapper />
+        {/* <FilterWrapper /> */}
         <Table className={styles.inner}>
           <TableHead className={styles.container__header}>
             <TableRow className={styles.container__header__row}>
@@ -84,4 +89,5 @@ const AnalyticsAlertTable = () => {
     </>
   );
 };
+
 export default AnalyticsAlertTable;

@@ -37,14 +37,16 @@ const InflowsTable = () => {
   //   setOrderBy(property);
   // };
 
-  const handleChangePage = (event: unknown, newPage: number) => {
+  const handleChangePage = (_event: unknown, newPage: number) => {
     dispatch(inflowFilterUpdate({ skip: Number(newPage) * filter.take }));
 
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(inflowFilterUpdate({ take: parseInt(event.target.value), skip: 0 }));
+    if (totalCount) {
+      dispatch(inflowFilterUpdate({ take: parseInt(event.target.value), skip: 0 }));
+    }
   };
 
   useEffect(() => {

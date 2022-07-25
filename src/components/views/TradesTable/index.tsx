@@ -35,14 +35,16 @@ const TradesTable = () => {
   //   setOrderBy(property);
   // };
 
-  const handleChangePage = (event: unknown, newPage: number) => {
+  const handleChangePage = (_event: unknown, newPage: number) => {
     dispatch(accountsTradesFilterUpdate({ skip: Number(newPage) * filter.take }));
 
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(accountsTradesFilterUpdate({ take: parseInt(event.target.value), skip: 0 }));
+    if (totalCount) {
+      dispatch(accountsTradesFilterUpdate({ take: parseInt(event.target.value), skip: 0 }));
+    }
   };
 
   useEffect(() => {

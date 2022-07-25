@@ -57,7 +57,7 @@ const Table = ({
     setOrderBy(property);
   };
 
-  const handleChangePage = (event: unknown, newPage: number) => {
+  const handleChangePage = (_event: unknown, newPage: number) => {
     if (action === 'users') {
       dispatch(usersFilterUpdate({ skip: Number(newPage) * take }));
     } else {
@@ -67,10 +67,12 @@ const Table = ({
   };
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (action === 'users') {
-      dispatch(usersFilterUpdate({ take: parseInt(event.target.value), skip: 0 }));
-    } else {
-      dispatch(accountsFilterUpdate({ take: parseInt(event.target.value), skip: 0 }));
+    if (totalCount) {
+      if (action === 'users') {
+        dispatch(usersFilterUpdate({ take: parseInt(event.target.value), skip: 0 }));
+      } else {
+        dispatch(accountsFilterUpdate({ take: parseInt(event.target.value), skip: 0 }));
+      }
     }
   };
 

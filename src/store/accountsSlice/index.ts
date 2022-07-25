@@ -22,6 +22,11 @@ const internalInitialState: AccountsSliceState = {
     list: [],
     filter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '' },
   },
+  alerts: {
+    totalCount: 0,
+    list: [],
+    filter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '' },
+  },
 };
 
 const accountsSlice = createSlice({
@@ -46,6 +51,14 @@ const accountsSlice = createSlice({
       (state, action: PayloadAction<any>) => {
         state.trades.list = action.payload.list;
         state.trades.totalCount = action.payload.totalCount;
+      },
+    );
+
+    builder.addCase(
+      accountsThunks.getAccountAlerts.fulfilled,
+      (state, action: PayloadAction<any>) => {
+        state.alerts.list = action.payload.list;
+        state.alerts.totalCount = action.payload.totalCount;
       },
     );
 
@@ -77,6 +90,10 @@ const accountsSlice = createSlice({
       const filter = state.trades.filter;
       state.trades.filter = { ...filter, ...action.payload };
     });
+    builder.addCase(accountsThunks.accountsAlertsFilterUpdate, (state, action) => {
+      const filter = state.alerts.filter;
+      state.alerts.filter = { ...filter, ...action.payload };
+    });
 
     builder.addMatcher(
       isAnyOf(
@@ -84,6 +101,7 @@ const accountsSlice = createSlice({
         accountsThunks.getAccountList.pending,
         accountsThunks.getAccountById.pending,
         accountsThunks.getAccountTradesList.pending,
+        accountsThunks.getAccountAlerts.pending,
       ),
       pendingReducer,
     );
@@ -94,6 +112,7 @@ const accountsSlice = createSlice({
         accountsThunks.getAccountList.rejected,
         accountsThunks.getAccountById.rejected,
         accountsThunks.getAccountTradesList.rejected,
+        accountsThunks.getAccountAlerts.rejected,
       ),
       errorReducer,
     );
