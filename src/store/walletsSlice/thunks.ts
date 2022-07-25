@@ -51,7 +51,7 @@ export const getWalletOrderTrades = createAsyncThunk(
     const { orderId, walletId, ...restCredentials } = credentials;
 
     try {
-      const response = await client.get(`/wallets/${walletId}/orders/${orderId}`, {
+      const response = await client.get(`/wallets/${walletId}/orders/${orderId}/trades`, {
         params: { ...restCredentials },
       });
       return {
@@ -128,8 +128,9 @@ export const getWalletSummary = createAsyncThunk(
   async (walletId: number, thunkAPI) => {
     try {
       const response = await client.get(`/wallets/${walletId}/summary`);
+
       return {
-        list: response.data.list,
+        list: response.data,
       };
     } catch {
       return thunkAPI.rejectWithValue({ error: '* Incorrect' });

@@ -234,6 +234,13 @@ export const walletHeader: { id: number; value: string }[] = [
   { id: 6, value: 'Time' },
 ];
 
+export const walletAssetsHeader: { id: number; value: string }[] = [
+  { id: 1, value: 'Asset' },
+  { id: 2, value: 'Amount' },
+  { id: 3, value: 'Amount, USDT' },
+  { id: 4, value: 'Time' },
+];
+
 export const inflowHeader: { id: number; value: string }[] = [
   { id: 1, value: 'Time' },
   { id: 2, value: 'ID' },

@@ -81,3 +81,14 @@
     background-color: transparent !important;
   }
 }
+.MuiCalendarPicker-root {
+  background: var(--background);
+}
+.MuiPickersDay-root {
+  background-color: var(--background) !important;
+  color: var(--font) !important;
+
+  &:hover {
+    background-color: var(--select-border) !important;
+  }
+}

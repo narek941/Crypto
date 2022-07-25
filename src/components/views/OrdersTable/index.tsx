@@ -46,8 +46,11 @@ const OrdersTable = () => {
   };
 
   useEffect(() => {
+    // eslint-disable-next-line no-console
+    console.log('tmtav');
     dispatch(walletsActions.getWalletOpenOrders({ ...filter, id: convertedId as string | any }));
   }, [convertedId, filter, dispatch]);
+
   return (
     <>
       <div className={styles.wrapper}>

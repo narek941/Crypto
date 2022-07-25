@@ -7,7 +7,7 @@ import { WalletsStates } from './constants';
 export type WalletsSliceState = {
   loading: WalletsStates;
   error?: SerializedError | null;
-  summary: any[];
+  summary: any;
   openOrders: {
     totalCount: number;
     list: any[];

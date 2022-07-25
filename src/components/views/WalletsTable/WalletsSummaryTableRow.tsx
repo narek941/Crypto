@@ -4,21 +4,27 @@ import moment from 'moment';
 
 import styles from './WalletsTable.module.scss';
 
-const WalletsTableRow = ({ row }: any) => (
+const WalletsSummaryTableRow = ({ walletId, row }: any) => (
   <TableRow className={styles.container__body__row}>
     <TableCell align='left' className={styles.ceil}>
-      {row?.coin?.name}
+      {walletId}
     </TableCell>
     <TableCell align='left' className={styles.ceil}>
-      {row.value}
+      {row.totalCapital}
     </TableCell>
     <TableCell align='left' className={styles.ceil}>
-      {row.baseCurrencyValue}
+      {row.totalCapitalInBaseCurrency}
     </TableCell>
     <TableCell align='left' className={styles.ceil}>
-      {moment(row.refreshAt).format('DD.MM.YYYY HH:MM:SS')}
+      {row.profitLossInBaseCurrency}
+    </TableCell>
+    <TableCell align='left' className={styles.ceil}>
+      {row.profitLossInPercent}
+    </TableCell>
+    <TableCell align='left' className={styles.ceil}>
+      {moment(row.lastRefreshDate).format('DD.MM.YYYY HH:MM:SS')}
     </TableCell>
   </TableRow>
 );
 
-export default WalletsTableRow;
+export default WalletsSummaryTableRow;

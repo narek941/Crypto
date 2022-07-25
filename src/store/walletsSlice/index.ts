@@ -35,7 +35,13 @@ const internalInitialState: WalletsSliceState = {
     totalCount: 0,
     filter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '' },
   },
-  summary: [],
+  summary: {
+    totalCapital: null,
+    lastRefreshDate: null,
+    profitLossInPercent: null,
+    profitLossInBaseCurrency: null,
+    totalCapitalInBaseCurrency: null,
+  },
 };
 
 const walletsSlice = createSlice({
