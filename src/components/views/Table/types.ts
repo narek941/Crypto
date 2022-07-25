@@ -18,6 +18,7 @@ export interface Data {
 export type KeyOfData = keyof Data | keyof UserData;
 export interface HeadCell {
   disablePadding: boolean;
+  isSort?: boolean;
   id: KeyOfData;
   label: string;
   numeric: boolean;

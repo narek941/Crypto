@@ -57,7 +57,7 @@ const WalletsTable = () => {
   return (
     <>
       <div className={styles.wrapper}>
-        <Typography>In total</Typography>
+        <Typography className={styles.wrapper__title}>In total</Typography>
         <Table className={styles.inner}>
           <TableHead className={styles.container__header}>
             <TableRow className={styles.container__header__row}>
@@ -73,7 +73,7 @@ const WalletsTable = () => {
           </TableBody>
         </Table>
 
-        <Typography>Assets</Typography>
+        <Typography className={styles.wrapper__title}>Assets</Typography>
         <Table className={styles.inner}>
           <TableHead className={styles.container__header}>
             <TableRow className={styles.container__header__row}>
@@ -90,7 +90,7 @@ const WalletsTable = () => {
             ))}
           </TableBody>
         </Table>
-        {!totalCount && <EmptyData />}
+        {!totalCount && <EmptyData className={styles.empty} />}
       </div>
 
       <Pagination

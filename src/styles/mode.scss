@@ -1,5 +1,7 @@
 //mode
 :root {
+  --table-item: #9a99a6;
+  --table-title: #080808;
   --font: #212121;
   --background: #faffff;
   --placeholder: #bab9bd;
@@ -82,6 +84,8 @@
 }
 
 [data-theme='dark'] {
+  --table-item: #29292e;
+  --table-title: #fff;
   --font: #ffffff;
   --background: #080808;
   --placeholder: #29292e;

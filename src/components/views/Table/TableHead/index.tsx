@@ -1,8 +1,6 @@
 import React from 'react';
-import TableCell from '@mui/material/TableCell';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
 import classNames from 'classnames';
+import { TableCell, TableHead, TableRow, TableSortLabel } from '@mui/material';
 
 import { KeyOfData } from '../types';
 import styles from '../Table.module.scss';
@@ -22,7 +20,13 @@ const TableHeadWrapper = ({ onRequestSort, headCells, type = 'primary' }: ITable
       <TableRow className={headerClass}>
         {headCells.map((headCell) => (
           <TableCell key={headCell.id} className={styles.table__header__ceil}>
-            <div onClick={createSortHandler(headCell.id)}>{headCell.label}</div>
+            {headCell.isSort ? (
+              <TableSortLabel onClick={createSortHandler(headCell.id)}>
+                {headCell.label}
+              </TableSortLabel>
+            ) : (
+              <div onClick={createSortHandler(headCell.id)}>{headCell.label}</div>
+            )}
           </TableCell>
         ))}
       </TableRow>
