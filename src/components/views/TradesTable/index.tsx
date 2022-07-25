@@ -12,15 +12,13 @@ import { RootState } from 'types';
 import { tradesHeader } from 'utils/table';
 import { useAppDispatch } from 'hooks';
 import { accountsActions } from 'store/accountsSlice';
-import { accountsFilterUpdate } from 'store/accountsSlice/thunks';
+import { accountsTradesFilterUpdate } from 'store/accountsSlice/thunks';
 
 import TradesTableRow from './TradesTableRow';
 import styles from './TradesTable.module.scss';
 
 const TradesTable = () => {
-  const { accountsFilter, tradesList, tradesTotalCount } = useSelector(
-    (state: RootState) => state.accounts,
-  );
+  const { filter, list, totalCount } = useSelector((state: RootState) => state.accounts.trades);
   const { id } = useParams();
   const convertedId = Number(id);
 
@@ -29,29 +27,29 @@ const TradesTable = () => {
   // const [orderBy, setOrderBy] = useState<KeyOfData>('id');
 
   // const handleRequestSort = (event: React.MouseEvent<unknown>, property: KeyOfData) => {
-  //   const isAsc = orderBy === property && accountsFilter.order === 'ASC';
+  //   const isAsc = orderBy === property && filter.order === 'ASC';
   //   const orderText = isAsc ? 'DESC' : 'ASC';
 
-  //   dispatch(accountsFilterUpdate({ order: orderText }));
+  //   dispatch(accountsTradesFilterUpdate({ order: orderText }));
 
   //   setOrderBy(property);
   // };
 
-  const handleChangePage = (event: unknown, newPage: number) => {
-    dispatch(accountsFilterUpdate({ skip: Number(newPage) * accountsFilter.take }));
+  const handleChangePage = (_event: unknown, newPage: number) => {
+    dispatch(accountsTradesFilterUpdate({ skip: Number(newPage) * filter.take }));
 
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(accountsFilterUpdate({ take: parseInt(event.target.value), skip: 0 }));
+    if (totalCount) {
+      dispatch(accountsTradesFilterUpdate({ take: parseInt(event.target.value), skip: 0 }));
+    }
   };
 
   useEffect(() => {
-    dispatch(
-      accountsActions.getWalletTradesList({ ...accountsFilter, id: convertedId as string | any }),
-    );
-  }, [convertedId, accountsFilter, dispatch]);
+    dispatch(accountsActions.getAccountTradesList({ ...filter, id: convertedId as string | any }));
+  }, [convertedId, filter, dispatch]);
 
   return (
     <>
@@ -67,20 +65,20 @@ const TradesTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {tradesList.map((row) => (
+            {list.map((row) => (
               <TradesTableRow row={row} key={row.id} />
             ))}
           </TableBody>
         </Table>
-        {!tradesTotalCount && <EmptyData />}
+        {!totalCount && <EmptyData />}
       </div>
 
       <Pagination
         handleChangePage={handleChangePage}
         handleChangeRowsPerPage={handleChangeRowsPerPage}
         currentPage={page}
-        rowsPerPage={accountsFilter?.take}
-        totalCount={tradesTotalCount}
+        rowsPerPage={filter?.take}
+        totalCount={totalCount}
       />
     </>
   );

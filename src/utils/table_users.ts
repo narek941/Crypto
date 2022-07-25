@@ -58,36 +58,42 @@ export function stableSort<T>(array: T[], comparator: (a: T, b: T) => number) {
 export const headCells: HeadCell[] = [
   {
     id: 'id',
+    isSort: true,
     numeric: false,
     disablePadding: true,
     label: 'ID',
   },
   {
     id: 'name',
+    isSort: false,
     numeric: true,
     disablePadding: false,
     label: 'Name',
   },
   {
     id: 'email',
+    isSort: false,
     numeric: true,
     disablePadding: false,
     label: 'Email',
   },
   {
     id: 'accountType',
+    isSort: false,
     numeric: true,
     disablePadding: false,
     label: 'Account Type',
   },
   {
     id: 'status',
+    isSort: false,
     numeric: true,
     disablePadding: false,
     label: 'Status',
   },
   {
     id: 'actions',
+    isSort: false,
     numeric: true,
     disablePadding: false,
     label: 'Actions',

@@ -8,7 +8,7 @@ const PublicRoute = ({ children }: any) => {
   const token = useAppSelector(authSelectors.selectToken);
 
   if (token) {
-    return <Navigate to={Routes.Dashboard} replace />;
+    return <Navigate to={Routes.Accounts} replace />;
   }
 
   return children;

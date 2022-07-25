@@ -11,6 +11,7 @@ const internalInitialState: AuthSliceState = {
   error: null,
   loading: AuthStates.IDLE,
   twoFactorAuthEnabled: false,
+  isDarkMode: false,
   accessToken: localStorage.getItem('accessToken') || sessionStorage.getItem('accessToken') || '',
 };
 
@@ -49,6 +50,20 @@ const authSlice = createSlice({
     builder.addCase(authThunks.signOut.rejected, (state, action) => {
       state.loading = AuthStates.IDLE;
       state.error = action.error;
+    });
+    builder.addCase(authThunks.setDarkTheme, (state) => {
+      state.isDarkMode = true;
+      document.querySelector('body')?.setAttribute('data-theme', 'dark');
+    });
+    builder.addCase(authThunks.setLightTheme, (state) => {
+      state.isDarkMode = false;
+      document.querySelector('body')?.setAttribute('data-theme', 'light');
+    });
+    builder.addCase(authThunks.setTheme, (state) => {
+      state.isDarkMode = !state.isDarkMode;
+      const activeTheme = state.isDarkMode ? 'dark' : 'light';
+      document.querySelector('body')?.setAttribute('data-theme', activeTheme);
+      localStorage.setItem('mode', activeTheme);
     });
   },
 });

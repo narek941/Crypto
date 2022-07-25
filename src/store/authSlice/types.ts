@@ -8,6 +8,7 @@ export type AuthSliceState = {
   error?: SerializedError | null;
   role: string | null;
   twoFactorAuthEnabled: boolean;
+  isDarkMode: boolean;
 };
 
 export type UpdateAccessTokenAction = {

@@ -53,8 +53,8 @@ export const getAccountSummary = createAsyncThunk(
   },
 );
 
-export const getWalletTradesList = createAsyncThunk(
-  `${Slice.Accounts}/wallet-trades`,
+export const getAccountTradesList = createAsyncThunk(
+  `${Slice.Accounts}/account-trades`,
   async (
     credentials: {
       skip: number;
@@ -83,40 +83,8 @@ export const getWalletTradesList = createAsyncThunk(
   },
 );
 
-export const getCoins = createAsyncThunk(
-  `${Slice.Accounts}/accounts/coins`,
-  async (_, thunkAPI) => {
-    try {
-      const response = await client.get('/admin/exchange/1/supported-cryptocurrencies');
-
-      return {
-        coins: response.data.list,
-      };
-    } catch {
-      return thunkAPI.rejectWithValue({ error: '* Incorrect' });
-    }
-  },
-);
-
-export const getWalletOrderTrades = createAsyncThunk(
-  `${Slice.Accounts}/accounts/order`,
-  async ({ walletId, orderId }: any, thunkAPI) => {
-    try {
-      const response = await client.get(
-        `/wallets/${walletId}/orders/${orderId}/trades?skip=0&take=10&sort=id&order=ASC&search={}`,
-      );
-
-      return {
-        orderTrades: response.data.list,
-      };
-    } catch {
-      return thunkAPI.rejectWithValue({ error: '* Incorrect' });
-    }
-  },
-);
-
-export const getWalletOpenOrders = createAsyncThunk(
-  `${Slice.Wallets}/open-orders`,
+export const getAccountAlerts = createAsyncThunk(
+  `${Slice.Accounts}/account-alerts`,
   async (
     credentials: {
       skip: number;
@@ -131,7 +99,7 @@ export const getWalletOpenOrders = createAsyncThunk(
     const { id, ...restCredentials } = credentials;
 
     try {
-      const response = await client.get(`/wallets/${id}/orders/open`, {
+      const response = await client.get(`/accounts/${id}/alerts`, {
         params: { ...restCredentials },
       });
 
@@ -146,5 +114,9 @@ export const getWalletOpenOrders = createAsyncThunk(
 );
 
 export const accountsFilterUpdate = createAction<Partial<IFilter>>('accountsFilter');
+export const accountsTradesFilterUpdate = createAction<Partial<IFilter>>('accountsTradesFilter');
+export const accountsAlertsFilterUpdate = createAction<Partial<IFilter>>(
+  'accountsAlertsFilterUpdate',
+);
 
 export const removeAccountById = createAction('removeAccountByID');

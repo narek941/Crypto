@@ -1,10 +1,17 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Paper, TableContainer } from '@mui/material';
 
-import { OrdersTable } from 'components';
 import { tabList } from 'utils/table';
-import Tab from 'components/shared/Tab';
-import TradesTable from 'components/shared/TradesTable';
+import {
+  OrdersHistoryTable,
+  OrdersTable,
+  InflowsTable,
+  Tab,
+  TradesTable,
+  WalletsTable,
+} from 'components';
+
+import AnalyticsAlertTable from '../AnalyticsAlertTable';
 
 import styles from './AnalyticsTabs.module.scss';
 
@@ -20,11 +27,15 @@ const AnalyticsTabs = (): JSX.Element => {
       case 0:
         return <OrdersTable />;
       case 1:
-        return <>Table2</>;
+        return <WalletsTable />;
+      case 2:
+        return <InflowsTable />;
+      case 3:
+        return <OrdersHistoryTable />;
       case 4:
         return <TradesTable />;
       default:
-        return <OrdersTable />;
+        return <AnalyticsAlertTable />;
     }
   };
 

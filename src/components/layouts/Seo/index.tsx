@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 
-import { setDarkTheme, setLightTheme } from 'store/themeSlice/actions';
 import { Container, Header, Sidebar } from 'components';
+import { authActions } from 'store/authSlice';
 
 import { ISeoProps } from './types';
 
@@ -10,9 +10,9 @@ const Seo = ({ children, text, withHeader = true, isBackBtn = false }: ISeoProps
 
   const activeMode = localStorage.getItem('mode') || 'light';
   if (activeMode === 'dark') {
-    dispatch(setDarkTheme());
+    dispatch(authActions.setDarkTheme());
   } else {
-    dispatch(setLightTheme());
+    dispatch(authActions.setLightTheme());
   }
 
   return (

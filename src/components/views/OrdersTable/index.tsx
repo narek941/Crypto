@@ -5,53 +5,51 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
 
 import { EmptyData, Pagination } from 'components';
 import { RootState } from 'types';
 import { orderTradesHeader } from 'utils/table';
 import { useAppDispatch } from 'hooks';
-import { accountsActions } from 'store/accountsSlice';
-import { accountsFilterUpdate } from 'store/accountsSlice/thunks';
+import { walletsActions } from 'store/walletsSlice';
+import { openOrdersFilterUpdate } from 'store/walletsSlice/thunks';
 
 import OrdersTableRow from './OrdersTableRow';
 import styles from './OrdersTable.module.scss';
 
 const OrdersTable = () => {
-  const { accountsFilter, openOrders, openOrdersTotalCount } = useSelector(
-    (state: RootState) => state.accounts,
-  );
-  const { id } = useParams();
-  const convertedId = Number(id);
+  const { filter, list, totalCount } = useSelector((state: RootState) => state.wallets.openOrders);
+  const accounts = useSelector((state: RootState) => state.accounts);
+  const walletId = accounts.accountById?.wallets?.length && accounts.accountById.wallets[0]?.id;
 
   const [page, setPage] = useState(0);
   const dispatch = useAppDispatch();
   // const [orderBy, setOrderBy] = useState<KeyOfData>('id');
 
   // const handleRequestSort = (event: React.MouseEvent<unknown>, property: KeyOfData) => {
-  //   const isAsc = orderBy === property && accountsFilter.order === 'ASC';
+  //   const isAsc = orderBy === property && filter.order === 'ASC';
   //   const orderText = isAsc ? 'DESC' : 'ASC';
 
-  //   dispatch(accountsFilterUpdate({ order: orderText }));
+  //   dispatch(openOrdersFilterUpdate({ order: orderText }));
 
   //   setOrderBy(property);
   // };
 
-  const handleChangePage = (event: unknown, newPage: number) => {
-    dispatch(accountsFilterUpdate({ skip: Number(newPage) * accountsFilter.take }));
+  const handleChangePage = (_event: unknown, newPage: number) => {
+    dispatch(openOrdersFilterUpdate({ skip: Number(newPage) * filter.take }));
 
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(accountsFilterUpdate({ take: parseInt(event.target.value), skip: 0 }));
+    if (totalCount) {
+      dispatch(openOrdersFilterUpdate({ take: parseInt(event.target.value), skip: 0 }));
+    }
   };
 
   useEffect(() => {
-    dispatch(
-      accountsActions.getWalletOpenOrders({ ...accountsFilter, id: convertedId as string | any }),
-    );
-  }, [convertedId, accountsFilter, dispatch]);
+    dispatch(walletsActions.getWalletOpenOrders({ ...filter, id: walletId }));
+  }, [walletId, filter, dispatch]);
+
   return (
     <>
       <div className={styles.wrapper}>
@@ -67,20 +65,20 @@ const OrdersTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {openOrders.map((row) => (
+            {list.map((row) => (
               <OrdersTableRow row={row} key={row.id} />
             ))}
           </TableBody>
         </Table>
-        {!openOrdersTotalCount && <EmptyData />}
+        {!totalCount && <EmptyData />}
       </div>
 
       <Pagination
         handleChangePage={handleChangePage}
         handleChangeRowsPerPage={handleChangeRowsPerPage}
         currentPage={page}
-        rowsPerPage={accountsFilter?.take}
-        totalCount={openOrdersTotalCount}
+        rowsPerPage={filter?.take}
+        totalCount={totalCount}
       />
     </>
   );

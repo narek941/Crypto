@@ -28,17 +28,7 @@ const SignInForm: React.FC = () => {
       navigate,
       deviceToken: uuidv4(),
     };
-    // eslint-disable-next-line no-console
     dispatch(authActions.signIn(formValues));
-
-    // const response = await your action here;
-    // TODO: the comment is a simple example of the values which will be returned when user submits this form
-    // eslint-disable-next-line no-console
-    // if (values.email === valid_email && values.password == valid_password) {
-    //   navigate('/accounts');
-    // } else {
-    //   setErrors(['Wrong email or password']);
-    // }
   };
 
   return (
@@ -56,9 +46,6 @@ const SignInForm: React.FC = () => {
             haveRightIcon={true}
             className={styles.signIn__form__group__input}
           />
-          {/* {!!errors.length && (
-            <FormErrorBox errors={errors} className={styles.signIn__form__group__error} />
-          )} */}
           {!!loginError && <p className={styles.signIn__form__group__error}>{loginError}</p>}
 
           <Checkbox

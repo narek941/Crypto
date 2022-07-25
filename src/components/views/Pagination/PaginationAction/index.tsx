@@ -14,6 +14,7 @@ const TablePaginationActions = ({
   onPageChange,
 }: TablePaginationActionsProps) => {
   const [totalPageCount, setTotalPageCount] = useState(Math.ceil(count / rowsPerPage));
+  const isEmptyCount = count === 0;
 
   useEffect(() => {
     setTotalPageCount(Math.ceil(count / rowsPerPage));
@@ -48,7 +49,7 @@ const TablePaginationActions = ({
       <button
         className={styles.action__item}
         onClick={handleFirstPageButtonClick}
-        disabled={page === 0}
+        disabled={isEmptyCount || page === 0}
         aria-label='first page'
       >
         <SkipToFirstIcon />
@@ -56,7 +57,7 @@ const TablePaginationActions = ({
       <button
         className={styles.action__item}
         onClick={handleBackButtonClick}
-        disabled={page === 0}
+        disabled={isEmptyCount || page === 0}
         aria-label='Prev'
       >
         <ChevronLeftIcon />
@@ -84,7 +85,7 @@ const TablePaginationActions = ({
       <button
         className={styles.action__item}
         onClick={handleNextButtonClick}
-        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+        disabled={isEmptyCount || page >= Math.ceil(count / rowsPerPage) - 1}
         aria-label='Next'
       >
         <span className={styles.action__item__text}>Next</span>
@@ -93,7 +94,7 @@ const TablePaginationActions = ({
       <button
         className={styles.action__item}
         onClick={handleLastPageButtonClick}
-        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+        disabled={isEmptyCount || page >= Math.ceil(count / rowsPerPage) - 1}
         aria-label='last page'
       >
         <SkipToLastIcon />

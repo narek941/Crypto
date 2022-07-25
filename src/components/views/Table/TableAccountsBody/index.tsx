@@ -6,7 +6,7 @@ import moment from 'moment';
 import { Link } from 'react-router-dom';
 
 import { BinIcon, ChartIcon, EditIcon, SettingIcon } from 'assets/icons';
-import { DeleteAlert } from 'components';
+import { Alert } from 'components';
 import { Routes } from 'types';
 
 import styles from '../Table.module.scss';
@@ -139,7 +139,7 @@ const TableAccountBody = ({
       <tbody className={styles.table__body}>
         {rows.map(
           ({ id, startCapitalInBaseCurrency, name, createdAt, status, statistics }: any, index) => {
-            const formattedDate = moment(createdAt).format('MM.DD.YY');
+            const formattedDate = moment(createdAt).format('DD.MM.YYYY HH:MM:SS');
             const isLastItem = index === rows.length - 1;
 
             return (
@@ -182,7 +182,7 @@ const TableAccountBody = ({
             );
           },
         )}
-        <DeleteAlert
+        <Alert
           open={open}
           handleClose={() => handleClose && handleClose()}
           handleDelete={handleDelete}

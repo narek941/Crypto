@@ -1,5 +1,4 @@
 import { TablePagination } from '@mui/material';
-import React from 'react';
 import classNames from 'classnames';
 
 import styles from './Pagination.module.scss';
@@ -21,7 +20,7 @@ const Pagination = ({
       component='div'
       className={classNames(className, styles.wrapper)}
       count={totalCount}
-      rowsPerPage={totalCount ? rowsPerPage : 0}
+      rowsPerPage={rowsPerPage}
       page={currentPage}
       onPageChange={handleChangePage}
       onRowsPerPageChange={handleChangeRowsPerPage}

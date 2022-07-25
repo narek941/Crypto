@@ -13,12 +13,6 @@ const internalInitialState: AlertsSliceState = {
   list: [],
   filter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '' },
 };
-export type IFilterPayload =
-  | { skip: number }
-  | { take: number }
-  | { sort: string }
-  | { search: string }
-  | { order: 'DESC' | 'ASC' };
 
 const alertsSlice = createSlice({
   name: Slice.Alerts,

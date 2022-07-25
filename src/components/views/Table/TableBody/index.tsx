@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { BinIcon, ChartIcon, EditIcon, SettingIcon } from 'assets/icons';
-import { DeleteAlert } from 'components';
+import { Alert } from 'components';
 import { Routes } from 'types';
 
 import styles from '../Table.module.scss';
@@ -131,7 +131,7 @@ const TableBody = ({
             </TableRow>
           );
         })}
-        <DeleteAlert
+        <Alert
           open={open}
           handleClose={() => handleClose && handleClose()}
           handleDelete={handleDelete}
