@@ -10,16 +10,16 @@ const WalletsSummaryTableRow = ({ walletId, row }: any) => (
       {walletId}
     </TableCell>
     <TableCell align='left' className={styles.ceil}>
-      {row.totalCapital}
+      {row.totalCapital || 0}
     </TableCell>
     <TableCell align='left' className={styles.ceil}>
-      {row.totalCapitalInBaseCurrency}
+      {row.totalCapitalInBaseCurrency || 0}
     </TableCell>
     <TableCell align='left' className={styles.ceil}>
-      {row.profitLossInBaseCurrency}
+      {row.profitLossInBaseCurrency || 0}
     </TableCell>
     <TableCell align='left' className={styles.ceil}>
-      {row.profitLossInPercent}
+      {row.profitLossInPercent || 0}
     </TableCell>
     <TableCell align='left' className={styles.ceil}>
       {moment(row.lastRefreshDate).format('DD.MM.YYYY HH:MM:SS')}
