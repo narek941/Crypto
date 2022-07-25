@@ -5,7 +5,6 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
 
 import { EmptyData, Pagination } from 'components';
 import { RootState } from 'types';
@@ -19,8 +18,8 @@ import styles from './OrdersTable.module.scss';
 
 const OrdersTable = () => {
   const { filter, list, totalCount } = useSelector((state: RootState) => state.wallets.openOrders);
-  const { id } = useParams();
-  const convertedId = Number(id);
+  const accounts = useSelector((state: RootState) => state.accounts);
+  const walletId = accounts.accountById?.wallets?.length && accounts.accountById.wallets[0]?.id;
 
   const [page, setPage] = useState(0);
   const dispatch = useAppDispatch();
@@ -48,8 +47,8 @@ const OrdersTable = () => {
   };
 
   useEffect(() => {
-    dispatch(walletsActions.getWalletOpenOrders({ ...filter, id: convertedId as string | any }));
-  }, [convertedId, filter, dispatch]);
+    dispatch(walletsActions.getWalletOpenOrders({ ...filter, id: walletId }));
+  }, [walletId, filter, dispatch]);
 
   return (
     <>
