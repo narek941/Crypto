@@ -1,5 +1,6 @@
 .container {
   &__header {
+    background: var(--table-head);
     display: table-header-group;
     border-bottom: 1px solid var(--collapse-table-border);
 

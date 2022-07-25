@@ -1,5 +1,6 @@
 //mode
 :root {
+  --table-head: #0097a7;
   --table-item: #9a99a6;
   --table-title: #080808;
   --font: #212121;
@@ -84,6 +85,7 @@
 }
 
 [data-theme='dark'] {
+  --table-head: transparent;
   --table-item: #29292e;
   --table-title: #fff;
   --font: #ffffff;
