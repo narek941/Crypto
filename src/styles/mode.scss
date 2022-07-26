@@ -34,7 +34,9 @@
   --sidebar-font: rgba(0, 151, 167, 0.41);
   --sidebar-selected: #0097a7;
   --table-header: #0097a7;
+  --table-inner: transparent;
   --collapse-table-header: #0097a7;
+  --table-border-style: hidden;
 
   --table-header-font: #ffffff;
   --table-header-secondary: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), #009688;
@@ -78,7 +80,8 @@
   --placeholder-select: #9a99a6;
   --option-shadow: 0px 2px 25px 2px rgba(0, 0, 0, 0.12);
   --tab-selected-border: #413ac7;
-  --tab-selected: #4c4b53;
+  --tab-selected: #000000;
+  --tab-not-selected: #9a99a6;
   --order-table-collapsed: rgba(56, 56, 56, 0.2);
   --paper: #ffffff;
   --icon-selected: #605d7b;
@@ -117,13 +120,15 @@
   --modal-header: rgba(56, 56, 56, 0.7);
   --sidebar-font: #ffffff;
   --sidebar-selected: #413ac7;
-  --table-header: rgba(56, 56, 56, 0.16);
+  --table-header: transparent;
+  --table-inner: rgba(56, 56, 56, 0.16);
   --collapse-table-header: #101010;
+  --table-border-style: solid;
 
   --table-header-font: #9a99a6;
   --table-header-secondary: rgba(56, 56, 56, 0.16);
-  --ceil: rgba(56, 56, 56, 0.16);
-  --ceil-even: rgba(56, 56, 56, 0.16);
+  --ceil: transparent;
+  --ceil-even: transparent;
   --signIn-subtitle: rgba(162, 191, 190, 0.8);
   --icon-primary: #ffffff;
   --icon-primary-nav: #ffffff;
@@ -132,7 +137,7 @@
   --icon-secondary-selected: #413ac7;
   --icon-secondary: #ffffff;
   --sidebar-line: #29292e;
-  --table-border: #383838;
+  --table-border: #29292e;
   --collapse-table-border: #29292e;
   --table-padding: 24px;
   --disable: #4c5853;
@@ -166,6 +171,7 @@
   --option-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   --tab-selected-border: #413ac7;
   --tab-selected: #ffffff;
+  --tab-not-selected: #29292e;
   --order-table-collapsed: #181818;
   --paper: #101010;
   --icon-selected: #ffffff;

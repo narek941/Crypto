@@ -1,7 +1,7 @@
 import { createSlice, isAnyOf, PayloadAction } from '@reduxjs/toolkit';
 
 import { Slice } from 'types';
-import { pendingReducer, errorReducer } from 'utils/extraReducers';
+import { extraReducers } from 'utils';
 
 import * as accountsThunks from './thunks';
 import { AccountStates } from './constants';
@@ -103,7 +103,7 @@ const accountsSlice = createSlice({
         accountsThunks.getAccountTradesList.pending,
         accountsThunks.getAccountAlerts.pending,
       ),
-      pendingReducer,
+      extraReducers.pendingReducer,
     );
 
     builder.addMatcher(
@@ -114,7 +114,7 @@ const accountsSlice = createSlice({
         accountsThunks.getAccountTradesList.rejected,
         accountsThunks.getAccountAlerts.rejected,
       ),
-      errorReducer,
+      extraReducers.errorReducer,
     );
   },
 });

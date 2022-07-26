@@ -8,6 +8,6 @@ export type AlertsSliceState = {
   loading: AlertStates;
   error?: SerializedError | null;
   totalCount: number;
-  list?: any[];
+  list: any[];
   filter: IFilter;
 };

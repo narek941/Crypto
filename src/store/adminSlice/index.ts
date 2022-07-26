@@ -1,7 +1,7 @@
 import { createSlice, isAnyOf, PayloadAction } from '@reduxjs/toolkit';
 
 import { Slice } from 'types';
-import { errorReducer, pendingReducer } from 'utils/extraReducers';
+import { extraReducers } from 'utils';
 
 import * as adminThunks from './thunks';
 import { AdminStates } from './constants';
@@ -96,7 +96,7 @@ const adminSlice = createSlice({
         adminThunks.updateUsername.pending,
         adminThunks.getCoins.pending,
       ),
-      pendingReducer,
+      extraReducers.pendingReducer,
     );
 
     builder.addMatcher(
@@ -116,7 +116,7 @@ const adminSlice = createSlice({
         adminThunks.updateUsername.rejected,
         adminThunks.getCoins.rejected,
       ),
-      errorReducer,
+      extraReducers.errorReducer,
     );
   },
 });

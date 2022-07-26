@@ -1,20 +1,18 @@
-import 'react-toastify/dist/ReactToastify.css';
-
-import { useSelector } from 'react-redux';
 import { useEffect, useMemo } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { useSelector } from 'react-redux';
 
 import { useForm } from 'hooks';
-import FormWrapper from 'components/forms/FormWrapper';
 import { RootState } from 'types';
+import FormWrapper from 'components/forms/FormWrapper';
 
-import { AddAccountFormShape, IAddAccount } from './types';
-import { addAccountSchemaKeys } from './fields';
-import BaseSetting from './FormGroups/BaseSetting';
 import Wallet from './FormGroups/Wallet';
+import { addAccountSchemaKeys } from './fields';
 import TradeLimit from './FormGroups/TradeLimit';
 import FormAction from './FormGroups/FormAction';
+import BaseSetting from './FormGroups/BaseSetting';
 import TradeSetting from './FormGroups/TradeSetting';
+import { AddAccountFormShape, IAddAccount } from './types';
 
 const AddAccountForm = ({ onClick, isEditable = false }: IAddAccount) => {
   const { name, startCapitalInBaseCurrency, allowedPairs, alertsDestinations, wallets } =

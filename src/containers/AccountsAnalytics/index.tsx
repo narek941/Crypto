@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
+import moment from 'moment';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import moment from 'moment';
-import { isUndefined } from 'lodash';
 
 import { RootState } from 'types';
 import { useAppDispatch } from 'hooks';
-import { accountsAnalyticsLineChart } from 'utils/table';
+import { charts } from 'constants/index';
+import { wrapWithBaseCurrency } from 'utils';
 import { accountsActions } from 'store/accountsSlice';
 import { Bricks, Chart, Doughnut, Export, AnalyticsTabs } from 'components';
 
@@ -19,11 +19,11 @@ const AccountsAnalytics = (): JSX.Element => {
 
   const { accountById } = useSelector((state: RootState) => state.accounts);
 
-  const renderLineCharts = accountsAnalyticsLineChart.map((item: any, index) => (
+  const renderLineCharts = charts.accountsAnalyticsChart.lineChart.map((item: any, index) => (
     <Chart key={index} />
   ));
 
-  const renderDoughnutCharts = accountsAnalyticsLineChart.map((item: any, index) => (
+  const renderDoughnutCharts = charts.accountsAnalyticsChart.lineChart.map((item: any, index) => (
     <Doughnut key={index} />
   ));
 
@@ -41,38 +41,31 @@ const AccountsAnalytics = (): JSX.Element => {
       <div className={styles.analytics__export}>
         <Export />
       </div>
+
       <div className={styles.analytics__bricks__wrapper}>
-        <Bricks header='Seed Capital' value={accountById.startCapitalInBaseCurrency} />
+        <Bricks header='Seed Capital' value={accountById.startCapitalInBaseCurrency || 0} />
         <Bricks
           header='Performance'
-          value={
-            !isUndefined(accountById.statistics?.productivityInPercent)
-              ? `${accountById.statistics?.productivityInPercent}%`
-              : ''
-          }
+          value={`${accountById.statistics?.productivityInPercent || 0}%`}
         />
         <Bricks
-          header='Current Capital, USDT'
-          value={accountById.statistics?.startCapitalInBaseCurrency}
-          moreText={
-            !isUndefined(accountById.statistics?.refreshDate)
-              ? `Updated at ${moment(accountById.statistics?.refreshDate).format(
-                  'DD.MM.YYYY HH:MM:SS',
-                )}`
-              : ''
-          }
+          value={accountById.statistics?.startCapitalInBaseCurrency || 0}
+          header={wrapWithBaseCurrency('Current Capital', accountById?.baseCurrency?.name)}
+          moreText={moment(accountById.statistics?.refreshDate).format('DD.MM.YYYY HH:MM:SS')}
         />
         <Bricks
-          header='Current open profit'
-          value={accountById.statistics?.currentOpenProfitInBaseCurrency}
+          value={accountById.statistics?.currentOpenProfitInBaseCurrency || 0}
+          header={wrapWithBaseCurrency('Current open profit', accountById?.baseCurrency?.name)}
         />
         <Bricks
-          header='Earned capital, USDT'
-          value={accountById.statistics?.earnedCapitalInBaseCurrency}
+          value={accountById.statistics?.earnedCapitalInBaseCurrency || 0}
+          header={wrapWithBaseCurrency('Earned capital', accountById?.baseCurrency?.name)}
         />
       </div>
+
       <div className={styles.analytics__chart}>{renderLineCharts}</div>
       <div className={styles.analytics__chart}>{renderDoughnutCharts}</div>
+
       <AnalyticsTabs />
     </div>
   );

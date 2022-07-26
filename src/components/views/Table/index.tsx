@@ -1,21 +1,24 @@
-import React, { useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import moment from 'moment';
 
 import { useAppDispatch } from 'hooks';
-import { usersFilterUpdate } from 'store/adminSlice/thunks';
 import { EmptyData } from 'components';
+import { wrapWithBaseCurrency } from 'utils';
 import { adminActions } from 'store/adminSlice';
+import { usersFilterUpdate } from 'store/adminSlice/thunks';
 import { accountsFilterUpdate } from 'store/accountsSlice/thunks';
+import { alertsActions } from 'store/alertsSlice';
 
-import Pagination from '../Pagination';
 import Modal from '../Modal';
+import Pagination from '../Pagination';
 
 import TableHead from './TableHead';
 import styles from './Table.module.scss';
-import TableBody from './TableBody';
-import { ITableProps, KeyOfData } from './types';
 import TableToolbar from './TableToolbar';
-import TableAccountBody from './TableAccountsBody';
+import TableUsersBody from './TableBody/TableUsersBody';
+import TableAccountBody from './TableBody/TableAccountsBody';
+import { ITableProps, KeyOfData, SelectedAccount } from './types';
+import TableAlertsBody from './TableBody/TableAlertsBody';
 
 const Table = ({
   rows = [],
@@ -28,24 +31,20 @@ const Table = ({
   order,
   totalCount,
 }: ITableProps) => {
-  const [open, setOpen] = useState(false);
-
-  const toggleAlertOpen = () => setOpen(!open);
-  const [page, setPage] = useState(0);
-  const [openChart, setOpenChart] = useState(false);
   const dispatch = useAppDispatch();
+  const [page, setPage] = useState(0);
+  const [open, setOpen] = useState(false);
+  const [openChart, setOpenChart] = useState(false);
   const [orderBy, setOrderBy] = useState<KeyOfData>('id');
-  const [selectedAccountData, setSelectedAccountData] = useState<{
-    id: number | null;
-    statistics: any | null;
-    startCapitalInBaseCurrency: any | null;
-  }>({
+  const [selectedAccountData, setSelectedAccountData] = useState<SelectedAccount>({
     id: null,
     statistics: null,
     startCapitalInBaseCurrency: null,
   });
 
-  const handleRequestSort = (event: React.MouseEvent<unknown>, property: KeyOfData) => {
+  const toggleAlertOpen = useCallback(() => setOpen(!open), [open]);
+
+  const handleRequestSort = (_event: React.MouseEvent<unknown>, property: KeyOfData) => {
     const isAsc = orderBy === property && order === 'ASC';
     const orderText = isAsc ? 'DESC' : 'ASC';
     if (action === 'users') {
@@ -58,20 +57,49 @@ const Table = ({
   };
 
   const handleChangePage = (_event: unknown, newPage: number) => {
-    if (action === 'users') {
-      dispatch(usersFilterUpdate({ skip: Number(newPage) * take }));
-    } else {
-      dispatch(accountsFilterUpdate({ skip: Number(newPage) * take }));
+    const filterSkip = { skip: Number(newPage) * take };
+
+    switch (action) {
+      case 'users': {
+        dispatch(usersFilterUpdate(filterSkip));
+        break;
+      }
+      case 'accounts': {
+        dispatch(accountsFilterUpdate(filterSkip));
+        break;
+      }
+      case 'alerts': {
+        dispatch(alertsActions.alertsFilterUpdate(filterSkip));
+        break;
+      }
+
+      default:
+        break;
     }
+
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (totalCount) {
-      if (action === 'users') {
-        dispatch(usersFilterUpdate({ take: parseInt(event.target.value), skip: 0 }));
-      } else {
-        dispatch(accountsFilterUpdate({ take: parseInt(event.target.value), skip: 0 }));
+      const filterPerPage = { take: parseInt(event.target.value), skip: 0 };
+
+      switch (action) {
+        case 'users': {
+          dispatch(usersFilterUpdate(filterPerPage));
+          break;
+        }
+        case 'accounts': {
+          dispatch(accountsFilterUpdate(filterPerPage));
+          break;
+        }
+        case 'alerts': {
+          dispatch(alertsActions.alertsFilterUpdate(filterPerPage));
+          break;
+        }
+
+        default:
+          break;
       }
     }
   };
@@ -85,50 +113,102 @@ const Table = ({
     setOpen(false);
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleSearch = (value: any) => {
-    if (action === 'users') {
-      dispatch(
-        usersFilterUpdate({
-          search: {
-            role: value.search,
-            email: value.search,
-            status: value.search,
-            username: value.search,
-            id: Number(value.search) || -1,
-          },
-        }),
-      );
-    } else {
-      dispatch(
-        accountsFilterUpdate({ search: { id: Number(value.search) || -1, name: value.search } }),
-      );
-    }
-  };
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const handleBlock = async (id: number) => {
-    if (action === 'users') {
-      await dispatch(adminActions.blockUser(id)).unwrap();
-    } else {
-      await dispatch(adminActions.blockAccount(id)).unwrap();
+    switch (action) {
+      case 'users': {
+        dispatch(
+          usersFilterUpdate({
+            search: {
+              role: value.search,
+              email: value.search,
+              status: value.search,
+              username: value.search,
+              id: Number(value.search) || -1,
+            },
+          }),
+        );
+        break;
+      }
+      case 'accounts': {
+        dispatch(
+          accountsFilterUpdate({ search: { id: Number(value.search) || -1, name: value.search } }),
+        );
+        break;
+      }
+      case 'alerts': {
+        dispatch(
+          alertsActions.alertsFilterUpdate({
+            search: { id: Number(value.search) || -1, message: value.search },
+          }),
+        );
+
+        break;
+      }
+
+      default:
+        break;
     }
   };
 
-  const handleUnblock = async (id: number) => {
-    if (action === 'users') {
-      await dispatch(adminActions.unblockUser(id)).unwrap();
-    } else {
-      await dispatch(adminActions.unblockAccount(id)).unwrap();
-    }
-  };
+  const handleBlock = useCallback(
+    async (id: number) => {
+      if (action === 'users') {
+        await dispatch(adminActions.blockUser(id)).unwrap();
+      } else {
+        await dispatch(adminActions.blockAccount(id)).unwrap();
+      }
+    },
+    [action, dispatch],
+  );
 
-  const handleDelete = async (id: number) => {
-    if (action === 'users') {
-      await dispatch(adminActions.deleteUser(id)).unwrap();
-    } else {
-      await dispatch(adminActions.deleteAccount(id)).unwrap();
+  const handleUnblock = useCallback(
+    async (id: number) => {
+      if (action === 'users') {
+        await dispatch(adminActions.unblockUser(id)).unwrap();
+      } else {
+        await dispatch(adminActions.unblockAccount(id)).unwrap();
+      }
+    },
+    [action, dispatch],
+  );
+
+  const handleDelete = useCallback(
+    async (id: number) => {
+      if (action === 'users') {
+        await dispatch(adminActions.deleteUser(id)).unwrap();
+      } else {
+        await dispatch(adminActions.deleteAccount(id)).unwrap();
+      }
+    },
+    [action, dispatch],
+  );
+
+  const renderTableBody = useMemo(() => {
+    const commonProps = {
+      rows,
+      open,
+      handleBlock,
+      handleClose,
+      handleDelete,
+      handleUnblock,
+      toggleAlertOpen,
+    };
+
+    switch (action) {
+      case 'users': {
+        return <TableUsersBody {...commonProps} />;
+      }
+      case 'accounts': {
+        return <TableAccountBody {...commonProps} handleChartAction={handleChartAction} />;
+      }
+      case 'alerts': {
+        return <TableAlertsBody rows={rows} />;
+      }
+
+      default:
+        return null;
     }
-  };
+  }, [action, handleBlock, handleDelete, handleUnblock, open, rows, toggleAlertOpen]);
 
   return (
     <>
@@ -143,37 +223,7 @@ const Table = ({
                 headCells={headCells}
                 type={type}
               />
-              {!!totalCount && action === 'users' ? (
-                <TableBody
-                  handleDelete={handleDelete}
-                  rows={rows}
-                  page={page}
-                  type={type}
-                  action={action}
-                  open={open}
-                  handleChartAction={handleChartAction}
-                  rowsPerPage={take}
-                  handleClose={handleClose}
-                  toggleAlertOpen={toggleAlertOpen}
-                  handleBlock={handleBlock}
-                  handleUnblock={handleUnblock}
-                />
-              ) : (
-                <TableAccountBody
-                  handleDelete={handleDelete}
-                  rows={rows}
-                  page={page}
-                  type={type}
-                  action={action}
-                  open={open}
-                  handleChartAction={handleChartAction}
-                  rowsPerPage={take}
-                  handleClose={handleClose}
-                  toggleAlertOpen={toggleAlertOpen}
-                  handleBlock={handleBlock}
-                  handleUnblock={handleUnblock}
-                />
-              )}
+              {!!totalCount && renderTableBody}
             </table>
             {!totalCount && <EmptyData />}
           </div>
@@ -198,12 +248,12 @@ const Table = ({
           },
           {
             id: 2,
-            key: 'Current open profit, USDT',
+            key: wrapWithBaseCurrency('Current open profit'),
             value: selectedAccountData.statistics?.currentOpenProfitInBaseCurrency,
           },
           {
             id: 3,
-            key: 'Earned capital, USDT',
+            key: wrapWithBaseCurrency('Earned capital'),
             value: selectedAccountData.statistics?.earnedCapitalInBaseCurrency,
           },
           {
@@ -213,7 +263,7 @@ const Table = ({
           },
           {
             id: 5,
-            key: 'Current Capital, USDT',
+            key: wrapWithBaseCurrency('Current Capital'),
             value: selectedAccountData.statistics?.startCapitalInBaseCurrency,
             info: `Updated at ${moment(selectedAccountData.statistics?.refreshDate).format(
               'DD.MM.YYYY HH:MM:SS',
@@ -224,4 +274,5 @@ const Table = ({
     </>
   );
 };
+
 export default Table;

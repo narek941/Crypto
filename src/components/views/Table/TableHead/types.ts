@@ -1,4 +1,6 @@
-import { HeadCell, KeyOfData, TypeType } from '../types';
+import { HeadCell } from 'types';
+
+import { KeyOfData, TypeType } from '../types';
 
 export interface ITableHeadProps {
   onRequestSort: (event: React.MouseEvent<unknown>, property: KeyOfData) => void;

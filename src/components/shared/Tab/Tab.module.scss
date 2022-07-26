@@ -1,10 +1,11 @@
 .tab {
   padding-bottom: 24px;
   cursor: pointer;
+  color: var(--tab-not-selected);
 
   &__selected {
     position: relative;
-    padding-bottom: 22px;
+    color: var(--tab-selected);
 
     &:first-child {
       &::after {
@@ -20,7 +21,7 @@
       background: var(--tab-selected-border);
       position: absolute;
       right: 0;
-      bottom: -1px;
+      bottom: 0;
     }
   }
 }

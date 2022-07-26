@@ -24,7 +24,8 @@
   padding: 24px 24px 84px;
   box-shadow: var(--collapse-table-shadow) !important;
   border-radius: 8px;
-  background-color: var(--paper) !important;
+  background-color: var(--table-inner) !important;
+  background-image: none !important;
 }
 
 .tabs {

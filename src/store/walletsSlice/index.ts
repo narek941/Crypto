@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction, isAnyOf } from '@reduxjs/toolkit';
 
 import { Slice } from 'types';
-import { pendingReducer, errorReducer } from 'utils/extraReducers';
+import { extraReducers } from 'utils';
 
 import * as walletsThunks from './thunks';
 import { WalletsStates } from './constants';
@@ -116,7 +116,7 @@ const walletsSlice = createSlice({
         walletsThunks.getWalletOpenOrders.pending,
         walletsThunks.getWalletOrderTrades.pending,
       ),
-      pendingReducer,
+      extraReducers.pendingReducer,
     );
 
     builder.addMatcher(
@@ -127,7 +127,7 @@ const walletsSlice = createSlice({
         walletsThunks.getWalletOpenOrders.rejected,
         walletsThunks.getWalletOrderTrades.rejected,
       ),
-      errorReducer,
+      extraReducers.errorReducer,
     );
   },
 });

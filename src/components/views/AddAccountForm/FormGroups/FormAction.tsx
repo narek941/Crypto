@@ -1,4 +1,3 @@
-import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import { Switch } from '@mui/material';

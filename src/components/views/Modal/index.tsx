@@ -1,13 +1,12 @@
 import React, { useRef } from 'react';
 import classNames from 'classnames';
-import { Doughnut } from 'react-chartjs-2';
 import { Link } from 'react-router-dom';
+import { Doughnut } from 'react-chartjs-2';
 
-import { modalChartList } from 'utils/modal';
+import { Routes } from 'types';
+import { charts } from 'constants/index';
 import { CloseModalIcon } from 'assets/icons';
 import useOnClickOutside from 'hooks/useOutsideClick';
-import { chartColor } from 'utils/chart';
-import { Routes } from 'types';
 
 import styles from './Modal.module.scss';
 import { IModalProps } from './types';
@@ -46,7 +45,7 @@ const Modal = ({ id, open, setOpen, modalList }: IModalProps): JSX.Element => {
     </div>
   ));
 
-  const renderModalChartList = modalChartList.map(({ id, header, data }) => (
+  const renderAccountOverviewCharts = charts.accountOverviewChart.map(({ id, header, data }) => (
     <div className={styles.chart} key={id}>
       <p className={styles.chart__header}>{header}</p>
       <div className={styles.chart__inner}>
@@ -56,7 +55,7 @@ const Modal = ({ id, open, setOpen, modalList }: IModalProps): JSX.Element => {
         <div className={styles.chart__inner__label}>
           {data.labels.map((item, index) => (
             <div key={index} className={styles.chart__inner__label__item}>
-              <span style={{ backgroundColor: chartColor[index] }} />
+              <span style={{ backgroundColor: charts.chartColor[index] }} />
               <p>{item}</p>
             </div>
           ))}
@@ -75,7 +74,7 @@ const Modal = ({ id, open, setOpen, modalList }: IModalProps): JSX.Element => {
       </div>
       <div className={styles.inner}>
         <div>{renderModalList}</div>
-        <div>{renderModalChartList}</div>
+        <div>{renderAccountOverviewCharts}</div>
         <Link className={linkClass} to={`${Routes.Accounts}/analytics/${id}`}>
           more details
         </Link>

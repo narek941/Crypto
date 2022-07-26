@@ -1,5 +1,3 @@
-import 'react-toastify/dist/ReactToastify.css';
-
 import { Input } from 'components';
 import { FormGroup } from 'components/forms';
 
