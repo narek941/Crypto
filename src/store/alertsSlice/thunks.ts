@@ -1,7 +1,8 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 
 import { client } from 'api';
 import { Slice } from 'types';
+import { IFilter } from 'types/api';
 
 export const getAlertList = createAsyncThunk(
   `${Slice.Alerts}`,
@@ -18,3 +19,5 @@ export const getAlertList = createAsyncThunk(
     }
   },
 );
+
+export const alertsFilterUpdate = createAction<Partial<IFilter>>('alertsFilter');

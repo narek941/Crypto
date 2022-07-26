@@ -1,19 +1,17 @@
-/* eslint-disable no-console */
 import { useMemo, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Controller } from 'react-hook-form';
-import { Link } from 'react-router-dom';
 
 import { useForm } from 'hooks';
-import { Button, Input, Select } from 'components';
-import FormWrapper from 'components/forms/FormWrapper';
-import FormGroup from 'components/forms/FormGroup';
 import { RootState, Routes } from 'types';
+import { Button, Input, Select } from 'components';
+import FormGroup from 'components/forms/FormGroup';
+import FormWrapper from 'components/forms/FormWrapper';
 
+import styles from './AddUserForm.module.scss';
 import { AddUserFormShape, IAddUser } from './types';
 import { AccountTypeOptions, addUserFormFields, addSchemaKeys } from './fields';
-import styles from './AddUserForm.module.scss';
-import 'react-toastify/dist/ReactToastify.css';
 
 const AddUserForm = ({ onClick, isEditable = false }: IAddUser) => {
   const { username, email, role } = useSelector((state: RootState) => state.admin.userById);

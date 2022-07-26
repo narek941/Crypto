@@ -34,6 +34,10 @@ const alertsSlice = createSlice({
       state.loading = AlertStates.IDLE;
       state.error = action.payload.error;
     });
+    builder.addCase(alertsThunks.alertsFilterUpdate, (state, action) => {
+      const filter = state.filter;
+      state.filter = { ...filter, ...action.payload };
+    });
   },
 });
 

@@ -1,6 +1,11 @@
 .toolbar {
   @extend %flex-between;
-  margin-bottom: 60px;
+  margin-bottom: 32px;
+
+  &_nolink {
+    justify-content: flex-end;
+  }
+
   &__link {
     width: 100%;
   }

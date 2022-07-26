@@ -1,22 +1,21 @@
 import { useState } from 'react';
 import { Paper, TableContainer } from '@mui/material';
 
-import { tabList } from 'utils/table';
+import { accountAnalyticsTabs } from 'constants/index';
 import {
-  OrdersHistoryTable,
-  OrdersTable,
-  InflowsTable,
   Tab,
+  OrdersTable,
   TradesTable,
+  InflowsTable,
   WalletsTable,
+  OrdersHistoryTable,
+  AnalyticsAlertTable,
 } from 'components';
-
-import AnalyticsAlertTable from '../AnalyticsAlertTable';
 
 import styles from './AnalyticsTabs.module.scss';
 
 const AnalyticsTabs = (): JSX.Element => {
-  const [selectedTab, setSelectedTab] = useState<number>(tabList[0].id || 0);
+  const [selectedTab, setSelectedTab] = useState<number>(accountAnalyticsTabs[0].id || 0);
 
   const handleTabUpdateChange = (id: number) => {
     setSelectedTab(id);
@@ -43,7 +42,7 @@ const AnalyticsTabs = (): JSX.Element => {
     <TableContainer component={Paper} className={styles.table}>
       <>
         <div className={styles.tabs}>
-          {tabList.map(({ id, name }) => (
+          {accountAnalyticsTabs.map(({ id, name }) => (
             <Tab
               selectedTab={selectedTab}
               handleChange={handleTabUpdateChange}

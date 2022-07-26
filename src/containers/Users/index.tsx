@@ -5,7 +5,7 @@ import { Table } from 'components';
 import { RootState } from 'types';
 import { Routes } from 'types/routes';
 import { useAppDispatch } from 'hooks';
-import { headCells } from 'utils/table_users';
+import { usersTable } from 'constants/index';
 import { adminActions } from 'store/adminSlice';
 
 const Users = () => {
@@ -21,12 +21,12 @@ const Users = () => {
   return (
     <Table
       take={take}
+      rows={list}
       order={order}
       action='users'
       linkText='user'
       type='secondary'
-      rows={list || []}
-      headCells={headCells}
+      headCells={usersTable}
       totalCount={totalCount}
       linkTo={Routes.AddNewUser}
     />

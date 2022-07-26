@@ -8,10 +8,13 @@ export { default as Doughnut } from './Doughnut';
 export { default as Pagination } from './Pagination';
 export { default as SignInForm } from './SignInForm';
 export { default as AddUserForm } from './AddUserForm';
-export { default as TradesTable } from './TradesTable';
-export { default as OrdersTable } from './OrdersTable';
-export { default as InflowsTable } from './InflowsTable';
-export { default as WalletsTable } from './WalletsTable';
 export { default as AnalyticsTabs } from './AnalyticsTabs';
 export { default as AddAccountForm } from './AddAccountForm';
-export { default as OrdersHistoryTable } from './OrdersHistoryTable';
+
+// Tables
+export { default as TradesTable } from './tables/TradesTable';
+export { default as OrdersTable } from './tables/OrdersTable';
+export { default as InflowsTable } from './tables/InflowsTable';
+export { default as WalletsTable } from './tables/WalletsTable';
+export { default as OrdersHistoryTable } from './tables/OrdersHistoryTable';
+export { default as AnalyticsAlertTable } from './tables/AnalyticsAlertTable';

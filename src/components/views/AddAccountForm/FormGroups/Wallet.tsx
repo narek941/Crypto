@@ -1,4 +1,3 @@
-import 'react-toastify/dist/ReactToastify.css';
 import { Controller } from 'react-hook-form';
 
 import { Input, Select } from 'components';

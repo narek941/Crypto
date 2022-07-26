@@ -8,7 +8,7 @@ export type AdminSliceState = {
   error?: any;
   role: string | null;
   twoFactorAdminEnabled: boolean;
-  list?: any[];
+  list: any[];
   coins: any[];
   totalCount: number;
   usersFilter: IFilter;

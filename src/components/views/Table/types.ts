@@ -1,3 +1,4 @@
+import { HeadCell } from 'types';
 import { Routes } from 'types/routes';
 
 export interface Data {
@@ -16,13 +17,7 @@ export interface Data {
 }
 
 export type KeyOfData = keyof Data | keyof UserData;
-export interface HeadCell {
-  disablePadding: boolean;
-  isSort?: boolean;
-  id: KeyOfData;
-  label: string;
-  numeric: boolean;
-}
+
 export type RowsType = string[];
 
 export type TypeType = 'primary' | 'secondary' | 'tertiary';
@@ -55,3 +50,9 @@ export interface UserData {
 export type Order = 'asc' | 'desc';
 
 export type IStatus = 'ACTIVE' | 'DELETED' | 'BLOCKED' | 'EMAIL_VERIFICATION';
+
+export type SelectedAccount = {
+  id: number | null;
+  statistics: any | null;
+  startCapitalInBaseCurrency: any | null;
+};

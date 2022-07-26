@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux';
 
 import { Table } from 'components';
 import { useAppDispatch } from 'hooks';
-import { headCells } from 'utils/table';
 import { RootState, Routes } from 'types';
+import { accountsTable } from 'constants/index';
 import { accountsActions } from 'store/accountsSlice';
 
 const Accounts = () => {
@@ -22,13 +22,13 @@ const Accounts = () => {
   return (
     <Table
       take={take}
+      rows={list}
       order={order}
       type='primary'
       action='accounts'
-      rows={list || []}
       linkText='account'
-      headCells={headCells}
       totalCount={totalCount}
+      headCells={accountsTable}
       linkTo={Routes.AddNewAccount}
     />
   );

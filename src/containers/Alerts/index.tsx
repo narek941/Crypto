@@ -1,15 +1,15 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
-import { Table } from 'components';
-import { headCells } from 'utils/alerts';
-import { useAppDispatch } from 'hooks';
-import { alertsActions } from 'store/alertsSlice';
 import { RootState } from 'types';
+import { Table } from 'components';
+import { useAppDispatch } from 'hooks';
+import { alertsTable } from 'constants/index';
+import { alertsActions } from 'store/alertsSlice';
 
 const Alerts = () => {
   const dispatch = useAppDispatch();
-  const { list, filter, totalCount } = useSelector((state: RootState) => state.alerts);
+  const { list, totalCount, filter } = useSelector((state: RootState) => state.alerts);
 
   const { take, order } = filter;
 
@@ -20,12 +20,12 @@ const Alerts = () => {
   return (
     <Table
       take={take}
+      rows={list}
       order={order}
       type='primary'
       action='alerts'
-      rows={list || []}
-      headCells={headCells}
       totalCount={totalCount}
+      headCells={alertsTable.mainTable}
     />
   );
 };

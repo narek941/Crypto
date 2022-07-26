@@ -2,10 +2,10 @@ import React, { useRef, useState } from 'react';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 
-import { BurgerIcon, LogoIcon } from 'assets/icons';
-import useOnClickOutside from 'hooks/useOutsideClick';
-import { navList } from 'utils/sidebar';
 import { Routes } from 'types';
+import { BurgerIcon, LogoIcon } from 'assets/icons';
+import { sidebarNavigation } from 'constants/index';
+import useOnClickOutside from 'hooks/useOutsideClick';
 
 import styles from './Sidebar.module.scss';
 
@@ -32,7 +32,7 @@ const Sidebar: React.FC = () => {
 
   useOnClickOutside(ref, handleClickOutside);
 
-  const renderList = navList.map(({ id, text, Icon, linkTo }) => (
+  const renderList = sidebarNavigation.map(({ id, text, Icon, linkTo }) => (
     <Link
       key={id}
       className={classNames(styles.list, {
