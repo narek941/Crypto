@@ -10,10 +10,10 @@ const WalletsTableRow = ({ row }: any) => (
       {row?.coin?.name}
     </TableCell>
     <TableCell align='left' className={styles.ceil}>
-      {row.value}
+      {Number(row.value)?.toFixed(8) || 0}
     </TableCell>
     <TableCell align='left' className={styles.ceil}>
-      {row.baseCurrencyValue}
+      {Number(row.baseCurrencyValue)?.toFixed(8) || 0}
     </TableCell>
     <TableCell align='left' className={styles.ceil}>
       {moment(row.refreshAt).format('DD.MM.YYYY HH:MM:SS')}

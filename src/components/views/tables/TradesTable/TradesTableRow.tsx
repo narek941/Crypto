@@ -16,22 +16,24 @@ const TradesTableRow = ({ row }: any) => (
       {row?.side}
     </TableCell>
     <TableCell align='left' className={styles.ceil}>
-      {row?.price || 0}
+      {`${Number(row?.price)?.toFixed(8) || 0} ${row?.coinsPair?.to?.name}`}
     </TableCell>
     <TableCell align='left' className={styles.ceil}>
-      {row?.amount || 0}
+      {`${Number(row?.amount).toFixed(8) || 0} ${row?.coinsPair?.from?.name}`}
     </TableCell>
     <TableCell align='left' className={styles.ceil}>
-      {row?.totalPrice || 0}
+      {`${Number(row?.totalPrice).toFixed(8) || 0} ${row?.coinsPair?.to?.name}`}
     </TableCell>
     <TableCell align='left' className={styles.ceil}>
-      {row?.totalPriceInBaseCurrency || 0}
+      {Number(row?.totalPriceInBaseCurrency).toFixed(8) || 0}
     </TableCell>
     <TableCell align='left' className={styles.ceil}>
-      {row?.fees || 0}
+      {row?.feesCoin
+        ? `${Number(row?.fees).toFixed(8) || 0} ${row?.feesCoin}`
+        : Number(row?.fees).toFixed(8) || 0}
     </TableCell>
     <TableCell align='left' className={styles.ceil}>
-      {row?.feesInBaseCurrency || 0}
+      {Number(row?.feesInBaseCurrency).toFixed(8) || 0}
     </TableCell>
   </TableRow>
 );

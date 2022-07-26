@@ -3,7 +3,7 @@
     background: var(--collapse-table-header) !important;
     display: table-header-group;
     border: 1px solid var(--collapse-table-border);
-    border-style: hidden;
+    border-style: var(--table-border-style);
 
     &__ceil {
       text-align: left;

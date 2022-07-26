@@ -53,7 +53,7 @@ const OrdersTableRow = ({ row }: any): JSX.Element => {
           </IconButton>
         </TableCell>
         <TableCell align='left' className={styles.ceil}>
-          {row.id}
+          {row?.originalId}
         </TableCell>
         <TableCell align='left' className={styles.ceil}>
           {moment(row.creationTime).format('DD.MM.YYYY HH:MM:SS')}
@@ -65,22 +65,22 @@ const OrdersTableRow = ({ row }: any): JSX.Element => {
           {row.side}
         </TableCell>
         <TableCell align='left' className={styles.ceil}>
-          {row.value || 0}
+          {Number(row.value).toFixed(8) || 0}
         </TableCell>
         <TableCell align='left' className={styles.ceil}>
-          {row.valueInBaseCurrency || 0}
+          {Number(row.valueInBaseCurrency).toFixed(8) || 0}
         </TableCell>
         <TableCell align='left' className={styles.ceil}>
-          {row.tradesTotalPriceSum || 0}
+          {Number(row.tradesTotalPriceSum).toFixed(8) || 0}
         </TableCell>
         <TableCell align='left' className={styles.ceil}>
-          {row.tradesTotalPriceInBaseCurrencySum || 0}
+          {Number(row.tradesTotalPriceInBaseCurrencySum).toFixed(8) || 0}
         </TableCell>
         <TableCell align='left' className={styles.ceil}>
-          {row.feesSum || 0}
+          {Number(row.feesSum).toFixed(8) || 0}
         </TableCell>
         <TableCell align='left' className={styles.ceil}>
-          {row.feesSumInBaseCurrency || 0}
+          {Number(row.feesSumInBaseCurrency).toFixed(8) || 0}
         </TableCell>
         <TableCell align='left' className={styles.ceil}>
           {row.relativePercentageToAccount || 0}
@@ -97,53 +97,64 @@ const OrdersTableRow = ({ row }: any): JSX.Element => {
         >
           <Collapse in={open} timeout='auto' unmountOnExit>
             <Box>
-              {wallerOrder ? (
+              {wallerOrder?.length ? (
                 <Table size='small' aria-label='purchases' className={collapseClass}>
                   <TableBody className={styles.container__body}>
-                    <TableRow className={styles.container__body__row}>
-                      <TableCell
-                        className={styles.container__body__row__ceil__collapse}
-                        align='left'
-                      >
-                        {moment(wallerOrder?.createdAt).format('MM.DD.YY')}
-                      </TableCell>
-                      <TableCell
-                        className={styles.container__body__row__ceil__collapse}
-                        align='left'
-                      >
-                        {wallerOrder.price}
-                      </TableCell>
-                      <TableCell
-                        className={styles.container__body__row__ceil__collapse}
-                        align='left'
-                      >
-                        {wallerOrder.totalPrice} BTC
-                      </TableCell>
-                      <TableCell
-                        className={styles.container__body__row__ceil__collapse}
-                        align='left'
-                      >
-                        {wallerOrder.totalPriceInBaseCurrency} USDT
-                      </TableCell>
-                      <TableCell
-                        className={styles.container__body__row__ceil__collapse}
-                        align='left'
-                      >
-                        {wallerOrder.amount} BTC
-                      </TableCell>
-                      <TableCell
-                        className={styles.container__body__row__ceil__collapse}
-                        align='left'
-                      >
-                        {wallerOrder.fees} USDT
-                      </TableCell>
-                      <TableCell
-                        className={styles.container__body__row__ceil__collapse}
-                        align='left'
-                      >
-                        {wallerOrder.feesInBaseCurrency} USDT
-                      </TableCell>
-                    </TableRow>
+                    {wallerOrder?.map((order: any) => (
+                      <TableRow key={order.id} className={styles.container__body__row}>
+                        <TableCell
+                          className={styles.container__body__row__ceil__collapse}
+                          align='left'
+                        >
+                          {moment(order?.tradeTime).format('DD.MM.YYYY HH:MM:SS')}
+                        </TableCell>
+                        <TableCell
+                          className={styles.container__body__row__ceil__collapse}
+                          align='left'
+                        >
+                          {`${Number(order?.price)?.toFixed(8) || 0} ${order?.coinsPair?.to?.name}`}
+                        </TableCell>
+                        <TableCell
+                          className={styles.container__body__row__ceil__collapse}
+                          align='left'
+                        >
+                          {`${Number(order?.amount).toFixed(8) || 0} ${
+                            order?.coinsPair?.from?.name
+                          }`}
+                        </TableCell>
+                        <TableCell
+                          className={styles.container__body__row__ceil__collapse}
+                          align='left'
+                        >
+                          {`${Number(order?.totalPrice).toFixed(8) || 0} ${
+                            order?.coinsPair?.from?.name
+                          }`}
+                        </TableCell>
+                        <TableCell
+                          className={styles.container__body__row__ceil__collapse}
+                          align='left'
+                        >
+                          {`${Number(order?.totalPriceInBaseCurrency).toFixed(8) || 0} ${
+                            order?.coinsPair?.from?.name
+                          }`}
+                        </TableCell>
+
+                        <TableCell
+                          className={styles.container__body__row__ceil__collapse}
+                          align='left'
+                        >
+                          {`${Number(order?.fees).toFixed(8) || 0} ${order?.coinsPair?.from?.name}`}
+                        </TableCell>
+                        <TableCell
+                          className={styles.container__body__row__ceil__collapse}
+                          align='left'
+                        >
+                          {`${Number(order?.feesInBaseCurrency).toFixed(8) || 0} ${
+                            order?.coinsPair?.from?.name
+                          }`}
+                        </TableCell>
+                      </TableRow>
+                    ))}
                   </TableBody>
                 </Table>
               ) : (

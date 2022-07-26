@@ -36,10 +36,14 @@ const ordersHistoryTable: TableHeaderRow[] = [
   },
   {
     id: 9,
-    value: 'Modifiers',
+    value: 'Status',
   },
   {
     id: 10,
+    value: 'Modifiers',
+  },
+  {
+    id: 11,
     value: 'Last Operation Time',
   },
 ];

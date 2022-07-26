@@ -19,7 +19,7 @@ const tradesTable: TableHeaderRow[] = [
   },
   {
     id: 5,
-    value: 'Amount, BTC',
+    value: 'Amount',
   },
   {
     id: 7,

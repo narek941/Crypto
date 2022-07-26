@@ -66,7 +66,11 @@ const TablePaginationActions = ({
 
       {paginationRange?.map((item, index) => {
         if (item === DOTS) {
-          return <span className={styles.action__item}>&#8230;</span>;
+          return (
+            <span key={index} className={styles.action__item}>
+              &#8230;
+            </span>
+          );
         }
 
         return (

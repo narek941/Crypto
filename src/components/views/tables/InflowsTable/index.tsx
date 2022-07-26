@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { v4 as uuid4 } from 'uuid';
 import { useSelector } from 'react-redux';
 import Table from '@mui/material/Table';
 import TableRow from '@mui/material/TableRow';
@@ -72,7 +71,7 @@ const InflowsTable = () => {
           {!!totalCount && (
             <TableBody>
               {list?.map((row) => (
-                <InflowsTableRow row={row} key={uuid4()} />
+                <InflowsTableRow row={row} key={row.id} />
               ))}
             </TableBody>
           )}

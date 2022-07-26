@@ -7,7 +7,7 @@ import styles from './OrdersHistoryTable.module.scss';
 const OrdersHistoryTableRow = ({ row }: any): JSX.Element => (
   <TableRow className={styles.container__body__row}>
     <TableCell align='left' className={styles.ceil}>
-      {row?.id}
+      {row?.originalId}
     </TableCell>
     <TableCell align='left' className={styles.ceil}>
       {row?.coinsPair?.name}
@@ -19,16 +19,19 @@ const OrdersHistoryTableRow = ({ row }: any): JSX.Element => (
       {row?.type}
     </TableCell>
     <TableCell align='left' className={styles.ceil}>
-      {row?.value || 0}
+      {`${Number(row?.value)?.toFixed(8) || 0} ${row?.coinsPair?.from?.name}`}
     </TableCell>
     <TableCell align='left' className={styles.ceil}>
-      {row?.valueInBaseCurrency || 0}
+      {Number(row?.valueInBaseCurrency)?.toFixed(8) || 0}
     </TableCell>
     <TableCell align='left' className={styles.ceil}>
-      {row?.stopPrice || 0}
+      {`${Number(row?.stopPrice)?.toFixed(8) || 0} ${row?.coinsPair?.to?.name}`}
     </TableCell>
     <TableCell align='left' className={styles.ceil}>
-      {row?.limitPrice || 0}
+      {`${Number(row?.limitPrice)?.toFixed(8) || 0} ${row?.coinsPair?.to?.name}`}
+    </TableCell>
+    <TableCell align='left' className={styles.ceil}>
+      {row?.status || '-'}
     </TableCell>
     <TableCell align='left' className={styles.ceil}>
       {row?.modifiers || '-'}
