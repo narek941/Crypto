@@ -28,7 +28,7 @@ const OrdersTableRow = ({ row }: any): JSX.Element => {
   const { filter } = useSelector((state: RootState) => state.wallets.orders);
 
   const id = accounts.accountById?.wallets?.length && accounts.accountById.wallets[0]?.id;
-  const baseCurrency = accounts.accountById?.baseCurrency?.coin?.name || '';
+  const baseCurrency = accounts.accountById?.baseCurrency?.name;
   const collapseClass = classNames({ [styles.open]: open });
   const dropdownClass = classNames({ [styles.dropdown]: open });
 
@@ -105,7 +105,7 @@ const OrdersTableRow = ({ row }: any): JSX.Element => {
                   <TableBody className={styles.container__body}>
                     {wallerOrder?.map((order: any) => (
                       <TableRow key={order.id} className={styles.container__body__row}>
-                        <Tooltip placement='bottom-start' title='Time'>
+                        <Tooltip followCursor={true} placement='bottom' title='Time'>
                           <TableCell
                             className={styles.container__body__row__ceil__collapse}
                             align='left'
@@ -113,7 +113,7 @@ const OrdersTableRow = ({ row }: any): JSX.Element => {
                             {moment(order?.tradeTime).format('DD.MM.YYYY HH:MM:SS')}
                           </TableCell>
                         </Tooltip>
-                        <Tooltip placement='bottom-start' title='Price'>
+                        <Tooltip followCursor={true} placement='bottom' title='Price'>
                           <TableCell
                             className={styles.container__body__row__ceil__collapse}
                             align='left'
@@ -123,7 +123,7 @@ const OrdersTableRow = ({ row }: any): JSX.Element => {
                             }`}
                           </TableCell>
                         </Tooltip>
-                        <Tooltip placement='bottom-start' title='Amount'>
+                        <Tooltip followCursor={true} placement='bottom' title='Amount'>
                           <TableCell
                             className={styles.container__body__row__ceil__collapse}
                             align='left'
@@ -134,7 +134,7 @@ const OrdersTableRow = ({ row }: any): JSX.Element => {
                           </TableCell>
                         </Tooltip>
 
-                        <Tooltip placement='bottom-start' title='Total price'>
+                        <Tooltip followCursor={true} placement='bottom' title='Total price'>
                           <TableCell
                             className={styles.container__body__row__ceil__collapse}
                             align='left'
@@ -145,7 +145,11 @@ const OrdersTableRow = ({ row }: any): JSX.Element => {
                           </TableCell>
                         </Tooltip>
 
-                        <Tooltip placement='bottom-start' title={`Total price, <${baseCurrency}>`}>
+                        <Tooltip
+                          followCursor={true}
+                          placement='bottom'
+                          title={`Total price, <${baseCurrency}>`}
+                        >
                           <TableCell
                             className={styles.container__body__row__ceil__collapse}
                             align='left'
@@ -156,7 +160,7 @@ const OrdersTableRow = ({ row }: any): JSX.Element => {
                           </TableCell>
                         </Tooltip>
 
-                        <Tooltip placement='bottom-start' title='Fees'>
+                        <Tooltip followCursor={true} placement='bottom' title='Fees'>
                           <TableCell
                             className={styles.container__body__row__ceil__collapse}
                             align='left'
@@ -167,7 +171,11 @@ const OrdersTableRow = ({ row }: any): JSX.Element => {
                           </TableCell>
                         </Tooltip>
 
-                        <Tooltip placement='bottom-start' title={`Fees, <${baseCurrency}>`}>
+                        <Tooltip
+                          followCursor={true}
+                          placement='bottom'
+                          title={`Fees, <${baseCurrency}>`}
+                        >
                           <TableCell
                             className={styles.container__body__row__ceil__collapse}
                             align='left'
