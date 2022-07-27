@@ -28,7 +28,6 @@ const OrdersTableRow = ({ row }: any): JSX.Element => {
   const { filter } = useSelector((state: RootState) => state.wallets.orders);
 
   const id = accounts.accountById?.wallets?.length && accounts.accountById.wallets[0]?.id;
-  const baseCurrency = accounts.accountById?.baseCurrency?.name;
   const collapseClass = classNames({ [styles.open]: open });
   const dropdownClass = classNames({ [styles.dropdown]: open });
 
@@ -148,7 +147,7 @@ const OrdersTableRow = ({ row }: any): JSX.Element => {
                         <Tooltip
                           followCursor={true}
                           placement='bottom'
-                          title={`Total price, <${baseCurrency}>`}
+                          title={`Total price, <${order?.coinsPair?.from?.name}>`}
                         >
                           <TableCell
                             className={styles.container__body__row__ceil__collapse}
@@ -174,7 +173,7 @@ const OrdersTableRow = ({ row }: any): JSX.Element => {
                         <Tooltip
                           followCursor={true}
                           placement='bottom'
-                          title={`Fees, <${baseCurrency}>`}
+                          title={`Fees, <${order?.coinsPair?.from?.name}>`}
                         >
                           <TableCell
                             className={styles.container__body__row__ceil__collapse}
