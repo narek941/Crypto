@@ -9,6 +9,7 @@ import TableRow from '@mui/material/TableRow';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
 import classNames from 'classnames';
+import { Tooltip } from '@mui/material';
 
 import { EmptyData } from 'components';
 import { TableDropdownIcon } from 'assets/icons';
@@ -23,9 +24,11 @@ const OrdersTableRow = ({ row }: any): JSX.Element => {
   const [open, setOpen] = useState(false);
   const [wallerOrder, setWallerOrder] = useState<any | null>();
   const accounts = useSelector((state: RootState) => state.accounts);
+
   const { filter } = useSelector((state: RootState) => state.wallets.orders);
 
   const id = accounts.accountById?.wallets?.length && accounts.accountById.wallets[0]?.id;
+  const baseCurrency = accounts.accountById?.baseCurrency?.coin?.name || '';
   const collapseClass = classNames({ [styles.open]: open });
   const dropdownClass = classNames({ [styles.dropdown]: open });
 
@@ -102,57 +105,78 @@ const OrdersTableRow = ({ row }: any): JSX.Element => {
                   <TableBody className={styles.container__body}>
                     {wallerOrder?.map((order: any) => (
                       <TableRow key={order.id} className={styles.container__body__row}>
-                        <TableCell
-                          className={styles.container__body__row__ceil__collapse}
-                          align='left'
-                        >
-                          {moment(order?.tradeTime).format('DD.MM.YYYY HH:MM:SS')}
-                        </TableCell>
-                        <TableCell
-                          className={styles.container__body__row__ceil__collapse}
-                          align='left'
-                        >
-                          {`${Number(order?.price)?.toFixed(8) || 0} ${order?.coinsPair?.to?.name}`}
-                        </TableCell>
-                        <TableCell
-                          className={styles.container__body__row__ceil__collapse}
-                          align='left'
-                        >
-                          {`${Number(order?.amount).toFixed(8) || 0} ${
-                            order?.coinsPair?.from?.name
-                          }`}
-                        </TableCell>
-                        <TableCell
-                          className={styles.container__body__row__ceil__collapse}
-                          align='left'
-                        >
-                          {`${Number(order?.totalPrice).toFixed(8) || 0} ${
-                            order?.coinsPair?.from?.name
-                          }`}
-                        </TableCell>
-                        <TableCell
-                          className={styles.container__body__row__ceil__collapse}
-                          align='left'
-                        >
-                          {`${Number(order?.totalPriceInBaseCurrency).toFixed(8) || 0} ${
-                            order?.coinsPair?.from?.name
-                          }`}
-                        </TableCell>
+                        <Tooltip placement='bottom-start' title='Time'>
+                          <TableCell
+                            className={styles.container__body__row__ceil__collapse}
+                            align='left'
+                          >
+                            {moment(order?.tradeTime).format('DD.MM.YYYY HH:MM:SS')}
+                          </TableCell>
+                        </Tooltip>
+                        <Tooltip placement='bottom-start' title='Price'>
+                          <TableCell
+                            className={styles.container__body__row__ceil__collapse}
+                            align='left'
+                          >
+                            {`${Number(order?.price)?.toFixed(8) || 0} ${
+                              order?.coinsPair?.to?.name
+                            }`}
+                          </TableCell>
+                        </Tooltip>
+                        <Tooltip placement='bottom-start' title='Amount'>
+                          <TableCell
+                            className={styles.container__body__row__ceil__collapse}
+                            align='left'
+                          >
+                            {`${Number(order?.amount).toFixed(8) || 0} ${
+                              order?.coinsPair?.from?.name
+                            }`}
+                          </TableCell>
+                        </Tooltip>
 
-                        <TableCell
-                          className={styles.container__body__row__ceil__collapse}
-                          align='left'
-                        >
-                          {`${Number(order?.fees).toFixed(8) || 0} ${order?.coinsPair?.from?.name}`}
-                        </TableCell>
-                        <TableCell
-                          className={styles.container__body__row__ceil__collapse}
-                          align='left'
-                        >
-                          {`${Number(order?.feesInBaseCurrency).toFixed(8) || 0} ${
-                            order?.coinsPair?.from?.name
-                          }`}
-                        </TableCell>
+                        <Tooltip placement='bottom-start' title='Total price'>
+                          <TableCell
+                            className={styles.container__body__row__ceil__collapse}
+                            align='left'
+                          >
+                            {`${Number(order?.totalPrice).toFixed(8) || 0} ${
+                              order?.coinsPair?.from?.name
+                            }`}
+                          </TableCell>
+                        </Tooltip>
+
+                        <Tooltip placement='bottom-start' title={`Total price, <${baseCurrency}>`}>
+                          <TableCell
+                            className={styles.container__body__row__ceil__collapse}
+                            align='left'
+                          >
+                            {`${Number(order?.totalPriceInBaseCurrency).toFixed(8) || 0} ${
+                              order?.coinsPair?.from?.name
+                            }`}
+                          </TableCell>
+                        </Tooltip>
+
+                        <Tooltip placement='bottom-start' title='Fees'>
+                          <TableCell
+                            className={styles.container__body__row__ceil__collapse}
+                            align='left'
+                          >
+                            {`${Number(order?.fees).toFixed(8) || 0} ${
+                              order?.coinsPair?.from?.name
+                            }`}
+                          </TableCell>
+                        </Tooltip>
+
+                        <Tooltip placement='bottom-start' title={`Fees, <${baseCurrency}>`}>
+                          <TableCell
+                            className={styles.container__body__row__ceil__collapse}
+                            align='left'
+                          >
+                            {`${Number(order?.feesInBaseCurrency).toFixed(8) || 0} ${
+                              order?.coinsPair?.from?.name
+                            }`}
+                          </TableCell>
+                        </Tooltip>
                       </TableRow>
                     ))}
                   </TableBody>
