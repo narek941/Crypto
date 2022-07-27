@@ -92,3 +92,12 @@
     background-color: var(--select-border) !important;
   }
 }
+///tooltip
+.MuiTooltip-tooltip {
+  z-index: 10;
+  background-color: #474646;
+  color: #fff;
+  padding: 5px 8px;
+  border-radius: 4px;
+  @extend %text-12;
+}
