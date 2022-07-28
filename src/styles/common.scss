@@ -39,6 +39,7 @@
 
 .MuiTablePagination-selectIcon {
   fill: var(--font) !important;
+  left: 20px;
 }
 
 .MuiSwitch-track {
@@ -92,12 +93,143 @@
     background-color: var(--select-border) !important;
   }
 }
-///tooltip
-.MuiTooltip-tooltip {
-  z-index: 10;
-  background-color: #474646;
-  color: #fff;
-  padding: 5px 8px;
-  border-radius: 4px;
-  @extend %text-12;
+
+/// DatePicker
+
+.rdrDateDisplayWrapper,
+.rdrMonthAndYearPickers {
+  display: none;
+}
+
+.rdrMonthName {
+  padding: 0 0 12px;
+  @extend %subtitle-14;
+  color: var(--font);
+}
+
+.rdrMonthAndYearWrapper {
+  padding: 16px 0 12px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+.rdrMonthsHorizontal {
+  gap: 32px;
+}
+.rdrMonth {
+  margin: 0 auto;
+  width: 100%;
+  padding: 0;
+}
+.rdrDayNumber {
+  span {
+    &::after {
+      content: none !important;
+    }
+  }
+}
+
+.rdrNextPrevButton {
+  background-color: transparent !important;
+}
+
+.rdrMonthName {
+  text-align: center;
+}
+.rdrMonth {
+  width: 226px;
+}
+
+.rdrDays {
+  width: inherit;
+  row-gap: 2px;
+}
+
+.rdrDay {
+  max-width: 32px !important;
+  max-height: 32px !important;
+}
+.rdrWeekDays {
+  width: 224px;
+  margin-bottom: 2px;
+}
+
+.rdrSelected,
+.rdrInRange,
+.rdrStartEdge,
+.rdrEndEdge {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0 !important;
+}
+
+.rdrDayHovered {
+  border-radius: 50%;
+  background-color: #6200ee;
+}
+
+.rdrDayNumber {
+  span {
+    color: var(--font) !important;
+    @extend %calendar-14;
+  }
+}
+
+.rdrInRange {
+  background: rgba(65, 58, 199, 0.15);
+}
+
+.rdrEndEdge + .rdrDayNumber,
+.rdrStartEdge + .rdrDayNumber {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: #6200ee !important;
+  border-radius: 50%;
+}
+.rdrStartEdge,
+.rdrEndEdge {
+  background: rgba(65, 58, 199, 0.15);
+}
+.rdrDayInPreview,
+.rdrDayStartPreview,
+.rdrDayEndPreview {
+  border: none;
+}
+.rdrDayStartPreview,
+.rdrDayInPreview,
+.rdrDayEndPreview {
+  background: rgba(65, 58, 199, 0.15);
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  border: none;
+}
+
+/// Range swipe
+
+.MuiSlider-rail {
+  background: #29292e !important;
+}
+.MuiSlider-track {
+  background: #6200ee !important;
+}
+.MuiSlider-thumb {
+  background-color: #d9d9d9 !important;
+}
+
+///select
+.MuiSelect-select {
+  padding: 0 !important;
+  border: none !important;
+
+  &:hover {
+    border-color: red !important;
+  }
 }

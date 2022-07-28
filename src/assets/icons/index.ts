@@ -1,7 +1,7 @@
 export { ReactComponent as BinIcon } from './bin.svg';
 export { ReactComponent as EditIcon } from './edit.svg';
 export { ReactComponent as ListIcon } from './list.svg';
-export { ReactComponent as DolarIcon } from './dolar.svg';
+export { ReactComponent as DollarIcon } from './dolar.svg';
 export { ReactComponent as ChartIcon } from './chart.svg';
 export { ReactComponent as CheckIcon } from './check.svg';
 export { ReactComponent as CloseIcon } from './close.svg';
@@ -28,3 +28,6 @@ export { ReactComponent as AccountBlockIcon } from './account-lock.svg';
 export { ReactComponent as ChevronRightIcon } from './chevron_right.svg';
 export { ReactComponent as AvatarMultipleIcon } from './avatar_multiple.svg';
 export { ReactComponent as TableDropdownIcon } from './table_dropdown.svg';
+export { ReactComponent as CalendarIcon } from './calendar.svg';
+export { ReactComponent as HandIcon } from './hand-coin.svg';
+export { ReactComponent as PercentIcon } from './percent.svg';

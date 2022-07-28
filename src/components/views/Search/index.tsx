@@ -1,10 +1,12 @@
 import { useForm } from 'react-hook-form';
+import classNames from 'classnames';
 
 import { SearchIcon } from 'assets/icons';
 
 import styles from './Search.module.scss';
 
-const Search = ({ onClick }: any) => {
+const Search = ({ onClick, placeholder = 'search', className }: any) => {
+  const inputClass = classNames(styles.search__input, className);
   const { register, handleSubmit } = useForm() as any;
 
   return (
@@ -13,7 +15,7 @@ const Search = ({ onClick }: any) => {
         <SearchIcon type='submit' role='button' />
       </div>
       <div>
-        <input {...register('search')} className={styles.search__input} placeholder='Search' />
+        <input {...register('search')} className={inputClass} placeholder={placeholder} />
       </div>
     </form>
   );

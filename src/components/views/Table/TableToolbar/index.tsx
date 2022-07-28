@@ -18,8 +18,9 @@ const TableToolbar = ({ linkText, linkTo, onClick }: ITableToolbarProps): JSX.El
           <LinkButton to={linkTo}>{text}</LinkButton>
         </div>
       )}
-
-      <Search onClick={onClick} />
+      <div className={styles.toolbar__search}>
+        <Search onClick={onClick} />
+      </div>
     </div>
   );
 };

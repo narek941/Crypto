@@ -13,8 +13,6 @@ import { alertsTable } from 'constants/index';
 import { useAppDispatch } from 'hooks';
 import { accountsActions } from 'store/accountsSlice';
 
-// import FilterWrapper from '../FilterWrapper';
-
 import AnalyticsAlertTableRow from './AnalyticsAlertTableRow';
 import styles from './AnalyticsAlertTable.module.scss';
 
@@ -59,7 +57,6 @@ const AnalyticsAlertTable = () => {
   return (
     <>
       <div className={styles.wrapper}>
-        {/* <FilterWrapper /> */}
         <Table className={styles.inner}>
           <TableHead className={styles.container__header}>
             <TableRow className={styles.container__header__row}>

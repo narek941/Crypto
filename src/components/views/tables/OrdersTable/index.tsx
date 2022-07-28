@@ -13,12 +13,13 @@ import { openOrdersTable } from 'constants/index';
 import { EmptyData, Pagination } from 'components';
 import { walletsActions } from 'store/walletsSlice';
 import { openOrdersFilterUpdate } from 'store/walletsSlice/thunks';
+import FilterWrapper from 'components/views/FilterWrapper';
 
 import OrdersTableRow from './OrdersTableRow';
 import styles from './OrdersTable.module.scss';
 
 const OrdersTable = () => {
-  const { filter, list, totalCount } = useSelector((state: RootState) => state.wallets.openOrders);
+  const { filter, list, totalCount } = useSelector((state: RootState) => state.wallets.orders);
   const { accountById } = useSelector((state: RootState) => state.accounts);
   const walletId = accountById?.wallets?.length && accountById.wallets[0]?.id;
 
@@ -48,12 +49,14 @@ const OrdersTable = () => {
   };
 
   useEffect(() => {
-    dispatch(walletsActions.getWalletOpenOrders({ ...filter, id: walletId }));
+    dispatch(walletsActions.getWalletOrders({ ...filter, id: walletId }));
   }, [walletId, filter, dispatch]);
 
   return (
     <>
       <div className={styles.wrapper}>
+        <FilterWrapper />
+
         <Table aria-label='collapsible table' className={styles.inner}>
           <TableHead className={styles.container__header}>
             <TableRow className={styles.container__header__row}>

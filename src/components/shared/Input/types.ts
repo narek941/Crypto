@@ -15,4 +15,6 @@ export interface IInputProps {
   type?: HTMLInputTypeAttribute;
   RightIcon?: React.FC<React.SVGProps<SVGSVGElement>>;
   RightToggledIcon?: React.FC<React.SVGProps<SVGSVGElement>>;
+  onChange?: any;
+  onFocus?: any;
 }
