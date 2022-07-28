@@ -18,7 +18,7 @@ import OrdersTableRow from './OrdersTableRow';
 import styles from './OrdersTable.module.scss';
 
 const OrdersTable = () => {
-  const { filter, list, totalCount } = useSelector((state: RootState) => state.wallets.openOrders);
+  const { filter, list, totalCount } = useSelector((state: RootState) => state.wallets.orders);
   const { accountById } = useSelector((state: RootState) => state.accounts);
   const walletId = accountById?.wallets?.length && accountById.wallets[0]?.id;
 
@@ -48,7 +48,7 @@ const OrdersTable = () => {
   };
 
   useEffect(() => {
-    dispatch(walletsActions.getWalletOpenOrders({ ...filter, id: walletId }));
+    dispatch(walletsActions.getWalletOrders({ ...filter, id: walletId }));
   }, [walletId, filter, dispatch]);
 
   return (

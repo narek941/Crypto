@@ -5,20 +5,22 @@ import moment from 'moment';
 import styles from './AnalyticsAlertTable.module.scss';
 
 const AnalyticsAlertTableRow = ({ row }: any) => (
-  <TableRow className={styles.container__body__row}>
-    <TableCell align='left' className={styles.ceil}>
-      {row?.id}
-    </TableCell>
-    <TableCell align='left' className={styles.ceil}>
-      {row?.message}
-    </TableCell>
-    <TableCell align='left' className={styles.ceil}>
-      {moment(row?.createdAt).format('DD.MM.YYYY HH:MM:SS')}
-    </TableCell>
-    <TableCell align='left' className={styles.ceil}>
-      {row?.type}
-    </TableCell>
-  </TableRow>
+  <>
+    <TableRow className={styles.container__body__row}>
+      <TableCell align='left' className={styles.ceil}>
+        {row?.id}
+      </TableCell>
+      <TableCell align='left' className={styles.ceil}>
+        {row?.message}
+      </TableCell>
+      <TableCell align='left' className={styles.ceil}>
+        {moment(row?.createdAt).format('DD.MM.YYYY HH:MM:SS')}
+      </TableCell>
+      <TableCell align='left' className={styles.ceil}>
+        {row?.type}
+      </TableCell>
+    </TableRow>
+  </>
 );
 
 export default AnalyticsAlertTableRow;

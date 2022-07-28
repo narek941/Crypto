@@ -1,4 +1,21 @@
 .wrapper {
+  display: flex;
+  gap: 10px;
+}
+.search {
+  // padding: 11px 34px 11px 14px !important;
+}
+.clear {
+  @extend %flex-align;
+  gap: 13px;
+  cursor: pointer;
+  svg {
+    @extend %flex-center;
+  }
+}
+.container {
+  @extend %flex-column;
+  gap: 23px;
   background: rgba(56, 56, 56, 0.16);
   border-radius: 4px;
   padding: 16px;

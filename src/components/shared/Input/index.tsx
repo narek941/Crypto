@@ -24,6 +24,8 @@ const Input = forwardRef<any, IInputProps>(
       haveRightIcon = false,
       label,
       isSmall,
+      onChange,
+      onFocus,
       ...rest
     },
     ref,
@@ -74,6 +76,8 @@ const Input = forwardRef<any, IInputProps>(
               disabled={disabled}
               className={inputClasses}
               placeholder={placeholder}
+              onChange={onChange}
+              onFocus={onFocus}
               type={isToggledIcon ? 'text' : type}
             />
             {haveRightIcon && (
