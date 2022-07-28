@@ -5,30 +5,33 @@
   flex: 1 1;
 
   span {
-    color: #29292e;
+    color: var(--font);
     @extend %text-14;
   }
 }
 .header {
   padding: 9.5px 11px;
   max-width: 144px;
-  background: rgba(56, 56, 56, 0.4);
-  gap: 12px;
+  background: var(--input-background);
   border: 1px solid transparent;
   border-radius: 4px;
-  @extend %flex-between;
   cursor: pointer;
   color: var(--font);
   min-width: 144px;
-  align-items: center;
   position: relative;
 
-  span {
-    @extend %filter-14;
-  }
+  &__inner {
+    gap: 12px;
+    @extend %flex-between;
+    align-items: center;
 
-  svg {
-    @extend %flex-center;
+    span {
+      @extend %filter-14;
+    }
+
+    svg {
+      @extend %flex-center;
+    }
   }
 
   &:hover {
@@ -43,6 +46,7 @@
 .slider {
   padding: 12px;
 }
+
 .action {
   justify-content: start;
   @extend %flex-align;
@@ -54,6 +58,10 @@
   &__select {
     color: #3700b3;
   }
+
+  &__cancel {
+    color: var(--cancel);
+  }
 }
 
 .modal {
@@ -61,7 +69,8 @@
   position: absolute;
   top: 47px;
   left: 0;
-  width: 212px;
+  min-width: 212px;
+  width: 100%;
   z-index: 10;
   padding: 13px 12px;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
@@ -94,4 +103,15 @@
   padding: 12px 46px 12px 10px;
   text-transform: capitalize;
   cursor: pointer;
+
+  &__item {
+    min-width: 90px;
+    color: var(--font);
+
+    background: var(--select-option), #1a1818;
+
+    &:hover {
+      background-color: var(--select-hover);
+    }
+  }
 }

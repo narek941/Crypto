@@ -3,7 +3,8 @@ import { useRef, useState } from 'react';
 import DatePicker from 'components/shared/DatePicker';
 import DualSelect from 'components/shared/DualSelect';
 import RangeSwipe from 'components/shared/Range';
-import { CloseIcon } from 'assets/icons';
+import { CloseIcon, HandIcon, PercentIcon } from 'assets/icons';
+import { Select } from 'components';
 
 import Search from '../Search';
 
@@ -17,27 +18,59 @@ const FilterWrapper = () => {
     <div className={styles.container}>
       <div className={styles.wrapper}>
         <div className={styles.item}>
-          <DatePicker />
+          <DatePicker placeholder='Choose creation date' />
         </div>
 
         <div className={styles.item}>
           <DualSelect ref={ref} />
         </div>
-
-        <div className={styles.search}>
-          <Search placeholder={'Select value'} />
+        <div className={styles.item}>
+          <Select
+            options={[
+              { label: 'Buy', value: 'Buy' },
+              { label: 'Sell', value: 'Sell' },
+            ]}
+            placeholder='Buy'
+            className={styles.select}
+          />
+        </div>
+        <div className={styles.item}>
+          <RangeSwipe />
+        </div>
+        <div className={styles.item}>
+          <Search placeholder={'Enter Alert Message'} className={styles.search} />
         </div>
 
         {isMore && (
           <>
             <div className={styles.item}>
-              <RangeSwipe />
+              <Search placeholder={'Enter ID'} className={styles.search} />
+            </div>
+
+            <div className={styles.item}>
+              <DatePicker placeholder='Select created time' />
             </div>
             <div className={styles.item}>
-              <Search placeholder={'Enter ID'} />
+              <RangeSwipe placeholder='Select value,USDT' />
+            </div>
+
+            <div className={styles.item}>
+              <Search placeholder={'Select Received'} className={styles.search} />
             </div>
             <div className={styles.item}>
-              <Search placeholder={'Enter Alert Message'} />
+              <Search placeholder={'Select Received,USDT'} className={styles.search} />
+            </div>
+            <div className={styles.item}>
+              <RangeSwipe placeholder='Select Fee' Icon={HandIcon} />
+            </div>
+            <div className={styles.item}>
+              <RangeSwipe placeholder='Select Fee,USDT' Icon={HandIcon} />
+            </div>
+            <div className={styles.item}>
+              <RangeSwipe placeholder='Select Share' Icon={PercentIcon} />
+            </div>
+            <div className={styles.item}>
+              <DatePicker placeholder='Select updated time' />
             </div>
           </>
         )}
@@ -48,8 +81,8 @@ const FilterWrapper = () => {
           </div>
         </div>
       </div>
-      <div role='button' onClick={handleToggle}>
-        Click Here to Show Advanced Filters
+      <div role='button' onClick={handleToggle} className={styles.toggle}>
+        Click Here to {isMore ? 'Hide' : 'Show'} Advanced Filters
       </div>
     </div>
   );

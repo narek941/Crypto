@@ -29,3 +29,5 @@ export { ReactComponent as ChevronRightIcon } from './chevron_right.svg';
 export { ReactComponent as AvatarMultipleIcon } from './avatar_multiple.svg';
 export { ReactComponent as TableDropdownIcon } from './table_dropdown.svg';
 export { ReactComponent as CalendarIcon } from './calendar.svg';
+export { ReactComponent as HandIcon } from './hand-coin.svg';
+export { ReactComponent as PercentIcon } from './percent.svg';

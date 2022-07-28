@@ -9,7 +9,7 @@ import Input from '../Input';
 
 import styles from './Range.module.scss';
 
-const RangeSwipe = () => {
+const RangeSwipe = ({ placeholder = 'Select Value', Icon }: any) => {
   const [value, setValue] = useState<number[]>([0, 100]);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const ref = useRef(null);
@@ -39,14 +39,12 @@ const RangeSwipe = () => {
 
   useOnClickOutside(ref, handleClose);
 
-  const headerText = value[0] ? `${value[0]} -  ${value[1]} ` : 'Select Value';
-
+  const headerText = value[0] ? `${value[0]} -  ${value[1]} ` : placeholder;
+  const headerTextClass = classNames({ [styles.header__placeholder]: !value[0] });
   return (
     <div role='button' onClick={toggleDrop} className={headerClass}>
-      <span> {headerText}</span>
-      <div>
-        <DollarIcon />
-      </div>
+      <span className={headerTextClass}> {headerText}</span>
+      <div>{Icon ? <Icon /> : <DollarIcon />}</div>
       <div className={modalClass} ref={ref}>
         <div className={styles.wrapper}>
           <div className={styles.inner}>

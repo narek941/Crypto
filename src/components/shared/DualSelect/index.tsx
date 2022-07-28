@@ -8,8 +8,8 @@ import { DropDownIcon } from 'assets/icons';
 import styles from './DualSelect.module.scss';
 
 const DualSelect = ({ placeholder = 'BTC/USDT', ref }: any) => {
-  const [value, setValue] = useState('');
-  const [value2, setValue2] = useState('');
+  const [value, setValue] = useState('BTC');
+  const [secondValue, setSecondValue] = useState('USDT');
 
   const [isOpenDropdown, setIsOpenDropdown] = useState<boolean>(false);
 
@@ -21,32 +21,40 @@ const DualSelect = ({ placeholder = 'BTC/USDT', ref }: any) => {
   };
 
   const handleSecondInputChange = (event: SelectChangeEvent) => {
-    setValue2(event.target.value as string);
+    setSecondValue(event.target.value as string);
   };
 
   const toggleDrop = () => {
     setIsOpenDropdown(true);
   };
 
-  const handleClose = () => {
+  const handleCloseDropDown = () => {
     setIsOpenDropdown(false);
   };
 
-  useOnClickOutside(ref, handleClose);
+  useOnClickOutside(ref, handleCloseDropDown);
 
-  const headerText = value ? `${value} /  ${value2} ` : placeholder;
+  const headerText = value ? `${value} /  ${secondValue} ` : placeholder;
 
   return (
-    <div role='button' onClick={toggleDrop} className={headerClass}>
-      <span> {headerText}</span>
-      <div>
-        <DropDownIcon />
+    <div className={headerClass}>
+      <div role='button' onClick={toggleDrop} className={styles.header__inner}>
+        <span> {headerText}</span>
+        <div>
+          <DropDownIcon />
+        </div>
       </div>
+
       <div className={modalClass} ref={ref}>
         <div className={styles.wrapper}>
           <div className={styles.inner}>
             <div>
-              <Select onChange={handleFirstInputChange} value={value} className={styles.select}>
+              <Select
+                onChange={handleFirstInputChange}
+                value={value}
+                className={styles.select}
+                name='1'
+              >
                 <MenuItem className={styles.select__item} value={'BTC'}>
                   BTC
                 </MenuItem>
@@ -65,7 +73,12 @@ const DualSelect = ({ placeholder = 'BTC/USDT', ref }: any) => {
               </Select>
             </div>
             <div>
-              <Select onChange={handleSecondInputChange} value={value2} className={styles.select}>
+              <Select
+                onChange={handleSecondInputChange}
+                value={secondValue}
+                name='2'
+                className={styles.select}
+              >
                 <MenuItem className={styles.select__item} value={'BTC'}>
                   BTC
                 </MenuItem>
@@ -86,11 +99,11 @@ const DualSelect = ({ placeholder = 'BTC/USDT', ref }: any) => {
           </div>
         </div>
         <div className={styles.action}>
-          <div className={styles.action__cancel} onClick={handleClose}>
-            cancel
+          <div className={styles.action__cancel} role='button' onClick={handleCloseDropDown}>
+            Cancel
           </div>
-          <div className={styles.action__select} onClick={handleClose}>
-            select
+          <div className={styles.action__select} role='button' onClick={handleCloseDropDown}>
+            Select
           </div>
         </div>
       </div>

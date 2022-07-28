@@ -39,6 +39,7 @@
 
 .MuiTablePagination-selectIcon {
   fill: var(--font) !important;
+  left: 20px;
 }
 
 .MuiSwitch-track {
@@ -162,7 +163,7 @@
   height: 100%;
   position: absolute;
   top: 0;
-  left: 0;
+  left: 0 !important;
 }
 
 .rdrDayHovered {
@@ -226,4 +227,9 @@
 ///select
 .MuiSelect-select {
   padding: 0 !important;
+  border: none !important;
+
+  &:hover {
+    border-color: red !important;
+  }
 }

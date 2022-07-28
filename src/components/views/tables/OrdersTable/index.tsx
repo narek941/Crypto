@@ -13,6 +13,7 @@ import { openOrdersTable } from 'constants/index';
 import { EmptyData, Pagination } from 'components';
 import { walletsActions } from 'store/walletsSlice';
 import { openOrdersFilterUpdate } from 'store/walletsSlice/thunks';
+import FilterWrapper from 'components/views/FilterWrapper';
 
 import OrdersTableRow from './OrdersTableRow';
 import styles from './OrdersTable.module.scss';
@@ -54,6 +55,8 @@ const OrdersTable = () => {
   return (
     <>
       <div className={styles.wrapper}>
+        <FilterWrapper />
+
         <Table aria-label='collapsible table' className={styles.inner}>
           <TableHead className={styles.container__header}>
             <TableRow className={styles.container__header__row}>

@@ -1,22 +1,41 @@
 .wrapper {
+  gap: 12px;
   display: flex;
-  gap: 10px;
+  flex-wrap: wrap;
+  max-width: 100%;
 }
 .search {
-  // padding: 11px 34px 11px 14px !important;
+  padding: 11px 34px 11px 14px !important;
+  max-width: unset;
+  &:hover {
+    border: 1px solid var(--select-border);
+  }
 }
 .clear {
-  @extend %flex-align;
   gap: 13px;
   cursor: pointer;
+  color: var(--placeholder-select);
+  @extend %flex-align;
+
   svg {
     @extend %flex-center;
   }
 }
 .container {
-  @extend %flex-column;
   gap: 23px;
-  background: rgba(56, 56, 56, 0.16);
-  border-radius: 4px;
   padding: 16px;
+  border-radius: 4px;
+  background: var(--sidebar-background);
+  @extend %flex-column;
+}
+
+.toggle {
+  display: flex;
+  color: var(--placeholder-select);
+  cursor: pointer;
+}
+
+.select {
+  gap: 0;
+  width: 135px;
 }

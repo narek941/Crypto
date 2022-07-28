@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { DateRange } from 'react-date-range';
 import classNames from 'classnames';
+import moment from 'moment';
 
 import { CalendarIcon } from 'assets/icons';
 import 'react-date-range/dist/styles.css'; // main style file
@@ -8,8 +9,6 @@ import 'react-date-range/dist/theme/default.css'; // theme css file
 import useOnClickOutside from 'hooks/useOutsideClick';
 
 import styles from './DatePicker.module.scss';
-
-import moment from 'moment';
 
 const DatePicker = ({ placeholder = 'Choose creation date' }: any) => {
   const ref = useRef(null);
@@ -22,11 +21,15 @@ const DatePicker = ({ placeholder = 'Choose creation date' }: any) => {
     },
   ]);
 
-  const sD = moment(state[0]?.startDate).format('LL');
-  const eD = moment(state[0]?.endDate).format('LL');
-  // eslint-disable-next-line no-console
-  console.log(state, sD, eD);
-  const text = state[0]?.startDate ? `${sD} - ${eD}` : placeholder;
+  const startDay = moment(state[0]?.startDate).format('LL');
+  const endDay = moment(state[0]?.endDate).format('LL');
+
+  const text = state[0]?.startDate ? `${startDay} - ${endDay}` : placeholder;
+
+  const headerTextClass = classNames({
+    [styles.calendar__header__placeholder]: !state[0]?.startDate,
+  });
+
   const calendarWrapperClass = classNames(styles.calendar__wrapper, {
     [styles.calendar__wrapper__open]: openCalendar,
   });
@@ -40,7 +43,7 @@ const DatePicker = ({ placeholder = 'Choose creation date' }: any) => {
   return (
     <div className={styles.calendar}>
       <div className={styles.calendar__header} role='button' onClick={toggleCalendar}>
-        <span>{text}</span>
+        <span className={headerTextClass}>{text}</span>
         <CalendarIcon />
       </div>
       <div ref={ref} className={calendarWrapperClass}>
