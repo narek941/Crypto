@@ -1,27 +1,32 @@
 .inner {
-  @extend %flex-align;
-  width: 100%;
   gap: 4px;
+  width: 100%;
+  @extend %flex-align;
 
   span {
     color: var(--font);
     @extend %text-14;
   }
 }
-.header {
-  padding: 7px 11px;
-  background: var(--input-background);
-  gap: 12px;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  @extend %flex-between;
-  cursor: pointer;
-  color: var(--font);
-  min-width: 144px;
-  align-items: center;
-  position: relative;
 
-  span {
+.header {
+  gap: 12px;
+  cursor: pointer;
+  min-width: 144px;
+  padding: 7px 11px;
+  color: var(--font);
+  border-radius: 4px;
+  position: relative;
+  align-items: center;
+  border: 1px solid transparent;
+  background: var(--input-background);
+  @extend %flex-between;
+
+  .header__input {
+    width: 100%;
+    border: none;
+    color: var(--font);
+    background-color: transparent;
     @extend %filter-14;
   }
 
@@ -29,7 +34,7 @@
     @extend %flex-center;
 
     path {
-      fill: #e5e5e5;
+      fill: #4c4b53;
     }
   }
 
@@ -40,6 +45,7 @@
   &__open {
     border: 1px solid var(--select-border);
   }
+
   &__placeholder {
     color: var(--placeholder);
   }
@@ -48,13 +54,14 @@
 .slider {
   padding: 12px;
 }
+
 .action {
-  justify-content: start;
-  @extend %flex-align;
-  @extend %text-13;
-  cursor: pointer;
   gap: 10px;
+  cursor: pointer;
+  justify-content: start;
   text-transform: capitalize;
+  @extend %text-13;
+  @extend %flex-align;
 
   &__select {
     color: #3700b3;
@@ -66,19 +73,19 @@
 }
 
 .modal {
-  display: none;
-  position: absolute;
-  top: 47px;
   left: 0;
-  width: 212px;
-  z-index: 10;
-  padding: 13px 12px;
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-  background-color: var(--background);
-  border-radius: 4px;
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
-  flex-direction: column;
   gap: 11px;
+  top: 47px;
+  z-index: 10;
+  width: 212px;
+  display: none;
+  padding: 13px 12px;
+  border-radius: 4px;
+  position: absolute;
+  flex-direction: column;
+  background-color: var(--background);
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
 
   &__open {
     display: flex;

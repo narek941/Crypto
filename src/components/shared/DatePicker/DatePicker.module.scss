@@ -3,16 +3,21 @@
 
   &__header {
     gap: 12px;
-    width: 100%;
     cursor: pointer;
-    max-width: 288px;
     padding: 7px 11px;
     border-radius: 4px;
+    width: fit-content;
     border: 1px solid transparent;
     background: var(--input-background);
-    color: var(--font);
-    @extend %filter-16;
     @extend %flex-between;
+
+    input {
+      width: 100%;
+      border: none;
+      color: var(--font);
+      background-color: transparent;
+      @extend %filter-16;
+    }
 
     &:hover {
       border-color: var(--select-border);
@@ -21,15 +26,18 @@
     &__placeholder {
       color: var(--placeholder);
     }
+
     svg path {
-      fill: #e5e5e5;
+      fill: #4c4b53;
     }
   }
+
   &__inner {
     padding: 16px;
     color: var(--font);
     background-color: var(--background);
   }
+
   &__wrapper {
     top: 0;
     display: none;
@@ -39,8 +47,8 @@
     border-radius: 4px;
     position: absolute;
     white-space: nowrap;
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
     background-color: var(--background);
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 
     &__open {
       display: block;

@@ -4,13 +4,16 @@
   flex-wrap: wrap;
   max-width: 100%;
 }
+
 .search {
-  padding: 11px 34px 11px 14px !important;
   max-width: unset;
+  padding: 11px 34px 11px 14px !important;
+
   &:hover {
     border: 1px solid var(--select-border);
   }
 }
+
 .clear {
   gap: 13px;
   cursor: pointer;
@@ -21,6 +24,7 @@
     @extend %flex-center;
   }
 }
+
 .container {
   gap: 23px;
   padding: 16px;
@@ -33,6 +37,7 @@
   display: flex;
   color: var(--placeholder-select);
   cursor: pointer;
+  width: fit-content;
 }
 
 .select {

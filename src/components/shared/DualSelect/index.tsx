@@ -1,28 +1,21 @@
-import { useState } from 'react';
+import { useState, forwardRef, useRef } from 'react';
 import classNames from 'classnames';
-import { MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import { Controller } from 'react-hook-form';
+import { MenuItem, Select } from '@mui/material';
 
 import useOnClickOutside from 'hooks/useOutsideClick';
 import { DropDownIcon } from 'assets/icons';
 
 import styles from './DualSelect.module.scss';
 
-const DualSelect = ({ placeholder = 'BTC/USDT', ref }: any) => {
-  const [value, setValue] = useState('BTC');
-  const [secondValue, setSecondValue] = useState('USDT');
-
+const DualSelect = forwardRef<any, any>(({ formMethods, name, placeholder }, ref: any) => {
+  const customRef = useRef(null);
   const [isOpenDropdown, setIsOpenDropdown] = useState<boolean>(false);
+  // eslint-disable-next-line no-console
+  const { selectPairStart, selectPairEnd } = formMethods.watch();
 
   const headerClass = classNames(styles.header, { [styles.header__open]: isOpenDropdown });
   const modalClass = classNames(styles.modal, { [styles.modal__open]: isOpenDropdown });
-
-  const handleFirstInputChange = (event: SelectChangeEvent) => {
-    setValue(event.target.value as string);
-  };
-
-  const handleSecondInputChange = (event: SelectChangeEvent) => {
-    setSecondValue(event.target.value as string);
-  };
 
   const toggleDrop = () => {
     setIsOpenDropdown(true);
@@ -32,69 +25,73 @@ const DualSelect = ({ placeholder = 'BTC/USDT', ref }: any) => {
     setIsOpenDropdown(false);
   };
 
-  useOnClickOutside(ref, handleCloseDropDown);
-
-  const headerText = value ? `${value} /  ${secondValue} ` : placeholder;
+  useOnClickOutside(customRef, handleCloseDropDown);
 
   return (
     <div className={headerClass}>
       <div role='button' onClick={toggleDrop} className={styles.header__inner}>
-        <span> {headerText}</span>
+        <p className={styles.header__input}>
+          {selectPairStart && selectPairEnd ? `${selectPairStart} / ${selectPairEnd}` : placeholder}
+        </p>
         <div>
           <DropDownIcon />
         </div>
       </div>
 
-      <div className={modalClass} ref={ref}>
+      <div className={modalClass} ref={customRef}>
         <div className={styles.wrapper}>
           <div className={styles.inner}>
             <div>
-              <Select
-                onChange={handleFirstInputChange}
-                value={value}
-                className={styles.select}
-                name='1'
-              >
-                <MenuItem className={styles.select__item} value={'BTC'}>
-                  BTC
-                </MenuItem>
-                <MenuItem className={styles.select__item} value={'ETH'}>
-                  ETH
-                </MenuItem>
-                <MenuItem className={styles.select__item} value={'USDT'}>
-                  USDT
-                </MenuItem>
-                <MenuItem className={styles.select__item} value={'XRP'}>
-                  XRP
-                </MenuItem>
-                <MenuItem className={styles.select__item} value={'BNB'}>
-                  BNB
-                </MenuItem>
-              </Select>
+              <Controller
+                control={formMethods.control}
+                name={`${name}End`}
+                {...formMethods.register(`${name}Start`)}
+                render={({ field }) => (
+                  <Select {...field} className={styles.select} defaultValue={'BTC'} ref={ref}>
+                    <MenuItem className={styles.select__item} value={'BTC'}>
+                      BTC
+                    </MenuItem>
+                    <MenuItem className={styles.select__item} value={'ETH'}>
+                      ETH
+                    </MenuItem>
+                    <MenuItem className={styles.select__item} value={'USDT'}>
+                      USDT
+                    </MenuItem>
+                    <MenuItem className={styles.select__item} value={'XRP'}>
+                      XRP
+                    </MenuItem>
+                    <MenuItem className={styles.select__item} value={'BNB'}>
+                      BNB
+                    </MenuItem>
+                  </Select>
+                )}
+              ></Controller>
             </div>
             <div>
-              <Select
-                onChange={handleSecondInputChange}
-                value={secondValue}
-                name='2'
-                className={styles.select}
-              >
-                <MenuItem className={styles.select__item} value={'BTC'}>
-                  BTC
-                </MenuItem>
-                <MenuItem className={styles.select__item} value={'ETH'}>
-                  ETH
-                </MenuItem>
-                <MenuItem className={styles.select__item} value={'USDT'}>
-                  USDT
-                </MenuItem>
-                <MenuItem className={styles.select__item} value={'XRP'}>
-                  XRP
-                </MenuItem>
-                <MenuItem className={styles.select__item} value={'BNB'}>
-                  BNB
-                </MenuItem>
-              </Select>
+              <Controller
+                control={formMethods.control}
+                name={`${name}End`}
+                {...formMethods.register(`${name}End`)}
+                render={({ field }) => (
+                  <Select {...field} className={styles.select} defaultValue={'BTC'} ref={ref}>
+                    <MenuItem className={styles.select__item} value={'BTC'}>
+                      BTC
+                    </MenuItem>
+                    <MenuItem className={styles.select__item} value={'ETH'}>
+                      ETH
+                    </MenuItem>
+                    <MenuItem className={styles.select__item} value={'USDT'}>
+                      USDT
+                    </MenuItem>
+                    <MenuItem className={styles.select__item} value={'XRP'}>
+                      XRP
+                    </MenuItem>
+                    <MenuItem className={styles.select__item} value={'BNB'}>
+                      BNB
+                    </MenuItem>
+                  </Select>
+                )}
+              ></Controller>
             </div>
           </div>
         </div>
@@ -109,6 +106,6 @@ const DualSelect = ({ placeholder = 'BTC/USDT', ref }: any) => {
       </div>
     </div>
   );
-};
+});
 
 export default DualSelect;

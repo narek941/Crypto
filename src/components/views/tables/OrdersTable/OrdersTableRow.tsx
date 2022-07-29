@@ -73,16 +73,18 @@ const OrdersTableRow = ({ row }: any): JSX.Element => {
           {Number(row.valueInBaseCurrency).toFixed(8) || 0}
         </TableCell>
         <TableCell align='left' className={styles.ceil}>
-          {Number(row.tradesTotalPriceSum).toFixed(8) || 0}
+          {(row.tradesTotalPriceSum && Number(row.tradesTotalPriceSum).toFixed(8)) || 0}
         </TableCell>
         <TableCell align='left' className={styles.ceil}>
-          {Number(row.tradesTotalPriceInBaseCurrencySum).toFixed(8) || 0}
+          {(row.tradesTotalPriceInBaseCurrencySum &&
+            Number(row.tradesTotalPriceInBaseCurrencySum).toFixed(8)) ||
+            0}
         </TableCell>
         <TableCell align='left' className={styles.ceil}>
-          {Number(row.feesSum).toFixed(8) || 0}
+          {(row.feesSum && Number(row.feesSum).toFixed(8)) || 0}
         </TableCell>
         <TableCell align='left' className={styles.ceil}>
-          {Number(row.feesSumInBaseCurrency).toFixed(8) || 0}
+          {(row.feesSumInBaseCurrency && Number(row.feesSumInBaseCurrency).toFixed(8)) || 0}
         </TableCell>
         <TableCell align='left' className={styles.ceil}>
           {row.relativePercentageToAccount || 0}

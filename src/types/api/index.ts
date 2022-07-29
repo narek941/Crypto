@@ -11,4 +11,5 @@ export interface IFilter {
   sort: string;
   search: any;
   order: 'DESC' | 'ASC';
+  filter?: any;
 }

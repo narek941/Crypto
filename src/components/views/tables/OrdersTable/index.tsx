@@ -19,9 +19,12 @@ import OrdersTableRow from './OrdersTableRow';
 import styles from './OrdersTable.module.scss';
 
 const OrdersTable = () => {
-  const { filter, list, totalCount } = useSelector((state: RootState) => state.wallets.orders);
+  const { filter, list, totalCount } = useSelector((state: RootState) => state.wallets.openOrders);
   const { accountById } = useSelector((state: RootState) => state.accounts);
   const walletId = accountById?.wallets?.length && accountById.wallets[0]?.id;
+
+  // eslint-disable-next-line no-console
+  console.log(list, 'list');
 
   const [page, setPage] = useState(0);
   const dispatch = useAppDispatch();
@@ -50,13 +53,12 @@ const OrdersTable = () => {
 
   useEffect(() => {
     dispatch(walletsActions.getWalletOrders({ ...filter, id: walletId }));
-  }, [walletId, filter, dispatch]);
+  }, [walletId, filter.search, filter, dispatch]);
 
   return (
     <>
       <div className={styles.wrapper}>
         <FilterWrapper />
-
         <Table aria-label='collapsible table' className={styles.inner}>
           <TableHead className={styles.container__header}>
             <TableRow className={styles.container__header__row}>

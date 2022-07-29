@@ -13,27 +13,27 @@ const internalInitialState: WalletsSliceState = {
   openOrders: {
     list: [],
     totalCount: 0,
-    filter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '' },
+    filter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '', filter: {} },
   },
   orderTrades: {
     list: [],
     totalCount: 0,
-    filter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '' },
+    filter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '', filter: {} },
   },
   orders: {
     list: [],
     totalCount: 0,
-    filter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '' },
+    filter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '', filter: {} },
   },
   inflow: {
     list: [],
     totalCount: 0,
-    filter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '' },
+    filter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '', filter: {} },
   },
   records: {
     list: [],
     totalCount: 0,
-    filter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '' },
+    filter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '', filter: {} },
   },
   summary: {
     totalCapital: null,
