@@ -2,25 +2,40 @@ import { UseFormHandleSubmit } from 'react-hook-form/dist/types/form';
 import { UseFormProps as UseReactHookFormProps, UseFormReturn } from 'react-hook-form';
 
 export type FormFieldNames =
-  | 'email'
-  | 'password'
-  | 'emptyPassword'
-  | 'rememberMe'
   | 'name'
-  | 'accountType'
-  | 'baseCurrency'
-  | 'startCapital'
-  | 'exchange'
+  | 'email'
   | 'apiKey'
+  | 'maxRisk'
+  | 'exchange'
+  | 'searchID'
+  | 'password'
+  | 'selectFee'
   | 'apiSecret'
-  | 'refreshInterval'
+  | 'selectSide'
+  | 'updateTime'
+  | 'selectPair'
+  | 'rememberMe'
+  | 'selectShare'
   | 'maxDrawdown'
   | 'maxPosition'
-  | 'maxRisk'
-  | 'stopLossOrder'
-  | 'wrongCurrencyAlert'
+  | 'accountType'
+  | 'selectValue'
+  | 'creationTime'
+  | 'baseCurrency'
+  | 'startCapital'
+  | 'creationDate'
   | 'allowedPairs'
-  | 'alertsDestinations';
+  | 'stopLossOrder'
+  | 'selectPairEnd'
+  | 'emptyPassword'
+  | 'searchReceived'
+  | 'refreshInterval'
+  | 'selectPairStart'
+  | 'wrongCurrencyAlert'
+  | 'alertsDestinations'
+  | 'selectValueInBaseCurrency'
+  | 'searchReceivedInBaseCurrency'
+  | 'selectFeeInBaseCurrency';
 
 export type FieldShapeLookup<K extends FormFieldNames> = {
   [P in K]?: Record<FormFieldNames, unknown>[P];
@@ -30,6 +45,7 @@ export type UseFormProps<K extends FormFieldNames, T extends FieldShapeLookup<K>
   schemaKeys: K[];
   defaultValues?: UseReactHookFormProps<T>['defaultValues'];
   options?: Omit<UseReactHookFormProps<T>, 'defaultValues'>;
+  mode?: any;
 };
 
 export type UseFormReturnType<T> = {

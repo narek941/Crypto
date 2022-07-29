@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { forwardRef, useRef, useState } from 'react';
 import { DateRange } from 'react-date-range';
 import classNames from 'classnames';
 import moment from 'moment';
@@ -10,8 +10,8 @@ import useOnClickOutside from 'hooks/useOutsideClick';
 
 import styles from './DatePicker.module.scss';
 
-const DatePicker = ({ placeholder = 'Choose creation date' }: any) => {
-  const ref = useRef(null);
+const DatePicker = forwardRef<any, any>(({ placeholder }, ref: any) => {
+  const customRef = useRef(null);
   const [openCalendar, setOpenCalendar] = useState<boolean>(false);
   const [state, setState] = useState([
     {
@@ -38,7 +38,7 @@ const DatePicker = ({ placeholder = 'Choose creation date' }: any) => {
 
   const handleCloseCalendar = () => setOpenCalendar(false);
 
-  useOnClickOutside(ref, handleCloseCalendar);
+  useOnClickOutside(customRef, handleCloseCalendar);
 
   return (
     <div className={styles.calendar}>
@@ -46,13 +46,14 @@ const DatePicker = ({ placeholder = 'Choose creation date' }: any) => {
         <span className={headerTextClass}>{text}</span>
         <CalendarIcon />
       </div>
-      <div ref={ref} className={calendarWrapperClass}>
+      <div ref={customRef} className={calendarWrapperClass}>
         <DateRange
           className={styles.calendar__inner}
           onChange={(item: any) => setState([item.selection])}
           moveRangeOnFirstSelection={true}
           ranges={state}
           months={2}
+          ref={ref}
           weekStartsOn={1}
           retainEndDateOnFirstSelection={true}
           weekdayDisplayFormat='EEEEE'
@@ -69,5 +70,5 @@ const DatePicker = ({ placeholder = 'Choose creation date' }: any) => {
       </div>
     </div>
   );
-};
+});
 export default DatePicker;

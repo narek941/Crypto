@@ -12,13 +12,13 @@ export type FormField<T extends FormFieldNames> = {
     type?: HTMLInputTypeAttribute;
     options?: Option[];
     checked?: boolean;
+    Icon?: any;
   };
 };
 
 export interface IFormGroup {
   children: JSX.Element | string;
   space?: 's' | 'm' | 'l';
-
   className?: string;
   onClick?: (e: SyntheticEvent) => void;
   disabled?: boolean;

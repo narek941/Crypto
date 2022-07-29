@@ -20,4 +20,5 @@ const Search = ({ onClick, placeholder = 'search', className }: any) => {
     </form>
   );
 };
+
 export default Search;
