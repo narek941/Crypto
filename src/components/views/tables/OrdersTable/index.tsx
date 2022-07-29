@@ -52,7 +52,7 @@ const OrdersTable = () => {
   };
 
   useEffect(() => {
-    dispatch(walletsActions.getWalletOrders({ ...filter, id: walletId }));
+    dispatch(walletsActions.getWalletOpenOrders({ ...filter, id: walletId }));
   }, [walletId, filter.search, filter, dispatch]);
 
   return (
