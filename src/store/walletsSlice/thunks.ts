@@ -74,6 +74,18 @@ export const getWalletOrders = createAsyncThunk(
       order: string;
       search: string;
       id: string;
+      side?: any;
+      creationTime?: any;
+      originalId?: any;
+      value?: any;
+      valueInBaseCurrency?: any;
+      lastOperationTime?: any;
+      share?: any;
+      received?: any;
+      receivedBaseCurrency?: any;
+      fee?: any;
+      feeBaseCurrency?: any;
+      pairs?: any;
     },
     thunkAPI,
   ) => {

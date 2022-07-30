@@ -26,7 +26,7 @@ export const composeFormSchema = <K extends FormFieldNames>(fields: K[]): AnyObj
     apiSecret: Yup.string(),
     selectSide: Yup.string(),
     selectPair: Yup.string(),
-    updateTime: Yup.string(),
+    updatedTime: Yup.string(),
     maxDrawdown: Yup.number(),
     maxPosition: Yup.number(),
     allowedPairs: Yup.array(),

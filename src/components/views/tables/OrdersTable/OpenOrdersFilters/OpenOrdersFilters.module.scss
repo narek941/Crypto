@@ -1,0 +1,46 @@
+.wrapper {
+  gap: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 100%;
+}
+
+.search {
+  max-width: unset;
+  padding: 11px 34px 11px 14px !important;
+
+  &:hover {
+    border: 1px solid var(--select-border);
+  }
+}
+
+.clear {
+  gap: 13px;
+  cursor: pointer;
+  color: var(--placeholder-select);
+  @extend %flex-align;
+
+  svg {
+    @extend %flex-center;
+  }
+}
+
+.container {
+  gap: 23px;
+  padding: 16px;
+  border-radius: 4px;
+  background: var(--sidebar-background);
+  @extend %flex-column;
+}
+
+.toggle {
+  display: flex;
+  color: var(--placeholder-select);
+  cursor: pointer;
+  width: fit-content;
+}
+
+.select {
+  gap: 0;
+  width: 135px;
+}

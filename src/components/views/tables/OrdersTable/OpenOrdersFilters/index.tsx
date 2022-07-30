@@ -9,12 +9,13 @@ import { Select, TableSearch } from 'components';
 import { FormGroup, FormWrapper } from 'components/forms';
 import { useAppDispatch, useForm } from 'hooks';
 import { openOrdersFilterUpdate } from 'store/walletsSlice/thunks';
+import { clearNullAndUndefinedFromObj } from 'utils/clearObject';
 
-import styles from './FilterWrapper.module.scss';
+import styles from './OpenOrdersFilters.module.scss';
 import { FilterFormShape } from './types';
 import { filterFormFields, filterSchemaKeys } from './fields';
 
-const FilterWrapper = () => {
+const OpenOrdersFilters = () => {
   const dispatch = useAppDispatch();
 
   const [isMore, setIsMore] = useState(false);
@@ -23,34 +24,42 @@ const FilterWrapper = () => {
     mode: 'onChange',
     schemaKeys: filterSchemaKeys,
     defaultValues: {
-      selectValue: [0, 10],
-      selectFee: [0, 10],
-      selectShare: [0, 10],
-      selectFeeInBaseCurrency: [0, 10],
+      selectValue: [undefined, undefined],
+      selectValueInBaseCurrency: [undefined, undefined],
+      selectFee: [undefined, undefined],
+      selectShare: [undefined, undefined],
+      selectFeeInBaseCurrency: [undefined, undefined],
+      selectSide: undefined,
+      searchID: '',
+      searchReceived: '',
+      selectPairEnd: undefined,
     },
   });
 
   const handleToggle = () => setIsMore(!isMore);
 
   const handleClick = (values: any) => {
+    const filter = clearNullAndUndefinedFromObj({
+      fee: values?.selectFee,
+      side: values?.selectSide,
+      value: values?.selectValue,
+      share: values?.selectShare,
+      originalId: values?.searchID,
+      received: values?.searchReceived,
+      feeBaseCurrency: values?.selectFeeInBaseCurrency,
+      valueInBaseCurrency: values?.selectValueInBaseCurrency,
+      pairs: [values?.selectPairStart, values.selectPairEnd],
+      receivedBaseCurrency: values?.searchReceivedInBaseCurrency,
+      creationDate: [values?.selectCreationDate?.startDate, values?.selectCreationDate?.endDate],
+      creationTime: [values?.selectCreationTime?.startDate, values?.selectCreationTime?.endDate],
+      lastOperationTime: [values?.selectUpdatedTime?.startDate, values?.selectUpdatedTime?.endDate],
+    });
     // eslint-disable-next-line no-console
     console.log(values);
+
     dispatch(
       openOrdersFilterUpdate({
-        filter: {
-          side: values?.selectSide,
-          creationTime: values?.creationTime,
-          id: values?.searchID,
-          value: values?.selectValue,
-          valueInBaseCurrency: values?.selectValueInBaseCurrency,
-          updatedAt: values?.updateTime,
-          share: values?.selectShare,
-          received: values?.searchReceived,
-          receivedBaseCurrency: values?.searchReceivedInBaseCurrency,
-          fee: values?.selectFee,
-          feeBaseCurrency: values?.selectFeeInBaseCurrency,
-          pairs: values?.selectPairs,
-        },
+        filter,
       }),
     );
   };
@@ -62,12 +71,8 @@ const FilterWrapper = () => {
         <div className={styles.container}>
           <div className={styles.wrapper}>
             <div className={styles.item}>
-              <DatePicker
-                {...filterFormFields.creationDate}
-                {...formMethods.register('creationDate')}
-              />
+              <DatePicker formMethods={formMethods} {...filterFormFields.creationDate} />
             </div>
-
             <div className={styles.item}>
               <DualSelect formMethods={formMethods} {...filterFormFields.selectPair} />
             </div>
@@ -84,13 +89,7 @@ const FilterWrapper = () => {
               <Controller
                 control={formMethods.control}
                 name={filterFormFields.selectValue.name as any}
-                render={({ field }) => (
-                  <RangeSwipe
-                    {...field}
-                    {...filterFormFields.selectValue}
-                    {...formMethods.register('selectValue')}
-                  />
-                )}
+                render={({ field }) => <RangeSwipe {...field} {...filterFormFields.selectValue} />}
               />
             </div>
 
@@ -105,21 +104,14 @@ const FilterWrapper = () => {
                 </div>
 
                 <div className={styles.item}>
-                  <DatePicker
-                    {...filterFormFields.creationTime}
-                    {...formMethods.register('creationTime')}
-                  />
+                  <DatePicker formMethods={formMethods} {...filterFormFields.creationTime} />
                 </div>
                 <div className={styles.item}>
                   <Controller
                     control={formMethods.control}
-                    name={filterFormFields.selectValue.name as any}
+                    name={filterFormFields.selectValueInBaseCurrency.name as any}
                     render={({ field }) => (
-                      <RangeSwipe
-                        {...field}
-                        {...filterFormFields.selectValueInBaseCurrency}
-                        {...formMethods.register('selectValueInBaseCurrency')}
-                      />
+                      <RangeSwipe {...field} {...filterFormFields.selectValueInBaseCurrency} />
                     )}
                   />
                 </div>
@@ -141,47 +133,32 @@ const FilterWrapper = () => {
                 <div className={styles.item}>
                   <Controller
                     control={formMethods.control}
-                    name={filterFormFields.selectValue.name as any}
+                    name={filterFormFields.selectFee.name as any}
                     render={({ field }) => (
-                      <RangeSwipe
-                        {...field}
-                        {...filterFormFields.selectFee}
-                        {...formMethods.register('selectFee')}
-                      />
+                      <RangeSwipe {...field} {...filterFormFields.selectFee} />
                     )}
                   />
                 </div>
                 <div className={styles.item}>
                   <Controller
                     control={formMethods.control}
-                    name={filterFormFields.selectValue.name as any}
+                    name={filterFormFields.selectFeeInBaseCurrency.name as any}
                     render={({ field }) => (
-                      <RangeSwipe
-                        {...field}
-                        {...filterFormFields.selectFeeInBaseCurrency}
-                        {...formMethods.register('selectFeeInBaseCurrency')}
-                      />
+                      <RangeSwipe {...field} {...filterFormFields.selectFeeInBaseCurrency} />
                     )}
                   />
                 </div>
                 <div className={styles.item}>
                   <Controller
                     control={formMethods.control}
-                    name={filterFormFields.selectValue.name as any}
+                    name={filterFormFields.selectShare.name as any}
                     render={({ field }) => (
-                      <RangeSwipe
-                        {...field}
-                        {...filterFormFields.selectShare}
-                        {...formMethods.register('selectShare')}
-                      />
+                      <RangeSwipe {...field} {...filterFormFields.selectShare} />
                     )}
                   />
                 </div>
                 <div className={styles.item}>
-                  <DatePicker
-                    {...filterFormFields.updateTime}
-                    {...formMethods.register('updateTime')}
-                  />
+                  <DatePicker formMethods={formMethods} {...filterFormFields.updatedTime} />
                 </div>
               </>
             )}
@@ -201,4 +178,4 @@ const FilterWrapper = () => {
   );
 };
 
-export default FilterWrapper;
+export default OpenOrdersFilters;

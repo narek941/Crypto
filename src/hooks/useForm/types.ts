@@ -12,7 +12,7 @@ export type FormFieldNames =
   | 'selectFee'
   | 'apiSecret'
   | 'selectSide'
-  | 'updateTime'
+  | 'updatedTime'
   | 'selectPair'
   | 'rememberMe'
   | 'selectShare'

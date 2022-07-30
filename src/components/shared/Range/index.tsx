@@ -11,10 +11,13 @@ import styles from './Range.module.scss';
 
 const RangeSwipe = forwardRef<any, any>(
   ({ name, placeholder = 'search', Icon, onChange, value, ...rest }: any, ref) => {
-    const [isOpen, setIsOpen] = useState<boolean>(false);
     const customRef = useRef(null);
+    const [isOpen, setIsOpen] = useState<boolean>(false);
     const headerClass = classNames(styles.header, { [styles.header__open]: isOpen });
     const modalClass = classNames(styles.modal, { [styles.modal__open]: isOpen });
+    const textClass = classNames(styles.header__input, {
+      [styles.header__input__placeholder]: !value[0] && !value[1],
+    });
 
     const toggleDrop = () => {
       setIsOpen(true);
@@ -24,12 +27,13 @@ const RangeSwipe = forwardRef<any, any>(
       setIsOpen(false);
     };
 
-    const inputText = `${value[0]} / ${value[1]}`;
-
     useOnClickOutside(customRef, handleClose);
+
     return (
       <div role='button' onClick={toggleDrop} className={headerClass}>
-        <p className={styles.header__input}>{value[0] ? inputText : placeholder}</p>
+        <p className={textClass}>
+          {!value.includes(undefined) ? `${value[0]} / ${value[1]}` : placeholder}
+        </p>
         <div>{Icon ? <Icon /> : <DollarIcon />}</div>
         <div className={modalClass} ref={customRef}>
           <div className={styles.wrapper}>

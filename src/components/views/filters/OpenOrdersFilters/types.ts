@@ -5,7 +5,7 @@ export type FilterFormShape = {
   searchID: any;
   selectFee: any;
   selectSide: any;
-  updateTime: any;
+  updatedTime: any;
   selectShare: any;
   selectValue: any[];
   creationDate: any;

@@ -1,21 +1,24 @@
 import { useState, forwardRef, useRef } from 'react';
 import classNames from 'classnames';
 import { Controller } from 'react-hook-form';
-import { MenuItem, Select } from '@mui/material';
 
 import useOnClickOutside from 'hooks/useOutsideClick';
 import { DropDownIcon } from 'assets/icons';
+
+import Select from '../Select';
 
 import styles from './DualSelect.module.scss';
 
 const DualSelect = forwardRef<any, any>(({ formMethods, name, placeholder }, ref: any) => {
   const customRef = useRef(null);
   const [isOpenDropdown, setIsOpenDropdown] = useState<boolean>(false);
-  // eslint-disable-next-line no-console
   const { selectPairStart, selectPairEnd } = formMethods.watch();
 
   const headerClass = classNames(styles.header, { [styles.header__open]: isOpenDropdown });
   const modalClass = classNames(styles.modal, { [styles.modal__open]: isOpenDropdown });
+  const textClass = classNames(styles.header__input, {
+    [styles.header__input__placeholder]: !selectPairStart && !selectPairEnd,
+  });
 
   const toggleDrop = () => {
     setIsOpenDropdown(true);
@@ -30,7 +33,7 @@ const DualSelect = forwardRef<any, any>(({ formMethods, name, placeholder }, ref
   return (
     <div className={headerClass}>
       <div role='button' onClick={toggleDrop} className={styles.header__inner}>
-        <p className={styles.header__input}>
+        <p className={textClass}>
           {selectPairStart && selectPairEnd ? `${selectPairStart} / ${selectPairEnd}` : placeholder}
         </p>
         <div>
@@ -47,23 +50,17 @@ const DualSelect = forwardRef<any, any>(({ formMethods, name, placeholder }, ref
                 name={`${name}End`}
                 {...formMethods.register(`${name}Start`)}
                 render={({ field }) => (
-                  <Select {...field} className={styles.select} defaultValue={'BTC'} ref={ref}>
-                    <MenuItem className={styles.select__item} value={'BTC'}>
-                      BTC
-                    </MenuItem>
-                    <MenuItem className={styles.select__item} value={'ETH'}>
-                      ETH
-                    </MenuItem>
-                    <MenuItem className={styles.select__item} value={'USDT'}>
-                      USDT
-                    </MenuItem>
-                    <MenuItem className={styles.select__item} value={'XRP'}>
-                      XRP
-                    </MenuItem>
-                    <MenuItem className={styles.select__item} value={'BNB'}>
-                      BNB
-                    </MenuItem>
-                  </Select>
+                  <Select
+                    options={[
+                      { label: 'aaa', value: 'sss' },
+                      { label: 'aaa', value: 'sss' },
+                      { label: 'aaa', value: 'sss' },
+                    ]}
+                    {...field}
+                    defaultValue={'BTC'}
+                    ref={ref}
+                    withAction={false}
+                  />
                 )}
               ></Controller>
             </div>
@@ -73,23 +70,17 @@ const DualSelect = forwardRef<any, any>(({ formMethods, name, placeholder }, ref
                 name={`${name}End`}
                 {...formMethods.register(`${name}End`)}
                 render={({ field }) => (
-                  <Select {...field} className={styles.select} defaultValue={'BTC'} ref={ref}>
-                    <MenuItem className={styles.select__item} value={'BTC'}>
-                      BTC
-                    </MenuItem>
-                    <MenuItem className={styles.select__item} value={'ETH'}>
-                      ETH
-                    </MenuItem>
-                    <MenuItem className={styles.select__item} value={'USDT'}>
-                      USDT
-                    </MenuItem>
-                    <MenuItem className={styles.select__item} value={'XRP'}>
-                      XRP
-                    </MenuItem>
-                    <MenuItem className={styles.select__item} value={'BNB'}>
-                      BNB
-                    </MenuItem>
-                  </Select>
+                  <Select
+                    options={[
+                      { label: 'aaa', value: 'sss' },
+                      { label: 'aaa', value: 'sss' },
+                      { label: 'aaa', value: 'sss' },
+                    ]}
+                    {...field}
+                    defaultValue={'BTC'}
+                    ref={ref}
+                    withAction={false}
+                  />
                 )}
               ></Controller>
             </div>
