@@ -50,7 +50,7 @@ const OrdersTable = () => {
 
   useEffect(() => {
     dispatch(walletsActions.getWalletOpenOrders({ ...filter, id: walletId }));
-  }, [walletId, filter.search, filter, filter.filter, dispatch]);
+  }, [walletId, filter.search, filter, dispatch, filter.filter]);
 
   return (
     <>

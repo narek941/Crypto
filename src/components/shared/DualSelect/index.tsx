@@ -46,7 +46,9 @@ const DualSelect = forwardRef<any, any>(
         <div role='button' onClick={toggleDrop} className={styles.header__inner}>
           <p className={textClass}>
             {selectPairStart && selectPairEnd
-              ? `${selectPairStart} / ${selectPairEnd}`
+              ? `${firstOptions[Number(selectPairStart) - 1].label} / ${
+                  secondOptions[Number(selectPairEnd) - 1].label
+                }`
               : placeholder}
           </p>
           <div>
