@@ -49,8 +49,8 @@ const OrdersTable = () => {
   };
 
   useEffect(() => {
-    dispatch(walletsActions.getWalletOrders({ ...filter, id: walletId }));
-  }, [walletId, filter.filter, filter, dispatch]);
+    dispatch(walletsActions.getWalletOpenOrders({ ...filter, id: walletId }));
+  }, [walletId, filter.search, filter, dispatch]);
 
   return (
     <>
