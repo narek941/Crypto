@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Controller } from 'react-hook-form';
 
 import DatePicker from 'components/shared/DatePicker';
@@ -7,9 +7,10 @@ import RangeSwipe from 'components/shared/Range';
 import { CloseIcon } from 'assets/icons';
 import { Select, TableSearch } from 'components';
 import { FormGroup, FormWrapper } from 'components/forms';
-import { useAppDispatch, useForm } from 'hooks';
+import { useAppDispatch, useAppSelector, useForm } from 'hooks';
 import { openOrdersFilterUpdate } from 'store/walletsSlice/thunks';
 import { clearNullAndUndefinedFromObj } from 'utils/clearObject';
+import { RootState } from 'types';
 
 import styles from './OpenOrdersFilters.module.scss';
 import { FilterFormShape } from './types';
@@ -17,8 +18,10 @@ import { filterFormFields, filterSchemaKeys } from './fields';
 
 const OpenOrdersFilters = () => {
   const dispatch = useAppDispatch();
+  const coins = useAppSelector((state: RootState) => state.admin.coins);
 
   const [isMore, setIsMore] = useState(false);
+  const [isUpdateState, setIsUpdateState] = useState(false);
 
   const { formMethods, handleSubmit } = useForm<keyof FilterFormShape, FilterFormShape>({
     mode: 'onChange',
@@ -33,10 +36,31 @@ const OpenOrdersFilters = () => {
       searchID: '',
       searchReceived: '',
       selectPairEnd: undefined,
+      selectPairStart: undefined,
     },
   });
 
+  // const formValues = formMethods.getValues();
+  console.log(isUpdateState, 888);
+
+  // useEffect(() => {
+
+  //   handleClick(formValues);
+  //   // formMethods.formState.isDirty && handleClick(values);
+  // }, [formValues]);
+
+  // const { isDirty, isValid } = formMethods.formState;
+  // const watch = formMethods.watch();
+
+  // eslint-disable-next-line no-console
+  // console.log(isDirty, watch, isValid);
+
   const handleToggle = () => setIsMore(!isMore);
+
+  useEffect(() => {
+    handleClick(formMethods.getValues());
+    console.log(formMethods.getValues(), 'qqq');
+  }, [setIsUpdateState]);
 
   const handleClick = (values: any) => {
     const filter = clearNullAndUndefinedFromObj({
@@ -55,9 +79,6 @@ const OpenOrdersFilters = () => {
       lastOperationTime: [values?.selectUpdatedTime?.startDate, values?.selectUpdatedTime?.endDate],
     });
 
-    // eslint-disable-next-line no-console
-    console.log(values);
-
     dispatch(
       openOrdersFilterUpdate({
         filter,
@@ -66,6 +87,19 @@ const OpenOrdersFilters = () => {
   };
 
   const handleClear = () => formMethods.reset({});
+
+  const handleToggleSelect = () => {
+    setIsUpdateState(true);
+  };
+
+  const coinOptions = useMemo(
+    () =>
+      coins.map((coin) => ({
+        label: coin.name,
+        value: coin.id,
+      })),
+    [coins],
+  );
 
   return (
     <FormWrapper {...{ formMethods }} onSubmit={handleSubmit(handleClick)}>
@@ -76,14 +110,24 @@ const OpenOrdersFilters = () => {
               <DatePicker formMethods={formMethods} {...filterFormFields.creationDate} />
             </div>
             <div className={styles.item}>
-              <DualSelect formMethods={formMethods} {...filterFormFields.selectPair} />
+              <DualSelect
+                formMethods={formMethods}
+                {...filterFormFields.selectPair}
+                firstOptions={coinOptions}
+                secondOptions={coinOptions}
+              />
             </div>
             <div className={styles.item}>
               <Controller
                 control={formMethods.control}
                 name={filterFormFields.selectSide.name as any}
                 render={({ field }) => (
-                  <Select {...filterFormFields.selectSide} {...field} className={styles.select} />
+                  <Select
+                    {...filterFormFields.selectSide}
+                    {...field}
+                    className={styles.select}
+                    handleToggle={handleToggleSelect}
+                  />
                 )}
               />
             </div>
@@ -164,12 +208,12 @@ const OpenOrdersFilters = () => {
                 </div>
               </>
             )}
-            <div className={styles.clear} role='button' onClick={handleClear}>
+            <button className={styles.clear} type='submit' onClick={handleClick}>
               <span>Clear All</span>
               <div>
                 <CloseIcon />
               </div>
-            </div>
+            </button>
           </div>
           <div role='button' onClick={handleToggle} className={styles.toggle}>
             Click Here to {isMore ? 'Hide' : 'Show'} Advanced Filters

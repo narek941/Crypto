@@ -22,6 +22,7 @@ const Select = forwardRef(
       onBlur,
       value,
       withAction = true,
+      handleToggle,
       ...props
     }: ISelect,
     ref: ForwardedRef<HTMLInputElement>,
@@ -64,6 +65,7 @@ const Select = forwardRef(
       if (isOpen) {
         setIsOpen(false);
         onBlur();
+        handleToggle && handleToggle();
       }
     };
 
@@ -80,6 +82,7 @@ const Select = forwardRef(
       if (!withAction) {
         setIsOpen(false);
       }
+      handleToggle && handleToggle();
     };
 
     return (

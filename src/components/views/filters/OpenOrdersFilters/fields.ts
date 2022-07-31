@@ -4,6 +4,11 @@ import { FormField } from '../../../forms/types';
 
 import { FilterFormShape } from './types';
 
+export const sideOptions = [
+  { label: 'BUY', value: 'BUY' },
+  { label: 'SELL', value: 'SELL' },
+];
+
 export const filterFormFields: FormField<keyof FilterFormShape> = {
   creationDate: {
     name: 'selectCreationDate',
@@ -29,10 +34,7 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
     type: 'Select',
     id: 'filterForm.selectSide',
     placeholder: 'Select Side',
-    options: [
-      { label: 'BUY', value: 'BUY' },
-      { label: 'SELL', value: 'SELL' },
-    ],
+    options: sideOptions,
   },
   selectValue: {
     name: 'selectValue',

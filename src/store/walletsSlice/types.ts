@@ -1,6 +1,6 @@
 import { SerializedError } from '@reduxjs/toolkit';
 
-import { IFilter } from 'types/api';
+import { ITableFilter } from 'types/api';
 
 import { WalletsStates } from './constants';
 
@@ -11,26 +11,26 @@ export type WalletsSliceState = {
   openOrders: {
     totalCount: number;
     list: any[];
-    filter: IFilter;
+    filter: ITableFilter;
   };
   orderTrades: {
     totalCount: number;
     list: any[];
-    filter: IFilter;
+    filter: ITableFilter;
   };
   orders: {
     totalCount: number;
     list: any[];
-    filter: IFilter;
+    filter: ITableFilter;
   };
   inflow: {
     totalCount: number;
     list: any[];
-    filter: IFilter;
+    filter: ITableFilter;
   };
   records: {
     totalCount: number;
     list: any[];
-    filter: IFilter;
+    filter: ITableFilter;
   };
 };

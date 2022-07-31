@@ -7,15 +7,15 @@ export type FilterFormShape = {
   selectSide: any;
   updatedTime: any;
   selectShare: any;
-  selectValue: any[];
+  selectValue: any;
   creationDate: any;
   creationTime: any;
   selectPairEnd?: any;
   searchReceived: any;
   selectPairStart?: any;
-  selectFeeInBaseCurrency: any[];
-  selectValueInBaseCurrency: any[];
-  searchReceivedInBaseCurrency: any[];
+  selectFeeInBaseCurrency: any;
+  selectValueInBaseCurrency: any;
+  searchReceivedInBaseCurrency: any;
 };
 
 export interface IFilterForm {

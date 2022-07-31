@@ -14,6 +14,7 @@ import { useAppDispatch } from 'hooks';
 import { accountsActions } from 'store/accountsSlice';
 import { accountsTradesFilterUpdate } from 'store/accountsSlice/thunks';
 import { wrapWithBaseCurrency } from 'utils';
+import TradesFilters from 'components/views/filters/TradesFilters';
 
 import TradesTableRow from './TradesTableRow';
 import styles from './TradesTable.module.scss';
@@ -56,6 +57,7 @@ const TradesTable = () => {
   return (
     <>
       <div className={styles.wrapper}>
+        <TradesFilters />
         <Table className={styles.inner}>
           <TableHead className={styles.container__header}>
             <TableRow className={styles.container__header__row}>

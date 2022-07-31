@@ -18,5 +18,6 @@ export interface ISelect {
   defaultChecked?: boolean;
   color?: ColorType;
   options: Option[];
+  handleToggle?: () => {};
   [prop: string]: any;
 }

@@ -2,7 +2,7 @@ import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 
 import { Slice } from 'types';
 import { client } from 'api';
-import { IFilter } from 'types/api';
+import { ITableFilter } from 'types/api';
 
 export const getWalletOpenOrders = createAsyncThunk(
   `${Slice.Wallets}/open-orders`,
@@ -14,6 +14,7 @@ export const getWalletOpenOrders = createAsyncThunk(
       order: string;
       search: string;
       id: string;
+      filter: any;
     },
     thunkAPI,
   ) => {
@@ -45,6 +46,7 @@ export const getWalletOrderTrades = createAsyncThunk(
       search: string;
       walletId: number;
       orderId: number;
+      filter: any;
     },
     thunkAPI,
   ) => {
@@ -74,18 +76,7 @@ export const getWalletOrders = createAsyncThunk(
       order: string;
       search: string;
       id: string;
-      side?: any;
-      creationTime?: any;
-      originalId?: any;
-      value?: any;
-      valueInBaseCurrency?: any;
-      lastOperationTime?: any;
-      share?: any;
-      received?: any;
-      receivedBaseCurrency?: any;
-      fee?: any;
-      feeBaseCurrency?: any;
-      pairs?: any;
+      filter: any;
     },
     thunkAPI,
   ) => {
@@ -116,6 +107,7 @@ export const getWalletInflow = createAsyncThunk(
       order: string;
       search: string;
       walletId: number;
+      filter: any;
     },
     thunkAPI,
   ) => {
@@ -160,6 +152,7 @@ export const getWalletRecords = createAsyncThunk(
       order: string;
       search: string;
       id: string;
+      filter: any;
     },
     thunkAPI,
   ) => {
@@ -180,8 +173,8 @@ export const getWalletRecords = createAsyncThunk(
   },
 );
 
-export const ordersFilterUpdate = createAction<Partial<IFilter>>('ordersFilter');
-export const inflowFilterUpdate = createAction<Partial<IFilter>>('inflowFilter');
-export const openOrdersFilterUpdate = createAction<Partial<IFilter>>('openOrdersFilter');
-export const orderTradesFilterUpdate = createAction<Partial<IFilter>>('orderTradesFilter');
-export const recordsFilterUpdate = createAction<Partial<IFilter>>('recordsFilter');
+export const ordersFilterUpdate = createAction<Partial<ITableFilter>>('ordersFilter');
+export const inflowFilterUpdate = createAction<Partial<ITableFilter>>('inflowFilter');
+export const openOrdersFilterUpdate = createAction<Partial<ITableFilter>>('openOrdersFilter');
+export const orderTradesFilterUpdate = createAction<Partial<ITableFilter>>('orderTradesFilter');
+export const recordsFilterUpdate = createAction<Partial<ITableFilter>>('recordsFilter');

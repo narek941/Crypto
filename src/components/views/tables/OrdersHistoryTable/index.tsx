@@ -12,6 +12,7 @@ import { wrapWithBaseCurrency } from 'utils';
 import { EmptyData, Pagination } from 'components';
 import { walletsActions } from 'store/walletsSlice';
 import { ordersHistoryTable } from 'constants/index';
+import OrdersHistoryFilters from 'components/views/filters/OrdersHistoryFilters';
 
 import styles from './OrdersHistoryTable.module.scss';
 import OrdersHistoryTableRow from './OrdersHistoryTableRow';
@@ -54,6 +55,8 @@ const OrdersHistoryTable = () => {
   return (
     <>
       <div className={styles.wrapper}>
+        <OrdersHistoryFilters />
+
         <Table className={styles.inner}>
           <TableHead className={styles.container__header}>
             <TableRow className={styles.container__header__row}>
