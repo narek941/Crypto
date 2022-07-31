@@ -5,11 +5,11 @@ import DatePicker from 'components/shared/DatePicker';
 import DualSelect from 'components/shared/DualSelect';
 import { CloseIcon } from 'assets/icons';
 import { Select, TableSearch } from 'components';
-import { FormGroup, FormWrapper } from 'components/forms';
+import { FormGroup } from 'components/forms';
 import { useAppDispatch, useAppSelector, useForm } from 'hooks';
 import { ordersFilterUpdate } from 'store/walletsSlice/thunks';
-import { clearNullAndUndefinedFromObj } from 'utils/clearObject';
 import { RootState } from 'types';
+import { createObject } from 'utils/createObject';
 
 import styles from './OrdersHistoryFilters.module.scss';
 import { FilterFormShape } from './types';
@@ -21,56 +21,21 @@ const OrdersHistoryFilters = () => {
 
   const [isMore, setIsMore] = useState(false);
 
-  const { formMethods, handleSubmit } = useForm<keyof FilterFormShape, FilterFormShape>({
+  const { formMethods } = useForm<keyof FilterFormShape, FilterFormShape>({
     mode: 'onChange',
     schemaKeys: filterSchemaKeys,
     defaultValues: {
-      // historyID: '',
-      // historyValue: '',
-      // historyUpdateTime: [undefined, undefined],
-      // historySide: undefined,
-      // selectHistoryType: undefined,
-      // selectHistoryPairEnd: '',
-      // historyStop: '',
-      // selectHistoryPairStart: '',
-      // selectHistoryValueInBaseCurrency: '',
-      // historyLimit: '',
-      // historyModifiers: '',
+      historyID: '',
+      historyValue: '',
+      historyUpdateTime: [undefined, undefined],
+      historySide: undefined,
     },
   });
-  // const { isDirty, isValid } = formMethods.formState;
-  // const watch = formMethods.watch();
-
-  // eslint-disable-next-line no-console
-  // console.log(isDirty, watch, isValid);
 
   const handleToggle = () => setIsMore(!isMore);
 
-  const handleClick = (values: any) => {
-    const filter = clearNullAndUndefinedFromObj({
-      id: values?.historyID,
-      // value: values?.historyValue,
-      // lastOperationTime: [
-      //   values?.historyUpdateTime?.startDate,
-      //   values?.historyUpdateTime?.endDate,
-      // ],
-      // side: values?.historySide,
-      // type: values?.selectHistoryType,
-      // coinsPair: [values?.selectHistoryPairStart, values.selectHistoryPairEnd],
-      // valueInBaseCurrency: values?.selectHistoryValueInBaseCurrency,
-      // limitPrice: values?.historyLimit,
-      // stopPrice: values?.historyStop,
-      // modifiers: values?.historyModifiers,
-    });
-
-    // eslint-disable-next-line no-console
-    console.log(values);
-
-    dispatch(
-      ordersFilterUpdate({
-        filter,
-      }),
-    );
+  const handleFilter = (key: string, value: any) => {
+    dispatch(ordersFilterUpdate({ filter: createObject(key, value) }));
   };
 
   const handleClear = () => formMethods.reset({});
@@ -85,101 +50,130 @@ const OrdersHistoryFilters = () => {
   );
 
   return (
-    <FormWrapper {...{ formMethods }} onSubmit={handleSubmit(handleClick)}>
-      <FormGroup className={styles.signIn__form__group}>
-        <div className={styles.container}>
-          <div className={styles.wrapper}>
-            <div className={styles.item}>
-              <DualSelect
-                formMethods={formMethods}
-                {...filterFormFields.historyPair}
-                firstOptions={coinOptions}
-                secondOptions={coinOptions}
-              />
-            </div>
-
-            <div className={styles.item}>
-              <Controller
-                control={formMethods.control}
-                name={filterFormFields.historySide.name as any}
-                render={({ field }) => (
-                  <Select {...filterFormFields.historySide} {...field} className={styles.select} />
-                )}
-              />
-            </div>
-            <div className={styles.item}>
-              <Controller
-                control={formMethods.control}
-                name={filterFormFields.historyType.name as any}
-                render={({ field }) => (
-                  <Select {...filterFormFields.historyType} {...field} className={styles.select} />
-                )}
-              />
-            </div>
-            <div className={styles.item}>
-              <TableSearch
-                {...filterFormFields.historyValue}
-                {...formMethods.register('historyValue')}
-                className={styles.search}
-              />
-            </div>
-
-            <div className={styles.item}>
-              <DatePicker formMethods={formMethods} {...filterFormFields.historyUpdateTime} />
-            </div>
-
-            {isMore && (
-              <>
-                <div className={styles.item}>
-                  <TableSearch
-                    {...filterFormFields.historyID}
-                    {...formMethods.register('historyID')}
-                    className={styles.search}
-                  />
-                </div>
-                <div className={styles.item}>
-                  <TableSearch
-                    {...filterFormFields.historyValueInBaseCurrency}
-                    {...formMethods.register('historyValueInBaseCurrency')}
-                    className={styles.search}
-                  />
-                </div>
-                <div className={styles.item}>
-                  <TableSearch
-                    {...filterFormFields.searchHistoryStop}
-                    {...formMethods.register('searchHistoryStop')}
-                    className={styles.search}
-                  />
-                </div>
-                <div className={styles.item}>
-                  <TableSearch
-                    {...filterFormFields.searchHistoryLimit}
-                    {...formMethods.register('searchHistoryLimit')}
-                    className={styles.search}
-                  />
-                </div>
-                <div className={styles.item}>
-                  <TableSearch
-                    {...filterFormFields.searchHistoryModifiers}
-                    {...formMethods.register('searchHistoryModifiers')}
-                    className={styles.search}
-                  />
-                </div>
-              </>
-            )}
-            <button className={styles.clear} type='submit' onClick={handleClick}>
-              <span>Clear All</span>
-              <div>
-                <CloseIcon />
-              </div>
-            </button>
+    <FormGroup className={styles.signIn__form__group}>
+      <div className={styles.container}>
+        <div className={styles.wrapper}>
+          <div className={styles.item}>
+            <DualSelect
+              formMethods={formMethods}
+              {...filterFormFields.historyPair}
+              firstOptions={coinOptions}
+              secondOptions={coinOptions}
+              callback={handleFilter}
+              filterName={'coinsPair'}
+            />
           </div>
-          <div role='button' onClick={handleToggle} className={styles.toggle}>
-            Click Here to {isMore ? 'Hide' : 'Show'} Advanced Filters
+
+          <div className={styles.item}>
+            <Controller
+              control={formMethods.control}
+              name={filterFormFields.historySide.name as any}
+              render={({ field }) => (
+                <Select
+                  {...filterFormFields.historySide}
+                  {...field}
+                  className={styles.select}
+                  callback={handleFilter}
+                  filterName={'side'}
+                />
+              )}
+            />
+          </div>
+          <div className={styles.item}>
+            <Controller
+              control={formMethods.control}
+              name={filterFormFields.historyType.name as any}
+              render={({ field }) => (
+                <Select
+                  {...filterFormFields.historyType}
+                  {...field}
+                  className={styles.select}
+                  callback={handleFilter}
+                  filterName={'type'}
+                />
+              )}
+            />
+          </div>
+          <div className={styles.item}>
+            <TableSearch
+              {...filterFormFields.historyValue}
+              {...formMethods.register('historyValue')}
+              className={styles.search}
+              callback={handleFilter}
+              filterName={'value'}
+            />
+          </div>
+
+          <div className={styles.item}>
+            <DatePicker
+              formMethods={formMethods}
+              {...filterFormFields.historyUpdateTime}
+              callback={handleFilter}
+              filterName={'lastOperationTime'}
+            />
+          </div>
+
+          {isMore && (
+            <>
+              <div className={styles.item}>
+                <TableSearch
+                  {...filterFormFields.historyID}
+                  {...formMethods.register('historyID')}
+                  className={styles.search}
+                  callback={handleFilter}
+                  filterName={'id'}
+                />
+              </div>
+              <div className={styles.item}>
+                <TableSearch
+                  {...filterFormFields.historyValueInBaseCurrency}
+                  {...formMethods.register('historyValueInBaseCurrency')}
+                  className={styles.search}
+                  callback={handleFilter}
+                  filterName={'valueInBaseCurrency'}
+                />
+              </div>
+              <div className={styles.item}>
+                <TableSearch
+                  {...filterFormFields.searchHistoryStop}
+                  {...formMethods.register('searchHistoryStop')}
+                  className={styles.search}
+                  callback={handleFilter}
+                  filterName={'stopPrice'}
+                />
+              </div>
+              <div className={styles.item}>
+                <TableSearch
+                  {...filterFormFields.searchHistoryLimit}
+                  {...formMethods.register('searchHistoryLimit')}
+                  className={styles.search}
+                  callback={handleFilter}
+                  filterName={'limitPrice'}
+                />
+              </div>
+              <div className={styles.item}>
+                <TableSearch
+                  {...filterFormFields.searchHistoryModifiers}
+                  {...formMethods.register('searchHistoryModifiers')}
+                  className={styles.search}
+                  callback={handleFilter}
+                  filterName={'modifiers'}
+                />
+              </div>
+            </>
+          )}
+          <div className={styles.clear} role='button' onClick={handleClear}>
+            <span>Clear All</span>
+            <div>
+              <CloseIcon />
+            </div>
           </div>
         </div>
-      </FormGroup>
-    </FormWrapper>
+        <div role='button' onClick={handleToggle} className={styles.toggle}>
+          Click Here to {isMore ? 'Hide' : 'Show'} Advanced Filters
+        </div>
+      </div>
+    </FormGroup>
   );
 };
 

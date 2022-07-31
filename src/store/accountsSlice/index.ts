@@ -20,12 +20,12 @@ const internalInitialState: AccountsSliceState = {
   trades: {
     totalCount: 0,
     list: [],
-    filter: { skip: 0, take: 10, sort: 'tradeTime', order: 'DESC', search: '' },
+    filter: { skip: 0, take: 10, sort: 'tradeTime', order: 'DESC', search: '', filter: {} },
   },
   alerts: {
     totalCount: 0,
     list: [],
-    filter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '' },
+    filter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '', filter: {} },
   },
 };
 

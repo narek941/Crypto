@@ -91,6 +91,12 @@ export const composeFormSchema = <K extends FormFieldNames>(fields: K[]): AnyObj
     tradesValueInBaseCurrency: Yup.string(),
     tradesFee: Yup.string(),
     tradesFeeInBaseCurrency: Yup.string(),
+
+    //alerts filter
+    alertType: Yup.string(),
+    alertID: Yup.string(),
+    alertMessage: Yup.string(),
+    alertCreationDate: Yup.string(),
   };
 
   const schema = fields.reduce(

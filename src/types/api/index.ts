@@ -11,6 +11,7 @@ export interface IFilter {
   sort: string;
   search: any;
   order: 'DESC' | 'ASC';
+  id?: string;
 }
 export interface ITableFilter extends IFilter {
   filter: any;

@@ -4,6 +4,8 @@ import { Slice } from 'types';
 import { client } from 'api';
 import { IFilter } from 'types/api';
 
+import { ITableFilter } from './../../types/api/index';
+
 export const getAccountList = createAsyncThunk(
   `${Slice.Accounts}/accounts`,
   async (
@@ -114,8 +116,9 @@ export const getAccountAlerts = createAsyncThunk(
 );
 
 export const accountsFilterUpdate = createAction<Partial<IFilter>>('accountsFilter');
-export const accountsTradesFilterUpdate = createAction<Partial<IFilter>>('accountsTradesFilter');
-export const accountsAlertsFilterUpdate = createAction<Partial<IFilter>>(
+export const accountsTradesFilterUpdate =
+  createAction<Partial<ITableFilter>>('accountsTradesFilter');
+export const accountsAlertsFilterUpdate = createAction<Partial<ITableFilter>>(
   'accountsAlertsFilterUpdate',
 );
 

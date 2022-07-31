@@ -10,6 +10,7 @@ import { FormGroup } from 'components/forms';
 import { useAppDispatch, useAppSelector, useForm } from 'hooks';
 import { openOrdersFilterUpdate } from 'store/walletsSlice/thunks';
 import { RootState } from 'types';
+import { createObject } from 'utils/createObject';
 
 import styles from './OpenOrdersFilters.module.scss';
 import { FilterFormShape } from './types';
@@ -52,9 +53,7 @@ const OpenOrdersFilters = () => {
   );
 
   const handleFilter = (key: string, value: any) => {
-    const filter = {};
-    filter[key] = value;
-    dispatch(openOrdersFilterUpdate({ filter }));
+    dispatch(openOrdersFilterUpdate({ filter: createObject(key, value) }));
   };
 
   return (

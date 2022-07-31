@@ -151,8 +151,8 @@ export const getWalletRecords = createAsyncThunk(
       sort: string;
       order: string;
       search: string;
-      id: string;
       filter: any;
+      id: string;
     },
     thunkAPI,
   ) => {

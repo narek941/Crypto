@@ -5,11 +5,11 @@ import DatePicker from 'components/shared/DatePicker';
 import DualSelect from 'components/shared/DualSelect';
 import { CloseIcon } from 'assets/icons';
 import { Select, TableSearch } from 'components';
-import { FormGroup, FormWrapper } from 'components/forms';
+import { FormGroup } from 'components/forms';
 import { useAppDispatch, useAppSelector, useForm } from 'hooks';
-import { openOrdersFilterUpdate } from 'store/walletsSlice/thunks';
-import { clearNullAndUndefinedFromObj } from 'utils/clearObject';
 import { RootState } from 'types';
+import { accountsTradesFilterUpdate } from 'store/accountsSlice/thunks';
+import { createObject } from 'utils/createObject';
 
 import styles from './TradesFilters.module.scss';
 import { FilterFormShape } from './types';
@@ -21,7 +21,7 @@ const TradesFilters = () => {
 
   const [isMore, setIsMore] = useState(false);
 
-  const { formMethods, handleSubmit } = useForm<keyof FilterFormShape, FilterFormShape>({
+  const { formMethods } = useForm<keyof FilterFormShape, FilterFormShape>({
     mode: 'onChange',
     schemaKeys: filterSchemaKeys,
     defaultValues: {
@@ -31,41 +31,14 @@ const TradesFilters = () => {
       tradesValueInBaseCurrency: '',
       tradesFee: '',
       tradesFeeInBaseCurrency: undefined,
-      tradesPairEnd: undefined,
-      tradesPairStart: undefined,
       tradesSide: undefined,
     },
   });
-  // const { isDirty, isValid } = formMethods.formState;
-  // const watch = formMethods.watch();
-
-  // eslint-disable-next-line no-console
-  // console.log(isDirty, watch, isValid);
 
   const handleToggle = () => setIsMore(!isMore);
 
-  const handleClick = (values: any) => {
-    const filter = clearNullAndUndefinedFromObj({
-      originalId: values?.tradesPrice,
-      value: values?.tradesValue,
-      pairs: [values?.tradesPairStart, values.tradesPairEnd],
-      side: values?.tradesSide,
-      tradesDate: [values?.selectTradesDate?.startDate, values?.selectTradesDate?.endDate],
-
-      totalPrice: values?.tradesTotalPrice,
-      valueInBaseCurrency: values?.tradesValueInBaseCurrency,
-      fees: values?.tradesFee,
-      feInBaseCurrency: values.tradesFeeInBaseCurrency,
-    });
-
-    // eslint-disable-next-line no-console
-    console.log(values);
-
-    dispatch(
-      openOrdersFilterUpdate({
-        filter,
-      }),
-    );
+  const handleFilter = (key: string, value: any) => {
+    dispatch(accountsTradesFilterUpdate({ filter: createObject(key, value) }));
   };
 
   const handleClear = () => formMethods.reset({});
@@ -80,93 +53,116 @@ const TradesFilters = () => {
   );
 
   return (
-    <FormWrapper {...{ formMethods }} onSubmit={handleSubmit(handleClick)}>
-      <FormGroup className={styles.signIn__form__group}>
-        <div className={styles.container}>
-          <div className={styles.wrapper}>
-            <div className={styles.item}>
-              <DatePicker formMethods={formMethods} {...filterFormFields.tradesDate} />
-            </div>
-            <div className={styles.item}>
-              <DualSelect
-                formMethods={formMethods}
-                {...filterFormFields.tradesPair}
-                firstOptions={coinOptions}
-                secondOptions={coinOptions}
-              />
-            </div>
-            <div className={styles.item}>
-              <Controller
-                control={formMethods.control}
-                name={filterFormFields.tradesSide.name as any}
-                render={({ field }) => (
-                  <Select {...filterFormFields.tradesSide} {...field} className={styles.select} />
-                )}
-              />
-            </div>
-
-            {isMore && (
-              <>
-                <div className={styles.item}>
-                  <TableSearch
-                    {...filterFormFields.tradesPrice}
-                    {...formMethods.register('tradesPrice')}
-                    className={styles.search}
-                  />
-                </div>
-
-                <div className={styles.item}>
-                  <TableSearch
-                    {...filterFormFields.tradesValue}
-                    {...formMethods.register('tradesValue')}
-                    className={styles.search}
-                  />
-                </div>
-
-                <div className={styles.item}>
-                  <TableSearch
-                    {...filterFormFields.tradesTotalPrice}
-                    {...formMethods.register('tradesTotalPrice')}
-                    className={styles.search}
-                  />
-                </div>
-                <div className={styles.item}>
-                  <TableSearch
-                    {...filterFormFields.tradesValueInBaseCurrency}
-                    {...formMethods.register('tradesValueInBaseCurrency')}
-                    className={styles.search}
-                  />
-                </div>
-                <div className={styles.item}>
-                  <TableSearch
-                    {...filterFormFields.tradesFee}
-                    {...formMethods.register('tradesFee')}
-                    className={styles.search}
-                  />
-                </div>
-                <div className={styles.item}>
-                  <TableSearch
-                    {...filterFormFields.tradesFeeInBaseCurrency}
-                    {...formMethods.register('tradesFeeInBaseCurrency')}
-                    className={styles.search}
-                  />
-                </div>
-              </>
-            )}
-
-            <button className={styles.clear} type='submit' onClick={handleClick}>
-              <span>Clear All</span>
-              <div>
-                <CloseIcon />
-              </div>
-            </button>
+    <FormGroup className={styles.signIn__form__group}>
+      <div className={styles.container}>
+        <div className={styles.wrapper}>
+          <div className={styles.item}>
+            <DatePicker
+              formMethods={formMethods}
+              {...filterFormFields.tradesDate}
+              callback={handleFilter}
+              filterName={'tradeTime'}
+            />
           </div>
-          <div role='button' onClick={handleToggle} className={styles.toggle}>
-            Click Here to {isMore ? 'Hide' : 'Show'} Advanced Filters
+          <div className={styles.item}>
+            <DualSelect
+              formMethods={formMethods}
+              {...filterFormFields.tradesPair}
+              firstOptions={coinOptions}
+              secondOptions={coinOptions}
+              callback={handleFilter}
+              filterName={'coinsPair'}
+            />
+          </div>
+          <div className={styles.item}>
+            <Controller
+              control={formMethods.control}
+              name={filterFormFields.tradesSide.name as any}
+              render={({ field }) => (
+                <Select
+                  {...filterFormFields.tradesSide}
+                  {...field}
+                  className={styles.select}
+                  callback={handleFilter}
+                  filterName={'side'}
+                />
+              )}
+            />
+          </div>
+
+          {isMore && (
+            <>
+              <div className={styles.item}>
+                <TableSearch
+                  {...filterFormFields.tradesPrice}
+                  {...formMethods.register('tradesPrice')}
+                  className={styles.search}
+                  callback={handleFilter}
+                  filterName={'price'}
+                />
+              </div>
+
+              <div className={styles.item}>
+                <TableSearch
+                  {...filterFormFields.tradesValue}
+                  {...formMethods.register('tradesValue')}
+                  className={styles.search}
+                  callback={handleFilter}
+                  filterName={'totalPrice'}
+                />
+              </div>
+
+              <div className={styles.item}>
+                <TableSearch
+                  {...filterFormFields.tradesTotalPrice}
+                  {...formMethods.register('tradesTotalPrice')}
+                  className={styles.search}
+                  callback={handleFilter}
+                  filterName={'amount'}
+                />
+              </div>
+              <div className={styles.item}>
+                <TableSearch
+                  {...filterFormFields.tradesValueInBaseCurrency}
+                  {...formMethods.register('tradesValueInBaseCurrency')}
+                  className={styles.search}
+                  callback={handleFilter}
+                  filterName={'totalPriceInBaseCurrency'}
+                />
+              </div>
+              <div className={styles.item}>
+                <TableSearch
+                  {...filterFormFields.tradesFee}
+                  {...formMethods.register('tradesFee')}
+                  className={styles.search}
+                  callback={handleFilter}
+                  filterName={'fees'}
+                />
+              </div>
+              <div className={styles.item}>
+                <TableSearch
+                  {...filterFormFields.tradesFeeInBaseCurrency}
+                  {...formMethods.register('tradesFeeInBaseCurrency')}
+                  className={styles.search}
+                  callback={handleFilter}
+                  filterName={'feesInBaseCurrency'}
+                />
+              </div>
+            </>
+          )}
+
+          <div className={styles.clear} role='button' onClick={handleClear}>
+            <span>Clear All</span>
+            <div>
+              <CloseIcon />
+            </div>
           </div>
         </div>
-      </FormGroup>
-    </FormWrapper>
+        <div role='button' onClick={handleToggle} className={styles.toggle}>
+          Click Here to {isMore ? 'Hide' : 'Show'} Advanced Filters
+        </div>
+      </div>
+    </FormGroup>
   );
 };
 

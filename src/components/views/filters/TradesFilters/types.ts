@@ -5,12 +5,11 @@ export type FilterFormShape = {
   tradesPair: any;
   tradesSide: any;
   tradesPrice: any;
-  tradesValue:any;
-  tradesTotalPrice:any;
-  tradesValueInBaseCurrency:any;
-  tradesFee:any;
-  tradesFeeInBaseCurrency:any;
-  
+  tradesValue: any;
+  tradesTotalPrice: any;
+  tradesValueInBaseCurrency: any;
+  tradesFee: any;
+  tradesFeeInBaseCurrency: any;
 };
 
 export interface IFilterForm {
