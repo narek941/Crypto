@@ -30,7 +30,7 @@ const TradesFilters = () => {
       tradesTotalPrice: '',
       tradesValueInBaseCurrency: '',
       tradesFee: '',
-      tradesFeeInBaseCurrency: '',
+      tradesFeeInBaseCurrency: undefined,
       tradesPairEnd: undefined,
       tradesPairStart: undefined,
       tradesSide: undefined,

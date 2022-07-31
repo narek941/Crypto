@@ -10,7 +10,10 @@ import Input from '../Input';
 import styles from './Range.module.scss';
 
 const RangeSwipe = forwardRef<any, any>(
-  ({ name, placeholder = 'search', Icon, onChange, value, ...rest }: any, ref) => {
+  (
+    { name, placeholder = 'search', Icon, onChange, value, callback, filterName, ...rest }: any,
+    ref,
+  ) => {
     const customRef = useRef(null);
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const headerClass = classNames(styles.header, { [styles.header__open]: isOpen });
@@ -25,6 +28,13 @@ const RangeSwipe = forwardRef<any, any>(
 
     const handleClose = () => {
       setIsOpen(false);
+    };
+
+    const handleSubmit = () => {
+      if (callback && filterName && !value.includes(undefined)) {
+        callback(filterName, value);
+      }
+      handleClose();
     };
 
     useOnClickOutside(customRef, handleClose);
@@ -60,7 +70,7 @@ const RangeSwipe = forwardRef<any, any>(
             <div className={styles.action__cancel} role='button' onClick={handleClose}>
               cancel
             </div>
-            <div className={styles.action__select} role='button' onClick={handleClose}>
+            <div className={styles.action__select} role='button' onClick={handleSubmit}>
               select
             </div>
           </div>

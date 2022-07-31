@@ -1,18 +1,41 @@
-import { forwardRef, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import classNames from 'classnames';
 
 import { CancelIcon, SearchIcon } from 'assets/icons';
+import useDebounce from 'hooks/useDebounce';
 
 import styles from './TableSearch.module.scss';
 
 const TableSearch = forwardRef<any, any>(
-  ({ name, className = '', onFocus, placeholder = 'search', ...rest }, ref) => {
+  (
+    {
+      name,
+      className = '',
+      onFocus,
+      placeholder = 'search',
+      callback,
+      filterName,
+      debouncedTime = 2000,
+      ...rest
+    },
+    ref,
+  ) => {
     const inputClass = classNames(styles.search__input, className);
     const [state, setState] = useState('');
+    const debouncedValue = useDebounce<string>(state, debouncedTime);
 
     const handleChange = (e: any) => {
       setState(e.target.value);
     };
+
+    const handleSubmit = () => {
+      if (callback && filterName) {
+        callback(filterName, state);
+      }
+    };
+
+    useEffect(handleSubmit, [debouncedValue]);
+
     return (
       <div className={styles.search}>
         <div className={styles.search__icon}>

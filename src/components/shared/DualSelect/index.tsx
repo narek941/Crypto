@@ -10,7 +10,10 @@ import Select from '../Select';
 import styles from './DualSelect.module.scss';
 
 const DualSelect = forwardRef<any, any>(
-  ({ formMethods, name, placeholder, firstOptions, secondOptions }, ref: any) => {
+  (
+    { formMethods, name, placeholder, firstOptions, secondOptions, callback, filterName },
+    ref: any,
+  ) => {
     const customRef = useRef(null);
     const [isOpenDropdown, setIsOpenDropdown] = useState<boolean>(false);
     const { selectPairStart, selectPairEnd } = formMethods.watch();
@@ -30,6 +33,13 @@ const DualSelect = forwardRef<any, any>(
     };
 
     useOnClickOutside(customRef, handleCloseDropDown);
+
+    const handleSubmit = () => {
+      if (callback && filterName && selectPairStart && selectPairEnd) {
+        callback(filterName, [selectPairStart, selectPairEnd]);
+      }
+      handleCloseDropDown();
+    };
 
     return (
       <div className={headerClass}>
@@ -85,7 +95,7 @@ const DualSelect = forwardRef<any, any>(
             <div className={styles.action__cancel} role='button' onClick={handleCloseDropDown}>
               Cancel
             </div>
-            <div className={styles.action__select} role='button' onClick={handleCloseDropDown}>
+            <div className={styles.action__select} role='button' onClick={handleSubmit}>
               Select
             </div>
           </div>
