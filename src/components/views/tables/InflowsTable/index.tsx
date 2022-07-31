@@ -13,6 +13,7 @@ import { EmptyData, Pagination } from 'components';
 import { walletsActions } from 'store/walletsSlice';
 import { inflowOutflowTable } from 'constants/index';
 import { inflowFilterUpdate } from 'store/walletsSlice/thunks';
+import InflowsFilters from 'components/views/filters/InflowsFilters';
 
 import InflowsTableRow from './InflowsTableRow';
 import styles from './InflowsTable.module.scss';
@@ -51,11 +52,12 @@ const InflowsTable = () => {
 
   useEffect(() => {
     dispatch(walletsActions.getWalletInflow({ ...filter, walletId: walletId as string | any }));
-  }, [walletId, filter, dispatch]);
+  }, [walletId, filter, dispatch, filter.filter]);
 
   return (
     <>
       <div className={styles.wrapper}>
+        <InflowsFilters />
         <Table className={styles.inner}>
           <TableHead className={styles.container__header}>
             <TableRow className={styles.container__header__row}>

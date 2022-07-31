@@ -10,11 +10,17 @@ import Input from '../Input';
 import styles from './Range.module.scss';
 
 const RangeSwipe = forwardRef<any, any>(
-  ({ name, placeholder = 'search', Icon, onChange, value, ...rest }: any, ref) => {
-    const [isOpen, setIsOpen] = useState<boolean>(false);
+  (
+    { name, placeholder = 'search', Icon, onChange, value, callback, filterName, ...rest }: any,
+    ref,
+  ) => {
     const customRef = useRef(null);
+    const [isOpen, setIsOpen] = useState<boolean>(false);
     const headerClass = classNames(styles.header, { [styles.header__open]: isOpen });
     const modalClass = classNames(styles.modal, { [styles.modal__open]: isOpen });
+    const textClass = classNames(styles.header__input, {
+      [styles.header__input__placeholder]: !value[0] && !value[1],
+    });
 
     const toggleDrop = () => {
       setIsOpen(true);
@@ -24,12 +30,20 @@ const RangeSwipe = forwardRef<any, any>(
       setIsOpen(false);
     };
 
-    const inputText = `${value[0]} / ${value[1]}`;
+    const handleSubmit = () => {
+      if (callback && filterName && !value.includes(undefined)) {
+        callback(filterName, value);
+      }
+      handleClose();
+    };
 
     useOnClickOutside(customRef, handleClose);
+
     return (
       <div role='button' onClick={toggleDrop} className={headerClass}>
-        <p className={styles.header__input}>{value[0] ? inputText : placeholder}</p>
+        <p className={textClass}>
+          {!value.includes(undefined) ? `${value[0]} / ${value[1]}` : placeholder}
+        </p>
         <div>{Icon ? <Icon /> : <DollarIcon />}</div>
         <div className={modalClass} ref={customRef}>
           <div className={styles.wrapper}>
@@ -46,6 +60,8 @@ const RangeSwipe = forwardRef<any, any>(
                 {...rest}
                 id={name}
                 ref={ref}
+                min={0}
+                max={10000000}
                 name={name}
                 autoComplete='off'
                 placeholder={placeholder}
@@ -56,7 +72,7 @@ const RangeSwipe = forwardRef<any, any>(
             <div className={styles.action__cancel} role='button' onClick={handleClose}>
               cancel
             </div>
-            <div className={styles.action__select} role='button' onClick={handleClose}>
+            <div className={styles.action__select} role='button' onClick={handleSubmit}>
               select
             </div>
           </div>

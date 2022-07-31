@@ -21,6 +21,9 @@ const Select = forwardRef(
       onChange,
       onBlur,
       value,
+      callback,
+      filterName,
+      withAction = true,
       ...props
     }: ISelect,
     ref: ForwardedRef<HTMLInputElement>,
@@ -76,6 +79,16 @@ const Select = forwardRef(
 
     const handleSelect = (selectedItem: string) => {
       onChange(selectedItem);
+      if (!callback) {
+        setIsOpen(false);
+      }
+    };
+
+    const handleSubmit = () => {
+      if (callback && filterName && !value.includes(undefined)) {
+        callback(filterName, currentOption?.value);
+      }
+      toggleDrop();
     };
 
     return (
@@ -107,14 +120,16 @@ const Select = forwardRef(
                 </div>
               ))}
             </div>
-            <div className={styles.select__option__action}>
-              <div className={styles.select__option__action__cancel} onClick={handleCancel}>
-                cancel
+            {withAction && (
+              <div className={styles.select__option__action}>
+                <div className={styles.select__option__action__cancel} onClick={handleCancel}>
+                  cancel
+                </div>
+                <div className={styles.select__option__action__select} onClick={handleSubmit}>
+                  select
+                </div>
               </div>
-              <div className={styles.select__option__action__select} onClick={toggleDrop}>
-                select
-              </div>
-            </div>
+            )}
           </div>
         </div>
 

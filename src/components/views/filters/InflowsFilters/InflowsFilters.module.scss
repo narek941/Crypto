@@ -18,6 +18,7 @@
   gap: 13px;
   cursor: pointer;
   color: var(--placeholder-select);
+  @extend %text-12;
   @extend %flex-align;
 
   svg {
@@ -42,5 +43,5 @@
 
 .select {
   gap: 0;
-  width: 135px;
+  min-width: 135px;
 }

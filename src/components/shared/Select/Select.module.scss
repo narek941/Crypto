@@ -33,7 +33,7 @@
   }
 
   &__placeholder {
-    color: var(--placeholder-select) !important;
+    color: var(--placeholder) !important;
   }
 
   &__option {
@@ -63,12 +63,15 @@
         color: #3700b3;
       }
     }
+
     &__item {
       padding: 6px 12px;
       cursor: pointer;
+
       &:hover {
         background-color: var(--select-hover);
       }
+
       &__selected {
         background-color: var(--select-hover);
       }
@@ -98,9 +101,12 @@
   padding: 12px 46px 12px 10px;
   text-transform: capitalize;
   cursor: pointer;
+  min-width: 93px;
+
   &:hover {
     border: 1px solid var(--select-border);
   }
+
   &__open {
     background-color: var(--select-option);
 

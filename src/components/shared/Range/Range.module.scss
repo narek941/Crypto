@@ -28,13 +28,17 @@
     color: var(--font);
     background-color: transparent;
     @extend %filter-14;
+
+    &__placeholder {
+      color: var(--placeholder) !important;
+    }
   }
 
   svg {
     @extend %flex-center;
 
     path {
-      fill: #4c4b53;
+      fill: var(--svg);
     }
   }
 

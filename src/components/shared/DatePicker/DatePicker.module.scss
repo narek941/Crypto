@@ -11,7 +11,7 @@
     background: var(--input-background);
     @extend %flex-between;
 
-    input {
+    span {
       width: 100%;
       border: none;
       color: var(--font);
@@ -24,11 +24,11 @@
     }
 
     &__placeholder {
-      color: var(--placeholder);
+      color: var(--placeholder) !important;
     }
 
     svg path {
-      fill: #4c4b53;
+      fill: var(--svg);
     }
   }
 

@@ -33,7 +33,14 @@ const internalInitialState: WalletsSliceState = {
   records: {
     list: [],
     totalCount: 0,
-    filter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '', filter: {} },
+    filter: {
+      skip: 0,
+      take: 10,
+      sort: 'id',
+      order: 'DESC',
+      search: '',
+      filter: {},
+    },
   },
   summary: {
     totalCapital: null,
@@ -104,6 +111,7 @@ const walletsSlice = createSlice({
     });
 
     builder.addCase(walletsThunks.openOrdersFilterUpdate, (state, action) => {
+      // eslint-disable-next-line no-console
       const filter = state.openOrders.filter;
       state.openOrders.filter = { ...filter, ...action.payload };
     });

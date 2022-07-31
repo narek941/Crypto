@@ -19,4 +19,5 @@ export type IFilterPayload =
   | { take: number }
   | { sort: string }
   | { search: string }
-  | { order: 'DESC' | 'ASC' };
+  | { order: 'DESC' | 'ASC' }
+  | { filter: any };

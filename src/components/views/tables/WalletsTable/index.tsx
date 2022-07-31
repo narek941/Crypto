@@ -12,6 +12,7 @@ import { walletTable } from 'constants/index';
 import { useAppDispatch } from 'hooks';
 import { walletsActions } from 'store/walletsSlice';
 import { wrapWithBaseCurrency } from 'utils';
+import WalletsFilters from 'components/views/filters/WalletsFilters';
 
 import WalletsTableRow from './WalletsTableRow';
 import styles from './WalletsTable.module.scss';
@@ -53,7 +54,7 @@ const WalletsTable = () => {
   useEffect(() => {
     dispatch(walletsActions.getWalletSummary(walletId));
     dispatch(walletsActions.getWalletRecords({ ...filter, id: walletId }));
-  }, [walletId, dispatch, filter]);
+  }, [walletId, dispatch, filter, filter.filter]);
 
   return (
     <>
@@ -75,7 +76,7 @@ const WalletsTable = () => {
             <WalletsSummaryTableRow walletId={walletId} row={summary} />
           </TableBody>
         </Table>
-
+        <WalletsFilters />
         <Typography className={styles.wrapper__title}>Assets</Typography>
         <Table className={styles.inner}>
           <TableHead className={styles.container__header}>

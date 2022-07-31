@@ -29,7 +29,7 @@ const SelectGroup = ({
   leftInputName,
   rightInputName,
 }: ISelectGroup) => {
-  const coins = useAppSelector((state: RootState) => state.accounts.coins);
+  const coins = useAppSelector((state: RootState) => state.admin.coins);
   const currentAlertDestination = formMethods.watch(`alertsDestinations[${index}]`);
   const type = isString(currentAlertDestination?.type)
     ? currentAlertDestination?.type

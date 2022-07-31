@@ -32,10 +32,17 @@
       color: var(--font);
       background-color: transparent;
       @extend %filter-14;
+
+      &__placeholder {
+        color: var(--placeholder);
+      }
     }
 
     svg {
       @extend %flex-center;
+      path {
+        fill: var(--svg);
+      }
     }
   }
 
@@ -74,13 +81,14 @@
   left: 0;
   top: 47px;
   z-index: 10;
-  pointer-events: none;
   opacity: 0;
+  display: flex;
   min-width: 212px;
   width: fit-content;
   border-radius: 4px;
   padding: 13px 12px;
   position: absolute;
+  pointer-events: none;
   flex-direction: column;
   background-color: var(--background);
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
@@ -119,7 +127,6 @@
   &__item {
     min-width: 89px;
     color: var(--font);
-    // background: var(--select-option);
 
     &:hover {
       background-color: var(--select-hover);

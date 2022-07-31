@@ -1,15 +1,25 @@
 import { HandIcon, PercentIcon } from 'assets/icons';
 
-import { FormField } from '../../forms/types';
+import { FormField } from '../../../forms/types';
 
 import { FilterFormShape } from './types';
 
+export const sideOptions = [
+  { label: 'BUY', value: 'BUY' },
+  { label: 'SELL', value: 'SELL' },
+];
+
 export const filterFormFields: FormField<keyof FilterFormShape> = {
   creationDate: {
-    name: 'creationDate',
-    type: 'DatePicker',
+    name: 'selectCreationDate',
     id: 'filterForm.creationDate',
     placeholder: 'Choose creation date',
+  },
+
+  updatedTime: {
+    name: 'selectUpdatedTime',
+    id: 'filterForm.updatedTime',
+    placeholder: 'Select updated time',
   },
 
   selectPair: {
@@ -24,14 +34,10 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
     type: 'Select',
     id: 'filterForm.selectSide',
     placeholder: 'Select Side',
-    options: [
-      { label: 'BUY', value: 'BUY' },
-      { label: 'SELL', value: 'SELL' },
-    ],
+    options: sideOptions,
   },
   selectValue: {
     name: 'selectValue',
-    type: 'search',
     id: 'filterForm.selectValue',
     placeholder: 'Select Value',
   },
@@ -44,8 +50,7 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
   },
 
   creationTime: {
-    name: 'creationTime',
-    type: 'Calendar',
+    name: 'selectCreationTime',
     id: 'filterForm.creationTime',
     placeholder: 'Search Created Time',
   },
@@ -88,12 +93,7 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
     placeholder: 'Select Share',
     Icon: PercentIcon,
   },
-  updateTime: {
-    name: 'updateTime',
-    type: 'Calendar',
-    id: 'filterForm.updateTime',
-    placeholder: 'Select updated time',
-  },
+
   selectPairEnd: {
     name: 'selectPairEnd',
     type: 'select',

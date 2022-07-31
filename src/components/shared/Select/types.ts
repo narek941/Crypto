@@ -18,5 +18,8 @@ export interface ISelect {
   defaultChecked?: boolean;
   color?: ColorType;
   options: Option[];
+  callback?: any;
+  filterName?: string;
+  withAction?: boolean;
   [prop: string]: any;
 }
