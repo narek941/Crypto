@@ -9,6 +9,7 @@ import { charts } from 'constants/index';
 import { wrapWithBaseCurrency } from 'utils';
 import { accountsActions } from 'store/accountsSlice';
 import { Bricks, Chart, Doughnut, Export, AnalyticsTabs } from 'components';
+import { adminActions } from 'store/adminSlice';
 
 import styles from './AccountsAnalytics.module.scss';
 
@@ -30,6 +31,7 @@ const AccountsAnalytics = (): JSX.Element => {
   useEffect(() => {
     dispatch(accountsActions.getAccountSummary(convertedId));
     dispatch(accountsActions.getAccountById(convertedId));
+    dispatch(adminActions.getCoins());
 
     return () => {
       dispatch(accountsActions.removeAccountById());
