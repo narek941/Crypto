@@ -32,6 +32,7 @@ const AccountsAnalytics = (): JSX.Element => {
     dispatch(accountsActions.getAccountSummary(convertedId));
     dispatch(accountsActions.getAccountById(convertedId));
     dispatch(adminActions.getCoins());
+    dispatch(adminActions.getTradingPairs());
 
     return () => {
       dispatch(accountsActions.removeAccountById());

@@ -19,6 +19,7 @@ import { filterFormFields, filterSchemaKeys } from './fields';
 const OpenOrdersFilters = () => {
   const dispatch = useAppDispatch();
   const coins = useAppSelector((state: RootState) => state.admin.coins);
+  const tradingPairs = useAppSelector((state: RootState) => state.admin.tradingPairs);
 
   const [isMore, setIsMore] = useState(false);
 
@@ -53,7 +54,25 @@ const OpenOrdersFilters = () => {
   );
 
   const handleFilter = (key: string, value: any) => {
-    dispatch(openOrdersFilterUpdate({ filter: createObject(key, value) }));
+    if (key === 'pair') {
+      const coinsPair = tradingPairs.find((pair) => {
+        const fromCoin = coins.find((coin) => coin.id === value[0]);
+        const toCoin = coins.find((coin) => coin.id === value[1]);
+
+        return `${fromCoin.name}${toCoin.name}` === pair.name;
+      });
+
+      coinsPair &&
+        dispatch(
+          openOrdersFilterUpdate({
+            filter: {
+              coinsPairId: coinsPair.id,
+            },
+          }),
+        );
+    } else {
+      dispatch(openOrdersFilterUpdate({ filter: createObject(key, value) }));
+    }
   };
 
   return (
@@ -65,7 +84,7 @@ const OpenOrdersFilters = () => {
               formMethods={formMethods}
               {...filterFormFields.creationDate}
               callback={handleFilter}
-              filterName={'creationDate'}
+              filterName='creationTime'
             />
           </div>
           <div className={styles.item}>
@@ -134,8 +153,8 @@ const OpenOrdersFilters = () => {
                   name={filterFormFields.selectValueInBaseCurrency.name as any}
                   render={({ field }) => (
                     <RangeSwipe
-                      {...field}
                       {...filterFormFields.selectValueInBaseCurrency}
+                      {...field}
                       callback={handleFilter}
                       filterName={'valueInBaseCurrency'}
                     />

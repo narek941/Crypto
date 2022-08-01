@@ -10,6 +10,7 @@ export type AdminSliceState = {
   twoFactorAdminEnabled: boolean;
   list: any[];
   coins: any[];
+  tradingPairs: any[];
   totalCount: number;
   usersFilter: IFilter;
   accountsFilter: IFilter;

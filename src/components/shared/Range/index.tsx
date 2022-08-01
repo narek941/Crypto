@@ -62,6 +62,7 @@ const RangeSwipe = forwardRef<any, any>(
                 ref={ref}
                 min={0}
                 max={10000000}
+                step={100}
                 name={name}
                 autoComplete='off'
                 placeholder={placeholder}

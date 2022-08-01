@@ -30,7 +30,7 @@ interface Obj {
 }
 
 export const createObject = (key: string, value: any) => {
-  const filter: Obj = Object;
+  const filter: any = {};
 
   filter[key as keyof Obj] = value;
   return filter;

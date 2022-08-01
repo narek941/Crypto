@@ -269,4 +269,19 @@ export const getCoins = createAsyncThunk(`${Slice.Admin}/coins`, async (_, thunk
   }
 });
 
+export const getTradingPairs = createAsyncThunk(
+  `${Slice.Admin}/trading-pairs`,
+  async (_, thunkAPI) => {
+    try {
+      const response = await client.get('/admin/exchange/1/allowed-trading-pairs');
+
+      return {
+        tradingPairs: response.data.list,
+      };
+    } catch {
+      return thunkAPI.rejectWithValue({ error: '* Incorrect' });
+    }
+  },
+);
+
 export const removeUserById = createAction('removeUserByID');

@@ -21,7 +21,7 @@
   }
 }
 .table {
-  padding: 24px 24px 84px;
+  padding: 16px 24px 84px;
   box-shadow: var(--collapse-table-shadow) !important;
   border-radius: 8px;
   background-color: var(--table-inner) !important;
@@ -34,8 +34,6 @@
   line-height: 20px;
   color: var(--cancel);
   justify-content: start;
-  padding: 16px 0 0;
   @extend %flex-align;
   @extend %text-16-bold;
-  margin: 10px 0 0;
 }
