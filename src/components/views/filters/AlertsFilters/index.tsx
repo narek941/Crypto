@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import DatePicker from 'components/shared/DatePicker';
+import DateRangePicker from 'components/shared/DateRangePicker';
 import { CloseIcon } from 'assets/icons';
 import { TableSearch } from 'components';
 import { FormGroup } from 'components/forms';
@@ -40,7 +40,7 @@ const AlertsFilters = () => {
       <div className={styles.container}>
         <div className={styles.wrapper}>
           <div className={styles.item}>
-            <DatePicker
+            <DateRangePicker
               formMethods={formMethods}
               {...filterFormFields.alertCreationDate}
               callback={handleFilter}

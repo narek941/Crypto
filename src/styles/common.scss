@@ -94,7 +94,7 @@
   }
 }
 
-/// DatePicker
+/// DateRangePicker
 
 .rdrDateDisplayWrapper,
 .rdrMonthAndYearPickers {
@@ -179,7 +179,7 @@
 }
 
 .rdrInRange {
-  background: rgba(65, 58, 199, 0.15);
+  background: var(--calendar);
 }
 
 .rdrEndEdge + .rdrDayNumber,
@@ -193,7 +193,7 @@
 }
 .rdrStartEdge,
 .rdrEndEdge {
-  background: rgba(65, 58, 199, 0.15);
+  background: var(--calendar);
 }
 .rdrDayInPreview,
 .rdrDayStartPreview,
@@ -203,7 +203,7 @@
 .rdrDayStartPreview,
 .rdrDayInPreview,
 .rdrDayEndPreview {
-  background: rgba(65, 58, 199, 0.15);
+  background: var(--calendar);
   height: 100%;
   position: absolute;
   top: 0;
@@ -212,6 +212,14 @@
   border: none;
 }
 
+.rdrDayToday {
+  color: var(--background) !important;
+  span {
+    background-color: transparent !important;
+    color: var(--font) !important;
+    border-color: transparent !important;
+  }
+}
 /// Range swipe
 
 .MuiSlider-rail {

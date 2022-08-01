@@ -93,27 +93,31 @@ const walletsSlice = createSlice({
     builder.addCase(walletsThunks.recordsFilterUpdate, (state, action) => {
       const filter = state.records.filter;
       state.records.filter = { ...filter, ...action.payload };
+      state.records.filter.filter = { ...filter.filter, ...action.payload.filter };
     });
 
     builder.addCase(walletsThunks.inflowFilterUpdate, (state, action) => {
       const filter = state.inflow.filter;
       state.inflow.filter = { ...filter, ...action.payload };
+      state.inflow.filter.filter = { ...filter.filter, ...action.payload.filter };
     });
 
     builder.addCase(walletsThunks.ordersFilterUpdate, (state, action) => {
       const filter = state.orders.filter;
       state.orders.filter = { ...filter, ...action.payload };
+      state.orders.filter.filter = { ...filter.filter, ...action.payload.filter };
     });
 
     builder.addCase(walletsThunks.orderTradesFilterUpdate, (state, action) => {
       const filter = state.orderTrades.filter;
       state.orderTrades.filter = { ...filter, ...action.payload };
+      state.orderTrades.filter.filter = { ...filter.filter, ...action.payload.filter };
     });
 
     builder.addCase(walletsThunks.openOrdersFilterUpdate, (state, action) => {
-      // eslint-disable-next-line no-console
       const filter = state.openOrders.filter;
       state.openOrders.filter = { ...filter, ...action.payload };
+      state.openOrders.filter.filter = { ...filter.filter, ...action.payload.filter };
     });
 
     builder.addMatcher(

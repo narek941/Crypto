@@ -89,10 +89,12 @@ const accountsSlice = createSlice({
     builder.addCase(accountsThunks.accountsTradesFilterUpdate, (state, action) => {
       const filter = state.trades.filter;
       state.trades.filter = { ...filter, ...action.payload };
+      state.trades.filter.filter = { ...filter.filter, ...action.payload.filter };
     });
     builder.addCase(accountsThunks.accountsAlertsFilterUpdate, (state, action) => {
       const filter = state.alerts.filter;
       state.alerts.filter = { ...filter, ...action.payload };
+      state.alerts.filter.filter = { ...filter.filter, ...action.payload.filter };
     });
 
     builder.addMatcher(

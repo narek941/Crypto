@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Controller } from 'react-hook-form';
 
-import DatePicker from 'components/shared/DatePicker';
+import DateRangePicker from 'components/shared/DateRangePicker';
 import DualSelect from 'components/shared/DualSelect';
 import { CloseIcon } from 'assets/icons';
 import { Select, TableSearch } from 'components';
@@ -57,7 +57,7 @@ const TradesFilters = () => {
       <div className={styles.container}>
         <div className={styles.wrapper}>
           <div className={styles.item}>
-            <DatePicker
+            <DateRangePicker
               formMethods={formMethods}
               {...filterFormFields.tradesDate}
               callback={handleFilter}
