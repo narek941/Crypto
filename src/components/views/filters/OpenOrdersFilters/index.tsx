@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Controller } from 'react-hook-form';
 
-import DatePicker from 'components/shared/DatePicker';
+import DateRangePicker from 'components/shared/DateRangePicker';
 import DualSelect from 'components/shared/DualSelect';
 import RangeSwipe from 'components/shared/Range';
 import { CloseIcon } from 'assets/icons';
@@ -61,7 +61,7 @@ const OpenOrdersFilters = () => {
       <div className={styles.container}>
         <div className={styles.wrapper}>
           <div className={styles.item}>
-            <DatePicker
+            <DateRangePicker
               formMethods={formMethods}
               {...filterFormFields.creationDate}
               callback={handleFilter}
@@ -121,7 +121,7 @@ const OpenOrdersFilters = () => {
               </div>
 
               <div className={styles.item}>
-                <DatePicker
+                <DateRangePicker
                   formMethods={formMethods}
                   {...filterFormFields.creationTime}
                   callback={handleFilter}
@@ -204,7 +204,7 @@ const OpenOrdersFilters = () => {
                 />
               </div>
               <div className={styles.item}>
-                <DatePicker
+                <DateRangePicker
                   formMethods={formMethods}
                   {...filterFormFields.updatedTime}
                   callback={handleFilter}
