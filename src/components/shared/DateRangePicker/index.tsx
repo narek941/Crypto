@@ -37,9 +37,11 @@ const DateRangePicker = forwardRef<any, any>(
       [styles.calendar__wrapper__open]: openCalendar,
     });
 
-    const toggleCalendar = () => setOpenCalendar(!openCalendar);
+    const toggleCalendar = () => setOpenCalendar(true);
 
-    const handleCloseCalendar = () => setOpenCalendar(false);
+    const handleCloseCalendar = () => {
+      setOpenCalendar(false);
+    };
 
     const handleChange = (item: any) => {
       setState([item.selection]);
@@ -47,12 +49,14 @@ const DateRangePicker = forwardRef<any, any>(
     };
 
     const handleSubmit = () => {
-      callback(filterName, [state[0]?.startDate, state[0]?.endDate]);
+      if (state[0].endDate !== undefined && state[0].endDate !== undefined && openCalendar) {
+        callback(filterName, [state[0]?.startDate, state[0]?.endDate]);
+      }
 
-      toggleCalendar();
+      setOpenCalendar(false);
     };
 
-    useOnClickOutside(customRef, handleCloseCalendar);
+    useOnClickOutside(customRef, handleSubmit);
 
     return (
       <div className={styles.calendar}>

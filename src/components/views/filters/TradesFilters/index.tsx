@@ -71,7 +71,7 @@ const TradesFilters = () => {
               firstOptions={coinOptions}
               secondOptions={coinOptions}
               callback={handleFilter}
-              filterName={'coinsPair'}
+              filterName={'coinsPair[id]'}
             />
           </div>
           <div className={styles.item}>

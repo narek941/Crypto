@@ -29,7 +29,7 @@ const TableSearch = forwardRef<any, any>(
     };
 
     const handleSubmit = () => {
-      if (callback && filterName) {
+      if (callback && filterName && state) {
         callback(filterName, state);
       }
     };

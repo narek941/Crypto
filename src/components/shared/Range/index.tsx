@@ -23,7 +23,7 @@ const RangeSwipe = forwardRef<any, any>(
     });
 
     const toggleDrop = () => {
-      setIsOpen(true);
+      if (!isOpen) setIsOpen(true);
     };
 
     const handleClose = () => {
@@ -31,13 +31,15 @@ const RangeSwipe = forwardRef<any, any>(
     };
 
     const handleSubmit = () => {
-      if (callback && filterName && !value.includes(undefined)) {
+      // eslint-disable-next-line no-console
+      console.log('work');
+      if (callback && filterName && value[0] !== '' && value[1] !== '' && isOpen) {
         callback(filterName, value);
       }
       handleClose();
     };
 
-    useOnClickOutside(customRef, handleClose);
+    useOnClickOutside(customRef, handleSubmit);
 
     return (
       <div role='button' onClick={toggleDrop} className={headerClass}>

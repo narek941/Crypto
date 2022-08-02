@@ -48,17 +48,17 @@ const AlertsFilters = () => {
             />
           </div>
 
+          <div className={styles.item}>
+            <TableSearch
+              {...filterFormFields.alertType}
+              {...formMethods.register('alertType')}
+              className={styles.search}
+              callback={handleFilter}
+              filterName={'type'}
+            />
+          </div>
           {isMore && (
             <>
-              <div className={styles.item}>
-                <TableSearch
-                  {...filterFormFields.alertType}
-                  {...formMethods.register('alertType')}
-                  className={styles.search}
-                  callback={handleFilter}
-                  filterName={'type'}
-                />
-              </div>
               <div className={styles.item}>
                 <TableSearch
                   {...filterFormFields.alertID}

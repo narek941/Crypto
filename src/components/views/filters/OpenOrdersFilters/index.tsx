@@ -32,7 +32,7 @@ const OpenOrdersFilters = () => {
       selectFee: [undefined, undefined],
       selectShare: [undefined, undefined],
       selectFeeInBaseCurrency: [undefined, undefined],
-      selectSide: undefined,
+      selectSide: '',
       searchID: '',
       searchReceived: '',
       selectPairEnd: undefined,
@@ -61,7 +61,8 @@ const OpenOrdersFilters = () => {
 
         return `${fromCoin.name}${toCoin.name}` === pair.name;
       });
-
+      // eslint-disable-next-line no-console
+      console.log(coinsPair);
       coinsPair &&
         dispatch(
           openOrdersFilterUpdate({
@@ -84,7 +85,7 @@ const OpenOrdersFilters = () => {
               formMethods={formMethods}
               {...filterFormFields.creationDate}
               callback={handleFilter}
-              filterName='creationTime'
+              filterName='createdAt'
             />
           </div>
           <div className={styles.item}>
@@ -135,7 +136,7 @@ const OpenOrdersFilters = () => {
                   {...formMethods.register('searchID')}
                   className={styles.search}
                   callback={handleFilter}
-                  filterName={'id'}
+                  filterName={'originalId'}
                 />
               </div>
 
