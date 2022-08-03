@@ -1,11 +1,8 @@
+import { sideOptions } from 'utils/filterHelper';
+
 import { FormField } from '../../../forms/types';
 
 import { FilterFormShape } from './types';
-
-export const sideOptions = [
-  { label: 'BUY', value: 'BUY' },
-  { label: 'SELL', value: 'SELL' },
-];
 
 export const filterFormFields: FormField<keyof FilterFormShape> = {
   tradesDate: {
@@ -13,6 +10,7 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
     id: 'filterForm.tradesDate',
     placeholder: 'Select Time',
   },
+
   tradesSide: {
     name: 'tradesSide',
     type: 'Select',
@@ -45,25 +43,25 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
     name: 'tradesTotalPrice',
     type: 'Search',
     id: 'filterForm.tradesTotalPrice',
-    placeholder: 'Enter Value',
+    placeholder: 'Total Price',
   },
   tradesValueInBaseCurrency: {
     name: 'tradesValueInBaseCurrency',
     type: 'Search',
     id: 'filterForm.tradesValueInBaseCurrency',
-    placeholder: 'Enter Value',
+    placeholder: 'Value, USDT',
   },
   tradesFee: {
     name: 'tradesFee',
     type: 'Search',
     id: 'filterForm.tradesFee',
-    placeholder: 'Enter Value',
+    placeholder: 'Fees',
   },
   tradesFeeInBaseCurrency: {
     name: 'tradesFeeInBaseCurrency',
     type: 'Search',
     id: 'filterForm.tradesFeeInBaseCurrency',
-    placeholder: 'Enter Value',
+    placeholder: 'Fees, USDT',
   },
 };
 

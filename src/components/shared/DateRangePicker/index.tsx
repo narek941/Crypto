@@ -1,4 +1,4 @@
-import { forwardRef, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { DateRange } from 'react-date-range';
 import classNames from 'classnames';
 import moment from 'moment';
@@ -11,18 +11,23 @@ import useOnClickOutside from 'hooks/useOutsideClick';
 
 import styles from './DateRangePicker.module.scss';
 
-const DateRangePicker = forwardRef<any, any>(
-  ({ placeholder, formMethods, name, callback, filterName }, ref: any) => {
+const DateRangePicker = React.forwardRef<any, any>(
+  ({ placeholder, formMethods, name, callback, filterName, clearAll }, ref: any) => {
     const customRef = useRef(null);
     const [openCalendar, setOpenCalendar] = useState<boolean>(false);
-
-    const [state, setState] = useState([
+    const defaultValue = [
       {
         startDate: undefined,
         endDate: undefined,
         key: 'selection',
       },
-    ]);
+    ];
+
+    const [state, setState] = useState(defaultValue);
+
+    useEffect(() => {
+      setState(defaultValue);
+    }, [clearAll]);
 
     const startDay = moment(state[0]?.startDate).format('LL');
     const endDay = moment(state[0]?.endDate).format('LL');
@@ -37,9 +42,11 @@ const DateRangePicker = forwardRef<any, any>(
       [styles.calendar__wrapper__open]: openCalendar,
     });
 
-    const toggleCalendar = () => setOpenCalendar(!openCalendar);
+    const toggleCalendar = () => setOpenCalendar(true);
 
-    const handleCloseCalendar = () => setOpenCalendar(false);
+    const handleCloseCalendar = () => {
+      setOpenCalendar(false);
+    };
 
     const handleChange = (item: any) => {
       setState([item.selection]);
@@ -47,12 +54,14 @@ const DateRangePicker = forwardRef<any, any>(
     };
 
     const handleSubmit = () => {
-      callback(filterName, [state[0]?.startDate, state[0]?.endDate]);
+      if (state[0].endDate !== undefined && state[0].endDate !== undefined && openCalendar) {
+        callback(filterName, [state[0]?.startDate, state[0]?.endDate]);
+      }
 
-      toggleCalendar();
+      setOpenCalendar(false);
     };
 
-    useOnClickOutside(customRef, handleCloseCalendar);
+    useOnClickOutside(customRef, handleSubmit);
 
     return (
       <div className={styles.calendar}>
@@ -77,6 +86,7 @@ const DateRangePicker = forwardRef<any, any>(
                 retainEndDateOnFirstSelection={true}
                 weekdayDisplayFormat='EEEEE'
                 direction='horizontal'
+                showPreview={false}
               />
             )}
           />

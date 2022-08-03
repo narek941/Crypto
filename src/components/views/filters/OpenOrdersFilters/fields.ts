@@ -1,13 +1,9 @@
 import { HandIcon, PercentIcon } from 'assets/icons';
+import { sideOptions } from 'utils/filterHelper';
 
 import { FormField } from '../../../forms/types';
 
 import { FilterFormShape } from './types';
-
-export const sideOptions = [
-  { label: 'BUY', value: 'BUY' },
-  { label: 'SELL', value: 'SELL' },
-];
 
 export const filterFormFields: FormField<keyof FilterFormShape> = {
   creationDate: {
@@ -46,7 +42,7 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
     name: 'searchID',
     type: 'Search',
     id: 'filterForm.searchID',
-    placeholder: 'Search BY ID',
+    placeholder: 'Enter ID',
   },
 
   creationTime: {

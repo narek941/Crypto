@@ -87,6 +87,7 @@
   --icon-selected: #605d7b;
   --svg: #4c4b53;
   --calendar: #e5e5e5;
+  --calendar-alpha: rgba(0, 151, 167, 0.05);
 }
 
 [data-theme='dark'] {
@@ -179,4 +180,5 @@
   --icon-selected: #ffffff;
   --svg: #9a99a6;
   --calendar: rgba(65, 58, 199, 0.15);
+  --calendar-alpha: rgba(65, 58, 199, 0.15);
 }

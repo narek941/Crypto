@@ -96,6 +96,12 @@ const accountsSlice = createSlice({
       state.alerts.filter = { ...filter, ...action.payload };
       state.alerts.filter.filter = { ...filter.filter, ...action.payload.filter };
     });
+    builder.addCase(accountsThunks.accountsTradesFilterClear, (state) => {
+      state.trades.filter.filter = {};
+    });
+    builder.addCase(accountsThunks.accountsAlertsFilterClear, (state) => {
+      state.alerts.filter.filter = {};
+    });
 
     builder.addMatcher(
       isAnyOf(

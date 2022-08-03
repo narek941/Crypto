@@ -1,7 +1,10 @@
 .inner {
   gap: 4px;
   width: 100%;
-  @extend %flex-align;
+  @extend %flex-center;
+  div {
+    gap: 0 !important;
+  }
 
   span {
     color: var(--font);

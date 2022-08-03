@@ -2,11 +2,6 @@ import { FormField } from '../../../forms/types';
 
 import { FilterFormShape } from './types';
 
-export const sideOptions = [
-  { label: 'BUY', value: 'BUY' },
-  { label: 'SELL', value: 'SELL' },
-];
-
 export const filterFormFields: FormField<keyof FilterFormShape> = {
   alertCreationDate: {
     name: 'selectAlertCreationDate',

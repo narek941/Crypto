@@ -1,4 +1,4 @@
-import { forwardRef, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Calendar } from 'react-date-range';
 import classNames from 'classnames';
 import moment from 'moment';
@@ -11,7 +11,7 @@ import useOnClickOutside from 'hooks/useOutsideClick';
 
 import styles from './DatePicker.module.scss';
 
-const DatePicker = forwardRef<any, any>(
+const DatePicker = React.forwardRef<any, any>(
   ({ placeholder, formMethods, name, callback, filterName }, ref: any) => {
     const customRef = useRef(null);
     const [openCalendar, setOpenCalendar] = useState<boolean>(false);

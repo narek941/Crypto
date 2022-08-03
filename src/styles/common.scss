@@ -169,6 +169,7 @@
 .rdrDayHovered {
   border-radius: 50%;
   background-color: #6200ee;
+  color: var(--font) !important;
 }
 
 .rdrDayNumber {
@@ -180,10 +181,12 @@
 
 .rdrInRange {
   background: var(--calendar);
+  color: var(--font);
 }
 
 .rdrEndEdge + .rdrDayNumber,
-.rdrStartEdge + .rdrDayNumber {
+.rdrStartEdge + .rdrDayNumber,
+.rdrDayStartPreview {
   width: 100%;
   height: 100%;
   top: 0;
@@ -203,23 +206,24 @@
 .rdrDayStartPreview,
 .rdrDayInPreview,
 .rdrDayEndPreview {
-  background: var(--calendar);
+  background: none !important;
   height: 100%;
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   border: none;
+  color: none !important;
 }
 
-.rdrDayToday {
-  color: var(--background) !important;
-  span {
-    background-color: transparent !important;
-    color: var(--font) !important;
-    border-color: transparent !important;
-  }
-}
+// .rdrDayToday {
+//   color: var(--background) !important;
+//   span {
+//     background-color: transparent !important;
+//     color: var(--font) !important;
+//     border-color: transparent !important;
+//   }
+// }
 /// Range swipe
 
 .MuiSlider-rail {
@@ -232,45 +236,44 @@
   background-color: #d9d9d9 !important;
 }
 
-///select
-.MuiSelect-select {
-  padding: 0 !important;
-  border: none !important;
-  outline: none !important;
+// ///select
+// .MuiSelect-select {
+//   padding: 0 !important;
+//   border: none !important;
+//   outline: none !important;
 
-  fieldset: {
-    display: 'none';
-  }
-}
+//   fieldset: {
+//     display: 'none';
+//   }
+// }
 
-.MuiSelect-outlined {
-  border: none !important;
-  background: transparent;
-  outline: none !important;
+// .MuiSelect-outlined {
+//   border: none !important;
+//   background: transparent;
+//   outline: none !important;
 
-  &:hover {
-    border: none !important;
-    outline: none !important;
-  }
-}
+//   &:hover {
+//     border: none !important;
+//     outline: none !important;
+//   }
+// }
 
-.MuiOutlinedInput-notchedOutline {
-  display: none;
-}
-.MuiOutlinedInput-input {
-  padding: 13px 36px 13px 12px;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 100%;
-}
+// .MuiOutlinedInput-notchedOutline {
+//   display: none;
+// }
+// .MuiOutlinedInput-input {
+//   padding: 13px 36px 13px 12px;
+//   font-weight: 400;
+//   font-size: 14px;
+//   line-height: 100%;
+// }
 
-.Mui-selected {
-  background: rgba(245, 245, 245, 0.1) !important;
-}
+// .Mui-selected {
+//   background: rgba(245, 245, 245, 0.1) !important;
+// }
 
-.MuiMenu-list {
-  background: linear-gradient(0deg, rgba(12, 0, 29, 0.02), rgba(12, 0, 29, 0.02)), #1a1818 !important;
-  border: 1px solid rgba(41, 41, 46, 0.3) !important;
-  box-shadow: 0px 2px 25px 2px rgba(0, 0, 0, 0.12) !important;
-  padding: 0 !important;
-}
+// .MuiMenu-list {
+//   border: 1px solid rgba(41, 41, 46, 0.3) !important;
+//   box-shadow: 0px 2px 25px 2px rgba(0, 0, 0, 0.12) !important;
+//   padding: 0 !important;
+// }

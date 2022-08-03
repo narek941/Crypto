@@ -1,4 +1,4 @@
-import { ForwardedRef, forwardRef, useState, useRef } from 'react';
+import React, { ForwardedRef, useState, useRef } from 'react';
 import classNames from 'classnames';
 
 import { DropDownIcon } from 'assets/icons';
@@ -7,7 +7,7 @@ import useOnClickOutside from 'hooks/useOutsideClick';
 import styles from './Select.module.scss';
 import { ColorType, ISelect } from './types';
 
-const Select = forwardRef(
+const Select = React.forwardRef(
   (
     {
       id,
@@ -59,17 +59,8 @@ const Select = forwardRef(
     const selectClass: string = classNames(selectClassName);
 
     const toggleDrop = () => {
-      setIsOpen(!isOpen);
+      setIsOpen(true);
     };
-
-    const handleClickOutside = () => {
-      if (isOpen) {
-        setIsOpen(false);
-        onBlur();
-      }
-    };
-
-    useOnClickOutside(selectRef, handleClickOutside);
 
     const handleCancel = () => {
       onChange('');
@@ -85,11 +76,13 @@ const Select = forwardRef(
     };
 
     const handleSubmit = () => {
-      if (callback && filterName && !value.includes(undefined)) {
+      if (callback && filterName && value && isOpen) {
         callback(filterName, currentOption?.value);
       }
-      toggleDrop();
+      setIsOpen(false);
+      onBlur();
     };
+    useOnClickOutside(selectRef, handleSubmit);
 
     return (
       <div className={selectClass} ref={ref}>
