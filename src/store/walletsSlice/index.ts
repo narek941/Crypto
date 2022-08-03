@@ -119,7 +119,25 @@ const walletsSlice = createSlice({
       state.openOrders.filter = { ...filter, ...action.payload };
       state.openOrders.filter.filter = { ...filter.filter, ...action.payload.filter };
     });
+    builder.addCase(walletsThunks.recordsFilterClear, (state) => {
+      state.records.filter.filter = {};
+    });
 
+    builder.addCase(walletsThunks.inflowFilterClear, (state) => {
+      state.inflow.filter.filter = {};
+    });
+
+    builder.addCase(walletsThunks.ordersFilterClear, (state) => {
+      state.orders.filter.filter = {};
+    });
+
+    builder.addCase(walletsThunks.orderTradesFilterClear, (state) => {
+      state.orderTrades.filter.filter = {};
+    });
+
+    builder.addCase(walletsThunks.openOrdersFilterClear, (state) => {
+      state.openOrders.filter.filter = {};
+    });
     builder.addMatcher(
       isAnyOf(
         walletsThunks.getWalletOrders.pending,

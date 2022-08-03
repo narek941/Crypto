@@ -116,10 +116,17 @@ export const getAccountAlerts = createAsyncThunk(
 );
 
 export const accountsFilterUpdate = createAction<Partial<IFilter>>('accountsFilter');
+
 export const accountsTradesFilterUpdate =
   createAction<Partial<ITableFilter>>('accountsTradesFilter');
 export const accountsAlertsFilterUpdate = createAction<Partial<ITableFilter>>(
   'accountsAlertsFilterUpdate',
+);
+export const accountsTradesFilterClear = createAction<Partial<ITableFilter>>(
+  'accountsTradesFilterClear',
+);
+export const accountsAlertsFilterClear = createAction<Partial<ITableFilter>>(
+  'accountsAlertsFilterClear',
 );
 
 export const removeAccountById = createAction('removeAccountByID');

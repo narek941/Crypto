@@ -1,4 +1,4 @@
-import React, { forwardRef, useMemo, useState, useCallback } from 'react';
+import React, { useMemo, useState, useCallback } from 'react';
 import classNames from 'classnames';
 
 import { EyeOpenIcon } from 'assets/icons';
@@ -9,7 +9,7 @@ import Typography from '../Typography';
 import { IInputProps } from './types';
 import styles from './Input.module.scss';
 
-const Input = forwardRef<any, IInputProps>(
+const Input = React.forwardRef<any, IInputProps>(
   (
     {
       name,

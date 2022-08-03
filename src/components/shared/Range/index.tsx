@@ -1,4 +1,4 @@
-import { useState, forwardRef, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import Slider from '@mui/material/Slider';
 import classNames from 'classnames';
 
@@ -9,7 +9,7 @@ import Input from '../Input';
 
 import styles from './Range.module.scss';
 
-const RangeSwipe = forwardRef<any, any>(
+const RangeSwipe = React.forwardRef<any, any>(
   (
     { name, placeholder = 'search', Icon, onChange, value, callback, filterName, ...rest }: any,
     ref,
@@ -31,10 +31,8 @@ const RangeSwipe = forwardRef<any, any>(
     };
 
     const handleSubmit = () => {
-      // eslint-disable-next-line no-console
-      console.log('work');
-      if (callback && filterName && value[0] !== '' && value[1] !== '' && isOpen) {
-        callback(filterName, value);
+      if (callback && filterName && !!value[1] && isOpen) {
+        callback(filterName, [Number(value[0]), Number(value[1])]);
       }
       handleClose();
     };
@@ -44,15 +42,27 @@ const RangeSwipe = forwardRef<any, any>(
     return (
       <div role='button' onClick={toggleDrop} className={headerClass}>
         <p className={textClass}>
-          {!value.includes(undefined) ? `${value[0]} / ${value[1]}` : placeholder}
+          {!value?.includes(undefined) ? `${value[0]} / ${value[1]}` : placeholder}
         </p>
         <div>{Icon ? <Icon /> : <DollarIcon />}</div>
         <div className={modalClass} ref={customRef}>
           <div className={styles.wrapper}>
             <div className={styles.inner}>
-              <Input value={value[0]} name={'firstInput'} type='number' className={styles.input} />
+              <Input
+                value={value[0]}
+                name={'firstInput'}
+                type='number'
+                className={styles.input}
+                placeholder={'0'}
+              />
               <span>-</span>
-              <Input value={value[1]} name={'secondInput'} type='number' className={styles.input} />
+              <Input
+                value={value[1]}
+                name={'secondInput'}
+                type='number'
+                className={styles.input}
+                placeholder={'0'}
+              />
             </div>
             <div className={styles.slider}>
               <Slider
@@ -63,11 +73,10 @@ const RangeSwipe = forwardRef<any, any>(
                 id={name}
                 ref={ref}
                 min={0}
-                max={10000000}
+                max={100000}
                 step={100}
                 name={name}
                 autoComplete='off'
-                placeholder={placeholder}
               />
             </div>
           </div>

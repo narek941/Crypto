@@ -39,7 +39,7 @@
   &__option {
     gap: 3px;
     color: var(--select-font);
-    width: 100%;
+    min-width: 100%;
     z-index: 1;
     display: none;
     position: absolute;

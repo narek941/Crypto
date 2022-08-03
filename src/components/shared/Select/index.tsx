@@ -1,4 +1,4 @@
-import { ForwardedRef, forwardRef, useState, useRef } from 'react';
+import React, { ForwardedRef, useState, useRef } from 'react';
 import classNames from 'classnames';
 
 import { DropDownIcon } from 'assets/icons';
@@ -7,7 +7,7 @@ import useOnClickOutside from 'hooks/useOutsideClick';
 import styles from './Select.module.scss';
 import { ColorType, ISelect } from './types';
 
-const Select = forwardRef(
+const Select = React.forwardRef(
   (
     {
       id,
@@ -76,7 +76,7 @@ const Select = forwardRef(
     };
 
     const handleSubmit = () => {
-      if (callback && filterName && !value.includes(undefined) && isOpen) {
+      if (callback && filterName && value && isOpen) {
         callback(filterName, currentOption?.value);
       }
       setIsOpen(false);

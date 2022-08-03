@@ -1,4 +1,4 @@
-import React, { ForwardedRef, forwardRef } from 'react';
+import React, { ForwardedRef } from 'react';
 import classNames from 'classnames';
 
 import { CheckIcon } from 'assets/icons';
@@ -6,7 +6,7 @@ import { CheckIcon } from 'assets/icons';
 import styles from './Checkbox.module.scss';
 import { ICheckbox } from './types';
 
-const Checkbox = forwardRef(
+const Checkbox = React.forwardRef(
   (
     { id, name, text, error, defaultChecked = false, className, color, ...props }: ICheckbox,
     ref: ForwardedRef<HTMLInputElement>,

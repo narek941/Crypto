@@ -4,9 +4,8 @@ import { Controller } from 'react-hook-form';
 import RangeSwipe from 'components/shared/Range';
 import { CloseIcon } from 'assets/icons';
 import { Select, TableSearch } from 'components';
-import { FormGroup } from 'components/forms';
 import { useAppDispatch, useAppSelector, useForm } from 'hooks';
-import { inflowFilterUpdate } from 'store/walletsSlice/thunks';
+import { inflowFilterClear, inflowFilterUpdate } from 'store/walletsSlice/thunks';
 import { RootState } from 'types';
 import { createObject } from 'utils/createObject';
 
@@ -19,6 +18,7 @@ const InflowsFilters = () => {
   const coins = useAppSelector((state: RootState) => state.admin.coins);
 
   const [isMore, setIsMore] = useState(false);
+  const [clearAll, setClearAll] = useState(false);
 
   const { formMethods } = useForm<keyof InflowsFilterFormShape, InflowsFilterFormShape>({
     mode: 'onChange',
@@ -34,7 +34,11 @@ const InflowsFilters = () => {
 
   const handleToggle = () => setIsMore(!isMore);
 
-  const handleClear = () => formMethods.reset({});
+  const handleClear = () => {
+    formMethods.reset({});
+    dispatch(inflowFilterClear({}));
+    setClearAll(!clearAll);
+  };
 
   const coinOptions = useMemo(
     () =>
@@ -50,94 +54,94 @@ const InflowsFilters = () => {
   };
 
   return (
-    <FormGroup className={styles.signIn__form__group}>
-      <div className={styles.container}>
-        <div className={styles.wrapper}>
-          <div className={styles.item}>
-            <Controller
-              control={formMethods.control}
-              name={inflowFilterFormFields.selectInflowType.name as any}
-              render={({ field }) => (
-                <Select
-                  {...inflowFilterFormFields.selectInflowType}
-                  {...field}
-                  className={styles.select}
-                  callback={handleFilter}
-                  filterName={'type'}
-                />
-              )}
-            />
-          </div>
-          <div className={styles.item}>
-            <Controller
-              control={formMethods.control}
-              name={inflowFilterFormFields.selectInflowAsset.name as any}
-              render={({ field }) => (
-                <Select
-                  {...inflowFilterFormFields.selectInflowAsset}
-                  {...field}
-                  className={styles.select}
-                  options={coinOptions}
-                  callback={handleFilter}
-                  filterName={'asset'}
-                />
-              )}
-            />
-          </div>
-
-          <div className={styles.item}>
-            <Controller
-              control={formMethods.control}
-              name={inflowFilterFormFields.selectInflowValue.name as any}
-              render={({ field }) => (
-                <RangeSwipe
-                  {...field}
-                  {...inflowFilterFormFields.selectInflowValue}
-                  callback={handleFilter}
-                  filterName={'value'}
-                />
-              )}
-            />
-          </div>
-
-          {isMore && (
-            <>
-              <div className={styles.item}>
-                <TableSearch
-                  {...formMethods.register('searchInflowID')}
-                  className={styles.search}
-                  callback={handleFilter}
-                  filterName={'id'}
-                />
-              </div>
-              <div className={styles.item}>
-                <Controller
-                  control={formMethods.control}
-                  name={inflowFilterFormFields.selectInflowValueInBaseCurrency.name as any}
-                  render={({ field }) => (
-                    <RangeSwipe
-                      {...field}
-                      {...inflowFilterFormFields.selectInflowValueInBaseCurrency}
-                      callback={handleFilter}
-                      filterName={'valueInBaseCurrency'}
-                    />
-                  )}
-                />
-              </div>
-            </>
-          )}
-          <div className={styles.clear} role='button' onClick={handleClear}>
-            <span>Clear All</span>
-            <div>
-              <CloseIcon />
-            </div>
-          </div>
+    <div className={styles.container}>
+      <div className={styles.wrapper}>
+        <div className={styles.item}>
+          <Controller
+            control={formMethods.control}
+            name={inflowFilterFormFields.selectInflowType.name as any}
+            render={({ field }) => (
+              <Select
+                {...inflowFilterFormFields.selectInflowType}
+                {...field}
+                className={styles.select}
+                callback={handleFilter}
+                filterName={'type'}
+              />
+            )}
+          />
         </div>
-        <div role='button' onClick={handleToggle} className={styles.toggle}>
-          Click Here to {isMore ? 'Hide' : 'Show'} Advanced Filters
+        <div className={styles.item}>
+          <Controller
+            control={formMethods.control}
+            name={inflowFilterFormFields.selectInflowAsset.name as any}
+            render={({ field }) => (
+              <Select
+                {...inflowFilterFormFields.selectInflowAsset}
+                {...field}
+                className={styles.select}
+                options={coinOptions}
+                callback={handleFilter}
+                filterName={'coinId'}
+              />
+            )}
+          />
+        </div>
+
+        <div className={styles.item}>
+          <Controller
+            control={formMethods.control}
+            name={inflowFilterFormFields.selectInflowValue.name as any}
+            render={({ field }) => (
+              <RangeSwipe
+                {...field}
+                {...inflowFilterFormFields.selectInflowValue}
+                callback={handleFilter}
+                filterName={'value'}
+              />
+            )}
+          />
+        </div>
+
+        {isMore && (
+          <>
+            <div className={styles.item}>
+              <TableSearch
+                {...formMethods.register('searchInflowID')}
+                className={styles.search}
+                callback={handleFilter}
+                placeholder={'Enter ID'}
+                filterName={'id'}
+                clearAll={clearAll}
+              />
+            </div>
+            <div className={styles.item}>
+              <Controller
+                control={formMethods.control}
+                name={inflowFilterFormFields.selectInflowValueInBaseCurrency.name as any}
+                render={({ field }) => (
+                  <RangeSwipe
+                    {...field}
+                    {...inflowFilterFormFields.selectInflowValueInBaseCurrency}
+                    callback={handleFilter}
+                    filterName={'baseCurrencyValue'}
+                  />
+                )}
+              />
+            </div>
+          </>
+        )}
+        <div className={styles.clear} role='button' onClick={handleClear}>
+          <span>Clear All</span>
+          <div>
+            <CloseIcon />
+          </div>
         </div>
       </div>
-    </FormGroup>
+      <div role='button' onClick={handleToggle} className={styles.toggle}>
+        Click Here to {isMore ? 'Hide' : 'Show'} Advanced Filters
+      </div>
+    </div>
   );
 };
 

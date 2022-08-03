@@ -1,4 +1,4 @@
-import { useState, forwardRef, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import classNames from 'classnames';
 import { Controller } from 'react-hook-form';
 
@@ -9,14 +9,16 @@ import Select from '../Select';
 
 import styles from './DualSelect.module.scss';
 
-const DualSelect = forwardRef<any, any>(
+const DualSelect = React.forwardRef<any, any>(
   (
     { formMethods, name, placeholder, firstOptions, secondOptions, callback, filterName },
     ref: any,
   ) => {
-    const customRef = useRef(null);
+    const customWrapperRef = useRef(null);
     const [isOpenDropdown, setIsOpenDropdown] = useState<boolean>(false);
-    const { selectPairStart, selectPairEnd } = formMethods.watch();
+    const fields = formMethods.watch();
+    const selectPairStart = fields[`${name}Start`];
+    const selectPairEnd = fields[`${name}End`];
 
     const headerClass = classNames(styles.header, { [styles.header__open]: isOpenDropdown });
     const modalClass = classNames(styles.modal, { [styles.modal__open]: isOpenDropdown });
@@ -28,17 +30,17 @@ const DualSelect = forwardRef<any, any>(
       setIsOpenDropdown(true);
     };
 
-    const handleCloseDropDown = () => {
+    const handleClose = () => {
       setIsOpenDropdown(false);
     };
 
-    useOnClickOutside(customRef, handleCloseDropDown);
+    useOnClickOutside(customWrapperRef, handleClose);
 
     const handleSubmit = () => {
       if (callback && filterName && selectPairStart && selectPairEnd) {
         callback(filterName, [selectPairStart, selectPairEnd]);
       }
-      handleCloseDropDown();
+      handleClose();
     };
 
     return (
@@ -56,7 +58,7 @@ const DualSelect = forwardRef<any, any>(
           </div>
         </div>
 
-        <div className={modalClass} ref={customRef}>
+        <div className={modalClass} ref={customWrapperRef}>
           <div className={styles.wrapper}>
             <div className={styles.inner}>
               <div>
@@ -94,7 +96,7 @@ const DualSelect = forwardRef<any, any>(
             </div>
           </div>
           <div className={styles.action}>
-            <div className={styles.action__cancel} role='button' onClick={handleCloseDropDown}>
+            <div className={styles.action__cancel} role='button' onClick={handleClose}>
               Cancel
             </div>
             <div className={styles.action__select} role='button' onClick={handleSubmit}>

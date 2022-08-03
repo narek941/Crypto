@@ -76,7 +76,9 @@ const WalletsTable = () => {
             <WalletsSummaryTableRow walletId={walletId} row={summary} />
           </TableBody>
         </Table>
-        <WalletsFilters />
+        <div className={styles.filter}>
+          <WalletsFilters />
+        </div>
         <Typography className={styles.wrapper__title}>Assets</Typography>
         <Table className={styles.inner}>
           <TableHead className={styles.container__header}>

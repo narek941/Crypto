@@ -26,7 +26,7 @@ const Alert = ({ open, handleClose, handleDelete, id }: AlertProps) => {
         <p className={styles.popup__header}>
           {!deleted
             ? 'Are you sure you want to delete this user?'
-            : 'You succesefully deleted account!'}
+            : 'You successfully deleted account!'}
         </p>
         <div className={styles.popup__action}>
           {!deleted ? (

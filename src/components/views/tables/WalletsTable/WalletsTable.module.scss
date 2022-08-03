@@ -102,10 +102,13 @@
     line-height: 100%;
     letter-spacing: -0.01em;
     color: var(--table-title) !important;
-    border-bottom: 1px solid var(--collapse-table-border);
+
+    &:first-of-type {
+      border-bottom: 1px solid var(--collapse-table-border);
+    }
 
     &:last-of-type {
-      border-top: 1px solid var(--collapse-table-border);
+      border-bottom: 1px solid var(--collapse-table-border);
     }
   }
 }
@@ -120,4 +123,9 @@
   path {
     fill: var(--icon-selected) !important;
   }
+}
+.filter {
+  padding: 26px 0 16px;
+  border-top: 1px solid var(--collapse-table-border);
+  background: var(--sidebar-background);
 }

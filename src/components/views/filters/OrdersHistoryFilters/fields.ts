@@ -1,11 +1,8 @@
+import { sideOptions, typeOptions } from 'utils/filterHelper';
+
 import { FormField } from '../../../forms/types';
 
 import { FilterFormShape } from './types';
-
-export const sideOptions = [
-  { label: 'BUY', value: 'BUY' },
-  { label: 'SELL', value: 'SELL' },
-];
 
 export const filterFormFields: FormField<keyof FilterFormShape> = {
   historyPair: {
@@ -18,7 +15,7 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
   historyUpdateTime: {
     name: 'selectHistoryUpdateTime',
     id: 'filterForm.historyUpdateTime',
-    placeholder: 'Choose creation date',
+    placeholder: 'Last Operation Time',
   },
 
   historySide: {
@@ -33,46 +30,46 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
     type: 'Select',
     id: 'filterForm.historyType',
     placeholder: 'Select Type',
-    options: sideOptions,
+    options: typeOptions,
   },
 
   historyValue: {
     name: 'historyValue',
     id: 'filterForm.historyValue',
-    placeholder: 'history Value',
+    placeholder: 'Enter Value',
   },
 
   historyID: {
     name: 'historyID',
     type: 'Search',
     id: 'filterForm.historyID',
-    placeholder: 'Search BY ID',
+    placeholder: 'Enter ID',
   },
 
   historyValueInBaseCurrency: {
     name: 'historyValueInBaseCurrency',
     type: 'select',
     id: 'filterForm.historyValueInBaseCurrency',
-    placeholder: 'Select value, USDT',
+    placeholder: 'Enter value, USDT',
   },
   searchHistoryStop: {
     name: 'searchHistoryStop',
     type: 'Search',
     id: 'filterForm.searchHistoryStop',
-    placeholder: 'Select Stop',
+    placeholder: 'Stop price',
   },
   searchHistoryLimit: {
     name: 'searchHistoryLimit',
     type: 'Search',
     id: 'filterForm.searchHistoryLimit',
-    placeholder: 'Select Received, USDT',
+    placeholder: 'Limit price',
   },
 
   searchHistoryModifiers: {
     name: 'searchHistoryModifiers',
     type: 'Search',
     id: 'filterForm.searchHistoryModifiers',
-    placeholder: 'Select Received, USDT',
+    placeholder: 'Enter Modifiers',
   },
 };
 

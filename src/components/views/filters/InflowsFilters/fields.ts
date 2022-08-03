@@ -1,11 +1,8 @@
+import { typeOptions } from 'utils/filterHelper';
+
 import { FormField } from '../../../forms/types';
 
 import { InflowsFilterFormShape } from './types';
-
-export const typeOptions = [
-  { label: 'Inflow', value: 'DEPOSIT' },
-  { label: 'Outflow', value: 'WITHDRAWAL' },
-];
 
 export const inflowFilterFormFields: FormField<keyof InflowsFilterFormShape> = {
   selectInflowType: {
@@ -17,7 +14,7 @@ export const inflowFilterFormFields: FormField<keyof InflowsFilterFormShape> = {
   selectInflowAsset: {
     name: 'selectInflowAsset',
     id: 'inflowFilterForm.selectInflowAsset',
-    placeholder: 'Select Asset',
+    placeholder: 'Select asset',
   },
   selectInflowValue: {
     name: 'selectInflowValue',

@@ -1,4 +1,4 @@
-import { forwardRef, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { DateRange } from 'react-date-range';
 import classNames from 'classnames';
 import moment from 'moment';
@@ -11,18 +11,23 @@ import useOnClickOutside from 'hooks/useOutsideClick';
 
 import styles from './DateRangePicker.module.scss';
 
-const DateRangePicker = forwardRef<any, any>(
-  ({ placeholder, formMethods, name, callback, filterName }, ref: any) => {
+const DateRangePicker = React.forwardRef<any, any>(
+  ({ placeholder, formMethods, name, callback, filterName, clearAll }, ref: any) => {
     const customRef = useRef(null);
     const [openCalendar, setOpenCalendar] = useState<boolean>(false);
-
-    const [state, setState] = useState([
+    const defaultValue = [
       {
         startDate: undefined,
         endDate: undefined,
         key: 'selection',
       },
-    ]);
+    ];
+
+    const [state, setState] = useState(defaultValue);
+
+    useEffect(() => {
+      setState(defaultValue);
+    }, [clearAll]);
 
     const startDay = moment(state[0]?.startDate).format('LL');
     const endDay = moment(state[0]?.endDate).format('LL');
@@ -81,6 +86,7 @@ const DateRangePicker = forwardRef<any, any>(
                 retainEndDateOnFirstSelection={true}
                 weekdayDisplayFormat='EEEEE'
                 direction='horizontal'
+                showPreview={false}
               />
             )}
           />
