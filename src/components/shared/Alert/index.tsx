@@ -4,32 +4,51 @@ import classNames from 'classnames';
 import styles from './Alert.module.scss';
 import { AlertProps } from './types';
 
-const Alert = ({ open, handleClose, handleDelete, id }: AlertProps) => {
-  const [deleted, setDeleted] = useState<boolean>(false);
+const Alert = ({ open, handleClose, handleAction, id, type }: AlertProps) => {
+  const [actionIsDone, setActionIsDone] = useState<boolean>(false);
   const popUpClasses = classNames(styles.wrapper, { [styles.wrapper__open]: open });
+
+  const renderText = () => {
+    switch (type) {
+      case 'DELETE':
+        return {
+          question: 'Are you sure you want to delete this user?',
+          answer: `You successfully deleted account!`,
+        };
+      case 'BLOCK':
+        return {
+          question: 'Are you sure you want to block this user?',
+          answer: `You successfully unblocked account!`,
+        };
+
+      default:
+        return {
+          question: 'Are you sure you want to unblock this user?',
+          answer: `You successfully blocked account!`,
+        };
+    }
+  };
 
   const handleDeleteClick = async () => {
     if (id) {
-      await handleDelete(id);
-      setDeleted(true);
+      await handleAction(id);
+      setActionIsDone(true);
     }
   };
 
   const handleContinueClick = () => {
     handleClose();
-    setDeleted(false);
+    setActionIsDone(false);
   };
 
   return (
     <div className={popUpClasses}>
       <div className={styles.popup}>
         <p className={styles.popup__header}>
-          {!deleted
-            ? 'Are you sure you want to delete this user?'
-            : 'You successfully deleted account!'}
+          {!actionIsDone ? renderText().question : renderText().answer}
         </p>
         <div className={styles.popup__action}>
-          {!deleted ? (
+          {!actionIsDone ? (
             <>
               <div className={styles.popup__action__cancel} onClick={handleClose} role='button'>
                 Cancel
@@ -39,7 +58,7 @@ const Alert = ({ open, handleClose, handleDelete, id }: AlertProps) => {
                 onClick={handleDeleteClick}
                 className={styles.popup__action__confirm}
               >
-                Delete
+                {type}
               </div>
             </>
           ) : (

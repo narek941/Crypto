@@ -86,7 +86,8 @@ const TableUsersBody = ({
       <Alert
         id={delID}
         open={open}
-        handleDelete={handleDelete}
+        handleAction={handleDelete}
+        type='DELETE'
         handleClose={() => handleClose && handleClose()}
       />
     </tbody>

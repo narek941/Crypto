@@ -2,11 +2,14 @@ import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 
 import { client } from 'api';
 import { Slice } from 'types';
-import { IFilter } from 'types/api';
+import { ITableFilter } from 'types/api';
 
 export const getAlertList = createAsyncThunk(
   `${Slice.Alerts}`,
-  async (credentials: { skip: number; take: number; sort: string; order: string }, thunkAPI) => {
+  async (
+    credentials: { skip: number; take: number; sort: string; order: string; filter: ITableFilter },
+    thunkAPI,
+  ) => {
     try {
       const response = await client.get('alerts', { params: { ...credentials } });
 
@@ -20,4 +23,6 @@ export const getAlertList = createAsyncThunk(
   },
 );
 
-export const alertsFilterUpdate = createAction<Partial<IFilter>>('alertsFilter');
+export const alertsFilterUpdate = createAction<Partial<ITableFilter>>('alertsFilter');
+
+export const alertsFilterClear = createAction<Partial<ITableFilter>>('alertsFilterClear');

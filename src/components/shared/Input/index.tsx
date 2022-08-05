@@ -1,5 +1,7 @@
 import React, { useMemo, useState, useCallback } from 'react';
 import classNames from 'classnames';
+import { Tooltip } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 import { EyeOpenIcon } from 'assets/icons';
 import { EyeCloseIcon } from 'assets/icons';
@@ -8,6 +10,8 @@ import Typography from '../Typography';
 
 import { IInputProps } from './types';
 import styles from './Input.module.scss';
+
+import '../../../i18';
 
 const Input = React.forwardRef<any, IInputProps>(
   (
@@ -30,6 +34,8 @@ const Input = React.forwardRef<any, IInputProps>(
     },
     ref,
   ) => {
+    const { t } = useTranslation();
+
     const inputClasses = classNames(styles.container, {
       [className]: className,
       [styles.container__error]: !!error,
@@ -81,14 +87,20 @@ const Input = React.forwardRef<any, IInputProps>(
               type={isToggledIcon ? 'text' : type}
             />
             {haveRightIcon && (
-              <RightIconComponent
-                role='button'
-                className={styles.container__right_icon}
-                onClick={togglePasswordVisibility}
-                style={{
-                  cursor: haveRightIcon ? 'pointer' : 'auto',
-                }}
-              />
+              <Tooltip
+                followCursor={true}
+                placement='bottom'
+                title={isToggledIcon ? t('hide_password') : t('show_password')}
+              >
+                <RightIconComponent
+                  role='button'
+                  className={styles.container__right_icon}
+                  onClick={togglePasswordVisibility}
+                  style={{
+                    cursor: haveRightIcon ? 'pointer' : 'auto',
+                  }}
+                />
+              </Tooltip>
             )}
           </div>
           {error && (

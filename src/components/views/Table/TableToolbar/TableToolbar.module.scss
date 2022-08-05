@@ -1,15 +1,21 @@
 .toolbar {
   @extend %flex-between;
-  margin-bottom: 32px;
 
-  &_nolink {
+  &_noLink {
     justify-content: flex-end;
   }
 
   &__link {
     width: 100%;
   }
-  &__search {
-    max-width: 180px;
+  &__filter {
+    cursor: pointer;
+    margin-right: 30px;
+    @extend %flex-center;
   }
+}
+.wrapper {
+  @extend %flex-column;
+  gap: 30px;
+  margin-bottom: 32px;
 }

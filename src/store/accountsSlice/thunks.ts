@@ -2,14 +2,20 @@ import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 
 import { Slice } from 'types';
 import { client } from 'api';
-import { IFilter } from 'types/api';
 
 import { ITableFilter } from './../../types/api/index';
 
 export const getAccountList = createAsyncThunk(
   `${Slice.Accounts}/accounts`,
   async (
-    credentials: { skip: number; take: number; sort: string; order: string; search: string },
+    credentials: {
+      skip: number;
+      take: number;
+      sort: string;
+      order: string;
+      search: string;
+      filter: {};
+    },
     thunkAPI,
   ) => {
     try {
@@ -115,8 +121,9 @@ export const getAccountAlerts = createAsyncThunk(
   },
 );
 
-export const accountsFilterUpdate = createAction<Partial<IFilter>>('accountsFilter');
+export const accountsFilterUpdate = createAction<Partial<ITableFilter>>('accountsFilter');
 
+export const accountsFilterClear = createAction<Partial<ITableFilter>>('accountsFilterClear');
 export const accountsTradesFilterUpdate =
   createAction<Partial<ITableFilter>>('accountsTradesFilter');
 export const accountsAlertsFilterUpdate = createAction<Partial<ITableFilter>>(

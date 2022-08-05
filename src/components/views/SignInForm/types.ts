@@ -1,5 +1,5 @@
 export type SignInFormShape = {
-  email: string;
-  password: string;
-  rememberMe: boolean;
+  login_email: string;
+  login_password: string;
+  login_rememberMe: boolean;
 };

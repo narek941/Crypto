@@ -1,6 +1,6 @@
 import { SerializedError } from '@reduxjs/toolkit';
 
-import { IFilter, ITableFilter } from 'types/api';
+import { ITableFilter } from 'types/api';
 
 import { AccountStates } from './constants';
 
@@ -12,7 +12,7 @@ export type AccountsSliceState = {
   accountsList: {
     totalCount: number;
     list: any[];
-    filter: IFilter;
+    filter: ITableFilter;
   };
   trades: {
     totalCount: number;

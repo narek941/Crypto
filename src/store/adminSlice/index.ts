@@ -17,7 +17,7 @@ const internalInitialState: AdminSliceState = {
   tradingPairs: [],
   totalCount: 0,
   accessToken: localStorage.getItem('accessToken') || sessionStorage.getItem('accessToken') || '',
-  usersFilter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '' },
+  usersFilter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '', filter: {} },
   accountsFilter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '' },
   userById: {},
 };
@@ -55,6 +55,7 @@ const adminSlice = createSlice({
     builder.addCase(adminThunks.usersFilterUpdate, (state, action) => {
       const usersFilter = state.usersFilter;
       state.usersFilter = { ...usersFilter, ...action.payload };
+      state.usersFilter.filter = { ...usersFilter.filter, ...action.payload.filter };
     });
 
     builder.addCase(adminThunks.blockUser.fulfilled, (state) => {
@@ -83,6 +84,10 @@ const adminSlice = createSlice({
 
     builder.addCase(adminThunks.getTradingPairs.fulfilled, (state, action) => {
       state.tradingPairs = action.payload.tradingPairs;
+    });
+
+    builder.addCase(adminThunks.userFilterClear, (state) => {
+      state.usersFilter.filter = {};
     });
 
     builder.addMatcher(

@@ -15,7 +15,7 @@ const internalInitialState: AccountsSliceState = {
   accountsList: {
     totalCount: 0,
     list: [],
-    filter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '' },
+    filter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '', filter: {} },
   },
   trades: {
     totalCount: 0,
@@ -85,6 +85,7 @@ const accountsSlice = createSlice({
     builder.addCase(accountsThunks.accountsFilterUpdate, (state, action) => {
       const filter = state.accountsList.filter;
       state.accountsList.filter = { ...filter, ...action.payload };
+      state.accountsList.filter.filter = { ...filter.filter, ...action.payload.filter };
     });
     builder.addCase(accountsThunks.accountsTradesFilterUpdate, (state, action) => {
       const filter = state.trades.filter;
@@ -101,6 +102,9 @@ const accountsSlice = createSlice({
     });
     builder.addCase(accountsThunks.accountsAlertsFilterClear, (state) => {
       state.alerts.filter.filter = {};
+    });
+    builder.addCase(accountsThunks.accountsFilterClear, (state) => {
+      state.accountsList.filter.filter = {};
     });
 
     builder.addMatcher(

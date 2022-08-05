@@ -15,7 +15,7 @@ const Alerts = () => {
 
   useEffect(() => {
     dispatch(alertsActions.getAlertList(filter));
-  }, [dispatch, filter]);
+  }, [dispatch, filter, filter.filter]);
 
   return (
     <Table

@@ -23,6 +23,7 @@ const TableSearch = React.forwardRef<any, any>(
   ) => {
     const inputClass = classNames(styles.search__input, className);
     const [state, setState] = useState('');
+
     const debouncedValue = useDebounce<string>(state, debouncedTime);
 
     const handleChange = (e: any) => {
@@ -53,7 +54,6 @@ const TableSearch = React.forwardRef<any, any>(
             className={inputClass}
             placeholder={placeholder}
             ref={ref}
-            name={name}
             autoComplete='off'
             onChange={handleChange}
             onFocus={onFocus}

@@ -17,7 +17,7 @@ const Accounts = () => {
 
   useEffect(() => {
     dispatch(accountsActions.getAccountList(filter));
-  }, [dispatch, filter]);
+  }, [dispatch, filter, filter.filter]);
 
   return (
     <Table

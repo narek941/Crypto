@@ -97,6 +97,37 @@ export const composeFormSchema = <K extends FormFieldNames>(fields: K[]): AnyObj
     alertID: Yup.string(),
     alertMessage: Yup.string(),
     alertCreationDate: Yup.string(),
+
+    //login
+
+    login_email: Yup.string()
+      .required()
+      .email('* Enter your password to login')
+      .required('* Enter your email to login'),
+    login_password: Yup.string()
+      .required('* Enter your password to login')
+      .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/, {
+        excludeEmptyString: true,
+        message: '* This password is too weak',
+      }),
+    login_rememberMe: Yup.bool(),
+
+    // Account Filter
+    accountName: Yup.string(),
+    accountStatus: Yup.string(),
+    accountAVGTrades: Yup.string(),
+    accountId: Yup.string(),
+    accountSeed: Yup.string(),
+    accountCurrentCapital: Yup.string(),
+    accountOpenProfit: Yup.string(),
+    accountEarnedCapital: Yup.string(),
+
+    //User filter
+    userName: Yup.string(),
+    userStatus: Yup.string(),
+    userId: Yup.string(),
+    userType: Yup.string(),
+    userEmail: Yup.string(),
   };
 
   const schema = fields.reduce(

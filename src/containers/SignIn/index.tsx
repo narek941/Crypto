@@ -19,33 +19,29 @@ const SignIn: React.FC = () => {
   const firstInnerClassNames = classNames(styles.signIn__inner, styles.signIn__inner__first);
 
   return (
-    <>
-      <div className={styles.wrapper}>
-        <div className={styles.signIn}>
-          <div className={firstInnerClassNames}>
-            <div className={styles.header}>
-              <LogoIcon />
-            </div>
-            <div className={styles.signIn__item}>
-              <h1 className={styles.signIn__item__title}>{t('welcome')}</h1>
-              <p className={styles.signIn__item__subTitle}>
-                Log in to continue monitoring securely and easily
-              </p>
-              <div className={styles.signIn__item__form}>
-                <SignInForm />
-              </div>
-            </div>
-            <Link to={Routes.Login} className={styles.copyright}>
-              <Copyright />
-            </Link>
+    <div className={styles.wrapper}>
+      <div className={styles.signIn}>
+        <div className={firstInnerClassNames}>
+          <div className={styles.header}>
+            <LogoIcon />
           </div>
+          <div className={styles.signIn__item}>
+            <h1 className={styles.signIn__item__title}>{t('welcome')}</h1>
+            <p className={styles.signIn__item__subTitle}>{t('signIn_subtitle')}</p>
+            <div className={styles.signIn__item__form}>
+              <SignInForm />
+            </div>
+          </div>
+          <Link to={Routes.Login} className={styles.copyright}>
+            <Copyright />
+          </Link>
+        </div>
 
-          <div className={styles.signIn__inner}>
-            <ExternalImage src={img} className={styles.signIn__inner__second} />
-          </div>
+        <div className={styles.signIn__inner}>
+          <ExternalImage src={img} className={styles.signIn__inner__second} />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

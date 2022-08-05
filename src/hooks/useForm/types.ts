@@ -68,7 +68,23 @@ export type FormFieldNames =
   | 'alertType'
   | 'alertID'
   | 'alertMessage'
-  | 'alertCreationDate';
+  | 'alertCreationDate'
+  | 'login_email'
+  | 'login_password'
+  | 'login_rememberMe'
+  | 'accountName'
+  | 'accountStatus'
+  | 'accountAVGTrades'
+  | 'accountId'
+  | 'accountSeed'
+  | 'accountCurrentCapital'
+  | 'accountOpenProfit'
+  | 'accountEarnedCapital'
+  | 'userName'
+  | 'userStatus'
+  | 'userId'
+  | 'userType'
+  | 'userEmail';
 
 export type FieldShapeLookup<K extends FormFieldNames> = {
   [P in K]?: Record<FormFieldNames, unknown>[P];

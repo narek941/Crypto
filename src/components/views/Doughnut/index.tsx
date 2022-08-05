@@ -63,7 +63,7 @@ const Doughnut: React.FC = () => {
 
   return (
     <div className={styles.wrapper}>
-      <h1>Trading Pairs Chart</h1>
+      <h1 className={styles.wrapper__title}>Trading Pairs Chart</h1>
       <div className={styles.chart}>
         <DoughnutJs data={data} options={options} width='448' height='199' />
       </div>
