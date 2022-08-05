@@ -33,7 +33,10 @@ client.interceptors.response.use(
       localStorage.removeItem('role');
       sessionStorage.removeItem('accessToken');
       sessionStorage.removeItem('role');
-      window.location.href = Routes.Login;
+
+      if (!window.location.href.includes(Routes.Login)) {
+        window.location.href = Routes.Login;
+      }
     }
 
     return Promise.reject(error);

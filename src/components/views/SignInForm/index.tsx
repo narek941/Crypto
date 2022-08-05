@@ -1,6 +1,5 @@
 import React from 'react';
 import { SubmitHandler } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { useTranslation } from 'react-i18next';
 
@@ -20,7 +19,6 @@ const SignInForm: React.FC = () => {
 
   const loginError = useAppSelector(authSelectors.selectAuthError) as string;
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const { formMethods, handleSubmit, isValid } = useForm<keyof SignInFormShape, SignInFormShape>({
     schemaKeys: signInSchemaKeys,
@@ -35,7 +33,6 @@ const SignInForm: React.FC = () => {
       email: login_email,
       password: login_password,
       rememberMe: login_rememberMe,
-      navigate,
       deviceToken: uuidv4(),
     };
     dispatch(authActions.signIn(formValues));
@@ -52,13 +49,13 @@ const SignInForm: React.FC = () => {
             className={styles.signIn__form__group__input}
           />
           <Input
-            error={formMethods.formState.errors.login_password?.message}
+            error={formMethods.formState.errors.login_password?.message || loginError}
             {...signInFormFields.login_password}
             {...formMethods.register('login_password')}
             haveRightIcon={true}
             className={styles.signIn__form__group__input}
           />
-          {!!loginError && <p className={styles.signIn__form__group__error}>{loginError}</p>}
+          {/* {!!loginError && <p className={styles.signIn__form__group__error}>{loginError}</p>} */}
 
           <Checkbox
             text={t('remember_me')}

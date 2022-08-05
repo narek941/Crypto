@@ -100,16 +100,8 @@ export const composeFormSchema = <K extends FormFieldNames>(fields: K[]): AnyObj
 
     //login
 
-    login_email: Yup.string()
-      .required()
-      .email('* Enter your password to login')
-      .required('* Enter your email to login'),
-    login_password: Yup.string()
-      .required('* Enter your password to login')
-      .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/, {
-        excludeEmptyString: true,
-        message: '* This password is too weak',
-      }),
+    login_email: Yup.string().required('* Login field is required'),
+    login_password: Yup.string().required('* Password field is required'),
     login_rememberMe: Yup.bool(),
 
     // Account Filter

@@ -2,7 +2,6 @@ import { useRef } from 'react';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
 
 import { RootState } from 'types';
 import { useAppDispatch } from 'hooks';
@@ -19,14 +18,13 @@ const Popup = ({ open }: PopupProps) => {
   const dispatch = useAppDispatch();
   const isDarkMode = useSelector((state: RootState) => state.auth.isDarkMode);
   const popUpClasses = classNames(styles.popup, { [styles.popup__able]: open });
-  const navigate = useNavigate();
 
   const handleChange = () => {
     dispatch(authActions.setTheme());
   };
 
   const handleLogOut = () => {
-    dispatch(authActions.signOut(navigate));
+    dispatch(authActions.signOut());
   };
 
   return (
