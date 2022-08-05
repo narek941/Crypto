@@ -71,8 +71,6 @@ const AddNewUser = () => {
         dispatch(adminActions.removeUserById());
       };
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

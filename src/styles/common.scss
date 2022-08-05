@@ -41,6 +41,9 @@
   fill: var(--font) !important;
   left: 20px;
 }
+.MuiTablePagination-root {
+  overflow: hidden !important;
+}
 
 .MuiSwitch-track {
   background-color: linear-gradient(0deg, rgba(0, 151, 167, 0.1), rgba(0, 151, 167, 0.1)), #ffffff !important;
