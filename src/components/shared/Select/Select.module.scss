@@ -87,21 +87,19 @@
 .header {
   margin: 0;
   width: 100%;
-  font: inherit;
-  font-size: 14px;
-  font-weight: 400;
+
   appearance: none;
-  line-height: 100%;
   border-radius: 4px;
   min-height: 40px;
   position: relative;
   border: 1px solid transparent;
   color: var(--font);
   background-color: var(--select-background);
-  padding: 12px 46px 12px 10px;
+  padding: 9px 46px 9px 10px;
   text-transform: capitalize;
   cursor: pointer;
   min-width: 93px;
+  @extend %flex-center;
 
   &:hover {
     border: 1px solid var(--select-border);
@@ -109,8 +107,25 @@
 
   &__open {
     background-color: var(--select-option);
-
     border-radius: 4px 4px 0 0;
     border: 1px solid var(--select-border);
+  }
+
+  &__input {
+    margin: 0;
+    border: none;
+    color: var(--placeholder);
+    background-color: transparent;
+    @extend %text-14;
+    padding: 0;
+    width: 100%;
+
+    &::placeholder {
+      color: var(--placeholder);
+    }
+
+    &__selected {
+      color: var(--font);
+    }
   }
 }

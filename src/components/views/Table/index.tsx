@@ -34,6 +34,7 @@ const Table = ({
   const dispatch = useAppDispatch();
   const [page, setPage] = useState(0);
   const [open, setOpen] = useState(false);
+
   const [openChart, setOpenChart] = useState(false);
   const [orderBy, setOrderBy] = useState<KeyOfData>('id');
   const [selectedAccountData, setSelectedAccountData] = useState<SelectedAccount>({
@@ -49,7 +50,7 @@ const Table = ({
     const orderText = isAsc ? 'DESC' : 'ASC';
     if (action === 'users') {
       dispatch(usersFilterUpdate({ order: orderText }));
-    } else {
+    } else if (action === 'accounts') {
       dispatch(accountsFilterUpdate({ order: orderText }));
     }
 
@@ -113,42 +114,40 @@ const Table = ({
     setOpen(false);
   };
 
-  const handleSearch = (value: any) => {
-    switch (action) {
-      case 'users': {
-        dispatch(
-          usersFilterUpdate({
-            search: {
-              role: value.search,
-              email: value.search,
-              status: value.search,
-              username: value.search,
-              id: Number(value.search) || -1,
-            },
-          }),
-        );
-        break;
-      }
-      case 'accounts': {
-        dispatch(
-          accountsFilterUpdate({ search: { id: Number(value.search) || -1, name: value.search } }),
-        );
-        break;
-      }
-      case 'alerts': {
-        dispatch(
-          alertsActions.alertsFilterUpdate({
-            search: { id: Number(value.search) || -1, message: value.search },
-          }),
-        );
-
-        break;
-      }
-
-      default:
-        break;
-    }
-  };
+  // const handleFilter = () => {
+  // switch (action) {
+  //   case 'users': {
+  //     dispatch(
+  //       usersFilterUpdate({
+  //         search: {
+  //           role: value.search,
+  //           email: value.search,
+  //           status: value.search,
+  //           username: value.search,
+  //           id: Number(value.search) || -1,
+  //         },
+  //       }),
+  //     );
+  //     break;
+  //   }
+  //   case 'accounts': {
+  //     dispatch(
+  //       accountsFilterUpdate({ search: { id: Number(value.search) || -1, name: value.search } }),
+  //     );
+  //     break;
+  //   }
+  //   case 'alerts': {
+  //     dispatch(
+  //       alertsActions.alertsFilterUpdate({
+  //         search: { id: Number(value.search) || -1, message: value.search },
+  //       }),
+  //     );
+  //     break;
+  //   }
+  //   default:
+  //     break;
+  // }
+  // };
 
   const handleBlock = useCallback(
     async (id: number) => {
@@ -213,7 +212,7 @@ const Table = ({
   return (
     <>
       <div className={styles.wrapper}>
-        <TableToolbar linkText={linkText} linkTo={linkTo} onClick={handleSearch} />
+        <TableToolbar linkText={linkText} linkTo={linkTo} />
         <div className={styles.inner}>
           <div className={styles.table__wrapper}>
             <table className={styles.table}>

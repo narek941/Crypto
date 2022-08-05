@@ -3,21 +3,21 @@ import { FormField } from '../../forms/types';
 import { SignInFormShape } from './types';
 
 export const signInFormFields: FormField<keyof SignInFormShape> = {
-  email: {
+  login_email: {
     id: 'signIn.email',
-    name: 'email',
+    name: 'login_email',
     placeholder: 'Enter Email',
   },
 
-  password: {
+  login_password: {
     id: 'signIn.password',
-    name: 'password',
+    name: 'login_password',
     type: 'password',
     placeholder: 'Enter Password',
   },
-  rememberMe: {
+  login_rememberMe: {
     id: 'signIn.rememberMe',
-    name: 'rememberMe',
+    name: 'login_rememberMe',
     label: 'Remember Me',
     type: 'checkbox',
   },

@@ -3,7 +3,7 @@ import { AxiosError } from 'axios';
 
 import { client } from 'api';
 import { Slice } from 'types';
-import { IFilter } from 'types/api';
+import { ITableFilter } from 'types/api';
 
 import { accountsActions } from '../accountsSlice';
 
@@ -40,7 +40,14 @@ export const updateAccount = createAsyncThunk(
 export const getUsersList = createAsyncThunk(
   `${Slice.Admin}/users`,
   async (
-    credentials: { skip: number; take: number; sort: string; order: string; search: string },
+    credentials: {
+      skip: number;
+      take: number;
+      sort: string;
+      order: string;
+      search: string;
+      filter: {};
+    },
     thunkAPI,
   ) => {
     try {
@@ -240,7 +247,7 @@ export const unblockAccount = createAsyncThunk(
   },
 );
 
-export const usersFilterUpdate = createAction<Partial<IFilter>>('usersFilter');
+export const usersFilterUpdate = createAction<Partial<ITableFilter>>('usersFilter');
 
 export const getUserById = createAsyncThunk(
   `${Slice.Admin}/users/id`,
@@ -285,3 +292,4 @@ export const getTradingPairs = createAsyncThunk(
 );
 
 export const removeUserById = createAction('removeUserByID');
+export const userFilterClear = createAction<Partial<ITableFilter>>('userFilterClear');

@@ -11,7 +11,7 @@ const internalInitialState: AlertsSliceState = {
   loading: AlertStates.IDLE,
   totalCount: 0,
   list: [],
-  filter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '' },
+  filter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '', filter: {} },
 };
 
 const alertsSlice = createSlice({
@@ -37,6 +37,10 @@ const alertsSlice = createSlice({
     builder.addCase(alertsThunks.alertsFilterUpdate, (state, action) => {
       const filter = state.filter;
       state.filter = { ...filter, ...action.payload };
+      state.filter.filter = { ...filter.filter, ...action.payload.filter };
+    });
+    builder.addCase(alertsThunks.alertsFilterClear, (state) => {
+      state.filter.filter = {};
     });
   },
 });

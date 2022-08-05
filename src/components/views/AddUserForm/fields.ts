@@ -1,21 +1,8 @@
+import { AccountTypeOptions } from 'utils/filterHelper';
+
 import { FormField } from '../../forms/types';
 
 import { AddUserFormShape } from './types';
-
-export const AccountTypeOptions = [
-  {
-    label: 'Administrator',
-    value: 'ADMIN',
-  },
-  {
-    label: 'Analyst',
-    value: 'ANALYST',
-  },
-  {
-    label: 'Viewer',
-    value: 'VIEWER',
-  },
-];
 
 export const addUserFormFields: FormField<keyof AddUserFormShape> = {
   name: {

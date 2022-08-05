@@ -132,7 +132,8 @@ const TableAccountBody = ({
       <Alert
         open={open}
         handleClose={() => handleClose && handleClose()}
-        handleDelete={handleDelete}
+        handleAction={handleDelete}
+        type={'DELETE'}
         id={delID}
       />
     </tbody>

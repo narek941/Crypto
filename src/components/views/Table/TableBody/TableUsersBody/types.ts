@@ -5,7 +5,7 @@ export interface ITableBodyProps {
   rows: RowsType[];
   handleClose?: () => void;
   toggleAlertOpen?: () => void;
-  handleBlock: (id: number) => void;
-  handleUnblock: (id: number) => void;
+  handleBlock: (id: number) => Promise<void>;
+  handleUnblock: (id: number) => Promise<void>;
   handleDelete: (id: number) => Promise<void>;
 }

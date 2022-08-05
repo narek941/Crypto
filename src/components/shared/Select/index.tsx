@@ -12,7 +12,6 @@ const Select = React.forwardRef(
     {
       id,
       name,
-      label,
       error,
       className,
       color = 'default',
@@ -30,6 +29,7 @@ const Select = React.forwardRef(
   ): JSX.Element => {
     const selectRef = useRef(null);
     const [isOpen, setIsOpen] = useState(false);
+    const [filteredOption, setFilteredOption] = useState(options);
 
     const currentOption = options.find((option) => option.value === value);
 
@@ -41,67 +41,91 @@ const Select = React.forwardRef(
       return selectClass;
     };
 
-    const dropClassName: string = classNames(styles.select__dropdown, {
+    const dropClass: string = classNames(styles.select__dropdown, {
       [styles.select__dropdown__open]: isOpen,
     });
 
-    const optionClassName: string = classNames(styles.select__option, {
+    const optionClass: string = classNames(styles.select__option, {
       [styles.select__option__open]: isOpen,
     });
 
-    const headerClassName: string = classNames(styles.header, {
+    const headerClass: string = classNames(styles.header, {
       [styles.header__open]: isOpen,
       [styles.select__placeholder]: !currentOption?.label,
+    });
+
+    const inputClass: string = classNames(styles.header__input, {
+      [styles.header__input__selected]: currentOption,
     });
 
     const selectClassName: string = getSelectClassName(color);
 
     const selectClass: string = classNames(selectClassName);
 
-    const toggleDrop = () => {
+    const openDropdown = () => {
       setIsOpen(true);
+    };
+
+    const closeDropdown = () => {
+      setIsOpen(false);
+      setFilteredOption(options);
     };
 
     const handleCancel = () => {
       onChange('');
-      setIsOpen(false);
       onBlur();
+      closeDropdown();
     };
 
     const handleSelect = (selectedItem: string) => {
       onChange(selectedItem);
+      setFilteredOption(options);
       if (!callback) {
-        setIsOpen(false);
+        closeDropdown();
       }
     };
 
     const handleSubmit = () => {
-      if (callback && filterName && value && isOpen) {
+      if (callback && filterName && currentOption && isOpen) {
         callback(filterName, currentOption?.value);
       }
-      setIsOpen(false);
+
+      closeDropdown();
       onBlur();
     };
+
+    const handleSearch = (e: any) => {
+      onChange(e.target.value);
+      const newOption = options.filter((item) =>
+        item.label.toLowerCase().includes(e.target.value.toLowerCase()),
+      );
+      setFilteredOption(newOption);
+    };
+
     useOnClickOutside(selectRef, handleSubmit);
 
     return (
-      <div className={selectClass} ref={ref}>
-        <label htmlFor={name} className={styles['select-label']}>
-          {label}
-        </label>
+      <div className={selectClass}>
         <div ref={selectRef} className={styles.wrapper} id={id} {...props}>
-          <div onClick={toggleDrop} className={headerClassName}>
-            {currentOption?.label || placeholder}
-            <DropDownIcon role='button' className={dropClassName} />
+          <div onClick={openDropdown} className={headerClass}>
+            <input
+              placeholder={placeholder}
+              value={value ? currentOption?.label : ''}
+              onChange={handleSearch}
+              className={inputClass}
+              name={name}
+              ref={ref}
+            />
+            <DropDownIcon role='button' className={dropClass} />
           </div>
-          <div className={optionClassName}>
+          <div className={optionClass}>
             <div
               style={{
                 maxHeight: 211,
                 overflowY: 'scroll',
               }}
             >
-              {options.map((item, index) => (
+              {filteredOption.map((item, index) => (
                 <div
                   key={index}
                   className={classNames(styles.select__option__item, {

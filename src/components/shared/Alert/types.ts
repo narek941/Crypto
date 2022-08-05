@@ -2,7 +2,8 @@ export interface AlertProps {
   ref?: any;
   open: boolean;
   className?: string;
+  type: 'DELETE' | 'BLOCK' | 'UNBLOCK';
   handleClose: () => void;
-  handleDelete: (id: number) => Promise<void>;
+  handleAction: (id: number) => Promise<void>;
   id: number | null;
 }

@@ -1,4 +1,4 @@
-import { IFilter } from 'types/api';
+import { IFilter, ITableFilter } from 'types/api';
 
 import { AdminStates } from './constants';
 
@@ -12,7 +12,7 @@ export type AdminSliceState = {
   coins: any[];
   tradingPairs: any[];
   totalCount: number;
-  usersFilter: IFilter;
+  usersFilter: ITableFilter;
   accountsFilter: IFilter;
   userById: any;
 };

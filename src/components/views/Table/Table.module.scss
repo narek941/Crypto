@@ -35,7 +35,8 @@
       white-space: nowrap;
       font-size: 13px !important;
       line-height: 16px !important;
-      color: var(--table-header-font);
+      color: var(--table-header-font) !important;
+
       border-color: var(--table-border) !important;
 
       span {

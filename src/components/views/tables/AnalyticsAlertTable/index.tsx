@@ -7,12 +7,12 @@ import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
+import AnalyticsAlertsFilters from 'components/views/filters/AnalyticsAlertsFilters';
 import { EmptyData, Pagination } from 'components';
 import { RootState } from 'types';
 import { alertsTable } from 'constants/index';
 import { useAppDispatch } from 'hooks';
 import { accountsActions } from 'store/accountsSlice';
-import AlertsFilters from 'components/views/filters/AlertsFilters';
 
 import AnalyticsAlertTableRow from './AnalyticsAlertTableRow';
 import styles from './AnalyticsAlertTable.module.scss';
@@ -58,7 +58,7 @@ const AnalyticsAlertTable = () => {
   return (
     <>
       <div className={styles.wrapper}>
-        <AlertsFilters />
+        <AnalyticsAlertsFilters />
         <Table className={styles.inner}>
           <TableHead className={styles.container__header}>
             <TableRow className={styles.container__header__row}>

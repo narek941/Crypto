@@ -4,14 +4,14 @@ import DateRangePicker from 'components/shared/DateRangePicker';
 import { CloseIcon } from 'assets/icons';
 import { TableSearch } from 'components';
 import { useAppDispatch, useForm } from 'hooks';
+import { accountsAlertsFilterClear, accountsAlertsFilterUpdate } from 'store/accountsSlice/thunks';
 import { createObject } from 'utils/createObject';
-import { alertsFilterClear, alertsFilterUpdate } from 'store/alertsSlice/thunks';
 
-import styles from './AlertsFilters.module.scss';
+import styles from './AnalyticsAlertsFilters.module.scss';
 import { FilterFormShape } from './types';
 import { filterFormFields, filterSchemaKeys } from './fields';
 
-const AlertsFilters = () => {
+const AnalyticsAlertsFilters = () => {
   const dispatch = useAppDispatch();
 
   const [isMore, setIsMore] = useState(false);
@@ -30,12 +30,12 @@ const AlertsFilters = () => {
 
   const handleClear = () => {
     formMethods.reset({});
-    dispatch(alertsFilterClear({}));
+    dispatch(accountsAlertsFilterClear({}));
     setClearAll(!clearAll);
   };
 
   const handleFilter = (key: string, value: any) => {
-    dispatch(alertsFilterUpdate({ filter: createObject(key, value) }));
+    dispatch(accountsAlertsFilterUpdate({ filter: createObject(key, value) }));
   };
 
   return (
@@ -99,4 +99,4 @@ const AlertsFilters = () => {
   );
 };
 
-export default AlertsFilters;
+export default AnalyticsAlertsFilters;

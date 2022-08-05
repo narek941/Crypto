@@ -1,4 +1,7 @@
+import { useState } from 'react';
+
 import { AccountBlockIcon, UnblockIcon } from 'assets/icons';
+import { Alert } from 'components';
 
 import styles from '../Table.module.scss';
 
@@ -12,25 +15,30 @@ const BlockAction = ({
   action,
   tooltipClasses,
 }: IBlockAction) => {
+  const [openAlert, setOpenAlert] = useState(false);
+
+  const handleCloseAlert = () => setOpenAlert(!openAlert);
+
   return (
     <>
       {status == 'BLOCKED' ? (
-        <div
-          className={styles.table__body__row__ceil__actions__block}
-          onClick={() => handleUnblock(id)}
-        >
+        <div className={styles.table__body__row__ceil__actions__block} onClick={handleCloseAlert}>
           <UnblockIcon />
           <span className={tooltipClasses}>Unblock {action}</span>
         </div>
       ) : (
-        <div
-          className={styles.table__body__row__ceil__actions__block}
-          onClick={() => handleBlock(id)}
-        >
+        <div className={styles.table__body__row__ceil__actions__block} onClick={handleCloseAlert}>
           <AccountBlockIcon />
           <span className={tooltipClasses}>Block {action}</span>
         </div>
       )}
+      <Alert
+        id={id}
+        open={openAlert}
+        type={status == 'BLOCKED' ? 'UNBLOCK' : 'BLOCK'}
+        handleAction={status === 'BLOCKED' ? handleUnblock : handleBlock}
+        handleClose={() => handleCloseAlert && handleCloseAlert()}
+      />
     </>
   );
 };

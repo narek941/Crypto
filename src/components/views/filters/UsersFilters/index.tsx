@@ -1,17 +1,18 @@
 import { useState } from 'react';
+import { Controller } from 'react-hook-form';
 
-import DateRangePicker from 'components/shared/DateRangePicker';
 import { CloseIcon } from 'assets/icons';
-import { TableSearch } from 'components';
+import { Select, TableSearch } from 'components';
 import { useAppDispatch, useForm } from 'hooks';
 import { createObject } from 'utils/createObject';
-import { alertsFilterClear, alertsFilterUpdate } from 'store/alertsSlice/thunks';
+import { statusOptions, AccountTypeOptions } from 'utils/filterHelper';
+import { userFilterClear, usersFilterUpdate } from 'store/adminSlice/thunks';
 
-import styles from './AlertsFilters.module.scss';
+import styles from './UsersFilters.module.scss';
 import { FilterFormShape } from './types';
 import { filterFormFields, filterSchemaKeys } from './fields';
 
-const AlertsFilters = () => {
+const UsersFilters = () => {
   const dispatch = useAppDispatch();
 
   const [isMore, setIsMore] = useState(false);
@@ -20,9 +21,11 @@ const AlertsFilters = () => {
     mode: 'onChange',
     schemaKeys: filterSchemaKeys,
     defaultValues: {
-      alertType: '',
-      alertID: '',
-      alertMessage: '',
+      userName: '',
+      userStatus: '',
+      userId: '',
+      userType: '',
+      userEmail: '',
     },
   });
 
@@ -30,43 +33,66 @@ const AlertsFilters = () => {
 
   const handleClear = () => {
     formMethods.reset({});
-    dispatch(alertsFilterClear({}));
+    dispatch(userFilterClear({}));
     setClearAll(!clearAll);
   };
 
   const handleFilter = (key: string, value: any) => {
-    dispatch(alertsFilterUpdate({ filter: createObject(key, value) }));
+    dispatch(usersFilterUpdate({ filter: createObject(key, value) }));
   };
 
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
         <div className={styles.item}>
-          <DateRangePicker
-            formMethods={formMethods}
-            {...filterFormFields.alertCreationDate}
+          <TableSearch
+            {...filterFormFields.userName}
+            {...formMethods.register('userName')}
+            className={styles.search}
             callback={handleFilter}
-            filterName={'createdAt'}
+            filterName={'username'}
             clearAll={clearAll}
+          />
+        </div>
+        <div className={styles.item}>
+          <Controller
+            control={formMethods.control}
+            name={filterFormFields.userType.name as any}
+            render={({ field }) => (
+              <Select
+                {...filterFormFields.userType}
+                {...field}
+                className={styles.select}
+                options={AccountTypeOptions}
+                callback={handleFilter}
+                filterName={'role'}
+              />
+            )}
+          />
+        </div>
+        <div className={styles.item}>
+          <Controller
+            control={formMethods.control}
+            name={filterFormFields.userStatus.name as any}
+            render={({ field }) => (
+              <Select
+                {...filterFormFields.userStatus}
+                {...field}
+                className={styles.select}
+                options={statusOptions}
+                callback={handleFilter}
+                filterName={'status'}
+              />
+            )}
           />
         </div>
 
-        <div className={styles.item}>
-          <TableSearch
-            {...filterFormFields.alertType}
-            {...formMethods.register('alertType')}
-            className={styles.search}
-            callback={handleFilter}
-            filterName={'type'}
-            clearAll={clearAll}
-          />
-        </div>
         {isMore && (
           <>
             <div className={styles.item}>
               <TableSearch
-                {...filterFormFields.alertID}
-                {...formMethods.register('alertID')}
+                {...filterFormFields.userId}
+                {...formMethods.register('userId')}
                 className={styles.search}
                 callback={handleFilter}
                 filterName={'id'}
@@ -75,11 +101,11 @@ const AlertsFilters = () => {
             </div>
             <div className={styles.item}>
               <TableSearch
-                {...filterFormFields.alertMessage}
-                {...formMethods.register('alertMessage')}
+                {...filterFormFields.userEmail}
+                {...formMethods.register('userEmail')}
                 className={styles.search}
                 callback={handleFilter}
-                filterName={'message'}
+                filterName={'email'}
                 clearAll={clearAll}
               />
             </div>
@@ -99,4 +125,4 @@ const AlertsFilters = () => {
   );
 };
 
-export default AlertsFilters;
+export default UsersFilters;
