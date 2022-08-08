@@ -42,7 +42,11 @@ const AccountsFilters = () => {
   };
 
   const handleFilter = (key: string, value: any) => {
-    dispatch(accountsFilterUpdate({ filter: createObject(key, value) }));
+    if (key === 'name') {
+      dispatch(accountsFilterUpdate({ search: createObject(key, value) }));
+    } else {
+      dispatch(accountsFilterUpdate({ filter: createObject(key, value) }));
+    }
   };
 
   return (

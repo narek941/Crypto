@@ -1,4 +1,4 @@
-import { sideOptions, typeOptions } from 'utils/filterHelper';
+import { sideOptions, ordersTypeOptions } from 'utils/filterHelper';
 
 import { FormField } from '../../../forms/types';
 
@@ -30,7 +30,7 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
     type: 'Select',
     id: 'filterForm.historyType',
     placeholder: 'Select Type',
-    options: typeOptions,
+    options: ordersTypeOptions,
   },
 
   historyValue: {

@@ -3,15 +3,20 @@ export const sideOptions = [
   { label: 'SELL', value: 'SELL' },
 ];
 
+export const ordersTypeOptions = [
+  { label: 'Limit', value: 'LIMIT' },
+  { label: 'Stop loss limit', value: 'STOP_LOSS_LIMIT' },
+];
+
 export const typeOptions = [
   { label: 'Inflow', value: 'DEPOSIT' },
   { label: 'Outflow', value: 'WITHDRAWAL' },
 ];
 
 export const statusOptions = [
-  { label: 'ACTIVE', value: 'ACTIVE' },
-  { label: 'DELETED', value: 'DELETED' },
-  { label: 'EMAIL_VERIFICATION', value: 'EMAIL_VERIFICATION' },
+  { label: 'Active', value: 'ACTIVE' },
+  { label: 'Deleted', value: 'DELETED' },
+  { label: 'Email verification', value: 'EMAIL_VERIFICATION' },
 ];
 
 export const AccountTypeOptions = [

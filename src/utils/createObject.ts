@@ -32,6 +32,6 @@ interface Obj {
 export const createObject = (key: string, value: any) => {
   const filter: any = {};
 
-  filter[key as keyof Obj] = value;
+  filter[key as keyof Obj] = value === '' ? undefined : key === 'id' ? Number(value) : value;
   return filter;
 };

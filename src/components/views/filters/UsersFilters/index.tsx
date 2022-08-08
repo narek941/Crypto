@@ -38,7 +38,11 @@ const UsersFilters = () => {
   };
 
   const handleFilter = (key: string, value: any) => {
-    dispatch(usersFilterUpdate({ filter: createObject(key, value) }));
+    if (key === 'username' || key === 'email') {
+      dispatch(usersFilterUpdate({ search: createObject(key, value) }));
+    } else {
+      dispatch(usersFilterUpdate({ filter: createObject(key, value) }));
+    }
   };
 
   return (

@@ -11,9 +11,19 @@ import styles from './Range.module.scss';
 
 const RangeSwipe = React.forwardRef<any, any>(
   (
-    { name, placeholder = 'search', Icon, onChange, value, callback, filterName, ...rest }: any,
+    {
+      name,
+      placeholder = 'search',
+      Icon,
+      onChange,
+      value: propsValue,
+      callback,
+      filterName,
+      ...rest
+    }: any,
     ref,
   ) => {
+    const value = propsValue || [];
     const customRef = useRef(null);
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const headerClass = classNames(styles.header, { [styles.header__open]: isOpen });
