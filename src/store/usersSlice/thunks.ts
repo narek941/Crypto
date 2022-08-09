@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { client } from 'api';
 import { Slice } from 'types';
+import { usersApi } from 'api';
 
 export const addNewUser = createAsyncThunk(
   `${Slice.Users}/users`,
@@ -22,7 +22,7 @@ export const addNewUser = createAsyncThunk(
     };
 
     try {
-      const response = await client.post('/users', newUser);
+      const response = await usersApi.addNewUserRequest(newUser);
 
       return {
         accessToken: response.data.token,

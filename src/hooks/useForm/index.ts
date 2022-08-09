@@ -21,7 +21,6 @@ const useForm = <K extends FormFieldNames, T extends FieldShapeLookup<K>>({
   const formOptions: UseReactHookFormProps<T> = {
     // resolver: yupResolver(schema) as Resolver<T, any>,
     resolver: yupResolver(schema) as Resolver<T, Record<string, string>>,
-    mode: 'all',
     defaultValues: defaultValuesMemo,
     ...options,
   };
@@ -30,8 +29,8 @@ const useForm = <K extends FormFieldNames, T extends FieldShapeLookup<K>>({
 
   return {
     formMethods,
-    handleSubmit: formMethods.handleSubmit,
     isValid: formMethods.formState.isValid,
+    handleSubmit: formMethods.handleSubmit,
     isSubmitting: formMethods.formState.isSubmitting,
   };
 };

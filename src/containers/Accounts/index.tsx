@@ -1,17 +1,16 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
+import { Routes } from 'types';
 import { Table } from 'components';
 import { useAppDispatch } from 'hooks';
-import { RootState, Routes } from 'types';
 import { accountsTable } from 'constants/index';
 import { accountsActions } from 'store/accountsSlice';
+import { accountsSelectors } from 'store/accountsSlice';
 
 const Accounts = () => {
   const dispatch = useAppDispatch();
-  const { list, totalCount, filter } = useSelector(
-    (state: RootState) => state.accounts.accountsList,
-  );
+  const { list, totalCount, filter } = useSelector(accountsSelectors.selectAccountAccountsList);
 
   const { take, order } = filter;
 

@@ -1,7 +1,7 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 
 import { Slice } from 'types';
-import { client } from 'api';
+import { accountsApi } from 'api';
 
 import { ITableFilter } from './../../types/api/index';
 
@@ -14,12 +14,12 @@ export const getAccountList = createAsyncThunk(
       sort: string;
       order: string;
       search: string;
-      filter: {};
+      filter: any;
     },
     thunkAPI,
   ) => {
     try {
-      const response = await client.get('accounts', { params: { ...credentials } });
+      const response = await accountsApi.accountListRequest(credentials);
 
       return {
         list: response.data.list,
@@ -35,7 +35,7 @@ export const getAccountById = createAsyncThunk(
   `${Slice.Accounts}/accounts/id`,
   async (userID: number, thunkAPI) => {
     try {
-      const response = await client.get(`/accounts/${userID}`);
+      const response = await accountsApi.accountByIdRequest(userID);
 
       return {
         account: response.data,
@@ -50,7 +50,7 @@ export const getAccountSummary = createAsyncThunk(
   `${Slice.Accounts}/accounts/id/summary`,
   async (id: number, thunkAPI) => {
     try {
-      const response = await client.get(`/accounts/${id}/summary`);
+      const response = await accountsApi.accountSummaryRequest(id);
 
       return {
         summary: response.data,
@@ -77,9 +77,7 @@ export const getAccountTradesList = createAsyncThunk(
     const { id, ...restCredentials } = credentials;
 
     try {
-      const response = await client.get(`/accounts/${id}/trades-list`, {
-        params: { ...restCredentials },
-      });
+      const response = await accountsApi.accountTradesListRequest(id, restCredentials);
 
       return {
         list: response.data.list,
@@ -107,9 +105,7 @@ export const getAccountAlerts = createAsyncThunk(
     const { id, ...restCredentials } = credentials;
 
     try {
-      const response = await client.get(`/accounts/${id}/alerts`, {
-        params: { ...restCredentials },
-      });
+      const response = await accountsApi.accountAlertsRequest(id, restCredentials);
 
       return {
         list: response.data.list,
@@ -124,14 +120,18 @@ export const getAccountAlerts = createAsyncThunk(
 export const accountsFilterUpdate = createAction<Partial<ITableFilter>>('accountsFilter');
 
 export const accountsFilterClear = createAction<Partial<ITableFilter>>('accountsFilterClear');
+
 export const accountsTradesFilterUpdate =
   createAction<Partial<ITableFilter>>('accountsTradesFilter');
+
 export const accountsAlertsFilterUpdate = createAction<Partial<ITableFilter>>(
   'accountsAlertsFilterUpdate',
 );
+
 export const accountsTradesFilterClear = createAction<Partial<ITableFilter>>(
   'accountsTradesFilterClear',
 );
+
 export const accountsAlertsFilterClear = createAction<Partial<ITableFilter>>(
   'accountsAlertsFilterClear',
 );

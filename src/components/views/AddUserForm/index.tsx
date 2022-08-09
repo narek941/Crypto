@@ -2,9 +2,11 @@ import { useMemo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Controller } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
+import { Routes } from 'types';
 import { useForm } from 'hooks';
-import { RootState, Routes } from 'types';
+import { adminSelectors } from 'store/adminSlice';
 import { Button, Input, Select } from 'components';
 import FormGroup from 'components/forms/FormGroup';
 import FormWrapper from 'components/forms/FormWrapper';
@@ -15,8 +17,9 @@ import { AddUserFormShape, IAddUser } from './types';
 import { addUserFormFields, addSchemaKeys } from './fields';
 
 const AddUserForm = ({ onClick, isEditable = false }: IAddUser) => {
-  const { username, email, role } = useSelector((state: RootState) => state.admin.userById);
-  const adminErrors = useSelector((state: RootState) => state.admin.error);
+  const { t } = useTranslation();
+  const adminErrors = useSelector(adminSelectors.selectAdminError);
+  const { username, email, role } = useSelector(adminSelectors.selectUserById);
 
   const addUserFormDefaultValues = useMemo(
     () =>
@@ -45,9 +48,9 @@ const AddUserForm = ({ onClick, isEditable = false }: IAddUser) => {
       <FormWrapper {...{ formMethods }} onSubmit={handleSubmit(onClick)}>
         <FormGroup className={styles.signIn__form__group}>
           <>
-            <div className={styles.signIn__form__group__header}>
-              {isEditable ? 'Edit user' : 'Add new user'}
-            </div>
+            <p className={styles.signIn__form__group__header}>
+              {isEditable ? t('edit_user') : t('add_user')}
+            </p>
 
             <Input
               error={formMethods.formState.errors.name?.message || adminErrors?.username}
@@ -79,13 +82,13 @@ const AddUserForm = ({ onClick, isEditable = false }: IAddUser) => {
             {!isEditable ? (
               <div className={styles.signIn__form__group__button}>
                 <Button type='submit' color='secondary' size='m' disabled={!isValid}>
-                  ADD USER
+                  {t('add_user')}
                 </Button>
               </div>
             ) : (
               <div className={styles.signIn__form__group__edit}>
                 <Link to={Routes.Users} className={styles.signIn__form__group__edit__cancel}>
-                  CANCEL
+                  {t('cancel')}
                 </Link>
                 <Button
                   type='submit'
@@ -94,7 +97,7 @@ const AddUserForm = ({ onClick, isEditable = false }: IAddUser) => {
                   disabled={!isValid}
                   className={styles.signIn__form__group__edit__save}
                 >
-                  SAVE CHANGES
+                  {t('save_changes')}
                 </Button>
               </div>
             )}

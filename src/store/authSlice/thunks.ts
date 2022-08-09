@@ -1,9 +1,10 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
 
-import { client } from 'api';
+import { authApi } from 'api';
 import { Slice } from 'types';
 import { errorConverter } from 'utils/errorConverter';
+import { BrowserStorageKeys, BrowserStorageService } from 'services';
 
 export const signIn = createAsyncThunk(
   `${Slice.Auth}/signIn`,
@@ -11,14 +12,14 @@ export const signIn = createAsyncThunk(
     const { rememberMe, ...restCredentials } = credentials;
 
     try {
-      const response = await client.post('auth/login', restCredentials);
-      if (rememberMe) {
-        localStorage.setItem('accessToken', response.data.token);
-        localStorage.setItem('role', response.data.role);
-      } else {
-        sessionStorage.setItem('accessToken', response.data.token);
-        sessionStorage.setItem('role', response.data.role);
-      }
+      const response = await authApi.signInRequest(restCredentials);
+
+      BrowserStorageService.set(BrowserStorageKeys.AccessToken, response.data.token, {
+        session: !rememberMe,
+      });
+      BrowserStorageService.set(BrowserStorageKeys.Role, response.data.role, {
+        session: !rememberMe,
+      });
 
       return {
         accessToken: response.data.token,
@@ -36,10 +37,14 @@ export const signIn = createAsyncThunk(
 
 export const signOut = createAsyncThunk(`${Slice.Auth}/signOut`, async (_, thunkAPI) => {
   try {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('role');
-    sessionStorage.removeItem('accessToken');
-    sessionStorage.removeItem('role');
+    BrowserStorageService.remove(BrowserStorageKeys.AccessToken);
+    BrowserStorageService.remove(BrowserStorageKeys.Role);
+    BrowserStorageService.remove(BrowserStorageKeys.AccessToken, {
+      session: true,
+    });
+    BrowserStorageService.remove(BrowserStorageKeys.Role, {
+      session: true,
+    });
   } catch (error) {
     const { message } = error as Error;
 
@@ -50,3 +55,4 @@ export const signOut = createAsyncThunk(`${Slice.Auth}/signOut`, async (_, thunk
 export const setDarkTheme = createAction('auth/setDarkTheme');
 export const setLightTheme = createAction('auth/setLightTheme');
 export const setTheme = createAction('auth/setTheme');
+export const setLang = createAction('auth/setLang');

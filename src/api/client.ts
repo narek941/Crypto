@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-import { Routes } from 'types';
+import store from 'store';
+import { authActions } from 'store/authSlice';
+import { BrowserStorageService, BrowserStorageKeys } from 'services';
 
 const initialConfig = {
   baseURL: process.env.REACT_APP_API_URL,
@@ -9,7 +11,9 @@ const initialConfig = {
 const client = axios.create(initialConfig) as any;
 
 client.interceptors.request.use((config: any) => {
-  const token = localStorage.getItem('accessToken') || sessionStorage.getItem('accessToken');
+  const token =
+    BrowserStorageService.get(BrowserStorageKeys.AccessToken) ||
+    BrowserStorageService.get(BrowserStorageKeys.AccessToken, { session: true });
 
   if (token) {
     config.headers = Object.assign(
@@ -29,14 +33,7 @@ client.interceptors.response.use(
   },
   (error: any) => {
     if (error.response?.status === 401) {
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('role');
-      sessionStorage.removeItem('accessToken');
-      sessionStorage.removeItem('role');
-
-      if (!window.location.href.includes(Routes.Login)) {
-        window.location.href = Routes.Login;
-      }
+      store.dispatch(authActions.signOut());
     }
 
     return Promise.reject(error);

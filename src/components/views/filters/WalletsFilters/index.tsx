@@ -3,10 +3,10 @@ import { Controller } from 'react-hook-form';
 
 import { CloseIcon } from 'assets/icons';
 import { Select, TableSearch } from 'components';
-import { useAppDispatch, useAppSelector, useForm } from 'hooks';
-import { RootState } from 'types';
-import { walletsActions } from 'store/walletsSlice';
 import { createObject } from 'utils/createObject';
+import { adminSelectors } from 'store/adminSlice';
+import { walletsActions } from 'store/walletsSlice';
+import { useAppDispatch, useAppSelector, useForm } from 'hooks';
 
 import styles from './WalletsFilters.module.scss';
 import { FilterFormShape } from './types';
@@ -14,7 +14,7 @@ import { filterSchemaKeys, walletFilterFormFields } from './fields';
 
 const WalletsFilters = () => {
   const dispatch = useAppDispatch();
-  const coins = useAppSelector((state: RootState) => state.admin.coins);
+  const coins = useAppSelector(adminSelectors.selectCoins);
   const [clearAll, setClearAll] = useState(false);
   const { formMethods } = useForm<keyof FilterFormShape, FilterFormShape>({
     mode: 'onChange',

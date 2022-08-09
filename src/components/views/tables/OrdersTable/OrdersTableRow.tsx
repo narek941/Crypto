@@ -12,10 +12,10 @@ import classNames from 'classnames';
 import { Tooltip } from '@mui/material';
 
 import { EmptyData } from 'components';
-import { TableDropdownIcon } from 'assets/icons';
 import { useAppDispatch } from 'hooks';
-import { walletsActions } from 'store/walletsSlice';
-import { RootState } from 'types';
+import { TableDropdownIcon } from 'assets/icons';
+import { walletsActions, walletsSelectors } from 'store/walletsSlice';
+import { accountsSelectors } from 'store/accountsSlice';
 
 import styles from './OrdersTable.module.scss';
 
@@ -23,11 +23,11 @@ const OrdersTableRow = ({ row }: any): JSX.Element => {
   const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
   const [wallerOrder, setWallerOrder] = useState<any | null>();
-  const accounts = useSelector((state: RootState) => state.accounts);
+  const accountById = useSelector(accountsSelectors.selectAccountById);
 
-  const { filter } = useSelector((state: RootState) => state.wallets.orders);
+  const { filter } = useSelector(walletsSelectors.selectOrders);
 
-  const id = accounts.accountById?.wallets?.length && accounts.accountById.wallets[0]?.id;
+  const id = accountById?.wallets?.length && accountById.wallets[0]?.id;
   const collapseClass = classNames({ [styles.open]: open });
   const dropdownClass = classNames({ [styles.dropdown]: open });
 

@@ -19,6 +19,7 @@ const Input = React.forwardRef<any, IInputProps>(
       name,
       error,
       disabled,
+      isDisabledError = false,
       RightIcon = EyeOpenIcon,
       RightToggledIcon = EyeCloseIcon,
       placeholder,
@@ -103,7 +104,7 @@ const Input = React.forwardRef<any, IInputProps>(
               </Tooltip>
             )}
           </div>
-          {error && (
+          {error && !isDisabledError && (
             <Typography type='Small' className={styles.container__error__text}>
               {error}
             </Typography>

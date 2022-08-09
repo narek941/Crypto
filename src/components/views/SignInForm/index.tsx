@@ -1,17 +1,17 @@
 import React from 'react';
-import { SubmitHandler } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
 import { useTranslation } from 'react-i18next';
+import { SubmitHandler } from 'react-hook-form';
 
-import { useAppDispatch, useAppSelector, useForm } from 'hooks';
-import { authActions, authSelectors } from 'store/authSlice';
 import { Button, Checkbox, Input } from 'components';
-import FormWrapper from 'components/forms/FormWrapper';
-import FormGroup from 'components/forms/FormGroup';
+import { FormWrapper, FormGroup } from 'components/forms';
+import { authActions, authSelectors } from 'store/authSlice';
+import { useAppDispatch, useAppSelector, useForm } from 'hooks';
 
-import styles from './SignInForm.module.scss';
 import { SignInFormShape } from './types';
+import styles from './SignInForm.module.scss';
 import { signInFormFields, signInSchemaKeys } from './fields';
+
 import '../../../i18';
 
 const SignInForm: React.FC = () => {
@@ -20,7 +20,7 @@ const SignInForm: React.FC = () => {
   const loginError = useAppSelector(authSelectors.selectAuthError) as string;
   const dispatch = useAppDispatch();
 
-  const { formMethods, handleSubmit, isValid } = useForm<keyof SignInFormShape, SignInFormShape>({
+  const { formMethods, handleSubmit } = useForm<keyof SignInFormShape, SignInFormShape>({
     schemaKeys: signInSchemaKeys,
   });
 
@@ -43,30 +43,30 @@ const SignInForm: React.FC = () => {
       <FormGroup className={styles.signIn__form__group}>
         <>
           <Input
-            error={formMethods.formState.errors.login_email?.message}
+            isDisabledError
             {...signInFormFields.login_email}
             {...formMethods.register('login_email')}
             className={styles.signIn__form__group__input}
+            error={formMethods.formState.errors.login_email?.message || loginError}
           />
           <Input
-            error={formMethods.formState.errors.login_password?.message || loginError}
+            haveRightIcon
             {...signInFormFields.login_password}
             {...formMethods.register('login_password')}
-            haveRightIcon={true}
             className={styles.signIn__form__group__input}
+            error='* Enter your password/email to login'
           />
-          {/* {!!loginError && <p className={styles.signIn__form__group__error}>{loginError}</p>} */}
 
           <Checkbox
-            text={t('remember_me')}
             error={null}
             color='primary'
-            className={styles.signIn__form__group__checkbox}
+            text={t('remember_me')}
             {...signInFormFields.login_rememberMe}
             {...formMethods.register('login_rememberMe')}
+            className={styles.signIn__form__group__checkbox}
           />
           <div className={styles.signIn__form__group__button}>
-            <Button type='submit' color='primary' size='s' disabled={!isValid}>
+            <Button type='submit' color='primary' size='s'>
               Login
             </Button>
           </div>

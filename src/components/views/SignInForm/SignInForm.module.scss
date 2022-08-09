@@ -17,7 +17,9 @@
       &__button {
         margin-top: 8px;
         @extend %flex-end;
+        cursor: pointer;
       }
+
       &__checkbox {
         margin-top: 8px;
       }

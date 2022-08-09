@@ -1,7 +1,7 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 
 import { Slice } from 'types';
-import { client } from 'api';
+import { walletsApi } from 'api';
 import { ITableFilter } from 'types/api';
 
 export const getWalletOpenOrders = createAsyncThunk(
@@ -21,9 +21,7 @@ export const getWalletOpenOrders = createAsyncThunk(
     const { id, ...restCredentials } = credentials;
 
     try {
-      const response = await client.get(`/wallets/${id}/orders/open`, {
-        params: { ...restCredentials },
-      });
+      const response = await walletsApi.walletOpenOrdersRequest(id, restCredentials);
 
       return {
         list: response.data.list,
@@ -53,9 +51,12 @@ export const getWalletOrderTrades = createAsyncThunk(
     const { orderId, walletId, ...restCredentials } = credentials;
 
     try {
-      const response = await client.get(`/wallets/${walletId}/orders/${orderId}/trades`, {
-        params: { ...restCredentials },
-      });
+      const response = await walletsApi.walletOrderTradesRequest(
+        walletId,
+        orderId,
+        restCredentials,
+      );
+
       return {
         list: response.data.list,
         totalCount: response.data.totalCount,
@@ -83,9 +84,7 @@ export const getWalletOrders = createAsyncThunk(
     const { id, ...restCredentials } = credentials;
 
     try {
-      const response = await client.get(`/wallets/${id}/orders`, {
-        params: { ...restCredentials },
-      });
+      const response = await walletsApi.walletOrdersRequest(id, restCredentials);
 
       return {
         list: response.data.list,
@@ -114,9 +113,8 @@ export const getWalletInflow = createAsyncThunk(
     const { walletId, ...restCredentials } = credentials;
 
     try {
-      const response = await client.get(`/wallets/${walletId}/inflow-outflow`, {
-        params: { ...restCredentials },
-      });
+      const response = await walletsApi.walletInflowRequest(walletId, restCredentials);
+
       return {
         list: response.data.list,
         totalCount: response.data.totalCount,
@@ -131,7 +129,7 @@ export const getWalletSummary = createAsyncThunk(
   `${Slice.Wallets}/summary`,
   async (walletId: number, thunkAPI) => {
     try {
-      const response = await client.get(`/wallets/${walletId}/summary`);
+      const response = await walletsApi.walletSummaryRequest(walletId);
 
       return {
         list: response.data,
@@ -159,9 +157,7 @@ export const getWalletRecords = createAsyncThunk(
     const { id, ...restCredentials } = credentials;
 
     try {
-      const response = await client.get(`/wallets/${id}/records`, {
-        params: { ...restCredentials },
-      });
+      const response = await walletsApi.walletRecordsRequest(id, restCredentials);
 
       return {
         list: response.data.list,

@@ -1,10 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { Slice } from 'types';
+import { BrowserStorageKeys, BrowserStorageService } from 'services';
 
 import * as authThunks from './thunks';
 import { AuthStates } from './constants';
 import { AuthSliceState, UpdateAccessTokenAction } from './types';
+
+const isEng =
+  BrowserStorageService.get(BrowserStorageKeys.Language) === 'en' ||
+  BrowserStorageService.get(BrowserStorageKeys.Language, { session: true }) === 'en';
 
 const internalInitialState: AuthSliceState = {
   role: '',
@@ -12,7 +17,12 @@ const internalInitialState: AuthSliceState = {
   loading: AuthStates.IDLE,
   twoFactorAuthEnabled: false,
   isDarkMode: false,
-  accessToken: localStorage.getItem('accessToken') || sessionStorage.getItem('accessToken') || '',
+  accessToken:
+    BrowserStorageService.get(BrowserStorageKeys.AccessToken) ||
+    BrowserStorageService.get(BrowserStorageKeys.AccessToken, { session: true }) ||
+    '',
+
+  isEnglish: isEng,
 };
 
 const authSlice = createSlice({
@@ -63,7 +73,10 @@ const authSlice = createSlice({
       state.isDarkMode = !state.isDarkMode;
       const activeTheme = state.isDarkMode ? 'dark' : 'light';
       document.querySelector('body')?.setAttribute('data-theme', activeTheme);
-      localStorage.setItem('mode', activeTheme);
+      BrowserStorageService.set(BrowserStorageKeys.Mode, activeTheme);
+    });
+    builder.addCase(authThunks.setLang, (state) => {
+      state.isEnglish = !state.isEnglish;
     });
   },
 });

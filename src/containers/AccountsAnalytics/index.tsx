@@ -3,13 +3,12 @@ import moment from 'moment';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import { RootState } from 'types';
 import { useAppDispatch } from 'hooks';
 import { charts } from 'constants/index';
 import { wrapWithBaseCurrency } from 'utils';
-import { accountsActions } from 'store/accountsSlice';
-import { Bricks, Chart, Doughnut, Export, AnalyticsTabs } from 'components';
 import { adminActions } from 'store/adminSlice';
+import { accountsActions, accountsSelectors } from 'store/accountsSlice';
+import { Bricks, Chart, Doughnut, Export, AnalyticsTabs } from 'components';
 
 import styles from './AccountsAnalytics.module.scss';
 
@@ -18,7 +17,7 @@ const AccountsAnalytics = (): JSX.Element => {
   const { id } = useParams();
   const convertedId = Number(id);
 
-  const { accountById } = useSelector((state: RootState) => state.accounts);
+  const accountById = useSelector(accountsSelectors.selectAccountById);
 
   const renderLineCharts = charts.accountsAnalyticsChart.lineChart.map((item: any, index) => (
     <Chart key={index} />

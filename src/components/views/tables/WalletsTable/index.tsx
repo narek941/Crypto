@@ -6,23 +6,23 @@ import TableRow from '@mui/material/TableRow';
 import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 
-import { EmptyData, Typography, Pagination } from 'components';
-import { RootState } from 'types';
-import { walletTable } from 'constants/index';
 import { useAppDispatch } from 'hooks';
-import { walletsActions } from 'store/walletsSlice';
 import { wrapWithBaseCurrency } from 'utils';
+import { walletTable } from 'constants/index';
+import { accountsSelectors } from 'store/accountsSlice';
+import { EmptyData, Typography, Pagination } from 'components';
+import { walletsActions, walletsSelectors } from 'store/walletsSlice';
 import WalletsFilters from 'components/views/filters/WalletsFilters';
 
-import WalletsTableRow from './WalletsTableRow';
 import styles from './WalletsTable.module.scss';
+import WalletsTableRow from './WalletsTableRow';
 import WalletsSummaryTableRow from './WalletsSummaryTableRow';
 
 const WalletsTable = () => {
   const dispatch = useAppDispatch();
-  const { accountById } = useSelector((state: RootState) => state.accounts);
-  const summary = useSelector((state: RootState) => state.wallets.summary);
-  const { filter, list, totalCount } = useSelector((state: RootState) => state.wallets.records);
+  const accountById = useSelector(accountsSelectors.selectAccountById);
+  const summary = useSelector(walletsSelectors.selectSummary);
+  const { filter, list, totalCount } = useSelector(walletsSelectors.selectRecords);
 
   const [page, setPage] = useState(0);
 

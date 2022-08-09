@@ -6,21 +6,21 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 
-import { RootState } from 'types';
 import { useAppDispatch } from 'hooks';
 import { wrapWithBaseCurrency } from 'utils';
 import { EmptyData, Pagination } from 'components';
-import { walletsActions } from 'store/walletsSlice';
 import { inflowOutflowTable } from 'constants/index';
+import { accountsSelectors } from 'store/accountsSlice';
 import { inflowFilterUpdate } from 'store/walletsSlice/thunks';
 import InflowsFilters from 'components/views/filters/InflowsFilters';
+import { walletsActions, walletsSelectors } from 'store/walletsSlice';
 
 import InflowsTableRow from './InflowsTableRow';
 import styles from './InflowsTable.module.scss';
 
 const InflowsTable = () => {
-  const { accountById } = useSelector((state: RootState) => state.accounts);
-  const { filter, list, totalCount } = useSelector((state: RootState) => state.wallets.inflow);
+  const accountById = useSelector(accountsSelectors.selectAccountById);
+  const { filter, list, totalCount } = useSelector(walletsSelectors.selectInflow);
   const walletId = accountById?.wallets?.length && accountById.wallets[0]?.id;
   // const { id } = useParams();
   // const convertedId = Number(id);
@@ -51,7 +51,9 @@ const InflowsTable = () => {
   };
 
   useEffect(() => {
-    dispatch(walletsActions.getWalletInflow({ ...filter, walletId: walletId as string | any }));
+    if (walletId) {
+      dispatch(walletsActions.getWalletInflow({ ...filter, walletId }));
+    }
   }, [walletId, filter, dispatch, filter.filter]);
 
   return (

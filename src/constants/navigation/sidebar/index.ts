@@ -11,26 +11,26 @@ type SidebarNavigationItem = {
 const sidebarNavigation: SidebarNavigationItem[] = [
   {
     id: 1,
-    text: 'Dashboard',
+    text: 'dashboard_header',
     Icon: DashboardIcon,
     linkTo: Routes.Dashboard,
   },
   {
     id: 2,
     Icon: ListIcon,
-    text: 'Accounts',
+    text: 'accounts_header',
     linkTo: Routes.Accounts,
   },
   {
     id: 3,
-    text: 'Users',
+    text: 'users_header',
     linkTo: Routes.Users,
     Icon: AvatarMultipleIcon,
   },
   {
     id: 4,
     Icon: BellIcon,
-    text: 'Alerts',
+    text: 'alerts_header',
     linkTo: Routes.Alerts,
   },
 ];

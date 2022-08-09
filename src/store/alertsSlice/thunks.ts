@@ -1,6 +1,6 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 
-import { client } from 'api';
+import { alertsApi } from 'api';
 import { Slice } from 'types';
 import { ITableFilter } from 'types/api';
 
@@ -11,7 +11,7 @@ export const getAlertList = createAsyncThunk(
     thunkAPI,
   ) => {
     try {
-      const response = await client.get('alerts', { params: { ...credentials } });
+      const response = await alertsApi.alertListRequest(credentials);
 
       return {
         list: response.data.list,

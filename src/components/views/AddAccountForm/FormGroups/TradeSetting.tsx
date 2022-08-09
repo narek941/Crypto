@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { useFieldArray } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import FormGroup from 'components/forms/FormGroup';
 
@@ -8,6 +9,8 @@ import styles from '../AddAccountForm.module.scss';
 import SelectGroup from './SelectGroup';
 
 const TradeSetting = ({ formMethods }: any) => {
+  const { t } = useTranslation();
+
   const initialPair = {
     from: {
       id: uuidv4(),
@@ -67,25 +70,25 @@ const TradeSetting = ({ formMethods }: any) => {
     <>
       <FormGroup className={styles.form__section}>
         <>
-          <div className={styles.form__header}>Trade Settings</div>
-          <p className={styles.form__section__item__subtitle}>Allowed Pairs</p>
+          <div className={styles.form__header}>{t('trade_settings')}</div>
+          <p className={styles.form__section__item__subtitle}>{t('allowed_pairs')}</p>
 
           {renderPairs}
           <div role='button' onClick={addPair} className={styles.form__section__item__add_button}>
-            + Add pair
+            + {t('add_pair')}
           </div>
         </>
       </FormGroup>
       <FormGroup className={styles.form__section}>
         <>
-          <div className={styles.form__header}>Account Alerts Destination</div>
+          <div className={styles.form__header}>{t('accounts_alerts_destination')}</div>
           {renderAlerts}
           <div
             role='button'
             onClick={addDestination}
             className={styles.form__section__item__add_button}
           >
-            + ADD DESTINATION
+            + {t('add_destination')}
           </div>
         </>
       </FormGroup>

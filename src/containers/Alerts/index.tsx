@@ -1,15 +1,14 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
-import { RootState } from 'types';
 import { Table } from 'components';
 import { useAppDispatch } from 'hooks';
 import { alertsTable } from 'constants/index';
-import { alertsActions } from 'store/alertsSlice';
+import { alertsActions, alertsSelectors } from 'store/alertsSlice';
 
 const Alerts = () => {
   const dispatch = useAppDispatch();
-  const { list, totalCount, filter } = useSelector((state: RootState) => state.alerts);
+  const { list, totalCount, filter } = useSelector(alertsSelectors.selectAlerts);
 
   const { take, order } = filter;
 
