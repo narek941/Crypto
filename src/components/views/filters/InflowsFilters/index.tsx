@@ -2,13 +2,13 @@ import { useMemo, useState } from 'react';
 import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import RangeSwipe from 'components/shared/Range';
 import { CloseIcon } from 'assets/icons';
+import RangeSwipe from 'components/shared/Range';
 import { Select, TableSearch } from 'components';
+import { createObject } from 'utils/createObject';
+import { adminSelectors } from 'store/adminSlice';
 import { useAppDispatch, useAppSelector, useForm } from 'hooks';
 import { inflowFilterClear, inflowFilterUpdate } from 'store/walletsSlice/thunks';
-import { RootState } from 'types';
-import { createObject } from 'utils/createObject';
 
 import styles from './InflowsFilters.module.scss';
 import { InflowsFilterFormShape } from './types';
@@ -16,7 +16,7 @@ import { inflowFilterFormFields, inflowFilterSchemaKeys } from './fields';
 
 const InflowsFilters = () => {
   const dispatch = useAppDispatch();
-  const coins = useAppSelector((state: RootState) => state.admin.coins);
+  const coins = useAppSelector(adminSelectors.selectCoins);
 
   const [isMore, setIsMore] = useState(false);
   const [clearAll, setClearAll] = useState(false);

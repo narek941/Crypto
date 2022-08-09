@@ -3,8 +3,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { useSelector } from 'react-redux';
 
 import { useForm } from 'hooks';
-import { RootState } from 'types';
 import FormWrapper from 'components/forms/FormWrapper';
+import { accountsSelectors } from 'store/accountsSlice';
 
 import Wallet from './FormGroups/Wallet';
 import { addAccountSchemaKeys } from './fields';
@@ -16,7 +16,7 @@ import { AddAccountFormShape, IAddAccount } from './types';
 
 const AddAccountForm = ({ onClick, isEditable = false }: IAddAccount) => {
   const { name, startCapitalInBaseCurrency, allowedPairs, alertsDestinations, wallets } =
-    useSelector((state: RootState) => state.accounts.accountById);
+    useSelector(accountsSelectors.selectAccountById);
 
   const addAccountFormDefaultValues = useMemo(
     () =>

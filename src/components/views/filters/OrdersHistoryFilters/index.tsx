@@ -2,14 +2,14 @@ import { useMemo, useState } from 'react';
 import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import DateRangePicker from 'components/shared/DateRangePicker';
-import DualSelect from 'components/shared/DualSelect';
 import { CloseIcon } from 'assets/icons';
 import { Select, TableSearch } from 'components';
+import { createObject } from 'utils/createObject';
+import { adminSelectors } from 'store/adminSlice';
+import DualSelect from 'components/shared/DualSelect';
+import DateRangePicker from 'components/shared/DateRangePicker';
 import { useAppDispatch, useAppSelector, useForm } from 'hooks';
 import { ordersFilterClear, ordersFilterUpdate } from 'store/walletsSlice/thunks';
-import { RootState } from 'types';
-import { createObject } from 'utils/createObject';
 
 import styles from './OrdersHistoryFilters.module.scss';
 import { FilterFormShape } from './types';
@@ -17,8 +17,8 @@ import { filterFormFields, filterSchemaKeys } from './fields';
 
 const OrdersHistoryFilters = () => {
   const dispatch = useAppDispatch();
-  const coins = useAppSelector((state: RootState) => state.admin.coins);
-  const tradingPairs = useAppSelector((state: RootState) => state.admin.tradingPairs);
+  const coins = useAppSelector(adminSelectors.selectCoins);
+  const tradingPairs = useAppSelector(adminSelectors.selectTradingPairs);
   const { t } = useTranslation();
 
   const [isMore, setIsMore] = useState(false);

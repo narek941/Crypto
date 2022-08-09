@@ -1,11 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
-import { RootState } from 'types';
 import { useAppDispatch } from 'hooks';
-import { authActions } from 'store/authSlice';
+import { authActions, authSelectors } from 'store/authSlice';
 
 import ToggleSwitch from '../ToggleSwitch';
 
@@ -14,26 +13,23 @@ import { PopupProps } from './types';
 
 const Popup = ({ open }: PopupProps) => {
   const ref = useRef(null);
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const isDarkMode = useSelector((state: RootState) => state.auth.isDarkMode);
+  const isDarkMode = useSelector(authSelectors.selectIsDarkMode);
   const popUpClasses = classNames(styles.popup, { [styles.popup__able]: open });
-  const [isEng, setIsEng] = useState(false);
+  const isEnglish = useSelector(authSelectors.selectIsEnglish);
 
   const handleChange = () => {
     dispatch(authActions.setTheme());
   };
 
   const handleChangeLang = () => {
-    setIsEng(!isEng);
+    dispatch(authActions.setLang());
   };
 
   const handleLogOut = () => {
     dispatch(authActions.signOut());
   };
-  useEffect(() => {
-    i18n.changeLanguage(!isEng ? 'en' : 'ru');
-  }, [isEng, i18n]);
 
   return (
     <div className={popUpClasses} ref={ref}>
@@ -45,7 +41,7 @@ const Popup = ({ open }: PopupProps) => {
       </div>
       <div className={styles.popup__switcher}>
         <span>EN</span>
-        <ToggleSwitch checked={isEng} onChange={handleChangeLang} />
+        <ToggleSwitch checked={!isEnglish} onChange={handleChangeLang} />
         <span>RU</span>
       </div>
 

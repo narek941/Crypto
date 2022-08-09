@@ -6,20 +6,20 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 
-import { RootState } from 'types';
 import { useAppDispatch } from 'hooks';
 import { wrapWithBaseCurrency } from 'utils';
 import { EmptyData, Pagination } from 'components';
-import { walletsActions } from 'store/walletsSlice';
 import { ordersHistoryTable } from 'constants/index';
+import { accountsSelectors } from 'store/accountsSlice';
+import { walletsActions, walletsSelectors } from 'store/walletsSlice';
 import OrdersHistoryFilters from 'components/views/filters/OrdersHistoryFilters';
 
 import styles from './OrdersHistoryTable.module.scss';
 import OrdersHistoryTableRow from './OrdersHistoryTableRow';
 
 const OrdersHistoryTable = () => {
-  const { accountById } = useSelector((state: RootState) => state.accounts);
-  const { filter, list, totalCount } = useSelector((state: RootState) => state.wallets.orders);
+  const accountById = useSelector(accountsSelectors.selectAccountById);
+  const { filter, list, totalCount } = useSelector(walletsSelectors.selectOrders);
 
   const walletId = accountById?.wallets?.length && accountById.wallets[0]?.id;
 

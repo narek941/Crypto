@@ -2,10 +2,10 @@ import { Controller } from 'react-hook-form';
 import { useMemo } from 'react';
 import { isString } from 'lodash';
 
-import { Input, Select } from 'components';
 import { BinIcon } from 'assets/icons';
 import { useAppSelector } from 'hooks';
-import { RootState } from 'types';
+import { Input, Select } from 'components';
+import { adminSelectors } from 'store/adminSlice';
 
 import { addAccountFormFields } from '../fields';
 import styles from '../AddAccountForm.module.scss';
@@ -29,7 +29,7 @@ const SelectGroup = ({
   leftInputName,
   rightInputName,
 }: ISelectGroup) => {
-  const coins = useAppSelector((state: RootState) => state.admin.coins);
+  const coins = useAppSelector(adminSelectors.selectCoins);
   const currentAlertDestination = formMethods.watch(`alertsDestinations[${index}]`);
   const type = isString(currentAlertDestination?.type)
     ? currentAlertDestination?.type

@@ -7,6 +7,10 @@ import * as authThunks from './thunks';
 import { AuthStates } from './constants';
 import { AuthSliceState, UpdateAccessTokenAction } from './types';
 
+const isEng =
+  BrowserStorageService.get(BrowserStorageKeys.Language) === 'en' ||
+  BrowserStorageService.get(BrowserStorageKeys.Language, { session: true }) === 'en';
+
 const internalInitialState: AuthSliceState = {
   role: '',
   error: null,
@@ -17,6 +21,8 @@ const internalInitialState: AuthSliceState = {
     BrowserStorageService.get(BrowserStorageKeys.AccessToken) ||
     BrowserStorageService.get(BrowserStorageKeys.AccessToken, { session: true }) ||
     '',
+
+  isEnglish: isEng,
 };
 
 const authSlice = createSlice({
@@ -68,6 +74,9 @@ const authSlice = createSlice({
       const activeTheme = state.isDarkMode ? 'dark' : 'light';
       document.querySelector('body')?.setAttribute('data-theme', activeTheme);
       BrowserStorageService.set(BrowserStorageKeys.Mode, activeTheme);
+    });
+    builder.addCase(authThunks.setLang, (state) => {
+      state.isEnglish = !state.isEnglish;
     });
   },
 });

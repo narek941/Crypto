@@ -7,21 +7,22 @@ import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { EmptyData, Pagination } from 'components';
-import { ParamsWithId, RootState } from 'types';
-import { tradesTable } from 'constants/index';
+import { ParamsWithId } from 'types';
 import { useAppDispatch } from 'hooks';
-import { accountsActions } from 'store/accountsSlice';
-import { accountsTradesFilterUpdate } from 'store/accountsSlice/thunks';
 import { wrapWithBaseCurrency } from 'utils';
+import { tradesTable } from 'constants/index';
+import { EmptyData, Pagination } from 'components';
+import { accountsActions } from 'store/accountsSlice';
+import { accountsSelectors } from 'store/accountsSlice';
 import TradesFilters from 'components/views/filters/TradesFilters';
+import { accountsTradesFilterUpdate } from 'store/accountsSlice/thunks';
 
 import TradesTableRow from './TradesTableRow';
 import styles from './TradesTable.module.scss';
 
 const TradesTable = () => {
-  const { accountById } = useSelector((state: RootState) => state.accounts);
-  const { filter, list, totalCount } = useSelector((state: RootState) => state.accounts.trades);
+  const accountById = useSelector(accountsSelectors.selectAccountById);
+  const { filter, list, totalCount } = useSelector(accountsSelectors.selectAccountAccountsTrades);
   const { id } = useParams<ParamsWithId>();
 
   const [page, setPage] = useState(0);

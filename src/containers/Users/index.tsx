@@ -2,15 +2,14 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import { Table } from 'components';
-import { RootState } from 'types';
 import { Routes } from 'types/routes';
 import { useAppDispatch } from 'hooks';
 import { usersTable } from 'constants/index';
-import { adminActions } from 'store/adminSlice';
+import { adminActions, adminSelectors } from 'store/adminSlice';
 
 const Users = () => {
   const dispatch = useAppDispatch();
-  const { list, usersFilter, totalCount } = useSelector((state: RootState) => state.admin);
+  const { list, usersFilter, totalCount } = useSelector(adminSelectors.selectAdmin);
 
   const { take, order } = usersFilter;
 

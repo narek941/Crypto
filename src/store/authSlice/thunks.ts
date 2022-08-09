@@ -55,3 +55,4 @@ export const signOut = createAsyncThunk(`${Slice.Auth}/signOut`, async (_, thunk
 export const setDarkTheme = createAction('auth/setDarkTheme');
 export const setLightTheme = createAction('auth/setLightTheme');
 export const setTheme = createAction('auth/setTheme');
+export const setLang = createAction('auth/setLang');
