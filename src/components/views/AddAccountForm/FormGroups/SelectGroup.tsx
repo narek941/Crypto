@@ -35,6 +35,7 @@ const SelectGroup = ({
     ? currentAlertDestination?.type
     : currentAlertDestination?.type.value;
   const isEmailInput = type === 'EMAIL';
+  // const { t } = useTranslation();
 
   const coinOptions = useMemo(
     () =>

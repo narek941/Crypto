@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Controller } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import { CloseIcon } from 'assets/icons';
 import { Select, TableSearch } from 'components';
@@ -14,6 +15,7 @@ import { filterFormFields, filterSchemaKeys } from './fields';
 
 const UsersFilters = () => {
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   const [isMore, setIsMore] = useState(false);
   const [clearAll, setClearAll] = useState(false);
@@ -116,14 +118,14 @@ const UsersFilters = () => {
           </>
         )}
         <div className={styles.clear} role='button' onClick={handleClear}>
-          <span>Clear All</span>
+          <span>{t('clear_all')}</span>
           <div>
             <CloseIcon />
           </div>
         </div>
       </div>
       <div role='button' onClick={handleToggle} className={styles.toggle}>
-        Click Here to {isMore ? 'Hide' : 'Show'} Advanced Filters
+        {isMore ? t('hide_filter_text') : t('show_filter_text')}
       </div>
     </div>
   );

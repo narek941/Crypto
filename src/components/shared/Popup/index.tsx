@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -14,30 +14,44 @@ import { PopupProps } from './types';
 
 const Popup = ({ open }: PopupProps) => {
   const ref = useRef(null);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const dispatch = useAppDispatch();
   const isDarkMode = useSelector((state: RootState) => state.auth.isDarkMode);
   const popUpClasses = classNames(styles.popup, { [styles.popup__able]: open });
+  const [isEng, setIsEng] = useState(false);
 
   const handleChange = () => {
     dispatch(authActions.setTheme());
   };
 
+  const handleChangeLang = () => {
+    setIsEng(!isEng);
+  };
+
   const handleLogOut = () => {
     dispatch(authActions.signOut());
   };
+  useEffect(() => {
+    i18n.changeLanguage(!isEng ? 'en' : 'ru');
+  }, [isEng, i18n]);
 
   return (
     <div className={popUpClasses} ref={ref}>
       <div className={styles.popup__header}>{t('welcome')}</div>
       <div className={styles.popup__switcher}>
-        <span>Light</span>
+        <span>{t('light')}</span>
         <ToggleSwitch checked={isDarkMode} onChange={handleChange} />
-        <span>Dark</span>
+        <span>{t('dark')}</span>
       </div>
+      <div className={styles.popup__switcher}>
+        <span>EN</span>
+        <ToggleSwitch checked={isEng} onChange={handleChangeLang} />
+        <span>RU</span>
+      </div>
+
       <div className={styles.popup__logout}>
         <div role='button' onClick={handleLogOut}>
-          Log out
+          {t('log_out')}
         </div>
       </div>
     </div>

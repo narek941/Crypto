@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import { Switch } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 import { Button } from 'components';
 import FormGroup from 'components/forms/FormGroup';
@@ -10,6 +11,8 @@ import styles from '../AddAccountForm.module.scss';
 import { addAccountFormFields } from '../fields';
 
 const FormAction = ({ formMethods, isValid }: any) => {
+  const { t } = useTranslation();
+
   const firstCheckbox = formMethods.watch('stopLossOrder');
   const secondCheckbox = formMethods.watch('wrongCurrencyAlert');
 
@@ -25,7 +28,7 @@ const FormAction = ({ formMethods, isValid }: any) => {
       <>
         <div className={styles.form__action}>
           <div className={styles.form__action__item}>
-            <p className={firstCheckboxTextClass}>Stop-loss-order required</p>
+            <p className={firstCheckboxTextClass}>{t('stop_loss_order')}</p>
             <Switch
               {...addAccountFormFields.stopLossOrder}
               {...formMethods.register('stopLossOrder')}
@@ -33,7 +36,7 @@ const FormAction = ({ formMethods, isValid }: any) => {
             />
           </div>
           <div className={styles.form__action__item}>
-            <p className={secondCheckboxTextClass}>Wrong currency alert required</p>
+            <p className={secondCheckboxTextClass}>{t('wrong_currency_alert')}</p>
             <Switch
               className={styles.switch}
               {...addAccountFormFields.wrongCurrencyAlert}
@@ -44,7 +47,7 @@ const FormAction = ({ formMethods, isValid }: any) => {
 
           <div className={styles.form__buttons}>
             <Link to={Routes.Accounts} className={styles.form__buttons__cancel}>
-              Cancel
+              {t('cancel')}
             </Link>
             <Button
               className={styles.form__buttons__submit}
@@ -53,7 +56,7 @@ const FormAction = ({ formMethods, isValid }: any) => {
               size='l'
               disabled={!isValid}
             >
-              SAVE SETTINGS
+              {t('save_settings')}
             </Button>
           </div>
         </div>

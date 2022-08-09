@@ -1,15 +1,19 @@
 import React, { useRef, useState } from 'react';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import { Routes } from 'types';
 import { BurgerIcon, LogoIcon } from 'assets/icons';
 import { sidebarNavigation } from 'constants/index';
 import useOnClickOutside from 'hooks/useOutsideClick';
+import '../../../i18';
 
 import styles from './Sidebar.module.scss';
 
 const Sidebar: React.FC = () => {
+  const { t } = useTranslation();
+
   const ref = useRef(null);
   const [open, setOpen] = useState(false);
 
@@ -59,7 +63,7 @@ const Sidebar: React.FC = () => {
         <div className={listIconClasses}>
           <Icon />
         </div>
-        <div className={listText}>{text}</div>
+        <div className={listText}>{t(text)}</div>
       </div>
     </Link>
   ));

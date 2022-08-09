@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Controller } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import RangeSwipe from 'components/shared/Range';
 import { CloseIcon } from 'assets/icons';
@@ -31,6 +32,7 @@ const InflowsFilters = () => {
       selectInflowType: '',
     },
   });
+  const { t } = useTranslation();
 
   const handleToggle = () => setIsMore(!isMore);
 
@@ -132,14 +134,14 @@ const InflowsFilters = () => {
           </>
         )}
         <div className={styles.clear} role='button' onClick={handleClear}>
-          <span>Clear All</span>
+          <span>{t('clear_all')}</span>
           <div>
             <CloseIcon />
           </div>
         </div>
       </div>
       <div role='button' onClick={handleToggle} className={styles.toggle}>
-        Click Here to {isMore ? 'Hide' : 'Show'} Advanced Filters
+        {isMore ? t('hide_filter_text') : t('show_filter_text')}
       </div>
     </div>
   );

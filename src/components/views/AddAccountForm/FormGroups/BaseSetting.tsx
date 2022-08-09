@@ -1,4 +1,5 @@
 import { Controller } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import { Input, Select } from 'components';
 import FormGroup from 'components/forms/FormGroup';
@@ -8,10 +9,11 @@ import { addAccountFormFields } from '../fields';
 import styles from '../AddAccountForm.module.scss';
 
 const BaseSetting = ({ formMethods }: any) => {
+  const { t } = useTranslation();
   return (
     <FormGroup className={styles.form__section}>
       <>
-        <div className={styles.form__header}>Basic settings</div>
+        <div className={styles.form__header}>{t('basic_settings')}</div>
         <Input {...addAccountFormFields.name} {...formMethods.register('name')} />
         <Controller
           {...formMethods.register('baseCurrency')}

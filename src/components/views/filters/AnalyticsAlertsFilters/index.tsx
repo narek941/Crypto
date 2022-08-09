@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import DateRangePicker from 'components/shared/DateRangePicker';
 import { CloseIcon } from 'assets/icons';
@@ -13,6 +14,7 @@ import { filterFormFields, filterSchemaKeys } from './fields';
 
 const AnalyticsAlertsFilters = () => {
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   const [isMore, setIsMore] = useState(false);
   const [clearAll, setClearAll] = useState(false);
@@ -86,14 +88,14 @@ const AnalyticsAlertsFilters = () => {
           </>
         )}
         <div className={styles.clear} role='button' onClick={handleClear}>
-          <span>Clear All</span>
+          <span>{t('clear_all')}</span>
           <div>
             <CloseIcon />
           </div>
         </div>
       </div>
       <div role='button' onClick={handleToggle} className={styles.toggle}>
-        Click Here to {isMore ? 'Hide' : 'Show'} Advanced Filters
+        {isMore ? t('hide_filter_text') : t('show_filter_text')}
       </div>
     </div>
   );
