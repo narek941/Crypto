@@ -6,21 +6,21 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 
-import { RootState } from 'types';
 import { useAppDispatch } from 'hooks';
 import { wrapWithBaseCurrency } from 'utils';
 import { openOrdersTable } from 'constants/index';
 import { EmptyData, Pagination } from 'components';
-import { walletsActions } from 'store/walletsSlice';
+import { accountsSelectors } from 'store/accountsSlice';
 import { openOrdersFilterUpdate } from 'store/walletsSlice/thunks';
+import { walletsActions, walletsSelectors } from 'store/walletsSlice';
 import OpenOrdersFilters from 'components/views/filters/OpenOrdersFilters';
 
 import OrdersTableRow from './OrdersTableRow';
 import styles from './OrdersTable.module.scss';
 
 const OrdersTable = () => {
-  const { filter, list, totalCount } = useSelector((state: RootState) => state.wallets.openOrders);
-  const { accountById } = useSelector((state: RootState) => state.accounts);
+  const { filter, list, totalCount } = useSelector(walletsSelectors.selectOpenOrders);
+  const accountById = useSelector(accountsSelectors.selectAccountById);
   const walletId = accountById?.wallets?.length && accountById.wallets[0]?.id;
 
   const [page, setPage] = useState(0);

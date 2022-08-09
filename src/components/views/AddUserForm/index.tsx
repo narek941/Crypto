@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Controller } from 'react-hook-form';
 
+import { Routes } from 'types';
 import { useForm } from 'hooks';
-import { RootState, Routes } from 'types';
+import { adminSelectors } from 'store/adminSlice';
 import { Button, Input, Select } from 'components';
 import FormGroup from 'components/forms/FormGroup';
 import FormWrapper from 'components/forms/FormWrapper';
@@ -15,8 +16,8 @@ import { AddUserFormShape, IAddUser } from './types';
 import { addUserFormFields, addSchemaKeys } from './fields';
 
 const AddUserForm = ({ onClick, isEditable = false }: IAddUser) => {
-  const { username, email, role } = useSelector((state: RootState) => state.admin.userById);
-  const adminErrors = useSelector((state: RootState) => state.admin.error);
+  const adminErrors = useSelector(adminSelectors.selectAdminError);
+  const { username, email, role } = useSelector(adminSelectors.selectUserById);
 
   const addUserFormDefaultValues = useMemo(
     () =>

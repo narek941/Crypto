@@ -1,24 +1,24 @@
 import { useMemo, useState } from 'react';
 import { Controller } from 'react-hook-form';
 
-import DateRangePicker from 'components/shared/DateRangePicker';
-import DualSelect from 'components/shared/DualSelect';
-import RangeSwipe from 'components/shared/Range';
 import { CloseIcon } from 'assets/icons';
+import RangeSwipe from 'components/shared/Range';
 import { Select, TableSearch } from 'components';
+import { createObject } from 'utils/createObject';
+import { adminSelectors } from 'store/adminSlice';
+import DualSelect from 'components/shared/DualSelect';
+import DateRangePicker from 'components/shared/DateRangePicker';
 import { useAppDispatch, useAppSelector, useForm } from 'hooks';
 import { openOrdersFilterClear, openOrdersFilterUpdate } from 'store/walletsSlice/thunks';
-import { RootState } from 'types';
-import { createObject } from 'utils/createObject';
 
-import styles from './OpenOrdersFilters.module.scss';
 import { FilterFormShape } from './types';
+import styles from './OpenOrdersFilters.module.scss';
 import { filterFormFields, filterSchemaKeys } from './fields';
 
 const OpenOrdersFilters = () => {
   const dispatch = useAppDispatch();
-  const coins = useAppSelector((state: RootState) => state.admin.coins);
-  const tradingPairs = useAppSelector((state: RootState) => state.admin.tradingPairs);
+  const coins = useAppSelector(adminSelectors.selectCoins);
+  const tradingPairs = useAppSelector(adminSelectors.selectTradingPairs);
 
   const [isMore, setIsMore] = useState(false);
   const [clearAll, setClearAll] = useState(false);

@@ -3,9 +3,8 @@ import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
-import { RootState } from 'types';
 import { useAppDispatch } from 'hooks';
-import { authActions } from 'store/authSlice';
+import { authActions, authSelectors } from 'store/authSlice';
 
 import ToggleSwitch from '../ToggleSwitch';
 
@@ -16,7 +15,7 @@ const Popup = ({ open }: PopupProps) => {
   const ref = useRef(null);
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const isDarkMode = useSelector((state: RootState) => state.auth.isDarkMode);
+  const isDarkMode = useSelector(authSelectors.selectIsDarkMode);
   const popUpClasses = classNames(styles.popup, { [styles.popup__able]: open });
 
   const handleChange = () => {
