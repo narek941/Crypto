@@ -51,7 +51,9 @@ const InflowsTable = () => {
   };
 
   useEffect(() => {
-    dispatch(walletsActions.getWalletInflow({ ...filter, walletId: walletId as string | any }));
+    if (walletId) {
+      dispatch(walletsActions.getWalletInflow({ ...filter, walletId }));
+    }
   }, [walletId, filter, dispatch, filter.filter]);
 
   return (

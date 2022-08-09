@@ -1,19 +1,10 @@
-import { useDispatch } from 'react-redux';
-
+import { useDarkMode } from 'hooks';
 import { Container, Header, Sidebar } from 'components';
-import { authActions } from 'store/authSlice';
 
 import { ISeoProps } from './types';
 
 const Seo = ({ children, text, withHeader = true, isBackBtn = false }: ISeoProps) => {
-  const dispatch = useDispatch();
-
-  const activeMode = localStorage.getItem('mode') || 'light';
-  if (activeMode === 'dark') {
-    dispatch(authActions.setDarkTheme());
-  } else {
-    dispatch(authActions.setLightTheme());
-  }
+  useDarkMode();
 
   return (
     <main className='wrapper'>

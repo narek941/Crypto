@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { Slice } from 'types';
+import { BrowserStorageKeys, BrowserStorageService } from 'services';
 
 import * as authThunks from './thunks';
 import { AuthStates } from './constants';
@@ -12,7 +13,10 @@ const internalInitialState: AuthSliceState = {
   loading: AuthStates.IDLE,
   twoFactorAuthEnabled: false,
   isDarkMode: false,
-  accessToken: localStorage.getItem('accessToken') || sessionStorage.getItem('accessToken') || '',
+  accessToken:
+    BrowserStorageService.get(BrowserStorageKeys.AccessToken) ||
+    BrowserStorageService.get(BrowserStorageKeys.AccessToken, { session: true }) ||
+    '',
 };
 
 const authSlice = createSlice({
@@ -63,7 +67,7 @@ const authSlice = createSlice({
       state.isDarkMode = !state.isDarkMode;
       const activeTheme = state.isDarkMode ? 'dark' : 'light';
       document.querySelector('body')?.setAttribute('data-theme', activeTheme);
-      localStorage.setItem('mode', activeTheme);
+      BrowserStorageService.set(BrowserStorageKeys.Mode, activeTheme);
     });
   },
 });

@@ -45,9 +45,9 @@ const AddUserForm = ({ onClick, isEditable = false }: IAddUser) => {
       <FormWrapper {...{ formMethods }} onSubmit={handleSubmit(onClick)}>
         <FormGroup className={styles.signIn__form__group}>
           <>
-            <div className={styles.signIn__form__group__header}>
+            <p className={styles.signIn__form__group__header}>
               {isEditable ? 'Edit user' : 'Add new user'}
-            </div>
+            </p>
 
             <Input
               error={formMethods.formState.errors.name?.message || adminErrors?.username}

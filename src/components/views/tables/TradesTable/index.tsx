@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { EmptyData, Pagination } from 'components';
-import { RootState } from 'types';
+import { ParamsWithId, RootState } from 'types';
 import { tradesTable } from 'constants/index';
 import { useAppDispatch } from 'hooks';
 import { accountsActions } from 'store/accountsSlice';
@@ -22,8 +22,7 @@ import styles from './TradesTable.module.scss';
 const TradesTable = () => {
   const { accountById } = useSelector((state: RootState) => state.accounts);
   const { filter, list, totalCount } = useSelector((state: RootState) => state.accounts.trades);
-  const { id } = useParams();
-  const convertedId = Number(id);
+  const { id } = useParams<ParamsWithId>();
 
   const [page, setPage] = useState(0);
   const dispatch = useAppDispatch();
@@ -51,8 +50,10 @@ const TradesTable = () => {
   };
 
   useEffect(() => {
-    dispatch(accountsActions.getAccountTradesList({ ...filter, id: convertedId as string | any }));
-  }, [convertedId, filter, dispatch]);
+    if (id) {
+      dispatch(accountsActions.getAccountTradesList({ ...filter, id }));
+    }
+  }, [id, filter, dispatch]);
 
   return (
     <>

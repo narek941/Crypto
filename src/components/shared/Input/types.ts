@@ -5,13 +5,14 @@ export interface IInputProps {
   name?: string;
   label?: string;
   error?: string;
+  isSmall?: boolean;
   className?: string;
   disabled?: boolean;
-  isSmall?: boolean;
   placeholder?: string;
   haveRightIcon?: boolean;
   innerClassName?: string;
   labelClassName?: string;
+  isDisabledError?: boolean;
   type?: HTMLInputTypeAttribute;
   RightIcon?: React.FC<React.SVGProps<SVGSVGElement>>;
   RightToggledIcon?: React.FC<React.SVGProps<SVGSVGElement>>;
