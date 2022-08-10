@@ -13,6 +13,7 @@ const Select = React.forwardRef(
       id,
       name,
       error,
+      label,
       className,
       color = 'default',
       placeholder,
@@ -79,6 +80,7 @@ const Select = React.forwardRef(
 
     const handleSelect = (selectedItem: string) => {
       onChange(selectedItem);
+
       setFilteredOption(options);
       if (!callback) {
         closeDropdown();
@@ -106,6 +108,9 @@ const Select = React.forwardRef(
 
     return (
       <div className={selectClass}>
+        <label htmlFor={name} className={styles.select__label}>
+          {label}
+        </label>
         <div ref={selectRef} className={styles.wrapper} id={id} {...props}>
           <div onClick={openDropdown} className={headerClass}>
             <input

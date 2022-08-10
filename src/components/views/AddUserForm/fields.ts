@@ -26,6 +26,13 @@ export const addUserFormFields: FormField<keyof AddUserFormShape> = {
     id: 'addUser.password',
     placeholder: 'Enter Password',
   },
+  confirmPassword: {
+    name: 'confirmPassword',
+    type: 'password',
+    label: 'Repeat Password',
+    id: 'addUser.confirmPassword',
+    placeholder: 'Enter Password',
+  },
   emptyPassword: {
     name: 'emptyPassword',
     type: 'password',
@@ -33,12 +40,20 @@ export const addUserFormFields: FormField<keyof AddUserFormShape> = {
     id: 'addUser.password',
     placeholder: 'Enter Password',
   },
-  accountType: {
+  usersAccountType: {
     type: 'select',
-    name: 'accountType',
+    name: 'usersAccountType',
     label: 'Account type',
-    id: 'signIn.accountType',
+    id: 'signIn.usersAccountType',
     placeholder: 'Choose Type',
+    options: AccountTypeOptions,
+  },
+  usersAccountList: {
+    type: 'select',
+    name: 'usersAccountList',
+    label: 'Account type',
+    id: 'signIn.usersAccountList',
+    placeholder: 'Choose Accounts',
     options: AccountTypeOptions,
   },
 };

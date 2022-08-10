@@ -13,6 +13,7 @@ export interface ISelect {
   id: string;
   className?: string;
   name: string;
+  label?: string;
   text?: ReactNode | string | null | undefined;
   error: ErrorType;
   defaultChecked?: boolean;
@@ -21,5 +22,6 @@ export interface ISelect {
   callback?: any;
   filterName?: string;
   withAction?: boolean;
+  multiple?: boolean;
   [prop: string]: any;
 }

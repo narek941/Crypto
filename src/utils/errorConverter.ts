@@ -9,3 +9,15 @@ export const errorConverter = (message: string): string => {
       return message;
   }
 };
+
+export const parseAddUserError = (message: string): any => {
+  if (message.includes('already exists')) {
+    if (message.includes('email')) {
+      return { email: '* User with this email already exists. Choose a different email' };
+    } else if (message.includes('name')) {
+      return { email: '* User with this name already exists. Choose a different name' };
+    } else {
+      return message;
+    }
+  }
+};

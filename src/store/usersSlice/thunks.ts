@@ -1,7 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { AxiosError } from 'axios';
 
 import { client } from 'api';
 import { Slice } from 'types';
+import { parseAddUserError } from 'utils/errorConverter';
 
 export const addNewUser = createAsyncThunk(
   `${Slice.Users}/users`,
@@ -27,8 +29,23 @@ export const addNewUser = createAsyncThunk(
       return {
         accessToken: response.data.token,
       };
-    } catch {
-      return thunkAPI.rejectWithValue({ error: 'You can not add users' });
+    } catch (exception) {
+      const error = exception as AxiosError<{ message: any }>;
+      return thunkAPI.rejectWithValue({ error: parseAddUserError(error.response?.data.message) });
+    }
+  },
+);
+
+export const userInfoRequest = createAsyncThunk<any, any, { rejectValue: any }>(
+  `${Slice.Users}/me`,
+  async (data: any, thunkAPI) => {
+    try {
+      const response = await client.get('/users/me');
+      return { personalInfo: response.data };
+    } catch (error) {
+      return thunkAPI.rejectWithValue({
+        message: 'get user info request failed',
+      });
     }
   },
 );

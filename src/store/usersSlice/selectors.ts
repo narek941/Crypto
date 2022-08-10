@@ -7,3 +7,4 @@ import { UsersSliceState } from './types';
 const selectUsers = (state: RootState): UsersSliceState => state.users;
 
 export const selectUsersError = createSelector(selectUsers, (users) => users.error);
+export const selectPersonalInfo = createSelector(selectUsers, (users) => users.personalInfo);

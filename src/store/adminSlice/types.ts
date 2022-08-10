@@ -52,3 +52,11 @@ export interface IUsersResponseData {
   settings: IUsersResponseDataSetting | null;
   profile: IUsersResponseDataProfile | null;
 }
+
+export type IFilterPayload =
+  | { skip: number }
+  | { take: number }
+  | { sort: string }
+  | { search: string }
+  | { order: 'DESC' | 'ASC' }
+  | { filter: any };

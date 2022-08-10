@@ -7,6 +7,8 @@ import TableCell from '@mui/material/TableCell';
 import { Routes } from 'types';
 import { Alert } from 'components';
 import { BinIcon, EditIcon } from 'assets/icons';
+import { useAppSelector } from 'hooks';
+import { usersSelectors } from 'store/usersSlice';
 
 import styles from '../../Table.module.scss';
 import BlockAction from '../../BlockAction';
@@ -24,6 +26,8 @@ const TableUsersBody = ({
 }: ITableBodyProps) => {
   const [delID, setID] = useState<number | null>(null);
 
+  const personalInfo = useAppSelector(usersSelectors.selectPersonalInfo);
+
   const actionCellClassnames = classNames(
     styles.table__body__row__ceil,
     styles.table__body__row__ceil__actions,
@@ -34,6 +38,9 @@ const TableUsersBody = ({
     const isLastItem = index === rows.length - 1;
     const tooltipClasses = classNames({
       [styles.table__body__row__ceil__actions__bin__users_last]: isLastItem,
+    });
+    const binClass = classNames(styles.table__body__row__ceil__actions__bin, {
+      [styles.table__body__row__ceil__actions__bin__disabled]: personalInfo?.id == id,
     });
 
     return (
@@ -64,7 +71,7 @@ const TableUsersBody = ({
 
           {status !== 'DELETED' && handleClose && (
             <div
-              className={styles.table__body__row__ceil__actions__bin}
+              className={binClass}
               onClick={() => {
                 setID(id);
                 toggleAlertOpen && toggleAlertOpen();

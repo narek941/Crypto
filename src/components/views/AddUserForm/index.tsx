@@ -9,6 +9,7 @@ import { Button, Input, Select } from 'components';
 import FormGroup from 'components/forms/FormGroup';
 import FormWrapper from 'components/forms/FormWrapper';
 import { AccountTypeOptions } from 'utils/filterHelper';
+import MultipleSelect from 'components/shared/MultipleSelect';
 
 import styles from './AddUserForm.module.scss';
 import { AddUserFormShape, IAddUser } from './types';
@@ -16,7 +17,7 @@ import { addUserFormFields, addSchemaKeys } from './fields';
 
 const AddUserForm = ({ onClick, isEditable = false }: IAddUser) => {
   const { username, email, role } = useSelector((state: RootState) => state.admin.userById);
-  const adminErrors = useSelector((state: RootState) => state.admin.error);
+  const userErrors = useSelector((state: RootState) => state.users.error);
 
   const addUserFormDefaultValues = useMemo(
     () =>
@@ -50,30 +51,54 @@ const AddUserForm = ({ onClick, isEditable = false }: IAddUser) => {
             </div>
 
             <Input
-              error={formMethods.formState.errors.name?.message || adminErrors?.username}
+              error={formMethods.formState.errors.name?.message || userErrors?.name}
               {...addUserFormFields.name}
               {...formMethods.register('name')}
             />
 
             <Input
-              error={formMethods.formState.errors.email?.message || adminErrors?.email}
+              error={formMethods.formState.errors.email?.message || userErrors?.email}
               {...addUserFormFields.email}
               {...formMethods.register('email')}
             />
             <Input
               error={
                 formMethods.formState.errors.emptyPassword?.message ||
-                formMethods.formState.errors.password?.message ||
-                adminErrors?.password
+                formMethods.formState.errors.password?.message
               }
               {...(isEditable ? addUserFormFields.emptyPassword : addUserFormFields.password)}
               {...formMethods.register(isEditable ? 'emptyPassword' : 'password')}
               haveRightIcon={true}
             />
+            <Input
+              error={
+                formMethods.formState.errors.emptyPassword?.message ||
+                formMethods.formState.errors.confirmPassword?.message
+              }
+              {...(isEditable
+                ? addUserFormFields.emptyPassword
+                : addUserFormFields.confirmPassword)}
+              {...formMethods.register(isEditable ? 'emptyPassword' : 'confirmPassword')}
+              haveRightIcon={true}
+            />
             <Controller
               control={formMethods.control}
-              name={addUserFormFields.accountType.name as keyof AddUserFormShape}
-              render={({ field }) => <Select {...addUserFormFields.accountType} {...field} />}
+              name={addUserFormFields.usersAccountType.name as keyof AddUserFormShape}
+              render={({ field }) => (
+                <Select
+                  {...addUserFormFields.usersAccountType}
+                  {...field}
+                  withAction={false}
+                  multiple={true}
+                />
+              )}
+            />
+            <Controller
+              control={formMethods.control}
+              name={addUserFormFields.usersAccountList.name as keyof AddUserFormShape}
+              render={({ field }) => (
+                <MultipleSelect {...addUserFormFields.usersAccountList} {...field} />
+              )}
             />
 
             {!isEditable ? (

@@ -3,12 +3,11 @@ import { useDispatch } from 'react-redux';
 import { authActions } from 'store/authSlice';
 
 const useDarkMode = () => {
-  const activeMode = localStorage.getItem('mode') || 'light';
+  const activeMode = localStorage.getItem('mode') || 'dark';
 
   const dispatch = useDispatch();
-  // document.querySelector('body')?.setAttribute('data-theme', activeMode);
-  if (activeMode === 'dark') {
-    dispatch(authActions.setDarkTheme());
+  if (activeMode === 'light') {
+    dispatch(authActions.setLightTheme());
   }
 };
 

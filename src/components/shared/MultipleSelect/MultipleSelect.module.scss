@@ -1,0 +1,11 @@
+.select {
+  &__chip {
+    color: var(--font);
+    padding: 6.5px 8px;
+    border-radius: 12px;
+    background: var(--popup-background);
+    @extend %text-12;
+    @extend %flex-align;
+    gap: 4px;
+  }
+}
