@@ -239,44 +239,75 @@
   background-color: #d9d9d9 !important;
 }
 
-// ///select
-// .MuiSelect-select {
-//   padding: 0 !important;
-//   border: none !important;
-//   outline: none !important;
+///select
+.MuiSelect-select {
+  padding: 0 !important;
+  outline: none !important;
+  width: 100%;
 
-//   fieldset: {
-//     display: 'none';
-//   }
-// }
+  fieldset: {
+    display: 'none';
+  }
+}
 
-// .MuiSelect-outlined {
-//   border: none !important;
-//   background: transparent;
-//   outline: none !important;
+.MuiSelect-outlined {
+  background: transparent;
+  outline: none !important;
+}
 
-//   &:hover {
-//     border: none !important;
-//     outline: none !important;
-//   }
-// }
+.MuiSvgIcon-root {
+  fill: var(--dropdown-svg) !important;
+  margin-right: 4px;
+}
 
-// .MuiOutlinedInput-notchedOutline {
-//   display: none;
-// }
-// .MuiOutlinedInput-input {
-//   padding: 13px 36px 13px 12px;
-//   font-weight: 400;
-//   font-size: 14px;
-//   line-height: 100%;
-// }
+.MuiOutlinedInput-root {
+  background-color: var(--select-background);
+  padding: 6.5px 46px 6.5px 10px !important;
+  gap: 12px !important;
+  border: 1px solid transparent !important;
 
-// .Mui-selected {
-//   background: rgba(245, 245, 245, 0.1) !important;
-// }
+  &:hover {
+    border: 1px solid var(--select-border) !important;
+    outline: none !important;
+  }
+}
 
-// .MuiMenu-list {
-//   border: 1px solid rgba(41, 41, 46, 0.3) !important;
-//   box-shadow: 0px 2px 25px 2px rgba(0, 0, 0, 0.12) !important;
-//   padding: 0 !important;
-// }
+.MuiButtonBase-root {
+  max-height: 25px;
+}
+
+.MuiChip-label {
+  font-size: 12px !important;
+  line-height: 14px !important;
+}
+
+.MuiButtonBase-root {
+  border: none !important;
+}
+
+.MuiOutlinedInput-notchedOutline {
+  display: none;
+}
+.MuiOutlinedInput-input {
+  padding: 13px 36px 13px 12px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 100%;
+}
+
+.MuiMenu-list {
+  padding: 0 !important;
+  box-shadow: var(--option-shadow) !important;
+}
+.MuiMenuItem-root {
+  background: var(--select-option) !important;
+  backdrop-filter: blur(4px) !important;
+  color: var(--font) !important;
+
+  &:hover {
+    background-color: var(--select-hover) !important;
+  }
+}
+.Mui-selected {
+  background-color: var(--select-hover) !important;
+}

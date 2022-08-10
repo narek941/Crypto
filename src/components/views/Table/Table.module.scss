@@ -122,6 +122,11 @@
               bottom: 30px !important;
             }
           }
+          &__bin {
+            &__disabled {
+              display: none;
+            }
+          }
         }
       }
     }

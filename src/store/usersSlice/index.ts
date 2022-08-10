@@ -1,6 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 
 import { Slice } from 'types';
+import { extraReducers } from 'utils';
 
 import * as usersThunks from './thunks';
 import { UserStates } from './constants';
@@ -17,7 +18,20 @@ const usersSlice = createSlice({
   reducers: {
     reset: () => internalInitialState,
   },
-  // extraReducers: (builder) => {},
+  extraReducers: (builder) => {
+    builder.addCase(usersThunks.userInfoRequest.fulfilled, (state, action) => {
+      state.personalInfo = action.payload.personalInfo;
+    });
+    builder.addMatcher(
+      isAnyOf(usersThunks.userInfoRequest.pending, usersThunks.addNewUser.pending),
+      extraReducers.pendingReducer,
+    );
+
+    builder.addMatcher(
+      isAnyOf(usersThunks.userInfoRequest.rejected, usersThunks.addNewUser.rejected),
+      extraReducers.errorReducer,
+    );
+  },
 });
 
 const { reducer, actions } = usersSlice;

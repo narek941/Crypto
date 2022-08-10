@@ -5,12 +5,15 @@ import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { Routes } from 'types';
-import { useForm } from 'hooks';
+import { useAppDispatch, useForm } from 'hooks';
 import { adminSelectors } from 'store/adminSlice';
 import { Button, Input, Select } from 'components';
 import FormGroup from 'components/forms/FormGroup';
 import FormWrapper from 'components/forms/FormWrapper';
 import { AccountTypeOptions } from 'utils/filterHelper';
+import MultipleSelect from 'components/shared/MultipleSelect';
+import { usersSelectors } from 'store/usersSlice';
+import { accountsActions, accountsSelectors } from 'store/accountsSlice';
 
 import styles from './AddUserForm.module.scss';
 import { AddUserFormShape, IAddUser } from './types';
@@ -18,7 +21,9 @@ import { addUserFormFields, addSchemaKeys } from './fields';
 
 const AddUserForm = ({ onClick, isEditable = false }: IAddUser) => {
   const { t } = useTranslation();
-  const adminErrors = useSelector(adminSelectors.selectAdminError);
+  const dispatch = useAppDispatch();
+  const userErrors = useSelector(usersSelectors.selectUsersError);
+  const accountList = useSelector(accountsSelectors.selectAccountAccountsList);
   const { username, email, role } = useSelector(adminSelectors.selectUserById);
 
   const addUserFormDefaultValues = useMemo(
@@ -27,7 +32,7 @@ const AddUserForm = ({ onClick, isEditable = false }: IAddUser) => {
         ? {
             name: username,
             email: email,
-            accountType: AccountTypeOptions.find((option) => option.value === role)?.value,
+            usersAccountType: AccountTypeOptions.find((option) => option.value === role)?.value,
           }
         : {},
     [email, isEditable, role, username],
@@ -35,13 +40,40 @@ const AddUserForm = ({ onClick, isEditable = false }: IAddUser) => {
   const { formMethods, handleSubmit, isValid } = useForm<keyof AddUserFormShape, AddUserFormShape>({
     schemaKeys: addSchemaKeys,
     defaultValues: addUserFormDefaultValues,
+    mode: 'onChange',
   });
+
+  const accountWatch = formMethods.watch();
+
+  const accountsOptions = useMemo(
+    () =>
+      accountList.list.map((account) => ({
+        label: account.name,
+        value: account.id,
+      })),
+    [accountList],
+  );
 
   useEffect(() => {
     if (isEditable) {
       formMethods.reset(addUserFormDefaultValues);
     }
   }, [addUserFormDefaultValues, formMethods, isEditable]);
+
+  useEffect(() => {
+    if (!accountList?.totalCount) {
+      dispatch(
+        accountsActions.getAccountList({
+          skip: 0,
+          take: 10,
+          sort: 'id',
+          order: 'DESC',
+          search: '',
+          filter: {},
+        }),
+      );
+    }
+  }, []);
 
   return (
     <>
@@ -53,35 +85,66 @@ const AddUserForm = ({ onClick, isEditable = false }: IAddUser) => {
             </p>
 
             <Input
-              error={formMethods.formState.errors.name?.message || adminErrors?.username}
+              error={formMethods.formState.errors.name?.message || userErrors?.name}
               {...addUserFormFields.name}
               {...formMethods.register('name')}
             />
 
             <Input
-              error={formMethods.formState.errors.email?.message || adminErrors?.email}
+              error={formMethods.formState.errors.email?.message || userErrors?.email}
               {...addUserFormFields.email}
               {...formMethods.register('email')}
             />
             <Input
               error={
                 formMethods.formState.errors.emptyPassword?.message ||
-                formMethods.formState.errors.password?.message ||
-                adminErrors?.password
+                formMethods.formState.errors.password?.message
               }
               {...(isEditable ? addUserFormFields.emptyPassword : addUserFormFields.password)}
               {...formMethods.register(isEditable ? 'emptyPassword' : 'password')}
               haveRightIcon={true}
             />
+            <Input
+              error={
+                formMethods.formState.errors.emptyPassword?.message ||
+                formMethods.formState.errors.confirmPassword?.message
+              }
+              {...(isEditable
+                ? addUserFormFields.emptyPassword
+                : addUserFormFields.confirmPassword)}
+              {...formMethods.register('confirmPassword')}
+              haveRightIcon={true}
+            />
             <Controller
               control={formMethods.control}
-              name={addUserFormFields.accountType.name as keyof AddUserFormShape}
-              render={({ field }) => <Select {...addUserFormFields.accountType} {...field} />}
+              name={addUserFormFields.usersAccountType.name as keyof AddUserFormShape}
+              render={({ field }) => (
+                <Select
+                  {...addUserFormFields.usersAccountType}
+                  {...field}
+                  withAction={false}
+                  error={formMethods.formState.errors.usersAccountType?.message}
+                />
+              )}
             />
+            {accountWatch.usersAccountType == 'VIEWER' && (
+              <Controller
+                control={formMethods.control}
+                name={addUserFormFields.usersAccountList.name as keyof AddUserFormShape}
+                render={({ field }) => (
+                  <MultipleSelect
+                    {...addUserFormFields.usersAccountList}
+                    {...field}
+                    options={accountsOptions}
+                    error={formMethods.formState.errors.usersAccountList?.message}
+                  />
+                )}
+              />
+            )}
 
             {!isEditable ? (
               <div className={styles.signIn__form__group__button}>
-                <Button type='submit' color='secondary' size='m' disabled={!isValid}>
+                <Button type='submit' color='secondary' size='m'>
                   {t('add_user')}
                 </Button>
               </div>

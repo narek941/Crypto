@@ -4,5 +4,6 @@ import { UserStates } from './constants';
 
 export type UsersSliceState = {
   loading: UserStates;
-  error?: SerializedError | null;
+  error?: SerializedError | null | any;
+  personalInfo?: any;
 };
