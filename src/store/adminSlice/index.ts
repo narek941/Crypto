@@ -2,6 +2,7 @@ import { createSlice, isAnyOf, PayloadAction } from '@reduxjs/toolkit';
 
 import { Slice } from 'types';
 import { extraReducers } from 'utils';
+import { BrowserStorageKeys, BrowserStorageService } from 'services';
 
 import * as adminThunks from './thunks';
 import { AdminStates } from './constants';
@@ -16,7 +17,10 @@ const internalInitialState: AdminSliceState = {
   coins: [],
   tradingPairs: [],
   totalCount: 0,
-  accessToken: localStorage.getItem('accessToken') || sessionStorage.getItem('accessToken') || '',
+  accessToken:
+    BrowserStorageService.get(BrowserStorageKeys.AccessToken) ||
+    BrowserStorageService.get(BrowserStorageKeys.AccessToken, { session: true }) ||
+    '',
   usersFilter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '', filter: {} },
   accountsFilter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '' },
   userById: {},

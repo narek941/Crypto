@@ -26,6 +26,10 @@
     cursor: pointer;
     top: calc(50% - 12px);
 
+    path {
+      fill: var(--dropdown-svg) !important;
+    }
+
     &__open {
       transform: rotate(180deg);
     }

@@ -1,9 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
 
-import { client } from 'api';
 import { Slice } from 'types';
 import { parseAddUserError } from 'utils/errorConverter';
+import { client, usersApi } from 'api';
 
 export const addNewUser = createAsyncThunk(
   `${Slice.Users}/users`,
@@ -24,7 +24,7 @@ export const addNewUser = createAsyncThunk(
     };
 
     try {
-      const response = await client.post('/users', newUser);
+      const response = await usersApi.addNewUserRequest(newUser);
 
       return {
         accessToken: response.data.token,
@@ -44,7 +44,7 @@ export const userInfoRequest = createAsyncThunk<any, any, { rejectValue: any }>(
       return { personalInfo: response.data };
     } catch (error) {
       return thunkAPI.rejectWithValue({
-        message: 'get user info request failed',
+        message: 'Get user info request failed',
       });
     }
   },

@@ -155,7 +155,7 @@ const Select = React.forwardRef(
           </div>
         </div>
 
-        {error && <span className={styles['select-errorMsg']}>{error.message}</span>}
+        {error && <span className={styles['select-errorMsg']}>{error}</span>}
       </div>
     );
   },

@@ -1,8 +1,8 @@
-import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
+import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 
-import { client } from 'api';
 import { Slice } from 'types';
+import { adminApi } from 'api';
 import { ITableFilter } from 'types/api';
 
 import { accountsActions } from '../accountsSlice';
@@ -11,7 +11,7 @@ export const addNewAccount = createAsyncThunk(
   `${Slice.Admin}/accounts`,
   async (credentials: any, thunkAPI) => {
     try {
-      const response = await client.post('/admin/accounts', credentials);
+      const response = await adminApi.addNewAccountRequest(credentials);
 
       return {
         response: response.data,
@@ -26,7 +26,7 @@ export const updateAccount = createAsyncThunk(
   `${Slice.Admin}/accounts/update`,
   async ({ credentials, accountId }: any, thunkAPI) => {
     try {
-      const response = await client.put(`/admin/accounts/${accountId}`, credentials);
+      const response = await adminApi.updateAccountRequest(accountId, credentials);
 
       return {
         response: response.data,
@@ -46,12 +46,12 @@ export const getUsersList = createAsyncThunk(
       sort: string;
       order: string;
       search: string;
-      filter: {};
+      filter: any;
     },
     thunkAPI,
   ) => {
     try {
-      const response = await client.get('/admin/users', { params: { ...credentials } });
+      const response = await adminApi.usersListRequest(credentials);
 
       return {
         list: response.data.list,
@@ -67,7 +67,7 @@ export const blockUser = createAsyncThunk(
   `${Slice.Admin}/users/block`,
   async (userID: number, thunkAPI) => {
     try {
-      const response = await client.put(`/admin/users/${userID}/block`);
+      const response = await adminApi.blockUserRequest(userID);
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -86,7 +86,7 @@ export const unblockUser = createAsyncThunk(
   `${Slice.Admin}/users/unblock`,
   async (userID: number, thunkAPI) => {
     try {
-      const response = await client.put(`/admin/users/${userID}/unblock`);
+      const response = await adminApi.unblockUserRequest(userID);
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -108,9 +108,7 @@ export const updateUsername = createAsyncThunk(
   `${Slice.Admin}/users/username`,
   async ({ userID, username }: { userID: number; username: string }, thunkAPI) => {
     try {
-      const response = await client.put(`/admin/users/${userID}/username`, {
-        username,
-      });
+      const response = await adminApi.updateUsernameRequest(userID, username);
 
       return response.data;
     } catch (exception) {
@@ -124,9 +122,7 @@ export const updateUserEmail = createAsyncThunk(
   `${Slice.Admin}/users/email`,
   async ({ userID, email }: { userID: number; email: string }, thunkAPI) => {
     try {
-      const response = await client.put(`/admin/users/${userID}/email`, {
-        email,
-      });
+      const response = await adminApi.updateUserEmailRequest(userID, email);
 
       return response.data;
     } catch (exception) {
@@ -140,9 +136,7 @@ export const updateUserPassword = createAsyncThunk(
   `${Slice.Admin}/users/password`,
   async ({ userID, password }: { userID: number; password: string }, thunkAPI) => {
     try {
-      const response = await client.put(`/admin/users/${userID}/password`, {
-        password,
-      });
+      const response = await adminApi.updateUserPasswordRequest(userID, password);
 
       return response.data;
     } catch (exception) {
@@ -156,9 +150,7 @@ export const updateUserRole = createAsyncThunk(
   `${Slice.Admin}/users/role`,
   async ({ userID, role }: { userID: number; role: string }, thunkAPI) => {
     try {
-      const response = await client.put(`/admin/users/${userID}/role`, {
-        role,
-      });
+      const response = await adminApi.updateUserRoleRequest(userID, role);
 
       return response.data;
     } catch (exception) {
@@ -172,7 +164,7 @@ export const deleteUser = createAsyncThunk(
   `${Slice.Admin}/users/delete`,
   async (id: number, thunkAPI) => {
     try {
-      const response = await client.delete(`/admin/users/${id}`);
+      const response = await adminApi.deleteUserRequest(id);
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -191,7 +183,7 @@ export const deleteAccount = createAsyncThunk(
   `${Slice.Admin}/accounts/delete`,
   async (id: number, thunkAPI) => {
     try {
-      const response = await client.delete(`/admin/accounts/${id}`);
+      const response = await adminApi.deleteAccountRequest(id);
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -210,7 +202,7 @@ export const blockAccount = createAsyncThunk(
   `${Slice.Admin}/accounts/block`,
   async (userID: number, thunkAPI) => {
     try {
-      const response = await client.put(`/admin/accounts/${userID}/block`);
+      const response = await adminApi.blockAccountRequest(userID);
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -229,7 +221,7 @@ export const unblockAccount = createAsyncThunk(
   `${Slice.Admin}/accounts/unblock`,
   async (userID: number, thunkAPI) => {
     try {
-      const response = await client.put(`/admin/accounts/${userID}/unblock`);
+      const response = await adminApi.unblockAccountRequest(userID);
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -247,13 +239,11 @@ export const unblockAccount = createAsyncThunk(
   },
 );
 
-export const usersFilterUpdate = createAction<Partial<ITableFilter>>('usersFilter');
-
 export const getUserById = createAsyncThunk(
   `${Slice.Admin}/users/id`,
   async (userID: number, thunkAPI) => {
     try {
-      const response = await client.get(`/admin/users/${userID}`);
+      const response = await adminApi.getUserByIdRequest(userID);
 
       return {
         user: response.data,
@@ -266,7 +256,7 @@ export const getUserById = createAsyncThunk(
 
 export const getCoins = createAsyncThunk(`${Slice.Admin}/coins`, async (_, thunkAPI) => {
   try {
-    const response = await client.get('/admin/exchange/1/supported-cryptocurrencies');
+    const response = await adminApi.getCoinsRequest();
 
     return {
       coins: response.data.list,
@@ -280,7 +270,7 @@ export const getTradingPairs = createAsyncThunk(
   `${Slice.Admin}/trading-pairs`,
   async (_, thunkAPI) => {
     try {
-      const response = await client.get('/admin/exchange/1/allowed-trading-pairs');
+      const response = await adminApi.getTradingPairsRequest();
 
       return {
         tradingPairs: response.data.list,
@@ -293,3 +283,4 @@ export const getTradingPairs = createAsyncThunk(
 
 export const removeUserById = createAction('removeUserByID');
 export const userFilterClear = createAction<Partial<ITableFilter>>('userFilterClear');
+export const usersFilterUpdate = createAction<Partial<ITableFilter>>('usersFilter');

@@ -24,7 +24,7 @@
   --link-border: #0097a7;
   --select-border: #3700b3;
   --select-font: #212121;
-  --select-hover: rgba(88, 195, 190, 0.1);
+  --select-hover: rgba(210, 210, 210, 0.2);
   --header-border: #e9e9e9;
   --header-background: #faffff;
   --search-background: rgba(210, 210, 210, 0.2);
@@ -86,6 +86,8 @@
   --paper: #ffffff;
   --icon-selected: #605d7b;
   --svg: #4c4b53;
+  --dropdown-svg: #080808;
+
   --calendar: #e5e5e5;
   --calendar-alpha: rgba(0, 151, 167, 0.05);
 }
@@ -179,6 +181,7 @@
   --paper: #101010;
   --icon-selected: #ffffff;
   --svg: #9a99a6;
+  --dropdown-svg: #e5e5e5;
   --calendar: rgba(65, 58, 199, 0.15);
   --calendar-alpha: rgba(65, 58, 199, 0.15);
 }

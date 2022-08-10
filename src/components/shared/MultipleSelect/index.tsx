@@ -1,50 +1,19 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { ForwardedRef } from 'react';
-import _without from 'lodash/without';
+import { ForwardedRef, useRef } from 'react';
 import { Chip } from '@mui/material';
 
-import { CancelIcon, CloseIcon } from 'assets/icons';
+import { CloseIcon } from 'assets/icons';
 
 import styles from './MultipleSelect.module.scss';
 
-const names = [
-  'Oliver Hansen',
-  'Van Henry',
-  'April Tucker',
-  'Ralph Hubbard',
-  'Omar Alexander',
-  'Carlos Abbott',
-  'Miriam Wagner',
-  'Bradley Wilkerson',
-  'Virginia Andrews',
-  'Kelly Snyder',
-];
-
 const MultipleSelect = React.forwardRef(
   (
-    {
-      id,
-      name,
-      error,
-      label,
-
-      placeholder,
-      options,
-      onChange,
-      value = [],
-    }: //   callback,
-    //   filterName,
-    //   ...props
-    any,
+    { id, name, error, label, placeholder, options, onChange, value = [] }: any,
     ref: ForwardedRef<HTMLInputElement>,
   ): JSX.Element => {
-    // const [personName, setPersonName] = React.useState<string[]>([]);
-
     const handleChange = (event: SelectChangeEvent<typeof options>) => {
       const {
         target: { value },
@@ -52,50 +21,63 @@ const MultipleSelect = React.forwardRef(
       onChange(typeof value === 'string' ? value.split(',') : value);
     };
 
-    const handleRemove = (props: any, e: React.MouseEvent) => {
-      // eslint-disable-next-line no-console
-      console.log(props, value, 'q');
-      e.preventDefault();
-      onChange(_without(props, value));
+    const selectRef = useRef(null);
+
+    const handleRemove = (event: React.MouseEvent, props: any) => {
+      const filteredSelected = value.filter((item: string) => item !== props);
+      event.preventDefault();
+      onChange(
+        typeof filteredSelected === 'string' ? filteredSelected.split(',') : filteredSelected,
+      );
     };
 
     return (
-      <div>
-        <FormControl sx={{ width: '100% ' }}>
-          <label htmlFor={name}>{label}</label>
-          <Select
-            id={id}
-            ref={ref}
-            multiple
-            placeholder={placeholder}
-            value={value}
-            name={name}
-            error={error}
-            onChange={handleChange}
-            input={<OutlinedInput id='select-multiple-chip' label='Chip' />}
-            renderValue={(selected) => (
-              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                {selected.map((item: any) => (
+      <div className={styles.select}>
+        <label htmlFor={name} className={styles.select__label}>
+          {label}
+        </label>
+
+        <Select
+          id={id}
+          ref={ref}
+          multiple
+          value={value}
+          name={name}
+          displayEmpty
+          error={error}
+          onChange={handleChange}
+          input={<OutlinedInput />}
+          renderValue={(selected) => (
+            <div className={styles.select__chip__wrapper}>
+              {selected.length === 0 ? (
+                <div className={styles.select__placeholder}>{placeholder}</div>
+              ) : (
+                selected.map((item: any) => (
                   <Chip
                     key={item}
                     label={item}
                     clickable
-                    deleteIcon={<CloseIcon onMouseDown={(event) => event.stopPropagation()} />}
-                    // className={classes.chip}
-                    onDelete={(e) => handleDelete(e, item)}
-                    onClick={() => console.log('clicked chip')}
+                    deleteIcon={
+                      <CloseIcon
+                        className={styles.select__chip__icon}
+                        onMouseDown={(event) => event.stopPropagation()}
+                      />
+                    }
+                    className={styles.select__chip}
+                    onDelete={(e) => handleRemove(e, item)}
                   />
-                ))}
-              </Box>
-            )}
-          >
-            {names.map((name) => (
-              <MenuItem key={name} value={name}>
-                {name}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+                ))
+              )}
+            </div>
+          )}
+        >
+          {options.map(({ label }: any) => (
+            <MenuItem key={label} value={label} disableRipple ref={selectRef}>
+              {label}
+            </MenuItem>
+          ))}
+        </Select>
+        {error && <span className={styles['select-errorMsg']}>{error}</span>}
       </div>
     );
   },

@@ -1,18 +1,10 @@
+import { useDarkMode } from 'hooks';
 import { Container, Header, Sidebar } from 'components';
-import { authActions } from 'store/authSlice';
-import { useAppDispatch } from 'hooks';
 
 import { ISeoProps } from './types';
 
 const Seo = ({ children, text, withHeader = true, isBackBtn = false }: ISeoProps) => {
-  const dispatch = useAppDispatch();
-
-  const activeMode = localStorage.getItem('mode') || 'dark';
-  if (activeMode === 'dark') {
-    dispatch(authActions.setDarkTheme());
-  } else {
-    dispatch(authActions.setLightTheme());
-  }
+  useDarkMode();
 
   return (
     <main className='wrapper'>

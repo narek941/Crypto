@@ -41,20 +41,16 @@ export const addUserFormFields: FormField<keyof AddUserFormShape> = {
     placeholder: 'Enter Password',
   },
   usersAccountType: {
-    type: 'select',
     name: 'usersAccountType',
     label: 'Account type',
-    id: 'signIn.usersAccountType',
+    id: 'addUser.usersAccountType',
     placeholder: 'Choose Type',
     options: AccountTypeOptions,
   },
   usersAccountList: {
-    type: 'select',
     name: 'usersAccountList',
-    label: 'Account type',
-    id: 'signIn.usersAccountList',
+    id: 'addUser.usersAccountList',
     placeholder: 'Choose Accounts',
-    options: AccountTypeOptions,
   },
 };
 

@@ -8,3 +8,4 @@ const selectUsers = (state: RootState): UsersSliceState => state.users;
 
 export const selectUsersError = createSelector(selectUsers, (users) => users.error);
 export const selectPersonalInfo = createSelector(selectUsers, (users) => users.personalInfo);
+export const selectUsersLoading = createSelector(selectUsers, (users) => users.loading);

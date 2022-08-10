@@ -9,6 +9,7 @@ export type AuthSliceState = {
   role: string | null;
   twoFactorAuthEnabled: boolean;
   isDarkMode: boolean;
+  isEnglish: boolean;
 };
 
 export type UpdateAccessTokenAction = {

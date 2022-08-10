@@ -20,3 +20,7 @@ export enum Routes {
   AddNewAccount = '/accounts/create',
   EditAccount = '/accounts/edit',
 }
+
+export type ParamsWithId = {
+  id: string;
+};

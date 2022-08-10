@@ -6,10 +6,10 @@ import { isEqual } from 'lodash';
 import { useSelector } from 'react-redux';
 
 import { useAppDispatch } from 'hooks';
-import { AppDispatch, RootState, Routes } from 'types';
 import { AddUserForm } from 'components';
-import { adminActions } from 'store/adminSlice';
+import { AppDispatch, Routes } from 'types';
 import { usersActions } from 'store/usersSlice';
+import { adminActions, adminSelectors } from 'store/adminSlice';
 import { AddUserFormShape } from 'components/views/AddUserForm/types';
 
 import styles from './AddNewUser.module.scss';
@@ -19,9 +19,7 @@ const AddNewUser = () => {
   const dispatch = useAppDispatch() as AppDispatch;
   const { id: userId } = useParams();
   const id = Number(userId);
-  const { username, role, email, password } = useSelector(
-    (state: RootState) => state.admin.userById,
-  );
+  const { username, role, email, password } = useSelector(adminSelectors.selectUserById);
 
   const handleSubmit: SubmitHandler<AddUserFormShape> = async (values) => {
     const body = {
@@ -73,6 +71,7 @@ const AddNewUser = () => {
         dispatch(adminActions.removeUserById());
       };
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

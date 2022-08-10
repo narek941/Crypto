@@ -7,24 +7,22 @@ import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import AnalyticsAlertsFilters from 'components/views/filters/AnalyticsAlertsFilters';
-import { EmptyData, Pagination } from 'components';
-import { RootState } from 'types';
-import { alertsTable } from 'constants/index';
+import { ParamsWithId } from 'types';
 import { useAppDispatch } from 'hooks';
-import { accountsActions } from 'store/accountsSlice';
+import { alertsTable } from 'constants/index';
+import { EmptyData, Pagination } from 'components';
+import { accountsActions, accountsSelectors } from 'store/accountsSlice';
+import AnalyticsAlertsFilters from 'components/views/filters/AnalyticsAlertsFilters';
 
 import AnalyticsAlertTableRow from './AnalyticsAlertTableRow';
 import styles from './AnalyticsAlertTable.module.scss';
 
 const AnalyticsAlertTable = () => {
-  const { id } = useParams();
+  const { id } = useParams<ParamsWithId>();
   const dispatch = useAppDispatch();
-  const { filter, list, totalCount } = useSelector((state: RootState) => state.accounts.alerts);
+  const { filter, list, totalCount } = useSelector(accountsSelectors.selectAccountAccountsAlerts);
 
   const [page, setPage] = useState(0);
-
-  const convertedId = Number(id);
 
   // const [orderBy, setOrderBy] = useState<KeyOfData>('id');
 
@@ -52,8 +50,10 @@ const AnalyticsAlertTable = () => {
   };
 
   useEffect(() => {
-    dispatch(accountsActions.getAccountAlerts({ ...filter, id: convertedId as string | any }));
-  }, [convertedId, filter, dispatch]);
+    if (id) {
+      dispatch(accountsActions.getAccountAlerts({ ...filter, id }));
+    }
+  }, [id, filter, dispatch]);
 
   return (
     <>

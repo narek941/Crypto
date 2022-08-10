@@ -3,11 +3,11 @@ import { DateRange } from 'react-date-range';
 import classNames from 'classnames';
 import moment from 'moment';
 import { Controller } from 'react-hook-form';
-
-import { CalendarIcon } from 'assets/icons';
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
-import useOnClickOutside from 'hooks/useOutsideClick';
+
+import { useOnClickOutside } from 'hooks';
+import { CalendarIcon } from 'assets/icons';
 
 import styles from './DateRangePicker.module.scss';
 
@@ -15,27 +15,26 @@ const DateRangePicker = React.forwardRef<any, any>(
   ({ placeholder, formMethods, name, callback, filterName, clearAll }, ref: any) => {
     const customRef = useRef(null);
     const [openCalendar, setOpenCalendar] = useState<boolean>(false);
-    const defaultValue = [
-      {
-        startDate: undefined,
-        endDate: undefined,
-        key: 'selection',
-      },
-    ];
+    const defaultValue = {
+      startDate: undefined,
+      endDate: undefined,
+      key: 'selection',
+    };
 
     const [state, setState] = useState(defaultValue);
 
     useEffect(() => {
       setState(defaultValue);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [clearAll]);
 
-    const startDay = moment(state[0]?.startDate).format('LL');
-    const endDay = moment(state[0]?.endDate).format('LL');
+    const startDay = moment(state.startDate).format('LL');
+    const endDay = moment(state.endDate).format('LL');
 
-    const text = state[0]?.startDate === undefined ? placeholder : `${startDay} - ${endDay}`;
+    const text = state.startDate === undefined ? placeholder : `${startDay} - ${endDay}`;
 
     const headerTextClass = classNames({
-      [styles.calendar__header__placeholder]: !state[0]?.startDate,
+      [styles.calendar__header__placeholder]: !state.startDate,
     });
 
     const calendarWrapperClass = classNames(styles.calendar__wrapper, {
@@ -49,13 +48,13 @@ const DateRangePicker = React.forwardRef<any, any>(
     };
 
     const handleChange = (item: any) => {
-      setState([item.selection]);
+      setState(item.selection);
       formMethods.setValue(name, item.selection);
     };
 
     const handleSubmit = () => {
-      if (state[0].endDate !== undefined && state[0].endDate !== undefined && openCalendar) {
-        callback(filterName, [state[0]?.startDate, state[0]?.endDate]);
+      if (state.endDate !== undefined && state.endDate !== undefined && openCalendar) {
+        callback(filterName, [state.startDate, state.endDate]);
       }
 
       setOpenCalendar(false);
@@ -76,28 +75,28 @@ const DateRangePicker = React.forwardRef<any, any>(
             {...formMethods.register(name)}
             render={() => (
               <DateRange
-                className={styles.calendar__inner}
-                onChange={handleChange}
-                moveRangeOnFirstSelection={true}
-                ranges={state}
-                months={2}
                 ref={ref}
+                months={2}
+                ranges={[state]}
                 weekStartsOn={1}
-                retainEndDateOnFirstSelection={true}
-                weekdayDisplayFormat='EEEEE'
-                direction='horizontal'
                 showPreview={false}
+                direction='horizontal'
+                onChange={handleChange}
+                weekdayDisplayFormat='EEEEE'
+                moveRangeOnFirstSelection={true}
+                className={styles.calendar__inner}
+                retainEndDateOnFirstSelection={true}
               />
             )}
           />
 
           <div className={styles.calendar__action}>
-            <div className={styles.calendar__action__cancel} onClick={handleCloseCalendar}>
+            <p className={styles.calendar__action__cancel} onClick={handleCloseCalendar}>
               cancel
-            </div>
-            <div className={styles.calendar__action__select} onClick={handleSubmit}>
+            </p>
+            <p className={styles.calendar__action__select} onClick={handleSubmit}>
               select
-            </div>
+            </p>
           </div>
         </div>
       </div>
