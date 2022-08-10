@@ -11,15 +11,17 @@ export type Option = {
 
 export interface ISelect {
   id: string;
-  className?: string;
   name: string;
-  text?: ReactNode | string | null | undefined;
+  label?: string;
+  callback?: any;
   error: ErrorType;
-  defaultChecked?: boolean;
   color?: ColorType;
   options: Option[];
-  callback?: any;
+  className?: string;
   filterName?: string;
-  withAction?: boolean;
   [prop: string]: any;
+  withAction?: boolean;
+  defaultValue?: string;
+  defaultChecked?: boolean;
+  text?: ReactNode | string | null | undefined;
 }

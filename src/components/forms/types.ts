@@ -9,6 +9,7 @@ export type FormField<T extends FormFieldNames> = {
     name: string;
     label?: string;
     placeholder?: string;
+    defaultValue?: string;
     type?: HTMLInputTypeAttribute;
     options?: Option[];
     checked?: boolean;
