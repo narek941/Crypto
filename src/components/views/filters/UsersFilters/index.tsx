@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
 
 import { CloseIcon } from 'assets/icons';
 import { Select, TableSearch } from 'components';
@@ -29,6 +30,10 @@ const UsersFilters = () => {
       userType: '',
       userEmail: '',
     },
+  });
+
+  const advancedClass = classNames(styles.item, {
+    [styles.advanced__hide]: !isMore,
   });
 
   const handleToggle = () => setIsMore(!isMore);
@@ -93,30 +98,26 @@ const UsersFilters = () => {
           />
         </div>
 
-        {isMore && (
-          <>
-            <div className={styles.item}>
-              <TableSearch
-                {...filterFormFields.userId}
-                {...formMethods.register('userId')}
-                className={styles.search}
-                callback={handleFilter}
-                filterName={'id'}
-                clearAll={clearAll}
-              />
-            </div>
-            <div className={styles.item}>
-              <TableSearch
-                {...filterFormFields.userEmail}
-                {...formMethods.register('userEmail')}
-                className={styles.search}
-                callback={handleFilter}
-                filterName={'email'}
-                clearAll={clearAll}
-              />
-            </div>
-          </>
-        )}
+        <div className={advancedClass}>
+          <TableSearch
+            {...filterFormFields.userId}
+            {...formMethods.register('userId')}
+            className={styles.search}
+            callback={handleFilter}
+            filterName={'id'}
+            clearAll={clearAll}
+          />
+        </div>
+        <div className={advancedClass}>
+          <TableSearch
+            {...filterFormFields.userEmail}
+            {...formMethods.register('userEmail')}
+            className={styles.search}
+            callback={handleFilter}
+            filterName={'email'}
+            clearAll={clearAll}
+          />
+        </div>
         <div className={styles.clear} role='button' onClick={handleClear}>
           <span>{t('clear_all')}</span>
           <div>

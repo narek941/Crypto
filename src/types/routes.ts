@@ -5,6 +5,7 @@ export type RoutesProps = {
   withHeader?: boolean;
   isProtected?: boolean;
   component: JSX.Element;
+  withMail?: boolean;
 };
 
 export enum Routes {

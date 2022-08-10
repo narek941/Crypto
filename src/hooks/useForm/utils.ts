@@ -13,10 +13,15 @@ export const composeFormSchema = <K extends FormFieldNames>(fields: K[]): AnyObj
       excludeEmptyString: true,
       message: '* This password is too weak',
     }),
-    password: Yup.string().matches(
-      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/,
-      '* This password is too weak',
-    ),
+    password: Yup.string()
+      .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/, '* This password is too weak')
+      .required('* Enter password to finish adding new user'),
+
+    confirmPassword: Yup.string()
+      .required('* Repeat password to finish adding new user')
+      .oneOf([Yup.ref('password'), null], 'Passwords must match'),
+    usersAccountType: Yup.string().required('* Choose account type to finish adding new user'),
+    usersAccountList: Yup.array().required('* Select linked accounts'),
     ///Add account
     apiKey: Yup.string(),
     maxRisk: Yup.number(),

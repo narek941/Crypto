@@ -50,7 +50,7 @@ const TableAccountBody = ({
             {statistics?.startCapitalInBaseCurrency + ' USDT'}
           </TableCell>
           <TableCell className={styles.table__body__row__ceil} align='left'>
-            {startCapitalInBaseCurrency + ' USDT'}
+            {statistics.currentCapitalInBaseCurrency + ' USDT'}
           </TableCell>
           <TableCell className={styles.table__body__row__ceil} align='left'>
             {formattedDate}

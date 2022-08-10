@@ -45,6 +45,7 @@ export type FormFieldNames =
   | 'selectInflowValueInBaseCurrency'
   | 'searchInflowID'
   | 'historyID'
+  | 'usersAccountList'
   | 'historyPair'
   | 'historyValue'
   | 'historyUpdateTime'
@@ -84,7 +85,9 @@ export type FormFieldNames =
   | 'userStatus'
   | 'userId'
   | 'userType'
-  | 'userEmail';
+  | 'userEmail'
+  | 'confirmPassword'
+  | 'usersAccountType';
 
 export type FieldShapeLookup<K extends FormFieldNames> = {
   [P in K]?: Record<FormFieldNames, unknown>[P];

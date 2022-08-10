@@ -26,14 +26,6 @@ const internalInitialState: AdminSliceState = {
   userById: {},
 };
 
-export type IFilterPayload =
-  | { skip: number }
-  | { take: number }
-  | { sort: string }
-  | { search: string }
-  | { order: 'DESC' | 'ASC' }
-  | { filter: any };
-
 const adminSlice = createSlice({
   name: Slice.Admin,
   initialState: internalInitialState,

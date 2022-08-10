@@ -38,6 +38,7 @@ const routes: RoutesProps[] = [
     isProtected: true,
     isBackBtn: true,
     component: <AccountsAnalytics />,
+    withMail: true,
   },
   {
     path: Routes.AddNewAccount,
