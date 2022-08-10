@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import DateRangePicker from 'components/shared/DateRangePicker';
@@ -35,6 +35,13 @@ const AnalyticsAlertsFilters = () => {
     dispatch(accountsAlertsFilterClear({}));
     setClearAll(!clearAll);
   };
+
+  useEffect(() => {
+    return () => {
+      handleClear();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleFilter = (key: string, value: any) => {
     dispatch(accountsAlertsFilterUpdate({ filter: createObject(key, value) }));

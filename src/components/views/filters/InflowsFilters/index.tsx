@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
@@ -41,6 +41,13 @@ const InflowsFilters = () => {
     dispatch(inflowFilterClear({}));
     setClearAll(!clearAll);
   };
+
+  useEffect(() => {
+    return () => {
+      handleClear();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const coinOptions = useMemo(
     () =>
