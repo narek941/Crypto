@@ -8,7 +8,7 @@ import routes from './routes';
 
 const RouterProvider = () => {
   const renderRoutes = routes.map(
-    ({ path, component, text, isProtected, withHeader, isBackBtn }: RoutesProps) => {
+    ({ path, component, text, isProtected, withHeader, isBackBtn, withMail }: RoutesProps) => {
       const RouteWrapper = isProtected ? ProtectedRoute : PublicRoute;
 
       return (
@@ -17,7 +17,7 @@ const RouterProvider = () => {
           path={path}
           element={
             <RouteWrapper>
-              <Seo text={text} withHeader={withHeader} isBackBtn={isBackBtn}>
+              <Seo text={text} withHeader={withHeader} isBackBtn={isBackBtn} withMail={withMail}>
                 {component}
               </Seo>
             </RouteWrapper>

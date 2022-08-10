@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
 
 import DateRangePicker from 'components/shared/DateRangePicker';
 import { CloseIcon } from 'assets/icons';
@@ -40,6 +41,10 @@ const AlertsFilters = () => {
     dispatch(alertsFilterUpdate({ filter: createObject(key, value) }));
   };
 
+  const advancedClass = classNames(styles.item, {
+    [styles.advanced__hide]: !isMore,
+  });
+
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
@@ -63,30 +68,26 @@ const AlertsFilters = () => {
             clearAll={clearAll}
           />
         </div>
-        {isMore && (
-          <>
-            <div className={styles.item}>
-              <TableSearch
-                {...filterFormFields.alertID}
-                {...formMethods.register('alertID')}
-                className={styles.search}
-                callback={handleFilter}
-                filterName={'id'}
-                clearAll={clearAll}
-              />
-            </div>
-            <div className={styles.item}>
-              <TableSearch
-                {...filterFormFields.alertMessage}
-                {...formMethods.register('alertMessage')}
-                className={styles.search}
-                callback={handleFilter}
-                filterName={'message'}
-                clearAll={clearAll}
-              />
-            </div>
-          </>
-        )}
+        <div className={advancedClass}>
+          <TableSearch
+            {...filterFormFields.alertID}
+            {...formMethods.register('alertID')}
+            className={styles.search}
+            callback={handleFilter}
+            filterName={'id'}
+            clearAll={clearAll}
+          />
+        </div>
+        <div className={advancedClass}>
+          <TableSearch
+            {...filterFormFields.alertMessage}
+            {...formMethods.register('alertMessage')}
+            className={styles.search}
+            callback={handleFilter}
+            filterName={'message'}
+            clearAll={clearAll}
+          />
+        </div>
         <div className={styles.clear} role='button' onClick={handleClear}>
           <span>{t('clear_all')}</span>
           <div>
