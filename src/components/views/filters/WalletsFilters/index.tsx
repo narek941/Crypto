@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Controller } from 'react-hook-form';
 
 import { CloseIcon } from 'assets/icons';
@@ -31,6 +31,13 @@ const WalletsFilters = () => {
     dispatch(walletsActions.recordsFilterClear({}));
     setClearAll(!clearAll);
   };
+
+  useEffect(() => {
+    return () => {
+      handleClear();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleFilter = (key: string, value: any) => {
     dispatch(walletsActions.recordsFilterUpdate({ filter: createObject(key, value) }));

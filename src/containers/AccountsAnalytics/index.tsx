@@ -19,11 +19,11 @@ const AccountsAnalytics = (): JSX.Element => {
 
   const accountById = useSelector(accountsSelectors.selectAccountById);
 
-  const renderLineCharts = charts.accountsAnalyticsChart.lineChart.map((item: any, index) => (
+  const renderLineCharts = charts.accountsAnalyticsChart.lineChart.map((_, index) => (
     <Chart key={index} />
   ));
 
-  const renderDoughnutCharts = charts.accountsAnalyticsChart.lineChart.map((item: any, index) => (
+  const renderDoughnutCharts = charts.accountsAnalyticsChart.lineChart.map((_, index) => (
     <Doughnut key={index} />
   ));
 
