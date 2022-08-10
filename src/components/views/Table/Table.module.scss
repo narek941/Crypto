@@ -21,7 +21,11 @@
     border: 1px solid var(--table-border);
     border-radius: 8px;
     overflow-x: scroll;
-  }
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
 
   &__header {
     height: 48px;
