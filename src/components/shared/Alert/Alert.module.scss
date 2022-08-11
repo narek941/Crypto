@@ -36,7 +36,7 @@
     &__continue {
       cursor: pointer;
       text-transform: uppercase;
-      color: #3700b3;
+      color: var(--select-btn);
     }
   }
 }

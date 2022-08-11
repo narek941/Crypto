@@ -121,8 +121,8 @@ const Select = React.forwardRef(
               className={inputClass}
               onChange={handleSearch}
               placeholder={placeholder}
-              defaultValue={props.defaultValue || ''}
-              value={value ? currentOption?.label : props.defaultValue || ''}
+              defaultValue={props.defaultValue}
+              value={value ? currentOption?.label : ''}
             />
             <DropDownIcon role='button' className={dropClass} />
           </div>
