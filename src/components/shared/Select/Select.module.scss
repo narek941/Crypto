@@ -1,4 +1,4 @@
-.label{
+.label {
   color: var(--font);
   @extend %text-14;
 }
@@ -59,7 +59,7 @@
     @extend %text-13;
     @extend %flex-column;
 
-    &__select_container{
+    &__select_container {
       &::-webkit-scrollbar {
         display: none;
       }
@@ -74,12 +74,12 @@
       gap: 10px;
 
       &__select {
-        color: #3700b3;
+        color: var(--select-btn);
         background-color: transparent;
       }
 
       &__cancel {
-        color: white;
+        color: var(--cancel);
         background-color: transparent;
       }
     }
