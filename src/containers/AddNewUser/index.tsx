@@ -23,7 +23,10 @@ const AddNewUser = () => {
 
   const handleSubmit: SubmitHandler<AddUserFormShape> = async (values) => {
     const body = {
-      ...values,
+      email: values.email,
+      password: values.password,
+      name: values.name,
+      role: values.usersAccountType,
       deviceToken: uuidv4(),
     } as any;
 

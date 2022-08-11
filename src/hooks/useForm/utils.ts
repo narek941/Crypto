@@ -21,7 +21,7 @@ export const composeFormSchema = <K extends FormFieldNames>(fields: K[]): AnyObj
       .required('* Repeat password to finish adding new user')
       .oneOf([Yup.ref('password'), null], 'Passwords must match'),
     usersAccountType: Yup.string().required('* Choose account type to finish adding new user'),
-    usersAccountList: Yup.array().required('* Select linked accounts'),
+    usersAccountList: Yup.array(),
     ///Add account
     apiKey: Yup.string(),
     maxRisk: Yup.number(),
