@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
@@ -46,6 +46,13 @@ const InflowsFilters = () => {
   const advancedClass = classNames(styles.item, {
     [styles.advanced__hide]: !isMore,
   });
+
+  useEffect(() => {
+    return () => {
+      handleClear();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const coinOptions = useMemo(
     () =>
