@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
+import { isNull } from 'lodash';
 
 import { CloseIcon } from 'assets/icons';
 import RangeSwipe from 'components/shared/Range';
@@ -12,6 +13,8 @@ import DualSelect from 'components/shared/DualSelect';
 import DateRangePicker from 'components/shared/DateRangePicker';
 import { useAppDispatch, useAppSelector, useForm } from 'hooks';
 import { openOrdersFilterClear, openOrdersFilterUpdate } from 'store/walletsSlice/thunks';
+import { walletsSelectors } from 'store/walletsSlice';
+import { filterObject } from 'utils/filterObject';
 
 import { FilterFormShape } from './types';
 import styles from './OpenOrdersFilters.module.scss';
@@ -21,6 +24,8 @@ const OpenOrdersFilters = () => {
   const dispatch = useAppDispatch();
   const coins = useAppSelector(adminSelectors.selectCoins);
   const tradingPairs = useAppSelector(adminSelectors.selectTradingPairs);
+  const { filter } = useAppSelector(walletsSelectors.selectOpenOrders);
+
   const { t } = useTranslation();
 
   const [isMore, setIsMore] = useState(false);
@@ -29,11 +34,11 @@ const OpenOrdersFilters = () => {
     mode: 'onChange',
     schemaKeys: filterSchemaKeys,
     defaultValues: {
-      selectValue: [undefined, undefined],
-      selectValueInBaseCurrency: [undefined, undefined],
-      selectFee: [undefined, undefined],
-      selectShare: [undefined, undefined],
-      selectFeeInBaseCurrency: [undefined, undefined],
+      selectValue: ['', ''],
+      selectValueInBaseCurrency: ['', ''],
+      selectFee: ['', ''],
+      selectShare: ['', ''],
+      selectFeeInBaseCurrency: ['', ''],
       selectSide: '',
       searchID: '',
       searchReceived: '',
@@ -74,22 +79,27 @@ const OpenOrdersFilters = () => {
   );
 
   const handleFilter = (key: string, value: any) => {
-    if (key === 'pair') {
-      const coinsPair = tradingPairs.find((pair) => {
-        const fromCoin = coins.find((coin) => coin.id === value[0]);
-        const toCoin = coins.find((coin) => coin.id === value[1]);
-        return `${fromCoin.name}${toCoin.name}` === pair.name;
-      });
-
-      dispatch(
-        openOrdersFilterUpdate({
-          filter: {
-            coinsPairId: coinsPair?.id || -1,
-          },
-        }),
-      );
+    if (isNull(value)) {
+      const obj = filterObject(filter.filter, key);
+      dispatch(openOrdersFilterClear(obj));
     } else {
-      dispatch(openOrdersFilterUpdate({ filter: createObject(key, value) }));
+      if (key === 'pair') {
+        const coinsPair = tradingPairs.find((pair) => {
+          const fromCoin = coins.find((coin) => coin.id === value[0]);
+          const toCoin = coins.find((coin) => coin.id === value[1]);
+          return `${fromCoin.name}${toCoin.name}` === pair.name;
+        });
+
+        dispatch(
+          openOrdersFilterUpdate({
+            filter: {
+              coinsPairId: coinsPair?.id || -1,
+            },
+          }),
+        );
+      } else {
+        dispatch(openOrdersFilterUpdate({ filter: createObject(key, value) }));
+      }
     }
   };
   const advancedClass = classNames(styles.item, {

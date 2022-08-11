@@ -119,24 +119,24 @@ const walletsSlice = createSlice({
       state.openOrders.filter = { ...filter, ...action.payload };
       state.openOrders.filter.filter = { ...filter.filter, ...action.payload.filter };
     });
-    builder.addCase(walletsThunks.recordsFilterClear, (state) => {
-      state.records.filter.filter = {};
+    builder.addCase(walletsThunks.recordsFilterClear, (state, action) => {
+      state.records.filter.filter = action.payload;
     });
 
-    builder.addCase(walletsThunks.inflowFilterClear, (state) => {
-      state.inflow.filter.filter = {};
+    builder.addCase(walletsThunks.inflowFilterClear, (state, action) => {
+      state.inflow.filter.filter = action.payload;
     });
 
-    builder.addCase(walletsThunks.ordersFilterClear, (state) => {
-      state.orders.filter.filter = {};
+    builder.addCase(walletsThunks.ordersFilterClear, (state, action) => {
+      state.orders.filter.filter = action.payload;
     });
 
-    builder.addCase(walletsThunks.orderTradesFilterClear, (state) => {
-      state.orderTrades.filter.filter = {};
+    builder.addCase(walletsThunks.orderTradesFilterClear, (state, action) => {
+      state.orderTrades.filter.filter = action.payload;
     });
 
-    builder.addCase(walletsThunks.openOrdersFilterClear, (state) => {
-      state.openOrders.filter.filter = {};
+    builder.addCase(walletsThunks.openOrdersFilterClear, (state, action) => {
+      state.openOrders.filter.filter = action.payload;
     });
     builder.addMatcher(
       isAnyOf(

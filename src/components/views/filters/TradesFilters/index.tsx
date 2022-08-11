@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
+import { isNull } from 'lodash';
 
 import { CloseIcon } from 'assets/icons';
 import { Select, TableSearch } from 'components';
@@ -11,6 +12,8 @@ import DualSelect from 'components/shared/DualSelect';
 import DateRangePicker from 'components/shared/DateRangePicker';
 import { useAppDispatch, useAppSelector, useForm } from 'hooks';
 import { accountsTradesFilterClear, accountsTradesFilterUpdate } from 'store/accountsSlice/thunks';
+import { accountsSelectors } from 'store/accountsSlice';
+import { filterObject } from 'utils/filterObject';
 
 import styles from './TradesFilters.module.scss';
 import { FilterFormShape } from './types';
@@ -20,6 +23,7 @@ const TradesFilters = () => {
   const dispatch = useAppDispatch();
   const coins = useAppSelector(adminSelectors.selectCoins);
   const tradingPairs = useAppSelector(adminSelectors.selectTradingPairs);
+  const { filter } = useAppSelector(accountsSelectors.selectAccountAccountsTrades);
   const { t } = useTranslation();
 
   const [isMore, setIsMore] = useState(false);
@@ -46,23 +50,29 @@ const TradesFilters = () => {
   const handleToggle = () => setIsMore(!isMore);
 
   const handleFilter = (key: string, value: any) => {
-    if (key === 'pair') {
-      const coinsPair = tradingPairs.find((pair) => {
-        const fromCoin = coins.find((coin) => coin.id === value[0]);
-        const toCoin = coins.find((coin) => coin.id === value[1]);
+    if (isNull(value)) {
+      const obj = filterObject(filter.filter, key);
 
-        return `${fromCoin.name}${toCoin.name}` === pair.name;
-      });
-
-      dispatch(
-        accountsTradesFilterUpdate({
-          filter: {
-            coinsPairId: coinsPair?.id || -1,
-          },
-        }),
-      );
+      dispatch(accountsTradesFilterClear(obj));
     } else {
-      dispatch(accountsTradesFilterUpdate({ filter: createObject(key, value) }));
+      if (key === 'pair') {
+        const coinsPair = tradingPairs.find((pair) => {
+          const fromCoin = coins.find((coin) => coin.id === value[0]);
+          const toCoin = coins.find((coin) => coin.id === value[1]);
+
+          return `${fromCoin.name}${toCoin.name}` === pair.name;
+        });
+
+        dispatch(
+          accountsTradesFilterUpdate({
+            filter: {
+              coinsPairId: coinsPair?.id || -1,
+            },
+          }),
+        );
+      } else {
+        dispatch(accountsTradesFilterUpdate({ filter: createObject(key, value) }));
+      }
     }
   };
 

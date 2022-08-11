@@ -16,3 +16,4 @@ export const selectTwoFactorAuthEnabled = createSelector(
 export const selectIsDarkMode = createSelector(selectAuth, (auth) => auth.isDarkMode);
 export const selectToken = createSelector(selectAuth, (auth) => auth.accessToken);
 export const selectIsEnglish = createSelector(selectAuth, (auth) => auth.isEnglish);
+export const selectPersonalInfo = createSelector(selectAuth, (auth) => auth.personalInfo);

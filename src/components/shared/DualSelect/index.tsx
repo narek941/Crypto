@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { Controller } from 'react-hook-form';
 
 import useOnClickOutside from 'hooks/useOutsideClick';
-import { DropDownIcon } from 'assets/icons';
+import { CloseIcon, DropDownIcon } from 'assets/icons';
 
 import Select from '../Select';
 
@@ -43,6 +43,11 @@ const DualSelect = React.forwardRef<any, any>(
       handleClose();
     };
 
+    const handleClear = () => {
+      formMethods.resetField(`${name}`);
+      callback(filterName, null);
+    };
+
     return (
       <div className={headerClass}>
         <div role='button' onClick={toggleDrop} className={styles.header__inner}>
@@ -54,7 +59,11 @@ const DualSelect = React.forwardRef<any, any>(
               : placeholder}
           </p>
           <div>
-            <DropDownIcon />
+            {selectPairStart || selectPairEnd ? (
+              <CloseIcon onClick={handleClear} />
+            ) : (
+              <DropDownIcon />
+            )}
           </div>
         </div>
 

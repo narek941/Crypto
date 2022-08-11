@@ -1,7 +1,7 @@
 import React, { ForwardedRef, useState, useRef } from 'react';
 import classNames from 'classnames';
 
-import { DropDownIcon } from 'assets/icons';
+import { CloseIcon, DropDownIcon } from 'assets/icons';
 import useOnClickOutside from 'hooks/useOutsideClick';
 
 import styles from './Select.module.scss';
@@ -104,6 +104,11 @@ const Select = React.forwardRef(
       setFilteredOption(newOption);
     };
 
+    const handleClear = () => {
+      onChange('');
+      callback(filterName, null);
+    };
+
     useOnClickOutside(selectRef, handleSubmit);
 
     return (
@@ -124,7 +129,13 @@ const Select = React.forwardRef(
               defaultValue={props.defaultValue}
               value={value ? currentOption?.label : ''}
             />
-            <DropDownIcon role='button' className={dropClass} />
+            {currentOption && callback ? (
+              <div className={styles.select__clear} onClick={handleClear}>
+                <CloseIcon />
+              </div>
+            ) : (
+              <DropDownIcon role='button' className={dropClass} />
+            )}
           </div>
           <div className={optionClass}>
             <div

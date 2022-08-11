@@ -102,6 +102,15 @@
       border-radius: 0 0 4px 4px;
     }
   }
+  &__clear {
+    position: absolute;
+    right: 12px;
+    width: 24px;
+    height: 24px;
+    @extend %flex-center;
+    cursor: pointer;
+    top: calc(50% - 12px);
+  }
 }
 
 .header {

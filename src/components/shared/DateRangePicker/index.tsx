@@ -6,8 +6,8 @@ import { Controller } from 'react-hook-form';
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 
-import { useOnClickOutside } from 'hooks';
 import { CalendarIcon } from 'assets/icons';
+import useOnClickOutside from 'hooks/useOutsideClick';
 
 import styles from './DateRangePicker.module.scss';
 

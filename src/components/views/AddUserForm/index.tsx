@@ -144,7 +144,7 @@ const AddUserForm = ({ onClick, isEditable = false }: IAddUser) => {
 
             {!isEditable ? (
               <div className={styles.signIn__form__group__button}>
-                <Button type='submit' color='secondary' size='m'>
+                <Button type='submit' color='secondary' size='m' disabled={!isValid}>
                   {t('add_user')}
                 </Button>
               </div>

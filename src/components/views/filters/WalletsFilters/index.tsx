@@ -1,12 +1,14 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Controller } from 'react-hook-form';
+import { isNull } from 'lodash';
 
 import { CloseIcon } from 'assets/icons';
 import { Select, TableSearch } from 'components';
 import { createObject } from 'utils/createObject';
 import { adminSelectors } from 'store/adminSlice';
-import { walletsActions } from 'store/walletsSlice';
+import { walletsActions, walletsSelectors } from 'store/walletsSlice';
 import { useAppDispatch, useAppSelector, useForm } from 'hooks';
+import { filterObject } from 'utils/filterObject';
 
 import styles from './WalletsFilters.module.scss';
 import { FilterFormShape } from './types';
@@ -14,6 +16,7 @@ import { filterSchemaKeys, walletFilterFormFields } from './fields';
 
 const WalletsFilters = () => {
   const dispatch = useAppDispatch();
+  const { filter } = useAppSelector(walletsSelectors.selectRecords);
   const coins = useAppSelector(adminSelectors.selectCoins);
   const [clearAll, setClearAll] = useState(false);
   const { formMethods } = useForm<keyof FilterFormShape, FilterFormShape>({
@@ -40,7 +43,13 @@ const WalletsFilters = () => {
   }, []);
 
   const handleFilter = (key: string, value: any) => {
-    dispatch(walletsActions.recordsFilterUpdate({ filter: createObject(key, value) }));
+    if (isNull(value)) {
+      const obj = filterObject(filter.filter, key);
+
+      dispatch(walletsActions.recordsFilterClear(obj));
+    } else {
+      dispatch(walletsActions.recordsFilterUpdate({ filter: createObject(key, value) }));
+    }
   };
 
   const coinOptions = useMemo(

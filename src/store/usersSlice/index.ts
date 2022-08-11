@@ -19,18 +19,9 @@ const usersSlice = createSlice({
     reset: () => internalInitialState,
   },
   extraReducers: (builder) => {
-    builder.addCase(usersThunks.userInfoRequest.fulfilled, (state, action) => {
-      state.personalInfo = action.payload.personalInfo;
-    });
-    builder.addMatcher(
-      isAnyOf(usersThunks.userInfoRequest.pending, usersThunks.addNewUser.pending),
-      extraReducers.pendingReducer,
-    );
+    builder.addMatcher(isAnyOf(usersThunks.addNewUser.pending), extraReducers.pendingReducer);
 
-    builder.addMatcher(
-      isAnyOf(usersThunks.userInfoRequest.rejected, usersThunks.addNewUser.rejected),
-      extraReducers.errorReducer,
-    );
+    builder.addMatcher(isAnyOf(usersThunks.addNewUser.rejected), extraReducers.errorReducer);
   },
 });
 
