@@ -66,8 +66,9 @@
 }
 
 .MuiSwitch-root {
-  padding: 12px 0 !important;
+  height: 14px;
   width: 51px !important;
+  padding: 12px 0 !important;
 }
 
 .MuiSwitch-thumb {
@@ -75,7 +76,7 @@
 }
 
 .MuiSwitch-switchBase.Mui-checked {
-  transform: translateX(31px) !important;
+  transform: translateX(30px) !important;
 }
 
 .Mui-checked {
@@ -282,7 +283,9 @@
 }
 
 .MuiButtonBase-root {
+  top: 6px !important;
   border: none !important;
+  position: absolute !important;
 }
 
 .MuiOutlinedInput-notchedOutline {

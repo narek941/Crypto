@@ -13,7 +13,6 @@ const Select = React.forwardRef(
       id,
       name,
       error,
-      label,
       className,
       color = 'default',
       placeholder,
@@ -21,6 +20,7 @@ const Select = React.forwardRef(
       onChange,
       onBlur,
       value,
+      label,
       callback,
       filterName,
       withAction = true,
@@ -108,18 +108,21 @@ const Select = React.forwardRef(
 
     return (
       <div className={selectClass}>
-        <label htmlFor={name} className={styles.select__label}>
-          {label}
-        </label>
+        {label && (
+          <label htmlFor={name} className={styles.label}>
+            {label}
+          </label>
+        )}
         <div ref={selectRef} className={styles.wrapper} id={id} {...props}>
-          <div onClick={openDropdown} className={headerClass}>
+          <div role='button' onClick={openDropdown} className={headerClass}>
             <input
-              placeholder={placeholder}
-              value={value ? currentOption?.label : ''}
-              onChange={handleSearch}
-              className={inputClass}
-              name={name}
               ref={ref}
+              name={name}
+              className={inputClass}
+              onChange={handleSearch}
+              placeholder={placeholder}
+              defaultValue={props.defaultValue || ''}
+              value={value ? currentOption?.label : props.defaultValue || ''}
             />
             <DropDownIcon role='button' className={dropClass} />
           </div>
@@ -129,14 +132,16 @@ const Select = React.forwardRef(
                 maxHeight: 211,
                 overflowY: 'scroll',
               }}
+              className={styles.select__option__select_container}
             >
               {filteredOption.map((item, index) => (
                 <div
                   key={index}
+                  role='button'
+                  onClick={() => handleSelect(item.value)}
                   className={classNames(styles.select__option__item, {
                     [styles.select__option__item__selected]: item === value,
                   })}
-                  onClick={() => handleSelect(item.value)}
                 >
                   {item.label}
                 </div>
@@ -144,12 +149,12 @@ const Select = React.forwardRef(
             </div>
             {withAction && (
               <div className={styles.select__option__action}>
-                <div className={styles.select__option__action__cancel} onClick={handleCancel}>
-                  cancel
-                </div>
-                <div className={styles.select__option__action__select} onClick={handleSubmit}>
-                  select
-                </div>
+                <button className={styles.select__option__action__cancel} onClick={handleCancel}>
+                  Cancel
+                </button>
+                <button className={styles.select__option__action__select} onClick={handleSubmit}>
+                  Select
+                </button>
               </div>
             )}
           </div>
