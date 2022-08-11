@@ -1,6 +1,7 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
 
 import { CloseIcon } from 'assets/icons';
 import RangeSwipe from 'components/shared/Range';
@@ -41,6 +42,17 @@ const InflowsFilters = () => {
     dispatch(inflowFilterClear({}));
     setClearAll(!clearAll);
   };
+
+  const advancedClass = classNames(styles.item, {
+    [styles.advanced__hide]: !isMore,
+  });
+
+  useEffect(() => {
+    return () => {
+      handleClear();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const coinOptions = useMemo(
     () =>
@@ -104,35 +116,30 @@ const InflowsFilters = () => {
             )}
           />
         </div>
-
-        {isMore && (
-          <>
-            <div className={styles.item}>
-              <TableSearch
-                {...formMethods.register('searchInflowID')}
-                className={styles.search}
+        <div className={advancedClass}>
+          <TableSearch
+            {...formMethods.register('searchInflowID')}
+            className={styles.search}
+            callback={handleFilter}
+            placeholder={'Enter ID'}
+            filterName={'id'}
+            clearAll={clearAll}
+          />
+        </div>
+        <div className={advancedClass}>
+          <Controller
+            control={formMethods.control}
+            name={inflowFilterFormFields.selectInflowValueInBaseCurrency.name as any}
+            render={({ field }) => (
+              <RangeSwipe
+                {...field}
+                {...inflowFilterFormFields.selectInflowValueInBaseCurrency}
                 callback={handleFilter}
-                placeholder={'Enter ID'}
-                filterName={'id'}
-                clearAll={clearAll}
+                filterName={'baseCurrencyValue'}
               />
-            </div>
-            <div className={styles.item}>
-              <Controller
-                control={formMethods.control}
-                name={inflowFilterFormFields.selectInflowValueInBaseCurrency.name as any}
-                render={({ field }) => (
-                  <RangeSwipe
-                    {...field}
-                    {...inflowFilterFormFields.selectInflowValueInBaseCurrency}
-                    callback={handleFilter}
-                    filterName={'baseCurrencyValue'}
-                  />
-                )}
-              />
-            </div>
-          </>
-        )}
+            )}
+          />
+        </div>
         <div className={styles.clear} role='button' onClick={handleClear}>
           <span>{t('clear_all')}</span>
           <div>

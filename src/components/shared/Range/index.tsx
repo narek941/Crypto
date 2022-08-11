@@ -52,7 +52,7 @@ const RangeSwipe = React.forwardRef<any, any>(
     return (
       <div role='button' onClick={toggleDrop} className={headerClass}>
         <p className={textClass}>
-          {!value?.includes(undefined) ? `${value[0]} / ${value[1]}` : placeholder}
+          {value?.includes(undefined) ? placeholder : `${value[0]} / ${value[1]}`}
         </p>
         <div>{Icon ? <Icon /> : <DollarIcon />}</div>
         <div className={modalClass} ref={customRef}>

@@ -80,6 +80,7 @@ const Select = React.forwardRef(
 
     const handleSelect = (selectedItem: string) => {
       onChange(selectedItem);
+
       setFilteredOption(options);
       if (!callback) {
         closeDropdown();
@@ -159,7 +160,7 @@ const Select = React.forwardRef(
           </div>
         </div>
 
-        {error && <span className={styles['select-errorMsg']}>{error.message}</span>}
+        {error && <span className={styles['select-errorMsg']}>{error}</span>}
       </div>
     );
   },

@@ -42,9 +42,11 @@ const AddNewUser = () => {
           dispatch(adminActions.updateUserEmail({ userID: id, email: values.email })).unwrap(),
         );
       }
-      if (!isEqual(values.accountType, role)) {
+      if (!isEqual(values.usersAccountType, role)) {
         userUpdatedFieldsPromises.push(
-          dispatch(adminActions.updateUserRole({ userID: id, role: values.accountType })).unwrap(),
+          dispatch(
+            adminActions.updateUserRole({ userID: id, role: values.usersAccountType }),
+          ).unwrap(),
         );
       }
       if (values.password && !isEqual(values.password, password)) {

@@ -1,6 +1,7 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
 
 import { CloseIcon } from 'assets/icons';
 import RangeSwipe from 'components/shared/Range';
@@ -56,6 +57,13 @@ const OpenOrdersFilters = () => {
     setClearAll(!clearAll);
   };
 
+  useEffect(() => {
+    return () => {
+      handleClear();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const coinOptions = useMemo(
     () =>
       coins.map((coin) => ({
@@ -84,6 +92,9 @@ const OpenOrdersFilters = () => {
       dispatch(openOrdersFilterUpdate({ filter: createObject(key, value) }));
     }
   };
+  const advancedClass = classNames(styles.item, {
+    [styles.advanced__hide]: !isMore,
+  });
 
   return (
     <div className={styles.container}>
@@ -137,116 +148,113 @@ const OpenOrdersFilters = () => {
           />
         </div>
 
-        {isMore && (
-          <>
-            <div className={styles.item}>
-              <TableSearch
-                {...filterFormFields.searchID}
-                {...formMethods.register('searchID')}
-                className={styles.search}
-                callback={handleFilter}
-                filterName={'originalId'}
-                clearAll={clearAll}
-              />
-            </div>
+        <div className={advancedClass}>
+          <TableSearch
+            {...filterFormFields.searchID}
+            {...formMethods.register('searchID')}
+            className={styles.search}
+            callback={handleFilter}
+            filterName={'originalId'}
+            clearAll={clearAll}
+          />
+        </div>
 
-            <div className={styles.item}>
-              <DateRangePicker
-                formMethods={formMethods}
-                {...filterFormFields.creationTime}
+        <div className={advancedClass}>
+          <DateRangePicker
+            formMethods={formMethods}
+            {...filterFormFields.creationTime}
+            callback={handleFilter}
+            filterName={'creationTime'}
+            clearAll={clearAll}
+          />
+        </div>
+        <div className={advancedClass}>
+          <Controller
+            control={formMethods.control}
+            name={filterFormFields.selectValueInBaseCurrency.name as any}
+            render={({ field }) => (
+              <RangeSwipe
+                {...filterFormFields.selectValueInBaseCurrency}
+                {...field}
                 callback={handleFilter}
-                filterName={'creationTime'}
-                clearAll={clearAll}
+                filterName={'baseCurrencyValue'}
               />
-            </div>
-            <div className={styles.item}>
-              <Controller
-                control={formMethods.control}
-                name={filterFormFields.selectValueInBaseCurrency.name as any}
-                render={({ field }) => (
-                  <RangeSwipe
-                    {...filterFormFields.selectValueInBaseCurrency}
-                    {...field}
-                    callback={handleFilter}
-                    filterName={'baseCurrencyValue'}
-                  />
-                )}
-              />
-            </div>
+            )}
+          />
+        </div>
 
-            <div className={styles.item}>
-              <TableSearch
-                {...filterFormFields.searchReceived}
-                {...formMethods.register('searchReceived')}
-                className={styles.search}
+        <div className={advancedClass}>
+          <TableSearch
+            {...filterFormFields.searchReceived}
+            {...formMethods.register('searchReceived')}
+            className={styles.search}
+            callback={handleFilter}
+            filterName={'tradesTotalPriceSum'}
+            clearAll={clearAll}
+          />
+        </div>
+        <div className={advancedClass}>
+          <TableSearch
+            {...filterFormFields.searchReceivedInBaseCurrency}
+            {...formMethods.register('searchReceivedInBaseCurrency')}
+            className={styles.search}
+            callback={handleFilter}
+            filterName={'tradesTotalPriceInBaseCurrencySum'}
+            clearAll={clearAll}
+          />
+        </div>
+        <div className={advancedClass}>
+          <Controller
+            control={formMethods.control}
+            name={filterFormFields.selectFee.name as any}
+            render={({ field }) => (
+              <RangeSwipe
+                {...field}
+                {...filterFormFields.selectFee}
                 callback={handleFilter}
-                filterName={'tradesTotalPriceSum'}
-                clearAll={clearAll}
+                filterName={'feesSum'}
               />
-            </div>
-            <div className={styles.item}>
-              <TableSearch
-                {...filterFormFields.searchReceivedInBaseCurrency}
-                {...formMethods.register('searchReceivedInBaseCurrency')}
-                className={styles.search}
+            )}
+          />
+        </div>
+        <div className={advancedClass}>
+          <Controller
+            control={formMethods.control}
+            name={filterFormFields.selectFeeInBaseCurrency.name as any}
+            render={({ field }) => (
+              <RangeSwipe
+                {...field}
+                {...filterFormFields.selectFeeInBaseCurrency}
                 callback={handleFilter}
-                filterName={'tradesTotalPriceInBaseCurrencySum'}
-                clearAll={clearAll}
+                filterName={'feesSumInBaseCurrency'}
               />
-            </div>
-            <div className={styles.item}>
-              <Controller
-                control={formMethods.control}
-                name={filterFormFields.selectFee.name as any}
-                render={({ field }) => (
-                  <RangeSwipe
-                    {...field}
-                    {...filterFormFields.selectFee}
-                    callback={handleFilter}
-                    filterName={'feesSum'}
-                  />
-                )}
-              />
-            </div>
-            <div className={styles.item}>
-              <Controller
-                control={formMethods.control}
-                name={filterFormFields.selectFeeInBaseCurrency.name as any}
-                render={({ field }) => (
-                  <RangeSwipe
-                    {...field}
-                    {...filterFormFields.selectFeeInBaseCurrency}
-                    callback={handleFilter}
-                    filterName={'feesSumInBaseCurrency'}
-                  />
-                )}
-              />
-            </div>
-            <div className={styles.item}>
-              <Controller
-                control={formMethods.control}
-                name={filterFormFields.selectShare.name as any}
-                render={({ field }) => (
-                  <RangeSwipe
-                    {...field}
-                    {...filterFormFields.selectShare}
-                    callback={handleFilter}
-                    filterName={'relativePercentageToAccount'}
-                  />
-                )}
-              />
-            </div>
-            <div className={styles.item}>
-              <DateRangePicker
-                formMethods={formMethods}
-                {...filterFormFields.updatedTime}
+            )}
+          />
+        </div>
+        <div className={advancedClass}>
+          <Controller
+            control={formMethods.control}
+            name={filterFormFields.selectShare.name as any}
+            render={({ field }) => (
+              <RangeSwipe
+                {...field}
+                {...filterFormFields.selectShare}
                 callback={handleFilter}
-                filterName={'lastOperationTime'}
-                clearAll={clearAll}
+                filterName={'relativePercentageToAccount'}
               />
-            </div>
-          </>
-        )}
+            )}
+          />
+        </div>
+        <div className={advancedClass}>
+          <DateRangePicker
+            formMethods={formMethods}
+            {...filterFormFields.updatedTime}
+            callback={handleFilter}
+            filterName={'lastOperationTime'}
+            clearAll={clearAll}
+          />
+        </div>
+
         <div className={styles.clear} role='button' onClick={handleClear}>
           <span>{t('clear_all')}</span>
           <div>
@@ -254,6 +262,7 @@ const OpenOrdersFilters = () => {
           </div>
         </div>
       </div>
+
       <div role='button' onClick={handleToggle} className={styles.toggle}>
         {isMore ? t('hide_filter_text') : t('show_filter_text')}
       </div>

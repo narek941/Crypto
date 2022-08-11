@@ -13,6 +13,8 @@
   }
 
   &__item {
+    position: relative;
+
     &__first {
       gap: 16px;
       cursor: pointer;
@@ -26,6 +28,14 @@
     &__text {
       color: var(--font);
       @extend %header-text;
+
+      &__footer {
+        position: absolute;
+        left: 0;
+        bottom: -11px;
+        @extend %header-11;
+        color: var(--placeholder-select);
+      }
     }
   }
 

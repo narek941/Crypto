@@ -62,7 +62,7 @@ export const addAccountFormFields: FormField<keyof AddAccountFormShape> = {
     name: 'maxDrawdown',
     label: 'Maximum drawdown, in %',
     id: 'addAccount.maxDrawdown',
-    defaultValue: ' 20%',
+    defaultValue: ' 20',
     placeholder: 'Enter maximum drawdown',
     options: formHelper.maximumPercentDropDown,
   },

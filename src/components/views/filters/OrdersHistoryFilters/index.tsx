@@ -1,6 +1,7 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
 
 import { CloseIcon } from 'assets/icons';
 import { Select, TableSearch } from 'components';
@@ -64,6 +65,13 @@ const OrdersHistoryFilters = () => {
     dispatch(ordersFilterClear({}));
   };
 
+  useEffect(() => {
+    return () => {
+      handleClear();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const coinOptions = useMemo(
     () =>
       coins.map((coin) => ({
@@ -72,6 +80,10 @@ const OrdersHistoryFilters = () => {
       })),
     [coins],
   );
+
+  const advancedClass = classNames(styles.item, {
+    [styles.advanced__hide]: !isMore,
+  });
 
   return (
     <div className={styles.container}>
@@ -138,60 +150,57 @@ const OrdersHistoryFilters = () => {
           />
         </div>
 
-        {isMore && (
-          <>
-            <div className={styles.item}>
-              <TableSearch
-                {...filterFormFields.historyID}
-                {...formMethods.register('historyID')}
-                className={styles.search}
-                callback={handleFilter}
-                filterName={'id'}
-                clearAll={clearAll}
-              />
-            </div>
-            <div className={styles.item}>
-              <TableSearch
-                {...filterFormFields.historyValueInBaseCurrency}
-                {...formMethods.register('historyValueInBaseCurrency')}
-                className={styles.search}
-                callback={handleFilter}
-                filterName={'valueInBaseCurrency'}
-                clearAll={clearAll}
-              />
-            </div>
-            <div className={styles.item}>
-              <TableSearch
-                {...filterFormFields.searchHistoryStop}
-                {...formMethods.register('searchHistoryStop')}
-                className={styles.search}
-                callback={handleFilter}
-                filterName={'stopPrice'}
-                clearAll={clearAll}
-              />
-            </div>
-            <div className={styles.item}>
-              <TableSearch
-                {...filterFormFields.searchHistoryLimit}
-                {...formMethods.register('searchHistoryLimit')}
-                className={styles.search}
-                callback={handleFilter}
-                filterName={'limitPrice'}
-                clearAll={clearAll}
-              />
-            </div>
-            <div className={styles.item}>
-              <TableSearch
-                {...filterFormFields.searchHistoryModifiers}
-                {...formMethods.register('searchHistoryModifiers')}
-                className={styles.search}
-                callback={handleFilter}
-                filterName={'modifiers'}
-                clearAll={clearAll}
-              />
-            </div>
-          </>
-        )}
+        <div className={advancedClass}>
+          <TableSearch
+            {...filterFormFields.historyID}
+            {...formMethods.register('historyID')}
+            className={styles.search}
+            callback={handleFilter}
+            filterName={'id'}
+            clearAll={clearAll}
+          />
+        </div>
+        <div className={advancedClass}>
+          <TableSearch
+            {...filterFormFields.historyValueInBaseCurrency}
+            {...formMethods.register('historyValueInBaseCurrency')}
+            className={styles.search}
+            callback={handleFilter}
+            filterName={'valueInBaseCurrency'}
+            clearAll={clearAll}
+          />
+        </div>
+        <div className={advancedClass}>
+          <TableSearch
+            {...filterFormFields.searchHistoryStop}
+            {...formMethods.register('searchHistoryStop')}
+            className={styles.search}
+            callback={handleFilter}
+            filterName={'stopPrice'}
+            clearAll={clearAll}
+          />
+        </div>
+        <div className={advancedClass}>
+          <TableSearch
+            {...filterFormFields.searchHistoryLimit}
+            {...formMethods.register('searchHistoryLimit')}
+            className={styles.search}
+            callback={handleFilter}
+            filterName={'limitPrice'}
+            clearAll={clearAll}
+          />
+        </div>
+        <div className={advancedClass}>
+          <TableSearch
+            {...filterFormFields.searchHistoryModifiers}
+            {...formMethods.register('searchHistoryModifiers')}
+            className={styles.search}
+            callback={handleFilter}
+            filterName={'modifiers'}
+            clearAll={clearAll}
+          />
+        </div>
+
         <div className={styles.clear} role='button' onClick={handleClear}>
           <span>{t('clear_all')}</span>
           <div>

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
 
 import { CloseIcon } from 'assets/icons';
 import { Select, TableSearch } from 'components';
@@ -36,7 +37,9 @@ const AccountsFilters = () => {
   });
 
   const handleToggle = () => setIsMore(!isMore);
-
+  const advancedClass = classNames(styles.item, {
+    [styles.advanced__hide]: !isMore,
+  });
   const handleClear = () => {
     formMethods.reset({});
     dispatch(accountsFilterClear({}));
@@ -94,76 +97,72 @@ const AccountsFilters = () => {
             )}
           />
         </div>
-        {isMore && (
-          <>
-            <div className={styles.item}>
-              <TableSearch
-                {...filterFormFields.accountId}
-                {...formMethods.register('accountId')}
-                className={styles.search}
+        <div className={advancedClass}>
+          <TableSearch
+            {...filterFormFields.accountId}
+            {...formMethods.register('accountId')}
+            className={styles.search}
+            callback={handleFilter}
+            filterName={'id'}
+            clearAll={clearAll}
+          />
+        </div>
+        <div className={advancedClass}>
+          <Controller
+            control={formMethods.control}
+            name={filterFormFields.accountSeed.name as any}
+            render={({ field }) => (
+              <RangeSwipe
+                {...field}
+                {...filterFormFields.accountSeed}
                 callback={handleFilter}
-                filterName={'id'}
-                clearAll={clearAll}
+                filterName={'statistics.startCapitalInBaseCurrency'}
               />
-            </div>
-            <div className={styles.item}>
-              <Controller
-                control={formMethods.control}
-                name={filterFormFields.accountSeed.name as any}
-                render={({ field }) => (
-                  <RangeSwipe
-                    {...field}
-                    {...filterFormFields.accountSeed}
-                    callback={handleFilter}
-                    filterName={'statistics.startCapitalInBaseCurrency'}
-                  />
-                )}
+            )}
+          />
+        </div>
+        <div className={advancedClass}>
+          <Controller
+            control={formMethods.control}
+            name={filterFormFields.accountCurrentCapital.name as any}
+            render={({ field }) => (
+              <RangeSwipe
+                {...field}
+                {...filterFormFields.accountCurrentCapital}
+                callback={handleFilter}
+                filterName={'statistics.currentCapitalInBaseCurrency'}
               />
-            </div>
-            <div className={styles.item}>
-              <Controller
-                control={formMethods.control}
-                name={filterFormFields.accountCurrentCapital.name as any}
-                render={({ field }) => (
-                  <RangeSwipe
-                    {...field}
-                    {...filterFormFields.accountCurrentCapital}
-                    callback={handleFilter}
-                    filterName={'statistics.currentCapitalInBaseCurrency'}
-                  />
-                )}
+            )}
+          />
+        </div>
+        <div className={advancedClass}>
+          <Controller
+            control={formMethods.control}
+            name={filterFormFields.accountOpenProfit.name as any}
+            render={({ field }) => (
+              <RangeSwipe
+                {...field}
+                {...filterFormFields.accountOpenProfit}
+                callback={handleFilter}
+                filterName={'statistics.currentOpenProfitInBaseCurrency'}
               />
-            </div>
-            <div className={styles.item}>
-              <Controller
-                control={formMethods.control}
-                name={filterFormFields.accountOpenProfit.name as any}
-                render={({ field }) => (
-                  <RangeSwipe
-                    {...field}
-                    {...filterFormFields.accountOpenProfit}
-                    callback={handleFilter}
-                    filterName={'statistics.currentOpenProfitInBaseCurrency'}
-                  />
-                )}
+            )}
+          />
+        </div>
+        <div className={advancedClass}>
+          <Controller
+            control={formMethods.control}
+            name={filterFormFields.accountEarnedCapital.name as any}
+            render={({ field }) => (
+              <RangeSwipe
+                {...field}
+                {...filterFormFields.accountEarnedCapital}
+                callback={handleFilter}
+                filterName={'statistics.earnedCapitalInBaseCurrency'}
               />
-            </div>
-            <div className={styles.item}>
-              <Controller
-                control={formMethods.control}
-                name={filterFormFields.accountEarnedCapital.name as any}
-                render={({ field }) => (
-                  <RangeSwipe
-                    {...field}
-                    {...filterFormFields.accountEarnedCapital}
-                    callback={handleFilter}
-                    filterName={'statistics.earnedCapitalInBaseCurrency'}
-                  />
-                )}
-              />
-            </div>
-          </>
-        )}
+            )}
+          />
+        </div>
         <div className={styles.clear} role='button' onClick={handleClear}>
           <span>{t('clear_all')}</span>
           <div>

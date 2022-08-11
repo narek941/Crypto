@@ -13,15 +13,12 @@ export interface ISelect {
   id: string;
   name: string;
   label?: string;
-  callback?: any;
+  text?: ReactNode | string | null | undefined;
   error: ErrorType;
   color?: ColorType;
   options: Option[];
   className?: string;
   filterName?: string;
-  [prop: string]: any;
   withAction?: boolean;
-  defaultValue?: string;
-  defaultChecked?: boolean;
-  text?: ReactNode | string | null | undefined;
+  [prop: string]: any;
 }

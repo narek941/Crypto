@@ -4,8 +4,10 @@ export type AddUserFormShape = {
   name: string;
   email: string;
   password: string;
-  accountType: string;
+  usersAccountType: string;
   emptyPassword: string;
+  confirmPassword: string;
+  usersAccountList: any;
 };
 
 export interface IAddUser {

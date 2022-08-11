@@ -1,6 +1,7 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
 
 import { CloseIcon } from 'assets/icons';
 import { Select, TableSearch } from 'components';
@@ -38,6 +39,10 @@ const TradesFilters = () => {
     },
   });
 
+  const advancedClass = classNames(styles.item, {
+    [styles.advanced__hide]: !isMore,
+  });
+
   const handleToggle = () => setIsMore(!isMore);
 
   const handleFilter = (key: string, value: any) => {
@@ -66,6 +71,14 @@ const TradesFilters = () => {
     formMethods.reset({});
     dispatch(accountsTradesFilterClear({}));
   };
+
+  useEffect(() => {
+    return () => {
+      handleClear();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const coinOptions = useMemo(
     () =>
       coins.map((coin) => ({
@@ -113,73 +126,68 @@ const TradesFilters = () => {
           />
         </div>
 
-        {isMore && (
-          <>
-            <div className={styles.item}>
-              <TableSearch
-                {...filterFormFields.tradesPrice}
-                {...formMethods.register('tradesPrice')}
-                className={styles.search}
-                callback={handleFilter}
-                filterName={'price'}
-                clearAll={clearAll}
-              />
-            </div>
+        <div className={advancedClass}>
+          <TableSearch
+            {...filterFormFields.tradesPrice}
+            {...formMethods.register('tradesPrice')}
+            className={styles.search}
+            callback={handleFilter}
+            filterName={'price'}
+            clearAll={clearAll}
+          />
+        </div>
 
-            <div className={styles.item}>
-              <TableSearch
-                {...filterFormFields.tradesValue}
-                {...formMethods.register('tradesValue')}
-                className={styles.search}
-                callback={handleFilter}
-                filterName={'totalPrice'}
-                clearAll={clearAll}
-              />
-            </div>
+        <div className={advancedClass}>
+          <TableSearch
+            {...filterFormFields.tradesValue}
+            {...formMethods.register('tradesValue')}
+            className={styles.search}
+            callback={handleFilter}
+            filterName={'totalPrice'}
+            clearAll={clearAll}
+          />
+        </div>
 
-            <div className={styles.item}>
-              <TableSearch
-                {...filterFormFields.tradesTotalPrice}
-                {...formMethods.register('tradesTotalPrice')}
-                className={styles.search}
-                callback={handleFilter}
-                filterName={'amount'}
-                clearAll={clearAll}
-              />
-            </div>
-            <div className={styles.item}>
-              <TableSearch
-                {...filterFormFields.tradesValueInBaseCurrency}
-                {...formMethods.register('tradesValueInBaseCurrency')}
-                className={styles.search}
-                callback={handleFilter}
-                filterName={'totalPriceInBaseCurrency'}
-                clearAll={clearAll}
-              />
-            </div>
-            <div className={styles.item}>
-              <TableSearch
-                {...filterFormFields.tradesFee}
-                {...formMethods.register('tradesFee')}
-                className={styles.search}
-                callback={handleFilter}
-                filterName={'fees'}
-                clearAll={clearAll}
-              />
-            </div>
-            <div className={styles.item}>
-              <TableSearch
-                {...filterFormFields.tradesFeeInBaseCurrency}
-                {...formMethods.register('tradesFeeInBaseCurrency')}
-                className={styles.search}
-                callback={handleFilter}
-                filterName={'feesInBaseCurrency'}
-                clearAll={clearAll}
-              />
-            </div>
-          </>
-        )}
-
+        <div className={advancedClass}>
+          <TableSearch
+            {...filterFormFields.tradesTotalPrice}
+            {...formMethods.register('tradesTotalPrice')}
+            className={styles.search}
+            callback={handleFilter}
+            filterName={'amount'}
+            clearAll={clearAll}
+          />
+        </div>
+        <div className={advancedClass}>
+          <TableSearch
+            {...filterFormFields.tradesValueInBaseCurrency}
+            {...formMethods.register('tradesValueInBaseCurrency')}
+            className={styles.search}
+            callback={handleFilter}
+            filterName={'totalPriceInBaseCurrency'}
+            clearAll={clearAll}
+          />
+        </div>
+        <div className={advancedClass}>
+          <TableSearch
+            {...filterFormFields.tradesFee}
+            {...formMethods.register('tradesFee')}
+            className={styles.search}
+            callback={handleFilter}
+            filterName={'fees'}
+            clearAll={clearAll}
+          />
+        </div>
+        <div className={advancedClass}>
+          <TableSearch
+            {...filterFormFields.tradesFeeInBaseCurrency}
+            {...formMethods.register('tradesFeeInBaseCurrency')}
+            className={styles.search}
+            callback={handleFilter}
+            filterName={'feesInBaseCurrency'}
+            clearAll={clearAll}
+          />
+        </div>
         <div className={styles.clear} role='button' onClick={handleClear}>
           <span>{t('clear_all')}</span>
           <div>

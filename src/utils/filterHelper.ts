@@ -15,6 +15,7 @@ export const typeOptions = [
 
 export const statusOptions = [
   { label: 'Active', value: 'ACTIVE' },
+  { label: 'Blocked', value: 'BLOCKED' },
   { label: 'Deleted', value: 'DELETED' },
   { label: 'Email verification', value: 'EMAIL_VERIFICATION' },
 ];
