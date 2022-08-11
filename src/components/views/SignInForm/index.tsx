@@ -54,7 +54,7 @@ const SignInForm: React.FC = () => {
             {...signInFormFields.login_password}
             {...formMethods.register('login_password')}
             className={styles.signIn__form__group__input}
-            error='* Enter your password/email to login'
+            error={formMethods.formState.errors.login_password?.message || loginError}
           />
 
           <Checkbox

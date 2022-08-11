@@ -34,7 +34,7 @@
 }
 
 .toggle__switch input[type='checkbox']:checked + .switch::before {
-  transform: translateX(31px);
+  transform: translateX(30px);
   background-color: #c4c4c4;
 }
 

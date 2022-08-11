@@ -1,3 +1,8 @@
+.label {
+  color: var(--font);
+  @extend %text-14;
+}
+
 .select {
   &-wrapper {
     position: relative;
@@ -54,6 +59,12 @@
     @extend %text-13;
     @extend %flex-column;
 
+    &__select_container {
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+
     &__action {
       padding: 6px 12px;
       justify-content: start;
@@ -63,7 +74,13 @@
       gap: 10px;
 
       &__select {
-        color: #3700b3;
+        color: var(--select-btn);
+        background-color: transparent;
+      }
+
+      &__cancel {
+        color: var(--cancel);
+        background-color: transparent;
       }
     }
 

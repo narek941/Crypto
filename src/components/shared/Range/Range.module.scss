@@ -71,7 +71,7 @@
   @extend %flex-align;
 
   &__select {
-    color: #3700b3;
+    color: var(--select-btn);
   }
 
   &__cancel {

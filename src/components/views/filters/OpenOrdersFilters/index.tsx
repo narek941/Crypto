@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
@@ -56,6 +56,13 @@ const OpenOrdersFilters = () => {
     dispatch(openOrdersFilterClear({}));
     setClearAll(!clearAll);
   };
+
+  useEffect(() => {
+    return () => {
+      handleClear();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const coinOptions = useMemo(
     () =>
@@ -255,6 +262,7 @@ const OpenOrdersFilters = () => {
           </div>
         </div>
       </div>
+
       <div role='button' onClick={handleToggle} className={styles.toggle}>
         {isMore ? t('hide_filter_text') : t('show_filter_text')}
       </div>
