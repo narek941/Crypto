@@ -20,7 +20,6 @@ export const addNewUser = createAsyncThunk(
     const newUser = {
       ...credentials,
       username: credentials.name,
-      role: credentials.accountType,
     };
 
     try {
