@@ -56,6 +56,10 @@
   border-collapse: collapse;
   border-style: hidden;
   overflow: hidden;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .open {
