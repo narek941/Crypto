@@ -30,9 +30,11 @@
       height: 14px;
     }
   }
+
   &__placeholder {
     color: var(--placeholder) !important;
   }
+
   &__label {
     color: var(--font);
     @extend %text-14;
