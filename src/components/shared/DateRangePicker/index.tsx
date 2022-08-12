@@ -13,16 +13,18 @@ import { authSelectors } from 'store/authSlice';
 import styles from './DateRangePicker.module.scss';
 
 const DateRangePicker = React.forwardRef<any, any>(
-  ({ placeholder, formMethods, name, callback, filterName, clearAll }, ref: any) => {
+  ({ placeholder, formMethods, name, callback, filterName, clearAll, closed }, ref: any) => {
     const customRef = useRef(null);
     const [openCalendar, setOpenCalendar] = useState<boolean>(false);
 
     const defaultValue = {
       startDate: undefined,
       endDate: undefined,
-      color: 'red',
+      color: 'transparent',
       key: 'selection',
     };
+    const [lastChange, setLastChange] = useState<number>(2);
+
     const [state, setState] = useState(defaultValue);
 
     const isDarkMode = useAppSelector(authSelectors.selectIsDarkMode);
@@ -48,8 +50,32 @@ const DateRangePicker = React.forwardRef<any, any>(
     };
 
     const handleChange = (item: any) => {
-      setState({ ...item.selection, color: isMode });
-      formMethods.setValue(name, item.selection);
+      const start = item.selection.startDate;
+      const end = item.selection.endDate;
+
+      if (state.endDate && state.startDate) {
+        if (moment(start).isBefore(state.startDate)) {
+          setState({ ...state, startDate: start });
+          formMethods.setValue(name, state);
+          setLastChange(1);
+        }
+        if (moment(state.endDate).isBefore(end)) {
+          setState({ ...state, endDate: end });
+          setLastChange(2);
+          formMethods.setValue(name, state);
+        }
+        if (moment(start).isBetween(state.startDate, state.endDate)) {
+          if (lastChange === 2) {
+            setState({ ...state, endDate: start });
+          } else {
+            setState({ ...state, startDate: start });
+          }
+          formMethods.setValue(name, state);
+        }
+      } else {
+        setState({ ...item.selection, color: isMode, lastChange: true });
+        formMethods.setValue(name, item.selection);
+      }
     };
 
     const handleSubmit = () => {
@@ -60,11 +86,18 @@ const DateRangePicker = React.forwardRef<any, any>(
       setOpenCalendar(false);
     };
 
-    const handleClear = (e: React.FormEvent<SVGSVGElement>) => {
+    const handleClear = (e?: React.FormEvent<SVGSVGElement>) => {
+      e?.stopPropagation();
       setState(defaultValue);
+      formMethods.resetField(name);
       callback(filterName, null);
-      e.stopPropagation();
     };
+
+    useEffect(() => {
+      if (closed) {
+        handleClear();
+      }
+    }, [closed]);
 
     useEffect(() => {
       setState(defaultValue);
@@ -74,12 +107,12 @@ const DateRangePicker = React.forwardRef<any, any>(
     useOnClickOutside(customRef, handleSubmit);
 
     return (
-      <div className={styles.calendar}>
+      <div className={styles.calendar} ref={customRef}>
         <div className={styles.calendar__header} role='button' onClick={toggleCalendar}>
           <span className={headerTextClass}>{text}</span>
-          {!state.startDate ? <CalendarIcon /> : <CloseIcon role='button' onClick={handleClear} />}
+          {!state.startDate ? <CalendarIcon /> : <CloseIcon onClick={handleClear} />}
         </div>
-        <div ref={customRef} className={calendarWrapperClass}>
+        <div className={calendarWrapperClass}>
           <Controller
             control={formMethods.control}
             name={name as any}
@@ -93,9 +126,9 @@ const DateRangePicker = React.forwardRef<any, any>(
                 showPreview={false}
                 direction='horizontal'
                 onChange={handleChange}
-                moveRangeOnFirstSelection
+                moveRangeOnFirstSelection={false}
                 weekdayDisplayFormat='EEEEE'
-                retainEndDateOnFirstSelection
+                showMonthAndYearPickers={true}
                 className={styles.calendar__inner}
               />
             )}

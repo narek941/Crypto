@@ -115,6 +115,7 @@ const UsersFilters = () => {
             callback={handleFilter}
             filterName={'id'}
             clearAll={clearAll}
+            closed={!isMore}
           />
         </div>
         <div className={advancedClass}>
@@ -125,6 +126,7 @@ const UsersFilters = () => {
             callback={handleFilter}
             filterName={'email'}
             clearAll={clearAll}
+            closed={!isMore}
           />
         </div>
         <div className={styles.clear} role='button' onClick={handleClear}>

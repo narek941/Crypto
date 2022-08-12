@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import classNames from 'classnames';
 import { Controller } from 'react-hook-form';
 
@@ -11,7 +11,7 @@ import styles from './DualSelect.module.scss';
 
 const DualSelect = React.forwardRef<any, any>(
   (
-    { formMethods, name, placeholder, firstOptions, secondOptions, callback, filterName },
+    { formMethods, name, placeholder, firstOptions, secondOptions, callback, filterName, closed },
     ref: any,
   ) => {
     const customWrapperRef = useRef(null);
@@ -41,14 +41,21 @@ const DualSelect = React.forwardRef<any, any>(
       handleClose();
     };
 
-    const handleClear = (event: React.FormEvent<SVGSVGElement>) => {
-      event.stopPropagation();
+    const handleClear = (event?: React.FormEvent<SVGSVGElement>) => {
+      event?.stopPropagation();
       formMethods.resetField(`${name}Start`);
       formMethods.resetField(`${name}End`);
       callback(filterName, null);
     };
 
+    useEffect(() => {
+      if (closed) {
+        handleClear();
+      }
+    }, [closed]);
+
     useOnClickOutside(customWrapperRef, handleSubmit);
+
     return (
       <div className={headerClass}>
         <div role='button' onClick={toggleDrop} className={styles.header__inner}>

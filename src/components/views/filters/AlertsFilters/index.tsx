@@ -9,9 +9,8 @@ import { TableSearch } from 'components';
 import { useAppDispatch, useAppSelector, useForm } from 'hooks';
 import { createObject } from 'utils/createObject';
 import { alertsFilterClear, alertsFilterUpdate } from 'store/alertsSlice/thunks';
-import { accountsSelectors } from 'store/accountsSlice';
 import { filterObject } from 'utils/filterObject';
-import { accountsAlertsFilterClear } from 'store/accountsSlice/thunks';
+import { alertsSelectors } from 'store/alertsSlice';
 
 import styles from './AlertsFilters.module.scss';
 import { FilterFormShape } from './types';
@@ -20,7 +19,7 @@ import { filterFormFields, filterSchemaKeys } from './fields';
 const AlertsFilters = () => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
-  const { filter } = useAppSelector(accountsSelectors.selectAccountAccountsAlerts);
+  const filter = useAppSelector(alertsSelectors.selectAlertsFilter);
 
   const [isMore, setIsMore] = useState(false);
   const [clearAll, setClearAll] = useState(false);
@@ -46,7 +45,7 @@ const AlertsFilters = () => {
     if (isNull(value)) {
       const obj = filterObject(filter.filter, key);
 
-      dispatch(accountsAlertsFilterClear(obj));
+      dispatch(alertsFilterClear(obj));
     } else {
       dispatch(alertsFilterUpdate({ filter: createObject(key, value) }));
     }
@@ -87,6 +86,7 @@ const AlertsFilters = () => {
             callback={handleFilter}
             filterName={'id'}
             clearAll={clearAll}
+            closed={!isMore}
           />
         </div>
         <div className={advancedClass}>
@@ -97,6 +97,7 @@ const AlertsFilters = () => {
             callback={handleFilter}
             filterName={'message'}
             clearAll={clearAll}
+            closed={!isMore}
           />
         </div>
         <div className={styles.clear} role='button' onClick={handleClear}>

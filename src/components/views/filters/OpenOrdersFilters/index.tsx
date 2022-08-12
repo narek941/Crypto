@@ -54,6 +54,10 @@ const OpenOrdersFilters = () => {
     },
   });
 
+  const advancedClass = classNames(styles.item, {
+    [styles.advanced__hide]: !isMore,
+  });
+
   const handleToggle = () => setIsMore(!isMore);
 
   const handleClear = () => {
@@ -80,9 +84,11 @@ const OpenOrdersFilters = () => {
 
   const handleFilter = (key: string, value: any) => {
     if (isNull(value)) {
-      const newKey = key === 'pair' ? 'coinsPairId' : value;
+      const newKey = key === 'pair' ? 'coinsPairId' : key;
       const obj = filterObject(filter.filter, newKey as string);
       dispatch(openOrdersFilterClear(obj));
+      // eslint-disable-next-line no-console
+      console.log(obj, 'sss');
     } else {
       if (key === 'pair') {
         const coinsPair = tradingPairs.find((pair) => {
@@ -103,9 +109,6 @@ const OpenOrdersFilters = () => {
       }
     }
   };
-  const advancedClass = classNames(styles.item, {
-    [styles.advanced__hide]: !isMore,
-  });
 
   return (
     <div className={styles.container}>
@@ -167,6 +170,7 @@ const OpenOrdersFilters = () => {
             callback={handleFilter}
             filterName={'originalId'}
             clearAll={clearAll}
+            closed={!isMore}
           />
         </div>
 
@@ -177,6 +181,7 @@ const OpenOrdersFilters = () => {
             callback={handleFilter}
             filterName={'creationTime'}
             clearAll={clearAll}
+            closed={!isMore}
           />
         </div>
         <div className={advancedClass}>
@@ -189,6 +194,7 @@ const OpenOrdersFilters = () => {
                 {...field}
                 callback={handleFilter}
                 filterName={'baseCurrencyValue'}
+                closed={!isMore}
               />
             )}
           />
@@ -202,6 +208,7 @@ const OpenOrdersFilters = () => {
             callback={handleFilter}
             filterName={'tradesTotalPriceSum'}
             clearAll={clearAll}
+            closed={!isMore}
           />
         </div>
         <div className={advancedClass}>
@@ -212,6 +219,7 @@ const OpenOrdersFilters = () => {
             callback={handleFilter}
             filterName={'tradesTotalPriceInBaseCurrencySum'}
             clearAll={clearAll}
+            closed={!isMore}
           />
         </div>
         <div className={advancedClass}>
@@ -224,6 +232,7 @@ const OpenOrdersFilters = () => {
                 {...filterFormFields.selectFee}
                 callback={handleFilter}
                 filterName={'feesSum'}
+                closed={!isMore}
               />
             )}
           />
@@ -238,6 +247,7 @@ const OpenOrdersFilters = () => {
                 {...filterFormFields.selectFeeInBaseCurrency}
                 callback={handleFilter}
                 filterName={'feesSumInBaseCurrency'}
+                closed={!isMore}
               />
             )}
           />
@@ -252,6 +262,7 @@ const OpenOrdersFilters = () => {
                 {...filterFormFields.selectShare}
                 callback={handleFilter}
                 filterName={'relativePercentageToAccount'}
+                closed={!isMore}
               />
             )}
           />
@@ -263,6 +274,7 @@ const OpenOrdersFilters = () => {
             callback={handleFilter}
             filterName={'lastOperationTime'}
             clearAll={clearAll}
+            closed={!isMore}
           />
         </div>
 

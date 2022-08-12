@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Slider from '@mui/material/Slider';
 import classNames from 'classnames';
 
@@ -19,6 +19,7 @@ const RangeSwipe = React.forwardRef<any, any>(
       value: propsValue,
       callback,
       filterName,
+      closed,
       ...rest
     }: any,
     ref,
@@ -72,11 +73,17 @@ const RangeSwipe = React.forwardRef<any, any>(
       setSecondInput(target.value);
     };
 
-    const handleClear = (event: React.FormEvent<HTMLElement>) => {
-      event.stopPropagation();
+    const handleClear = (event?: React.FormEvent<HTMLElement>) => {
+      event?.stopPropagation();
       onChange(['', '']);
       callback(filterName, null);
     };
+
+    useEffect(() => {
+      if (closed && callback) {
+        handleClear();
+      }
+    }, [closed]);
 
     useOnClickOutside(customRef, handleSubmit);
 

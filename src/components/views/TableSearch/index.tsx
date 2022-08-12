@@ -17,6 +17,7 @@ const TableSearch = React.forwardRef<any, any>(
       filterName,
       debouncedTime = 700,
       clearAll,
+      closed,
       ...rest
     },
     ref,
@@ -42,6 +43,12 @@ const TableSearch = React.forwardRef<any, any>(
     };
 
     useEffect(() => handleClear(), [clearAll]);
+
+    useEffect(() => {
+      if (closed) {
+        handleClear();
+      }
+    }, [closed]);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(handleSubmit, [debouncedValue]);

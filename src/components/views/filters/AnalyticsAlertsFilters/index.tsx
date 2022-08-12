@@ -92,6 +92,7 @@ const AnalyticsAlertsFilters = () => {
             callback={handleFilter}
             filterName={'id'}
             clearAll={clearAll}
+            closed={!isMore}
           />
         </div>
         <div className={advancedClass}>
@@ -102,6 +103,7 @@ const AnalyticsAlertsFilters = () => {
             callback={handleFilter}
             filterName={'message'}
             clearAll={clearAll}
+            closed={!isMore}
           />
         </div>
         <div className={styles.clear} role='button' onClick={handleClear}>

@@ -134,6 +134,7 @@ const InflowsFilters = () => {
             placeholder={'Enter ID'}
             filterName={'id'}
             clearAll={clearAll}
+            closed={!isMore}
           />
         </div>
         <div className={advancedClass}>
@@ -146,6 +147,7 @@ const InflowsFilters = () => {
                 {...inflowFilterFormFields.selectInflowValueInBaseCurrency}
                 callback={handleFilter}
                 filterName={'baseCurrencyValue'}
+                closed={!isMore}
               />
             )}
           />
