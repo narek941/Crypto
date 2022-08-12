@@ -31,6 +31,7 @@ const Input = React.forwardRef<any, IInputProps>(
       isSmall,
       onChange,
       onFocus,
+      onBlur,
       ...rest
     },
     ref,
@@ -85,6 +86,7 @@ const Input = React.forwardRef<any, IInputProps>(
               placeholder={placeholder}
               onChange={onChange}
               onFocus={onFocus}
+              onBlur={onBlur}
               type={isToggledIcon ? 'text' : type}
             />
             {haveRightIcon && (

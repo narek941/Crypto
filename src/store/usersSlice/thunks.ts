@@ -3,7 +3,7 @@ import { AxiosError } from 'axios';
 
 import { Slice } from 'types';
 import { parseAddUserError } from 'utils/errorConverter';
-import { client, usersApi } from 'api';
+import { usersApi } from 'api';
 
 export const addNewUser = createAsyncThunk(
   `${Slice.Users}/users`,
@@ -20,7 +20,6 @@ export const addNewUser = createAsyncThunk(
     const newUser = {
       ...credentials,
       username: credentials.name,
-      role: credentials.accountType,
     };
 
     try {
@@ -32,20 +31,6 @@ export const addNewUser = createAsyncThunk(
     } catch (exception) {
       const error = exception as AxiosError<{ message: any }>;
       return thunkAPI.rejectWithValue({ error: parseAddUserError(error.response?.data.message) });
-    }
-  },
-);
-
-export const userInfoRequest = createAsyncThunk<any, any, { rejectValue: any }>(
-  `${Slice.Users}/me`,
-  async (data: any, thunkAPI) => {
-    try {
-      const response = await client.get('/users/me');
-      return { personalInfo: response.data };
-    } catch (error) {
-      return thunkAPI.rejectWithValue({
-        message: 'Get user info request failed',
-      });
     }
   },
 );

@@ -38,6 +38,10 @@ const authSlice = createSlice({
     builder.addCase(authThunks.signIn.pending, (state) => {
       state.loading = AuthStates.LOADING;
     });
+    builder.addCase(authThunks.userInfoRequest.fulfilled, (state, action) => {
+      state.personalInfo = action.payload.personalInfo;
+    });
+
     builder.addCase(authThunks.signIn.fulfilled, (state, action) => {
       state.error = null;
       state.accessToken = action.payload.accessToken;

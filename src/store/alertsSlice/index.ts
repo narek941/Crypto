@@ -39,8 +39,8 @@ const alertsSlice = createSlice({
       state.filter = { ...filter, ...action.payload };
       state.filter.filter = { ...filter.filter, ...action.payload.filter };
     });
-    builder.addCase(alertsThunks.alertsFilterClear, (state) => {
-      state.filter.filter = {};
+    builder.addCase(alertsThunks.alertsFilterClear, (state, action) => {
+      state.filter.filter = action.payload;
     });
   },
 });

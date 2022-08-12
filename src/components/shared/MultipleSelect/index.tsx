@@ -1,9 +1,9 @@
 import * as React from 'react';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import MenuItem from '@mui/material/MenuItem';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { ForwardedRef, useRef } from 'react';
 import { Chip } from '@mui/material';
+import MenuItem from '@mui/material/MenuItem';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 import { CloseIcon } from 'assets/icons';
 

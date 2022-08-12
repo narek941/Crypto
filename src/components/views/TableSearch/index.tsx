@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 
-import { CancelIcon, SearchIcon } from 'assets/icons';
+import { CloseIcon, SearchIcon } from 'assets/icons';
 import useDebounce from 'hooks/useDebounce';
 
 import styles from './TableSearch.module.scss';
@@ -36,7 +36,10 @@ const TableSearch = React.forwardRef<any, any>(
       }
     };
 
-    const handleClear = () => setState('');
+    const handleClear = () => {
+      setState('');
+      callback(filterName, null);
+    };
 
     useEffect(() => handleClear(), [clearAll]);
 
@@ -46,7 +49,7 @@ const TableSearch = React.forwardRef<any, any>(
     return (
       <div className={styles.search}>
         <div className={styles.search__icon}>
-          {!state ? <SearchIcon /> : <CancelIcon onClick={handleClear} />}
+          {!state ? <SearchIcon /> : <CloseIcon onClick={handleClear} />}
         </div>
         <div>
           <input

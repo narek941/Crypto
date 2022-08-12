@@ -82,8 +82,8 @@ const adminSlice = createSlice({
       state.tradingPairs = action.payload.tradingPairs;
     });
 
-    builder.addCase(adminThunks.userFilterClear, (state) => {
-      state.usersFilter.filter = {};
+    builder.addCase(adminThunks.userFilterClear, (state, action) => {
+      state.usersFilter.filter = action.payload;
     });
 
     builder.addMatcher(

@@ -47,25 +47,25 @@ const TableAccountBody = ({
             {name}
           </TableCell>
           <TableCell className={styles.table__body__row__ceil} align='left'>
-            {statistics?.startCapitalInBaseCurrency + ' USDT'}
+            {Number(statistics?.startCapitalInBaseCurrency).toFixed(8) + ' USDT'}
           </TableCell>
           <TableCell className={styles.table__body__row__ceil} align='left'>
-            {statistics.currentCapitalInBaseCurrency + ' USDT'}
+            {Number(statistics.currentCapitalInBaseCurrency).toFixed(8) + ' USDT'}
           </TableCell>
           <TableCell className={styles.table__body__row__ceil} align='left'>
             {formattedDate}
           </TableCell>
           <TableCell className={styles.table__body__row__ceil} align='left'>
-            {statistics?.currentOpenProfitInBaseCurrency + ' %'}
+            {Number(statistics?.currentOpenProfitInBaseCurrency).toFixed(8) + ' %'}
           </TableCell>
           <TableCell className={styles.table__body__row__ceil} align='left'>
-            {statistics?.earnedCapitalInBaseCurrency + ' USDT'}
+            {Number(statistics?.earnedCapitalInBaseCurrency).toFixed(8) + ' USDT'}
           </TableCell>
           <TableCell className={styles.table__body__row__ceil} align='left'>
-            {statistics?.earnedCapitalInPercent + ' %'}
+            {Number(statistics?.earnedCapitalInPercent).toFixed(8) + ' %'}
           </TableCell>
           <TableCell className={styles.table__body__row__ceil} align='left'>
-            {statistics?.currentOpenProfitInBaseCurrency + ' USDT'}
+            {Number(statistics?.currentOpenProfitInBaseCurrency).toFixed(8) + ' USDT'}
           </TableCell>
           <TableCell className={styles.table__body__row__ceil} align='left'>
             {statistics?.numberDailyTransactions}
