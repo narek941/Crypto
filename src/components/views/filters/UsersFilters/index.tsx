@@ -50,8 +50,7 @@ const UsersFilters = () => {
 
   const handleFilter = (key: string, value: any) => {
     if (isNull(value)) {
-      const obj = filterObject(filter.filter, key);
-
+      const obj = filterObject(filter, key);
       dispatch(userFilterClear(obj));
     } else {
       if (key === 'username' || key === 'email') {

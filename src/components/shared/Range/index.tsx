@@ -72,7 +72,7 @@ const RangeSwipe = React.forwardRef<any, any>(
       setSecondInput(target.value);
     };
 
-    const handleClear = (event: any) => {
+    const handleClear = (event: React.FormEvent<HTMLElement>) => {
       event.stopPropagation();
       onChange(['', '']);
       callback(filterName, null);

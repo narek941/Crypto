@@ -80,8 +80,8 @@ const Select = React.forwardRef(
 
     const handleSelect = (selectedItem: string) => {
       setFilteredOption(options);
+      onChange(selectedItem);
       if (!callback) {
-        onChange(selectedItem);
         closeDropdown();
       }
     };
@@ -103,9 +103,8 @@ const Select = React.forwardRef(
       setFilteredOption(newOption);
     };
 
-    const handleClear = (event: any) => {
+    const handleClear = (event: React.FormEvent<HTMLElement>) => {
       event.stopPropagation();
-
       onChange('');
       callback(filterName, null);
     };

@@ -41,7 +41,7 @@ const DualSelect = React.forwardRef<any, any>(
       handleClose();
     };
 
-    const handleClear = (event: any) => {
+    const handleClear = (event: React.FormEvent<SVGSVGElement>) => {
       event.stopPropagation();
       formMethods.resetField(`${name}Start`);
       formMethods.resetField(`${name}End`);
