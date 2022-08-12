@@ -40,11 +40,9 @@ const AddUserForm = ({ onClick, isEditable = false }: IAddUser) => {
   const { formMethods, handleSubmit, isValid } = useForm<keyof AddUserFormShape, AddUserFormShape>({
     schemaKeys: addSchemaKeys,
     defaultValues: addUserFormDefaultValues,
-    mode: 'onChange',
   });
 
   const accountWatch = formMethods.watch();
-
   const accountsOptions = useMemo(
     () =>
       accountList.list.map((account) => ({
@@ -144,7 +142,7 @@ const AddUserForm = ({ onClick, isEditable = false }: IAddUser) => {
 
             {!isEditable ? (
               <div className={styles.signIn__form__group__button}>
-                <Button type='submit' color='secondary' size='m'>
+                <Button type='submit' color='secondary' size='m' disabled={!!isValid}>
                   {t('add_user')}
                 </Button>
               </div>

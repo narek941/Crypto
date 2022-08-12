@@ -1,13 +1,17 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
+import { isNull } from 'lodash';
 
 import DateRangePicker from 'components/shared/DateRangePicker';
 import { CloseIcon } from 'assets/icons';
 import { TableSearch } from 'components';
-import { useAppDispatch, useForm } from 'hooks';
+import { useAppDispatch, useAppSelector, useForm } from 'hooks';
 import { createObject } from 'utils/createObject';
 import { alertsFilterClear, alertsFilterUpdate } from 'store/alertsSlice/thunks';
+import { accountsSelectors } from 'store/accountsSlice';
+import { filterObject } from 'utils/filterObject';
+import { accountsAlertsFilterClear } from 'store/accountsSlice/thunks';
 
 import styles from './AlertsFilters.module.scss';
 import { FilterFormShape } from './types';
@@ -16,6 +20,7 @@ import { filterFormFields, filterSchemaKeys } from './fields';
 const AlertsFilters = () => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
+  const { filter } = useAppSelector(accountsSelectors.selectAccountAccountsAlerts);
 
   const [isMore, setIsMore] = useState(false);
   const [clearAll, setClearAll] = useState(false);
@@ -38,7 +43,13 @@ const AlertsFilters = () => {
   };
 
   const handleFilter = (key: string, value: any) => {
-    dispatch(alertsFilterUpdate({ filter: createObject(key, value) }));
+    if (isNull(value)) {
+      const obj = filterObject(filter.filter, key);
+
+      dispatch(accountsAlertsFilterClear(obj));
+    } else {
+      dispatch(alertsFilterUpdate({ filter: createObject(key, value) }));
+    }
   };
 
   const advancedClass = classNames(styles.item, {

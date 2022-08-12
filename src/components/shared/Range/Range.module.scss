@@ -104,3 +104,8 @@
   border: 1px solid var(--header-border);
   @extend %text-14;
 }
+.icon {
+  width: 24px;
+  height: 24px;
+  @extend %flex-center;
+}

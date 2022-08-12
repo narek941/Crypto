@@ -2,13 +2,16 @@ import { useState } from 'react';
 import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
+import { isNull } from 'lodash';
 
 import { CloseIcon } from 'assets/icons';
 import { Select, TableSearch } from 'components';
-import { useAppDispatch, useForm } from 'hooks';
+import { useAppDispatch, useAppSelector, useForm } from 'hooks';
 import { createObject } from 'utils/createObject';
 import { statusOptions, AccountTypeOptions } from 'utils/filterHelper';
 import { userFilterClear, usersFilterUpdate } from 'store/adminSlice/thunks';
+import { filterObject } from 'utils/filterObject';
+import { adminSelectors } from 'store/adminSlice';
 
 import styles from './UsersFilters.module.scss';
 import { FilterFormShape } from './types';
@@ -17,6 +20,7 @@ import { filterFormFields, filterSchemaKeys } from './fields';
 const UsersFilters = () => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
+  const { filter } = useAppSelector(adminSelectors.selectUsersFilter);
 
   const [isMore, setIsMore] = useState(false);
   const [clearAll, setClearAll] = useState(false);
@@ -45,10 +49,15 @@ const UsersFilters = () => {
   };
 
   const handleFilter = (key: string, value: any) => {
-    if (key === 'username' || key === 'email') {
-      dispatch(usersFilterUpdate({ search: createObject(key, value) }));
+    if (isNull(value)) {
+      const obj = filterObject(filter, key);
+      dispatch(userFilterClear(obj));
     } else {
-      dispatch(usersFilterUpdate({ filter: createObject(key, value) }));
+      if (key === 'username' || key === 'email') {
+        dispatch(usersFilterUpdate({ search: createObject(key, value) }));
+      } else {
+        dispatch(usersFilterUpdate({ filter: createObject(key, value) }));
+      }
     }
   };
 

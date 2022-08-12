@@ -97,14 +97,14 @@ const accountsSlice = createSlice({
       state.alerts.filter = { ...filter, ...action.payload };
       state.alerts.filter.filter = { ...filter.filter, ...action.payload.filter };
     });
-    builder.addCase(accountsThunks.accountsTradesFilterClear, (state) => {
-      state.trades.filter.filter = {};
+    builder.addCase(accountsThunks.accountsTradesFilterClear, (state, action) => {
+      state.trades.filter.filter = action.payload;
     });
-    builder.addCase(accountsThunks.accountsAlertsFilterClear, (state) => {
-      state.alerts.filter.filter = {};
+    builder.addCase(accountsThunks.accountsAlertsFilterClear, (state, action) => {
+      state.alerts.filter.filter = action.payload;
     });
-    builder.addCase(accountsThunks.accountsFilterClear, (state) => {
-      state.accountsList.filter.filter = {};
+    builder.addCase(accountsThunks.accountsFilterClear, (state, action) => {
+      state.accountsList.filter.filter = action.payload;
     });
 
     builder.addMatcher(

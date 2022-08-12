@@ -5,14 +5,13 @@ import { useSelector } from 'react-redux';
 import { Routes } from 'types';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { authSelectors } from 'store/authSlice';
-import { usersSelectors } from 'store/usersSlice';
-import { userInfoRequest } from 'store/usersSlice/thunks';
 import { i18n } from 'i18';
+import { userInfoRequest } from 'store/authSlice/thunks';
 
 const ProtectedRoute = ({ children }: any) => {
   const dispatch = useAppDispatch();
   const token = useAppSelector(authSelectors.selectToken);
-  const personalInfo = useAppSelector(usersSelectors.selectPersonalInfo);
+  const personalInfo = useAppSelector(authSelectors.selectPersonalInfo);
   const isEnglish = useSelector(authSelectors.selectIsEnglish);
 
   useEffect(() => {

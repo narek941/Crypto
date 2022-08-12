@@ -1,7 +1,7 @@
 import React, { ForwardedRef, useState, useRef } from 'react';
 import classNames from 'classnames';
 
-import { DropDownIcon } from 'assets/icons';
+import { CloseIcon, DropDownIcon } from 'assets/icons';
 import useOnClickOutside from 'hooks/useOutsideClick';
 
 import styles from './Select.module.scss';
@@ -79,9 +79,8 @@ const Select = React.forwardRef(
     };
 
     const handleSelect = (selectedItem: string) => {
-      onChange(selectedItem);
-
       setFilteredOption(options);
+      onChange(selectedItem);
       if (!callback) {
         closeDropdown();
       }
@@ -104,6 +103,12 @@ const Select = React.forwardRef(
       setFilteredOption(newOption);
     };
 
+    const handleClear = (event: React.FormEvent<HTMLElement>) => {
+      event.stopPropagation();
+      onChange('');
+      callback(filterName, null);
+    };
+
     useOnClickOutside(selectRef, handleSubmit);
 
     return (
@@ -124,7 +129,13 @@ const Select = React.forwardRef(
               defaultValue={props.defaultValue}
               value={value ? currentOption?.label : ''}
             />
-            <DropDownIcon role='button' className={dropClass} />
+            {currentOption && callback ? (
+              <div className={styles.select__clear} onClick={handleClear}>
+                <CloseIcon />
+              </div>
+            ) : (
+              <DropDownIcon role='button' className={dropClass} />
+            )}
           </div>
           <div className={optionClass}>
             <div
@@ -159,8 +170,7 @@ const Select = React.forwardRef(
             )}
           </div>
         </div>
-
-        {error && <span className={styles['select-errorMsg']}>{error}</span>}
+        {error && <div className={styles['select-errorMsg']}>{error}</div>}
       </div>
     );
   },
