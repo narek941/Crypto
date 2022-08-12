@@ -80,7 +80,8 @@ const OpenOrdersFilters = () => {
 
   const handleFilter = (key: string, value: any) => {
     if (isNull(value)) {
-      const obj = filterObject(filter.filter, key);
+      const newKey = key === 'pair' ? 'coinsPairId' : value;
+      const obj = filterObject(filter.filter, newKey as string);
       dispatch(openOrdersFilterClear(obj));
     } else {
       if (key === 'pair') {

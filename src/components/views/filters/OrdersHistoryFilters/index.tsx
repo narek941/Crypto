@@ -45,7 +45,9 @@ const OrdersHistoryFilters = () => {
 
   const handleFilter = (key: string, value: any) => {
     if (isNull(value)) {
-      const obj = filterObject(filter.filter, key);
+      const newKey = key === 'pair' ? 'coinsPairId' : value;
+
+      const obj = filterObject(filter.filter, newKey as string);
 
       dispatch(ordersFilterClear(obj));
     } else {

@@ -72,7 +72,8 @@ const RangeSwipe = React.forwardRef<any, any>(
       setSecondInput(target.value);
     };
 
-    const handleClear = () => {
+    const handleClear = (event: any) => {
+      event.stopPropagation();
       onChange(['', '']);
       callback(filterName, null);
     };

@@ -34,8 +34,6 @@ const DualSelect = React.forwardRef<any, any>(
       setIsOpenDropdown(false);
     };
 
-    useOnClickOutside(customWrapperRef, handleClose);
-
     const handleSubmit = () => {
       if (callback && filterName && selectPairStart && selectPairEnd) {
         callback(filterName, [selectPairStart, selectPairEnd]);
@@ -43,11 +41,14 @@ const DualSelect = React.forwardRef<any, any>(
       handleClose();
     };
 
-    const handleClear = () => {
-      formMethods.resetField(`${name}`);
+    const handleClear = (event: any) => {
+      event.stopPropagation();
+      formMethods.resetField(`${name}Start`);
+      formMethods.resetField(`${name}End`);
       callback(filterName, null);
     };
 
+    useOnClickOutside(customWrapperRef, handleSubmit);
     return (
       <div className={headerClass}>
         <div role='button' onClick={toggleDrop} className={styles.header__inner}>
