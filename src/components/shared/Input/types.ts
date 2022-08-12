@@ -18,4 +18,5 @@ export interface IInputProps {
   RightToggledIcon?: React.FC<React.SVGProps<SVGSVGElement>>;
   onChange?: any;
   onFocus?: any;
+  onBlur?: any;
 }

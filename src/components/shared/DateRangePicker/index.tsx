@@ -20,18 +20,13 @@ const DateRangePicker = React.forwardRef<any, any>(
     const defaultValue = {
       startDate: undefined,
       endDate: undefined,
-      color: 'transparent',
+      color: 'red',
       key: 'selection',
     };
     const [state, setState] = useState(defaultValue);
 
     const isDarkMode = useAppSelector(authSelectors.selectIsDarkMode);
     const isMode = isDarkMode ? 'rgba(65, 58, 199, 0.15)' : '#e5e5e5';
-
-    useEffect(() => {
-      setState(defaultValue);
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [clearAll]);
 
     const startDay = moment(state.startDate).format('LL');
     const endDay = moment(state.endDate).format('LL');
@@ -70,6 +65,11 @@ const DateRangePicker = React.forwardRef<any, any>(
       callback(filterName, null);
       e.stopPropagation();
     };
+
+    useEffect(() => {
+      setState(defaultValue);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [clearAll]);
 
     useOnClickOutside(customRef, handleSubmit);
 

@@ -8,7 +8,7 @@ import { Routes } from 'types';
 import { Alert } from 'components';
 import { BinIcon, EditIcon } from 'assets/icons';
 import { useAppSelector } from 'hooks';
-import { usersSelectors } from 'store/usersSlice';
+import { authSelectors } from 'store/authSlice';
 
 import styles from '../../Table.module.scss';
 import BlockAction from '../../BlockAction';
@@ -26,7 +26,7 @@ const TableUsersBody = ({
 }: ITableBodyProps) => {
   const [delID, setID] = useState<number | null>(null);
 
-  const personalInfo = useAppSelector(usersSelectors.selectPersonalInfo);
+  const personalInfo = useAppSelector(authSelectors.selectPersonalInfo);
 
   const actionCellClassnames = classNames(
     styles.table__body__row__ceil,

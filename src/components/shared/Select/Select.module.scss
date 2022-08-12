@@ -18,9 +18,9 @@
     left: 0;
     color: var(--danger);
     bottom: 0;
-    position: absolute;
-    transform: translate(0, 100%);
-    @extend %text-10;
+    // position: absolute;
+    // transform: translate(0, 100%);
+    @extend %text-14;
   }
 
   &__dropdown {
@@ -101,6 +101,16 @@
       display: block;
       border-radius: 0 0 4px 4px;
     }
+  }
+
+  &__clear {
+    position: absolute;
+    right: 12px;
+    width: 24px;
+    height: 24px;
+    @extend %flex-center;
+    cursor: pointer;
+    top: calc(50% - 12px);
   }
 }
 

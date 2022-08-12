@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
+import { isNull } from 'lodash';
+import { useSelector } from 'react-redux';
 
 import { CloseIcon } from 'assets/icons';
 import { Select, TableSearch } from 'components';
@@ -10,6 +12,8 @@ import { accountsFilterClear, accountsFilterUpdate } from 'store/accountsSlice/t
 import { createObject } from 'utils/createObject';
 import { statusOptions } from 'utils/filterHelper';
 import RangeSwipe from 'components/shared/Range';
+import { accountsSelectors } from 'store/accountsSlice';
+import { filterObject } from 'utils/filterObject';
 
 import styles from './AccountsFilters.module.scss';
 import { FilterFormShape } from './types';
@@ -18,6 +22,7 @@ import { filterFormFields, filterSchemaKeys } from './fields';
 const AccountsFilters = () => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
+  const { filter } = useSelector(accountsSelectors.selectAccountAccountsList);
 
   const [isMore, setIsMore] = useState(false);
   const [clearAll, setClearAll] = useState(false);
@@ -27,12 +32,12 @@ const AccountsFilters = () => {
     defaultValues: {
       accountName: '',
       accountStatus: '',
-      accountAVGTrades: [undefined, undefined],
+      accountAVGTrades: ['', ''],
       accountId: '',
-      accountSeed: [undefined, undefined],
-      accountCurrentCapital: [undefined, undefined],
-      accountOpenProfit: [undefined, undefined],
-      accountEarnedCapital: [undefined, undefined],
+      accountSeed: ['', ''],
+      accountCurrentCapital: ['', ''],
+      accountOpenProfit: ['', ''],
+      accountEarnedCapital: ['', ''],
     },
   });
 
@@ -47,10 +52,16 @@ const AccountsFilters = () => {
   };
 
   const handleFilter = (key: string, value: any) => {
-    if (key === 'name') {
-      dispatch(accountsFilterUpdate({ search: createObject(key, value) }));
+    if (isNull(value)) {
+      const obj = filterObject(filter.filter, key);
+
+      dispatch(accountsFilterClear(obj));
     } else {
-      dispatch(accountsFilterUpdate({ filter: createObject(key, value) }));
+      if (key === 'name') {
+        dispatch(accountsFilterUpdate({ search: createObject(key, value) }));
+      } else {
+        dispatch(accountsFilterUpdate({ filter: createObject(key, value) }));
+      }
     }
   };
 

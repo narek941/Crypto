@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
+import { isNull } from 'lodash';
 
 import { CloseIcon } from 'assets/icons';
 import RangeSwipe from 'components/shared/Range';
@@ -10,6 +11,8 @@ import { createObject } from 'utils/createObject';
 import { adminSelectors } from 'store/adminSlice';
 import { useAppDispatch, useAppSelector, useForm } from 'hooks';
 import { inflowFilterClear, inflowFilterUpdate } from 'store/walletsSlice/thunks';
+import { walletsSelectors } from 'store/walletsSlice';
+import { filterObject } from 'utils/filterObject';
 
 import styles from './InflowsFilters.module.scss';
 import { InflowsFilterFormShape } from './types';
@@ -18,6 +21,7 @@ import { inflowFilterFormFields, inflowFilterSchemaKeys } from './fields';
 const InflowsFilters = () => {
   const dispatch = useAppDispatch();
   const coins = useAppSelector(adminSelectors.selectCoins);
+  const { filter } = useAppSelector(walletsSelectors.selectInflow);
 
   const [isMore, setIsMore] = useState(false);
   const [clearAll, setClearAll] = useState(false);
@@ -27,8 +31,8 @@ const InflowsFilters = () => {
     schemaKeys: inflowFilterSchemaKeys,
     defaultValues: {
       searchInflowID: '',
-      selectInflowValueInBaseCurrency: [undefined, undefined],
-      selectInflowValue: [undefined, undefined],
+      selectInflowValueInBaseCurrency: ['', ''],
+      selectInflowValue: ['', ''],
       selectInflowAsset: '',
       selectInflowType: '',
     },
@@ -64,7 +68,13 @@ const InflowsFilters = () => {
   );
 
   const handleFilter = (key: string, value: any) => {
-    dispatch(inflowFilterUpdate({ filter: createObject(key, value) }));
+    if (isNull(value)) {
+      const obj = filterObject(filter.filter, key);
+
+      dispatch(inflowFilterClear(obj));
+    } else {
+      dispatch(inflowFilterUpdate({ filter: createObject(key, value) }));
+    }
   };
 
   return (

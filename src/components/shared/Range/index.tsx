@@ -3,7 +3,7 @@ import Slider from '@mui/material/Slider';
 import classNames from 'classnames';
 
 import useOnClickOutside from 'hooks/useOutsideClick';
-import { DollarIcon } from 'assets/icons';
+import { CloseIcon, DollarIcon } from 'assets/icons';
 
 import Input from '../Input';
 
@@ -26,6 +26,9 @@ const RangeSwipe = React.forwardRef<any, any>(
     const value = propsValue || [];
     const customRef = useRef(null);
     const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [firstInput, setFirstInput] = useState<any>(NaN);
+    const [secondInput, setSecondInput] = useState<any>(NaN);
+
     const headerClass = classNames(styles.header, { [styles.header__open]: isOpen });
     const modalClass = classNames(styles.modal, { [styles.modal__open]: isOpen });
     const textClass = classNames(styles.header__input, {
@@ -47,31 +50,75 @@ const RangeSwipe = React.forwardRef<any, any>(
       handleClose();
     };
 
+    const handleFirstBlur = () => {
+      if (!isNaN(firstInput)) {
+        onChange([firstInput, value[1]]);
+        setFirstInput(NaN);
+      }
+    };
+
+    const handleSecondBlur = () => {
+      if (!isNaN(secondInput)) {
+        onChange([value[0], secondInput]);
+        setSecondInput(NaN);
+      }
+    };
+
+    const handleFirstChange = ({ target }: any) => {
+      setFirstInput(target.value);
+    };
+
+    const handleSecondChange = ({ target }: any) => {
+      setSecondInput(target.value);
+    };
+
+    const handleClear = (event: React.FormEvent<HTMLElement>) => {
+      event.stopPropagation();
+      onChange(['', '']);
+      callback(filterName, null);
+    };
+
     useOnClickOutside(customRef, handleSubmit);
 
     return (
       <div role='button' onClick={toggleDrop} className={headerClass}>
         <p className={textClass}>
-          {value?.includes(undefined) ? placeholder : `${value[0]} / ${value[1]}`}
+          {value[0] === '' && value[1] === '' ? placeholder : `${value[0]} / ${value[1]}`}
         </p>
-        <div>{Icon ? <Icon /> : <DollarIcon />}</div>
+        <div>
+          {value[0] === '' && value[1] === '' ? (
+            Icon ? (
+              <Icon />
+            ) : (
+              <DollarIcon />
+            )
+          ) : (
+            <div className={styles.icon} onClick={handleClear}>
+              <CloseIcon />
+            </div>
+          )}
+        </div>
         <div className={modalClass} ref={customRef}>
           <div className={styles.wrapper}>
             <div className={styles.inner}>
               <Input
-                value={value[0]}
+                value={!isNaN(firstInput) ? firstInput : value[0]}
                 name={'firstInput'}
                 type='number'
                 className={styles.input}
-                placeholder={'0'}
+                placeholder={'min'}
+                onChange={handleFirstChange}
+                onBlur={handleFirstBlur}
               />
               <span>-</span>
               <Input
-                value={value[1]}
+                value={!isNaN(secondInput) ? secondInput : value[1]}
                 name={'secondInput'}
                 type='number'
                 className={styles.input}
-                placeholder={'0'}
+                placeholder={'max'}
+                onChange={handleSecondChange}
+                onBlur={handleSecondBlur}
               />
             </div>
             <div className={styles.slider}>

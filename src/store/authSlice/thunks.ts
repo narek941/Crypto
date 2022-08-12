@@ -1,7 +1,7 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
 
-import { authApi } from 'api';
+import { authApi, client } from 'api';
 import { Slice } from 'types';
 import { errorConverter } from 'utils/errorConverter';
 import { BrowserStorageKeys, BrowserStorageService } from 'services';
@@ -51,6 +51,20 @@ export const signOut = createAsyncThunk(`${Slice.Auth}/signOut`, async (_, thunk
     return thunkAPI.rejectWithValue({ error: message });
   }
 });
+
+export const userInfoRequest = createAsyncThunk<any, any, { rejectValue: any }>(
+  `${Slice.Users}/me`,
+  async (data: any, thunkAPI) => {
+    try {
+      const response = await client.get('/users/me');
+      return { personalInfo: response.data };
+    } catch (error) {
+      return thunkAPI.rejectWithValue({
+        message: 'Get user info request failed',
+      });
+    }
+  },
+);
 
 export const setDarkTheme = createAction('auth/setDarkTheme');
 export const setLightTheme = createAction('auth/setLightTheme');
