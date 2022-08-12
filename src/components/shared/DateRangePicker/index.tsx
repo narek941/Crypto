@@ -6,8 +6,9 @@ import { Controller } from 'react-hook-form';
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 
-import { useOnClickOutside } from 'hooks';
-import { CalendarIcon } from 'assets/icons';
+import { useAppSelector, useOnClickOutside } from 'hooks';
+import { CalendarIcon, CloseIcon } from 'assets/icons';
+import { authSelectors } from 'store/authSlice';
 
 import styles from './DateRangePicker.module.scss';
 
@@ -15,13 +16,17 @@ const DateRangePicker = React.forwardRef<any, any>(
   ({ placeholder, formMethods, name, callback, filterName, clearAll }, ref: any) => {
     const customRef = useRef(null);
     const [openCalendar, setOpenCalendar] = useState<boolean>(false);
+
     const defaultValue = {
       startDate: undefined,
       endDate: undefined,
+      color: 'transparent',
       key: 'selection',
     };
-
     const [state, setState] = useState(defaultValue);
+
+    const isDarkMode = useAppSelector(authSelectors.selectIsDarkMode);
+    const isMode = isDarkMode ? 'rgba(65, 58, 199, 0.15)' : '#e5e5e5';
 
     useEffect(() => {
       setState(defaultValue);
@@ -48,16 +53,22 @@ const DateRangePicker = React.forwardRef<any, any>(
     };
 
     const handleChange = (item: any) => {
-      setState(item.selection);
+      setState({ ...item.selection, color: isMode });
       formMethods.setValue(name, item.selection);
     };
 
     const handleSubmit = () => {
-      if (state.endDate !== undefined && state.endDate !== undefined && openCalendar) {
+      if (state.endDate !== null && state.startDate !== null && openCalendar) {
         callback(filterName, [state.startDate, state.endDate]);
       }
 
       setOpenCalendar(false);
+    };
+
+    const handleClear = (e: React.FormEvent<SVGSVGElement>) => {
+      setState(defaultValue);
+      callback(filterName, null);
+      e.stopPropagation();
     };
 
     useOnClickOutside(customRef, handleSubmit);
@@ -66,7 +77,7 @@ const DateRangePicker = React.forwardRef<any, any>(
       <div className={styles.calendar}>
         <div className={styles.calendar__header} role='button' onClick={toggleCalendar}>
           <span className={headerTextClass}>{text}</span>
-          <CalendarIcon />
+          {!state.startDate ? <CalendarIcon /> : <CloseIcon role='button' onClick={handleClear} />}
         </div>
         <div ref={customRef} className={calendarWrapperClass}>
           <Controller
@@ -82,10 +93,10 @@ const DateRangePicker = React.forwardRef<any, any>(
                 showPreview={false}
                 direction='horizontal'
                 onChange={handleChange}
+                moveRangeOnFirstSelection
                 weekdayDisplayFormat='EEEEE'
-                moveRangeOnFirstSelection={true}
+                retainEndDateOnFirstSelection
                 className={styles.calendar__inner}
-                retainEndDateOnFirstSelection={true}
               />
             )}
           />

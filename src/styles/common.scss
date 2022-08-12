@@ -159,6 +159,10 @@
   margin-bottom: 2px;
 }
 
+.rdrDayPassive{
+  opacity: 0;
+}
+
 .rdrSelected,
 .rdrInRange,
 .rdrStartEdge,
@@ -184,8 +188,9 @@
 }
 
 .rdrInRange {
-  background: var(--calendar);
   color: var(--font);
+  // background-color: var(--calendar);
+  // background-color: var(--background);
 }
 
 .rdrEndEdge + .rdrDayNumber,

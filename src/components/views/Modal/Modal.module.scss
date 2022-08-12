@@ -15,6 +15,10 @@
   @extend %flex-column;
   @extend %modal-shadow;
 
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
   &__open {
     display: block;
   }
@@ -48,7 +52,13 @@
   }
   &__value {
     min-width: 75px;
+    max-width: 75px;
     text-align: left;
+    overflow-x: scroll;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 }
 .chart {
