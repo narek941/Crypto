@@ -111,7 +111,7 @@ const Select = React.forwardRef(
     };
 
     useEffect(() => {
-      if (closed) {
+      if (closed && filterName) {
         handleClear();
       }
     }, [closed]);

@@ -2,10 +2,11 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { isNull } from 'lodash';
+import { Controller } from 'react-hook-form';
 
 import DateRangePicker from 'components/shared/DateRangePicker';
 import { CloseIcon } from 'assets/icons';
-import { TableSearch } from 'components';
+import { Select, TableSearch } from 'components';
 import { useAppDispatch, useAppSelector, useForm } from 'hooks';
 import { createObject } from 'utils/createObject';
 import { alertsFilterClear, alertsFilterUpdate } from 'store/alertsSlice/thunks';
@@ -47,7 +48,11 @@ const AlertsFilters = () => {
 
       dispatch(alertsFilterClear(obj));
     } else {
-      dispatch(alertsFilterUpdate({ filter: createObject(key, value) }));
+      if (key === 'account.name') {
+        dispatch(alertsFilterUpdate({ search: createObject(key, value) }));
+      } else {
+        dispatch(alertsFilterUpdate({ filter: createObject(key, value) }));
+      }
     }
   };
 
@@ -59,6 +64,16 @@ const AlertsFilters = () => {
     <div className={styles.container}>
       <div className={styles.wrapper}>
         <div className={styles.item}>
+          <TableSearch
+            {...filterFormFields.alertName}
+            {...formMethods.register('alertName')}
+            className={styles.search}
+            callback={handleFilter}
+            filterName={'account.name'}
+            clearAll={clearAll}
+          />
+        </div>
+        <div className={styles.item}>
           <DateRangePicker
             formMethods={formMethods}
             {...filterFormFields.alertCreationDate}
@@ -69,15 +84,21 @@ const AlertsFilters = () => {
         </div>
 
         <div className={styles.item}>
-          <TableSearch
-            {...filterFormFields.alertType}
-            {...formMethods.register('alertType')}
-            className={styles.search}
-            callback={handleFilter}
-            filterName={'type'}
-            clearAll={clearAll}
+          <Controller
+            control={formMethods.control}
+            name={filterFormFields.alertType.name as any}
+            render={({ field }) => (
+              <Select
+                {...filterFormFields.alertType}
+                {...field}
+                className={styles.select}
+                callback={handleFilter}
+                filterName={'type'}
+              />
+            )}
           />
         </div>
+
         <div className={advancedClass}>
           <TableSearch
             {...filterFormFields.alertID}

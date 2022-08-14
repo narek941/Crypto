@@ -8,7 +8,7 @@ import TableHead from '@mui/material/TableHead';
 
 import { useAppDispatch } from 'hooks';
 import { wrapWithBaseCurrency } from 'utils';
-import { EmptyData, Pagination } from 'components';
+import { EmptyData, Pagination, ScrollWrapper } from 'components';
 import { inflowOutflowTable } from 'constants/index';
 import { accountsSelectors } from 'store/accountsSlice';
 import { inflowFilterUpdate } from 'store/walletsSlice/thunks';
@@ -60,27 +60,29 @@ const InflowsTable = () => {
     <>
       <div className={styles.wrapper}>
         <InflowsFilters />
-        <Table className={styles.inner}>
-          <TableHead className={styles.container__header}>
-            <TableRow className={styles.container__header__row}>
-              {inflowOutflowTable.map(({ id, value, withBaseCurrency }) => (
-                <TableCell align='left' className={styles.container__header__ceil} key={id}>
-                  {!withBaseCurrency
-                    ? value
-                    : wrapWithBaseCurrency(value, accountById?.baseCurrency?.name)}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          {!!totalCount && (
-            <TableBody>
-              {list?.map((row) => (
-                <InflowsTableRow row={row} key={row.id} />
-              ))}
-            </TableBody>
-          )}
-        </Table>
-        {!totalCount && <EmptyData />}
+        <ScrollWrapper>
+          <Table className={styles.inner}>
+            <TableHead className={styles.container__header}>
+              <TableRow className={styles.container__header__row}>
+                {inflowOutflowTable.map(({ id, value, withBaseCurrency }) => (
+                  <TableCell align='left' className={styles.container__header__ceil} key={id}>
+                    {!withBaseCurrency
+                      ? value
+                      : wrapWithBaseCurrency(value, accountById?.baseCurrency?.name)}
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            {!!totalCount && (
+              <TableBody>
+                {list?.map((row) => (
+                  <InflowsTableRow row={row} key={row.id} />
+                ))}
+              </TableBody>
+            )}
+          </Table>
+          {!totalCount && <EmptyData />}
+        </ScrollWrapper>
       </div>
 
       <Pagination

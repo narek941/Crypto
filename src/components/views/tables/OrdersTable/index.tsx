@@ -9,7 +9,7 @@ import TableHead from '@mui/material/TableHead';
 import { useAppDispatch } from 'hooks';
 import { wrapWithBaseCurrency } from 'utils';
 import { openOrdersTable } from 'constants/index';
-import { EmptyData, Pagination } from 'components';
+import { EmptyData, Pagination, ScrollWrapper } from 'components';
 import { accountsSelectors } from 'store/accountsSlice';
 import { openOrdersFilterUpdate } from 'store/walletsSlice/thunks';
 import { walletsActions, walletsSelectors } from 'store/walletsSlice';
@@ -56,28 +56,29 @@ const OrdersTable = () => {
     <>
       <div className={styles.wrapper}>
         <OpenOrdersFilters />
-        <Table aria-label='collapsible table' className={styles.inner}>
-          <TableHead className={styles.container__header}>
-            <TableRow className={styles.container__header__row}>
-              <TableCell className={styles.container__header__ceil}>More</TableCell>
-              {openOrdersTable.map(({ id, value, withBaseCurrency }) => (
-                <TableCell align='left' className={styles.container__header__ceil} key={id}>
-                  {!withBaseCurrency
-                    ? value
-                    : wrapWithBaseCurrency(value, accountById?.baseCurrency?.name)}
-                </TableCell>
+        <ScrollWrapper>
+          <Table aria-label='collapsible table' className={styles.inner}>
+            <TableHead className={styles.container__header}>
+              <TableRow className={styles.container__header__row}>
+                <TableCell className={styles.container__header__ceil}>More</TableCell>
+                {openOrdersTable.map(({ id, value, withBaseCurrency }) => (
+                  <TableCell align='left' className={styles.container__header__ceil} key={id}>
+                    {!withBaseCurrency
+                      ? value
+                      : wrapWithBaseCurrency(value, accountById?.baseCurrency?.name)}
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {list.map((row) => (
+                <OrdersTableRow row={row} key={row.id} />
               ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {list.map((row) => (
-              <OrdersTableRow row={row} key={row.id} />
-            ))}
-          </TableBody>
-        </Table>
-        {!totalCount && <EmptyData />}
+            </TableBody>
+          </Table>
+          {!totalCount && <EmptyData />}
+        </ScrollWrapper>
       </div>
-
       <Pagination
         handleChangePage={handleChangePage}
         handleChangeRowsPerPage={handleChangeRowsPerPage}

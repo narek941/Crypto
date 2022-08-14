@@ -1,3 +1,5 @@
+import { AlertsTypeOptions } from 'utils/filterHelper';
+
 import { FormField } from '../../../forms/types';
 
 import { FilterFormShape } from './types';
@@ -11,9 +13,10 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
 
   alertType: {
     name: 'alertType',
-    type: 'Search',
+    type: 'Select',
     id: 'filterForm.alertType',
     placeholder: 'Alert Type',
+    options: AlertsTypeOptions,
   },
 
   alertID: {

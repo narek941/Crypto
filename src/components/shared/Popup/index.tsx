@@ -39,7 +39,7 @@ const Popup = ({ open }: PopupProps) => {
         <ToggleSwitch checked={isDarkMode} onChange={handleChange} />
         <span>{t('dark')}</span>
       </div>
-      <div className={styles.popup__switcher}>
+      <div className={styles.popup__switcher} style={{ display: 'none' }}>
         <span>EN</span>
         <ToggleSwitch checked={!isEnglish} onChange={handleChangeLang} />
         <span>RU</span>

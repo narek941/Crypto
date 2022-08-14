@@ -102,6 +102,7 @@ export const composeFormSchema = <K extends FormFieldNames>(fields: K[]): AnyObj
     alertID: Yup.string(),
     alertMessage: Yup.string(),
     alertCreationDate: Yup.string(),
+    alertName: Yup.string(),
 
     //login
 

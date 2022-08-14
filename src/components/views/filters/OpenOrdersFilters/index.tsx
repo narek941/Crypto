@@ -35,18 +35,15 @@ const OpenOrdersFilters = () => {
     schemaKeys: filterSchemaKeys,
     defaultValues: {
       selectValue: ['', ''],
-      selectValueInBaseCurrency: ['', ''],
-      selectFee: ['', ''],
       selectShare: ['', ''],
-      selectFeeInBaseCurrency: ['', ''],
       selectSide: '',
       searchID: '',
       searchReceived: '',
-      selectPairEnd: undefined,
-      selectPairStart: undefined,
+      selectPairEnd: '',
+      selectPairStart: '',
       creationDate: [
         {
-          startDate: undefined,
+          startDate: 'undefined',
           endDate: undefined,
           key: 'selection',
         },
@@ -175,32 +172,6 @@ const OpenOrdersFilters = () => {
         </div>
 
         <div className={advancedClass}>
-          <DateRangePicker
-            formMethods={formMethods}
-            {...filterFormFields.creationTime}
-            callback={handleFilter}
-            filterName={'creationTime'}
-            clearAll={clearAll}
-            closed={!isMore}
-          />
-        </div>
-        <div className={advancedClass}>
-          <Controller
-            control={formMethods.control}
-            name={filterFormFields.selectValueInBaseCurrency.name as any}
-            render={({ field }) => (
-              <RangeSwipe
-                {...filterFormFields.selectValueInBaseCurrency}
-                {...field}
-                callback={handleFilter}
-                filterName={'baseCurrencyValue'}
-                closed={!isMore}
-              />
-            )}
-          />
-        </div>
-
-        <div className={advancedClass}>
           <TableSearch
             {...filterFormFields.searchReceived}
             {...formMethods.register('searchReceived')}
@@ -211,47 +182,7 @@ const OpenOrdersFilters = () => {
             closed={!isMore}
           />
         </div>
-        <div className={advancedClass}>
-          <TableSearch
-            {...filterFormFields.searchReceivedInBaseCurrency}
-            {...formMethods.register('searchReceivedInBaseCurrency')}
-            className={styles.search}
-            callback={handleFilter}
-            filterName={'tradesTotalPriceInBaseCurrencySum'}
-            clearAll={clearAll}
-            closed={!isMore}
-          />
-        </div>
-        <div className={advancedClass}>
-          <Controller
-            control={formMethods.control}
-            name={filterFormFields.selectFee.name as any}
-            render={({ field }) => (
-              <RangeSwipe
-                {...field}
-                {...filterFormFields.selectFee}
-                callback={handleFilter}
-                filterName={'feesSum'}
-                closed={!isMore}
-              />
-            )}
-          />
-        </div>
-        <div className={advancedClass}>
-          <Controller
-            control={formMethods.control}
-            name={filterFormFields.selectFeeInBaseCurrency.name as any}
-            render={({ field }) => (
-              <RangeSwipe
-                {...field}
-                {...filterFormFields.selectFeeInBaseCurrency}
-                callback={handleFilter}
-                filterName={'feesSumInBaseCurrency'}
-                closed={!isMore}
-              />
-            )}
-          />
-        </div>
+
         <div className={advancedClass}>
           <Controller
             control={formMethods.control}
@@ -265,16 +196,6 @@ const OpenOrdersFilters = () => {
                 closed={!isMore}
               />
             )}
-          />
-        </div>
-        <div className={advancedClass}>
-          <DateRangePicker
-            formMethods={formMethods}
-            {...filterFormFields.updatedTime}
-            callback={handleFilter}
-            filterName={'lastOperationTime'}
-            clearAll={clearAll}
-            closed={!isMore}
           />
         </div>
 

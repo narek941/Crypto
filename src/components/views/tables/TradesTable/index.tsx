@@ -11,7 +11,7 @@ import { ParamsWithId } from 'types';
 import { useAppDispatch } from 'hooks';
 import { wrapWithBaseCurrency } from 'utils';
 import { tradesTable } from 'constants/index';
-import { EmptyData, Pagination } from 'components';
+import { EmptyData, Pagination, ScrollWrapper } from 'components';
 import { accountsActions } from 'store/accountsSlice';
 import { accountsSelectors } from 'store/accountsSlice';
 import TradesFilters from 'components/views/filters/TradesFilters';
@@ -60,25 +60,27 @@ const TradesTable = () => {
     <>
       <div className={styles.wrapper}>
         <TradesFilters />
-        <Table className={styles.inner}>
-          <TableHead className={styles.container__header}>
-            <TableRow className={styles.container__header__row}>
-              {tradesTable.map(({ id, value, withBaseCurrency }) => (
-                <TableCell align='left' className={styles.container__header__ceil} key={id}>
-                  {!withBaseCurrency
-                    ? value
-                    : wrapWithBaseCurrency(value, accountById?.baseCurrency?.name)}
-                </TableCell>
+        <ScrollWrapper>
+          <Table className={styles.inner}>
+            <TableHead className={styles.container__header}>
+              <TableRow className={styles.container__header__row}>
+                {tradesTable.map(({ id, value, withBaseCurrency }) => (
+                  <TableCell align='left' className={styles.container__header__ceil} key={id}>
+                    {!withBaseCurrency
+                      ? value
+                      : wrapWithBaseCurrency(value, accountById?.baseCurrency?.name)}
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {list.map((row) => (
+                <TradesTableRow row={row} key={row.id} />
               ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {list.map((row) => (
-              <TradesTableRow row={row} key={row.id} />
-            ))}
-          </TableBody>
-        </Table>
-        {!totalCount && <EmptyData />}
+            </TableBody>
+          </Table>
+          {!totalCount && <EmptyData />}
+        </ScrollWrapper>
       </div>
 
       <Pagination

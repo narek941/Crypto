@@ -11,13 +11,13 @@ const AnalyticsAlertTableRow = ({ row }: any) => (
         {row?.id}
       </TableCell>
       <TableCell align='left' className={styles.ceil}>
+        {row?.type}
+      </TableCell>
+      <TableCell align='left' className={styles.ceil}>
         {row?.message}
       </TableCell>
       <TableCell align='left' className={styles.ceil}>
         {moment(row?.createdAt).format('DD.MM.YYYY HH:MM:SS')}
-      </TableCell>
-      <TableCell align='left' className={styles.ceil}>
-        {row?.type}
       </TableCell>
     </TableRow>
   </>

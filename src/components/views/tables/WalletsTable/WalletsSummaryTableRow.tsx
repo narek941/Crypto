@@ -4,11 +4,8 @@ import moment from 'moment';
 
 import styles from './WalletsTable.module.scss';
 
-const WalletsSummaryTableRow = ({ walletId, row }: any) => (
+const WalletsSummaryTableRow = ({ row }: any) => (
   <TableRow className={styles.container__body__row}>
-    <TableCell align='left' className={styles.ceil}>
-      {walletId}
-    </TableCell>
     <TableCell align='left' className={styles.ceil}>
       {Number(row?.totalCapital)?.toFixed(8) || 0}
     </TableCell>

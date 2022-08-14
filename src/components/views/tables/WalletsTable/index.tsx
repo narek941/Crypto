@@ -73,7 +73,7 @@ const WalletsTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            <WalletsSummaryTableRow walletId={walletId} row={summary} />
+            <WalletsSummaryTableRow row={summary} />
           </TableBody>
         </Table>
         <div className={styles.filter}>

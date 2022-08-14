@@ -39,7 +39,7 @@ export interface UserData {
   id: string;
   name: string;
   message: string;
-  alertTigger: string;
+  alertTrigger: string;
   alertTime: string;
   email: string;
   accountType: string;

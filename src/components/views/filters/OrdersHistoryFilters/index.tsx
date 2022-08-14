@@ -37,7 +37,7 @@ const OrdersHistoryFilters = () => {
       historyID: '',
       historyValue: '',
       historyUpdateTime: [undefined, undefined],
-      historySide: undefined,
+      historySide: '',
     },
   });
 

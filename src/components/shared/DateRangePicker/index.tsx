@@ -6,6 +6,8 @@ import { Controller } from 'react-hook-form';
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 
+import { isNull } from 'lodash';
+
 import { useAppSelector, useOnClickOutside } from 'hooks';
 import { CalendarIcon, CloseIcon } from 'assets/icons';
 import { authSelectors } from 'store/authSlice';
@@ -53,7 +55,7 @@ const DateRangePicker = React.forwardRef<any, any>(
       const start = item.selection.startDate;
       const end = item.selection.endDate;
 
-      if (state.endDate && state.startDate) {
+      if (state.endDate && state.startDate && !isNull(state.startDate)) {
         if (moment(start).isBefore(state.startDate)) {
           setState({ ...state, startDate: start });
           formMethods.setValue(name, state);
@@ -79,7 +81,12 @@ const DateRangePicker = React.forwardRef<any, any>(
     };
 
     const handleSubmit = () => {
-      if (state.endDate !== null && state.startDate !== null && openCalendar) {
+      if (
+        !isNull(state.endDate) &&
+        !isNull(state.endDate) &&
+        openCalendar &&
+        state.startDate !== undefined
+      ) {
         callback(filterName, [state.startDate, state.endDate]);
       }
 

@@ -8,7 +8,7 @@ import TableHead from '@mui/material/TableHead';
 
 import { useAppDispatch } from 'hooks';
 import { wrapWithBaseCurrency } from 'utils';
-import { EmptyData, Pagination } from 'components';
+import { EmptyData, Pagination, ScrollWrapper } from 'components';
 import { ordersHistoryTable } from 'constants/index';
 import { accountsSelectors } from 'store/accountsSlice';
 import { walletsActions, walletsSelectors } from 'store/walletsSlice';
@@ -56,26 +56,27 @@ const OrdersHistoryTable = () => {
     <>
       <div className={styles.wrapper}>
         <OrdersHistoryFilters />
-
-        <Table className={styles.inner}>
-          <TableHead className={styles.container__header}>
-            <TableRow className={styles.container__header__row}>
-              {ordersHistoryTable.map(({ id, value, withBaseCurrency }) => (
-                <TableCell align='left' className={styles.container__header__ceil} key={id}>
-                  {!withBaseCurrency
-                    ? value
-                    : wrapWithBaseCurrency(value, accountById?.baseCurrency?.name)}
-                </TableCell>
+        <ScrollWrapper>
+          <Table className={styles.inner}>
+            <TableHead className={styles.container__header}>
+              <TableRow className={styles.container__header__row}>
+                {ordersHistoryTable.map(({ id, value, withBaseCurrency }) => (
+                  <TableCell align='left' className={styles.container__header__ceil} key={id}>
+                    {!withBaseCurrency
+                      ? value
+                      : wrapWithBaseCurrency(value, accountById?.baseCurrency?.name)}
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {list.map((row) => (
+                <OrdersHistoryTableRow row={row} key={row.id} />
               ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {list.map((row) => (
-              <OrdersHistoryTableRow row={row} key={row.id} />
-            ))}
-          </TableBody>
-        </Table>
-        {!totalCount && <EmptyData />}
+            </TableBody>
+          </Table>
+          {!totalCount && <EmptyData />}
+        </ScrollWrapper>
       </div>
 
       <Pagination

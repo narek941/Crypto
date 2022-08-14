@@ -74,22 +74,7 @@ const UsersFilters = () => {
             clearAll={clearAll}
           />
         </div>
-        <div className={styles.item}>
-          <Controller
-            control={formMethods.control}
-            name={filterFormFields.userType.name as any}
-            render={({ field }) => (
-              <Select
-                {...filterFormFields.userType}
-                {...field}
-                className={styles.select}
-                options={AccountTypeOptions}
-                callback={handleFilter}
-                filterName={'role'}
-              />
-            )}
-          />
-        </div>
+
         <div className={styles.item}>
           <Controller
             control={formMethods.control}
@@ -102,6 +87,23 @@ const UsersFilters = () => {
                 options={statusOptions}
                 callback={handleFilter}
                 filterName={'status'}
+              />
+            )}
+          />
+        </div>
+
+        <div className={styles.item}>
+          <Controller
+            control={formMethods.control}
+            name={filterFormFields.userType.name as any}
+            render={({ field }) => (
+              <Select
+                {...filterFormFields.userType}
+                {...field}
+                className={styles.select}
+                options={AccountTypeOptions}
+                callback={handleFilter}
+                filterName={'role'}
               />
             )}
           />

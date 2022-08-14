@@ -28,7 +28,16 @@ const TableAccountBody = ({
     styles.table__body__row__ceil,
     styles.table__body__row__ceil__actions,
   );
+
   const [delID, setID] = useState<number | null>(null);
+
+  const handleClick = (id: any, statistics: any, startCapitalInBaseCurrency: any) =>
+    handleChartAction &&
+    handleChartAction({
+      id,
+      statistics,
+      startCapitalInBaseCurrency,
+    });
 
   const renderRows = rows.map(
     ({ id, startCapitalInBaseCurrency, name, createdAt, status, statistics }: any, index) => {
@@ -39,7 +48,12 @@ const TableAccountBody = ({
       });
 
       return (
-        <TableRow className={styles.table__body__row} tabIndex={id} key={index}>
+        <TableRow
+          className={styles.table__body__row}
+          tabIndex={id}
+          key={index}
+          onClick={() => handleClick(id, statistics, startCapitalInBaseCurrency)}
+        >
           <TableCell className={styles.table__body__row__ceil} align='left'>
             {id}
           </TableCell>
@@ -68,24 +82,18 @@ const TableAccountBody = ({
             {Number(statistics?.currentOpenProfitInBaseCurrency).toFixed(8) + ' USDT'}
           </TableCell>
           <TableCell className={styles.table__body__row__ceil} align='left'>
-            {statistics?.numberDailyTransactions}
+            {status}
           </TableCell>
           <TableCell className={styles.table__body__row__ceil} align='left'>
-            {status}
+            {statistics?.numberDailyTransactions}
           </TableCell>
 
           <TableCell className={actionCellClassnames} align='left'>
             {handleChartAction && (
               <div className={styles.table__body__row__ceil__actions__chart}>
-                <ChartIcon
-                  onClick={() =>
-                    handleChartAction({
-                      id,
-                      statistics,
-                      startCapitalInBaseCurrency,
-                    })
-                  }
-                />
+                <Link to={`${Routes.Accounts}/analytics/${id}`}>
+                  <ChartIcon />
+                </Link>
                 <span className={tooltipClasses}>Account analytics</span>
               </div>
             )}

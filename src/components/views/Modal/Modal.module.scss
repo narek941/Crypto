@@ -9,7 +9,7 @@
   position: fixed;
   max-width: 258px;
   overflow-y: scroll;
-  height: calc(100vh - 141px);
+  height: 90vh;
   border-radius: 4px;
   background-color: var(--sidebar-background);
   @extend %flex-column;

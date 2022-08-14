@@ -58,14 +58,8 @@
 }
 .inner {
   padding: var(--table-padding);
-  overflow-x: scroll;
   border-collapse: collapse;
   border-style: hidden;
-  overflow: hidden;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
 }
 
 .open {
@@ -108,11 +102,6 @@
 .wrapper {
   border: 1px solid var(--table-border);
   border-radius: 8px;
-  overflow-x: scroll;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
 }
 
 .dropdown {

@@ -18,6 +18,7 @@ const TableSearch = React.forwardRef<any, any>(
       debouncedTime = 700,
       clearAll,
       closed,
+      type,
       ...rest
     },
     ref,
@@ -65,6 +66,7 @@ const TableSearch = React.forwardRef<any, any>(
             className={inputClass}
             placeholder={placeholder}
             ref={ref}
+            type={type}
             autoComplete='off'
             onChange={handleChange}
             onFocus={onFocus}

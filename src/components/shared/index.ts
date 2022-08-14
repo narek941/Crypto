@@ -14,5 +14,6 @@ export { default as Typography } from './Typography';
 export { default as LinkButton } from './LinkButton';
 export { default as PublicRoute } from './PublicRoute';
 export { default as ToggleSwitch } from './ToggleSwitch';
+export { default as ScrollWrapper } from './ScrollWrapper';
 export { default as ExternalImage } from './ExternalImage';
 export { default as ProtectedRoute } from './ProtectedRoute';

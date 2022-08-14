@@ -3,12 +3,14 @@ import { TableHeaderRow } from 'types';
 export const inflowOutflowTable: TableHeaderRow[] = [
   {
     id: 1,
-    value: 'Type',
-  },
-  {
-    id: 2,
     value: 'ID',
   },
+
+  {
+    id: 2,
+    value: 'Type',
+  },
+
   {
     id: 3,
     value: 'Asset',

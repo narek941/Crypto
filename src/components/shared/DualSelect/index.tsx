@@ -49,7 +49,7 @@ const DualSelect = React.forwardRef<any, any>(
     };
 
     useEffect(() => {
-      if (closed) {
+      if (closed && filterName) {
         handleClear();
       }
     }, [closed]);

@@ -2,10 +2,6 @@ import { TableHeaderRow } from 'types';
 
 const walletSummaryTable: TableHeaderRow[] = [
   {
-    id: 1,
-    value: 'ID',
-  },
-  {
     id: 2,
     value: 'Capital, BTC',
   },

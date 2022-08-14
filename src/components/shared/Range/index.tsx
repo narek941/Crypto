@@ -27,8 +27,8 @@ const RangeSwipe = React.forwardRef<any, any>(
     const value = propsValue || [];
     const customRef = useRef(null);
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const [firstInput, setFirstInput] = useState<any>(NaN);
-    const [secondInput, setSecondInput] = useState<any>(NaN);
+    const [firstInput, setFirstInput] = useState<any>(0);
+    const [secondInput, setSecondInput] = useState<any>(0);
 
     const headerClass = classNames(styles.header, { [styles.header__open]: isOpen });
     const modalClass = classNames(styles.modal, { [styles.modal__open]: isOpen });
@@ -84,7 +84,6 @@ const RangeSwipe = React.forwardRef<any, any>(
         handleClear();
       }
     }, [closed]);
-
     useOnClickOutside(customRef, handleSubmit);
 
     return (

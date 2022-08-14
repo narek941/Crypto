@@ -38,8 +38,8 @@ const TradesFilters = () => {
       tradesTotalPrice: '',
       tradesValueInBaseCurrency: '',
       tradesFee: '',
-      tradesFeeInBaseCurrency: undefined,
-      tradesSide: undefined,
+      tradesFeeInBaseCurrency: '',
+      tradesSide: '',
     },
   });
 
@@ -136,13 +136,25 @@ const TradesFilters = () => {
           />
         </div>
 
-        <div className={advancedClass}>
+        <div className={styles.item}>
           <TableSearch
             {...filterFormFields.tradesPrice}
             {...formMethods.register('tradesPrice')}
             className={styles.search}
             callback={handleFilter}
             filterName={'price'}
+            clearAll={clearAll}
+            closed={!isMore}
+          />
+        </div>
+
+        <div className={styles.item}>
+          <TableSearch
+            {...filterFormFields.tradesTotalPrice}
+            {...formMethods.register('tradesTotalPrice')}
+            className={styles.search}
+            callback={handleFilter}
+            filterName={'amount'}
             clearAll={clearAll}
             closed={!isMore}
           />
@@ -160,17 +172,6 @@ const TradesFilters = () => {
           />
         </div>
 
-        <div className={advancedClass}>
-          <TableSearch
-            {...filterFormFields.tradesTotalPrice}
-            {...formMethods.register('tradesTotalPrice')}
-            className={styles.search}
-            callback={handleFilter}
-            filterName={'amount'}
-            clearAll={clearAll}
-            closed={!isMore}
-          />
-        </div>
         <div className={advancedClass}>
           <TableSearch
             {...filterFormFields.tradesValueInBaseCurrency}
