@@ -16,13 +16,13 @@ const TableAlertsBody = ({ rows }: ITableAlertsBodyProps) => {
         {account?.name}
       </TableCell>
       <TableCell align='left' className={styles.table__body__row__ceil}>
+        {type}
+      </TableCell>
+      <TableCell align='left' className={styles.table__body__row__ceil}>
         {message}
       </TableCell>
       <TableCell align='left' className={styles.table__body__row__ceil}>
         {moment(createdAt).format('DD.MM.YYYY HH:MM:SS')}
-      </TableCell>
-      <TableCell align='left' className={styles.table__body__row__ceil}>
-        {type}
       </TableCell>
     </TableRow>
   ));

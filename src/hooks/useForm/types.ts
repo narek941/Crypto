@@ -87,6 +87,7 @@ export type FormFieldNames =
   | 'userType'
   | 'userEmail'
   | 'confirmPassword'
+  | 'alertName'
   | 'usersAccountType';
 
 export type FieldShapeLookup<K extends FormFieldNames> = {

@@ -98,6 +98,13 @@
   }
 }
 
+// .css-1poimk-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper {
+//   width: 100%;
+//   margin-top: 7px;
+//   left: 50%  !important;
+//   max-width: 420px !important;
+// }
+
 /// DateRangePicker
 
 .rdrDateDisplayWrapper,
@@ -159,6 +166,10 @@
   margin-bottom: 2px;
 }
 
+.rdrDayPassive {
+  opacity: 0;
+}
+
 .rdrSelected,
 .rdrInRange,
 .rdrStartEdge,
@@ -184,7 +195,6 @@
 }
 
 .rdrInRange {
-  background: var(--calendar);
   color: var(--font);
 }
 
@@ -305,6 +315,11 @@
     background-color: var(--select-hover) !important;
   }
 }
+
 .Mui-selected {
   background-color: var(--select-hover) !important;
+}
+
+.MuiTableSortLabel-root:hover {
+  color: inherit !important;
 }

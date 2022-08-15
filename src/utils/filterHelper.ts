@@ -1,3 +1,5 @@
+import { AlertType } from 'types/api/filters';
+
 export const sideOptions = [
   { label: 'BUY', value: 'BUY' },
   { label: 'SELL', value: 'SELL' },
@@ -32,5 +34,36 @@ export const AccountTypeOptions = [
   {
     label: 'Viewer',
     value: 'VIEWER',
+  },
+];
+
+export const AlertsTypeOptions = [
+  {
+    label: 'Trade Fulfilled',
+    value: AlertType.TRADE_FULFILLED,
+  },
+  {
+    label: 'Stop Order Placed',
+    value: AlertType.STOP_ORDER_PLACED,
+  },
+  {
+    label: 'Stop Order Not Placed',
+    value: AlertType.STOP_ORDER_NOT_PLACED,
+  },
+  {
+    label: 'Maximum Drawdown Exceeded',
+    value: AlertType.MAXIMUM_DRAWDOWN_EXCEEDED,
+  },
+  {
+    label: 'Wrong Currency',
+    value: AlertType.WRONG_CURRENCY,
+  },
+  {
+    label: 'Maximum Position Exceeded',
+    value: AlertType.MAXIMUM_POSITION_EXCEEDED,
+  },
+  {
+    label: 'Risk Position',
+    value: AlertType.RISK_POSITION,
   },
 ];

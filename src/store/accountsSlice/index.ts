@@ -15,7 +15,14 @@ const internalInitialState: AccountsSliceState = {
   accountsList: {
     totalCount: 0,
     list: [],
-    filter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '', filter: {} },
+    filter: {
+      skip: 0,
+      take: 10,
+      sort: 'statistics.numberDailyTransactions',
+      order: 'DESC',
+      search: '',
+      filter: {},
+    },
   },
   trades: {
     totalCount: 0,

@@ -38,8 +38,8 @@ const TradesFilters = () => {
       tradesTotalPrice: '',
       tradesValueInBaseCurrency: '',
       tradesFee: '',
-      tradesFeeInBaseCurrency: undefined,
-      tradesSide: undefined,
+      tradesFeeInBaseCurrency: '',
+      tradesSide: '',
     },
   });
 
@@ -51,7 +51,7 @@ const TradesFilters = () => {
 
   const handleFilter = (key: string, value: any) => {
     if (isNull(value)) {
-      const newKey = key === 'pair' ? 'coinsPairId' : value;
+      const newKey = key === 'pair' ? 'coinsPairId' : key;
       const obj = filterObject(filter.filter, newKey as string);
       dispatch(accountsTradesFilterClear(obj));
     } else {
@@ -136,7 +136,7 @@ const TradesFilters = () => {
           />
         </div>
 
-        <div className={advancedClass}>
+        <div className={styles.item}>
           <TableSearch
             {...filterFormFields.tradesPrice}
             {...formMethods.register('tradesPrice')}
@@ -144,6 +144,19 @@ const TradesFilters = () => {
             callback={handleFilter}
             filterName={'price'}
             clearAll={clearAll}
+            closed={!isMore}
+          />
+        </div>
+
+        <div className={styles.item}>
+          <TableSearch
+            {...filterFormFields.tradesTotalPrice}
+            {...formMethods.register('tradesTotalPrice')}
+            className={styles.search}
+            callback={handleFilter}
+            filterName={'amount'}
+            clearAll={clearAll}
+            closed={!isMore}
           />
         </div>
 
@@ -155,19 +168,10 @@ const TradesFilters = () => {
             callback={handleFilter}
             filterName={'totalPrice'}
             clearAll={clearAll}
+            closed={!isMore}
           />
         </div>
 
-        <div className={advancedClass}>
-          <TableSearch
-            {...filterFormFields.tradesTotalPrice}
-            {...formMethods.register('tradesTotalPrice')}
-            className={styles.search}
-            callback={handleFilter}
-            filterName={'amount'}
-            clearAll={clearAll}
-          />
-        </div>
         <div className={advancedClass}>
           <TableSearch
             {...filterFormFields.tradesValueInBaseCurrency}
@@ -176,6 +180,7 @@ const TradesFilters = () => {
             callback={handleFilter}
             filterName={'totalPriceInBaseCurrency'}
             clearAll={clearAll}
+            closed={!isMore}
           />
         </div>
         <div className={advancedClass}>
@@ -186,6 +191,7 @@ const TradesFilters = () => {
             callback={handleFilter}
             filterName={'fees'}
             clearAll={clearAll}
+            closed={!isMore}
           />
         </div>
         <div className={advancedClass}>
@@ -196,6 +202,7 @@ const TradesFilters = () => {
             callback={handleFilter}
             filterName={'feesInBaseCurrency'}
             clearAll={clearAll}
+            closed={!isMore}
           />
         </div>
         <div className={styles.clear} role='button' onClick={handleClear}>

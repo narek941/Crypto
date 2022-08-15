@@ -21,8 +21,14 @@ const internalInitialState: AdminSliceState = {
     BrowserStorageService.get(BrowserStorageKeys.AccessToken) ||
     BrowserStorageService.get(BrowserStorageKeys.AccessToken, { session: true }) ||
     '',
-  usersFilter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '', filter: {} },
-  accountsFilter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '' },
+  usersFilter: { skip: 0, take: 10, sort: 'username', order: 'ASC', search: '', filter: {} },
+  accountsFilter: {
+    skip: 0,
+    take: 10,
+    sort: 'id',
+    order: 'ASC',
+    search: '',
+  },
   userById: {},
 };
 

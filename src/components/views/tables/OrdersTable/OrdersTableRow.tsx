@@ -28,6 +28,8 @@ const OrdersTableRow = ({ row }: any): JSX.Element => {
   const { filter } = useSelector(walletsSelectors.selectOrders);
 
   const id = accountById?.wallets?.length && accountById.wallets[0]?.id;
+  const coinName = accountById?.baseCurrency?.name;
+
   const collapseClass = classNames({ [styles.open]: open });
   const dropdownClass = classNames({ [styles.dropdown]: open });
 
@@ -72,6 +74,14 @@ const OrdersTableRow = ({ row }: any): JSX.Element => {
         <TableCell align='left' className={styles.ceil}>
           {Number(row.valueInBaseCurrency).toFixed(8) || 0}
         </TableCell>
+
+        <TableCell align='left' className={styles.ceil}>
+          {(Number(row.stopPrice) && Number(row.stopPrice).toFixed(8)) || 0}
+        </TableCell>
+        <TableCell align='left' className={styles.ceil}>
+          {(Number(row.limitPrice) && Number(row.limitPrice).toFixed(8)) || 0}
+        </TableCell>
+
         <TableCell align='left' className={styles.ceil}>
           {(row.tradesTotalPriceSum && Number(row.tradesTotalPriceSum).toFixed(8)) || 0}
         </TableCell>
@@ -119,9 +129,7 @@ const OrdersTableRow = ({ row }: any): JSX.Element => {
                             className={styles.container__body__row__ceil__collapse}
                             align='left'
                           >
-                            {`${Number(order?.price)?.toFixed(8) || 0} ${
-                              order?.coinsPair?.to?.name
-                            }`}
+                            {`${Number(order?.price)?.toFixed(8) || 0} ${coinName}`}
                           </TableCell>
                         </Tooltip>
                         <Tooltip followCursor={true} placement='bottom' title='Amount'>
@@ -129,9 +137,7 @@ const OrdersTableRow = ({ row }: any): JSX.Element => {
                             className={styles.container__body__row__ceil__collapse}
                             align='left'
                           >
-                            {`${Number(order?.amount).toFixed(8) || 0} ${
-                              order?.coinsPair?.from?.name
-                            }`}
+                            {`${Number(order?.amount).toFixed(8) || 0} ${coinName}`}
                           </TableCell>
                         </Tooltip>
 
@@ -140,24 +146,22 @@ const OrdersTableRow = ({ row }: any): JSX.Element => {
                             className={styles.container__body__row__ceil__collapse}
                             align='left'
                           >
-                            {`${Number(order?.totalPrice).toFixed(8) || 0} ${
-                              order?.coinsPair?.from?.name
-                            }`}
+                            {`${Number(order?.totalPrice).toFixed(8) || 0} ${coinName}`}
                           </TableCell>
                         </Tooltip>
 
                         <Tooltip
                           followCursor={true}
                           placement='bottom'
-                          title={`Total price, <${order?.coinsPair?.from?.name}>`}
+                          title={`Total price, <${coinName}>`}
                         >
                           <TableCell
                             className={styles.container__body__row__ceil__collapse}
                             align='left'
                           >
-                            {`${Number(order?.totalPriceInBaseCurrency).toFixed(8) || 0} ${
-                              order?.coinsPair?.from?.name
-                            }`}
+                            {`${
+                              Number(order?.totalPriceInBaseCurrency).toFixed(8) || 0
+                            } ${coinName}`}
                           </TableCell>
                         </Tooltip>
 
@@ -166,24 +170,20 @@ const OrdersTableRow = ({ row }: any): JSX.Element => {
                             className={styles.container__body__row__ceil__collapse}
                             align='left'
                           >
-                            {`${Number(order?.fees).toFixed(8) || 0} ${
-                              order?.coinsPair?.from?.name
-                            }`}
+                            {`${Number(order?.fees).toFixed(8) || 0} ${coinName}`}
                           </TableCell>
                         </Tooltip>
 
                         <Tooltip
                           followCursor={true}
                           placement='bottom'
-                          title={`Fees, <${order?.coinsPair?.from?.name}>`}
+                          title={`Fees, <${coinName}>`}
                         >
                           <TableCell
                             className={styles.container__body__row__ceil__collapse}
                             align='left'
                           >
-                            {`${Number(order?.feesInBaseCurrency).toFixed(8) || 0} ${
-                              order?.coinsPair?.from?.name
-                            }`}
+                            {`${Number(order?.feesInBaseCurrency).toFixed(8) || 0} ${coinName}`}
                           </TableCell>
                         </Tooltip>
                       </TableRow>

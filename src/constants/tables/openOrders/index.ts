@@ -28,28 +28,36 @@ const openOrdersTable: TableHeaderRow[] = [
   },
   {
     id: 7,
-    value: 'Received',
+    value: 'Stop Price',
   },
   {
     id: 8,
-    value: 'Received',
-    withBaseCurrency: true,
+    value: 'Limit Price',
   },
   {
     id: 9,
-    value: 'Fee',
+    value: 'Received',
   },
   {
     id: 10,
-    value: 'Fee',
+    value: 'Received',
     withBaseCurrency: true,
   },
   {
     id: 11,
-    value: 'Share',
+    value: 'Fee',
   },
   {
     id: 12,
+    value: 'Fee',
+    withBaseCurrency: true,
+  },
+  {
+    id: 13,
+    value: 'Share',
+  },
+  {
+    id: 14,
     value: 'Updated',
   },
 ];

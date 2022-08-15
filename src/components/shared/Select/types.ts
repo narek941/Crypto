@@ -18,7 +18,9 @@ export interface ISelect {
   color?: ColorType;
   options: Option[];
   className?: string;
+  multiple?: boolean;
   filterName?: string;
   withAction?: boolean;
+  closed?: boolean;
   [prop: string]: any;
 }

@@ -7,10 +7,10 @@ import styles from './InflowsTable.module.scss';
 const InflowsTableRow = ({ row }: any) => (
   <TableRow className={styles.container__body__row}>
     <TableCell align='left' className={styles.ceil}>
-      {row?.type === 'DEPOSIT' ? 'Inflow' : 'Outflow'}
+      {row?.id}
     </TableCell>
     <TableCell align='left' className={styles.ceil}>
-      {row?.id}
+      {row?.type === 'DEPOSIT' ? 'Inflow' : 'Outflow'}
     </TableCell>
     <TableCell align='left' className={styles.ceil}>
       {row?.coin?.name}

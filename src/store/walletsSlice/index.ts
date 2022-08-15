@@ -23,12 +23,12 @@ const internalInitialState: WalletsSliceState = {
   orders: {
     list: [],
     totalCount: 0,
-    filter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '', filter: {} },
+    filter: { skip: 0, take: 10, sort: 'originalId', order: 'DESC', search: '', filter: {} },
   },
   inflow: {
     list: [],
     totalCount: 0,
-    filter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '', filter: {} },
+    filter: { skip: 0, take: 10, sort: 'insertTime', order: 'ASC', search: '', filter: {} },
   },
   records: {
     list: [],
@@ -36,8 +36,8 @@ const internalInitialState: WalletsSliceState = {
     filter: {
       skip: 0,
       take: 10,
-      sort: 'id',
-      order: 'DESC',
+      sort: 'coin.name',
+      order: 'ASC',
       search: '',
       filter: {},
     },

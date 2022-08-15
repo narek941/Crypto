@@ -47,10 +47,8 @@
 .inner {
   padding: var(--table-padding);
   border: 1px solid var(--collapse-table-border);
-  overflow-x: scroll;
   border-collapse: collapse;
   border-style: hidden;
-  overflow: hidden;
 
   &::-webkit-scrollbar {
     display: none;

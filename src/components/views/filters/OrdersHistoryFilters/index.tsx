@@ -37,7 +37,7 @@ const OrdersHistoryFilters = () => {
       historyID: '',
       historyValue: '',
       historyUpdateTime: [undefined, undefined],
-      historySide: undefined,
+      historySide: '',
     },
   });
 
@@ -45,7 +45,7 @@ const OrdersHistoryFilters = () => {
 
   const handleFilter = (key: string, value: any) => {
     if (isNull(value)) {
-      const newKey = key === 'pair' ? 'coinsPairId' : value;
+      const newKey = key === 'pair' ? 'coinsPairId' : key;
 
       const obj = filterObject(filter.filter, newKey as string);
 
@@ -171,6 +171,7 @@ const OrdersHistoryFilters = () => {
             callback={handleFilter}
             filterName={'id'}
             clearAll={clearAll}
+            closed={!isMore}
           />
         </div>
         <div className={advancedClass}>
@@ -181,6 +182,7 @@ const OrdersHistoryFilters = () => {
             callback={handleFilter}
             filterName={'valueInBaseCurrency'}
             clearAll={clearAll}
+            closed={!isMore}
           />
         </div>
         <div className={advancedClass}>
@@ -191,6 +193,7 @@ const OrdersHistoryFilters = () => {
             callback={handleFilter}
             filterName={'stopPrice'}
             clearAll={clearAll}
+            closed={!isMore}
           />
         </div>
         <div className={advancedClass}>
@@ -201,6 +204,7 @@ const OrdersHistoryFilters = () => {
             callback={handleFilter}
             filterName={'limitPrice'}
             clearAll={clearAll}
+            closed={!isMore}
           />
         </div>
         <div className={advancedClass}>
@@ -211,6 +215,7 @@ const OrdersHistoryFilters = () => {
             callback={handleFilter}
             filterName={'modifiers'}
             clearAll={clearAll}
+            closed={!isMore}
           />
         </div>
 

@@ -74,22 +74,7 @@ const UsersFilters = () => {
             clearAll={clearAll}
           />
         </div>
-        <div className={styles.item}>
-          <Controller
-            control={formMethods.control}
-            name={filterFormFields.userType.name as any}
-            render={({ field }) => (
-              <Select
-                {...filterFormFields.userType}
-                {...field}
-                className={styles.select}
-                options={AccountTypeOptions}
-                callback={handleFilter}
-                filterName={'role'}
-              />
-            )}
-          />
-        </div>
+
         <div className={styles.item}>
           <Controller
             control={formMethods.control}
@@ -107,6 +92,23 @@ const UsersFilters = () => {
           />
         </div>
 
+        <div className={styles.item}>
+          <Controller
+            control={formMethods.control}
+            name={filterFormFields.userType.name as any}
+            render={({ field }) => (
+              <Select
+                {...filterFormFields.userType}
+                {...field}
+                className={styles.select}
+                options={AccountTypeOptions}
+                callback={handleFilter}
+                filterName={'role'}
+              />
+            )}
+          />
+        </div>
+
         <div className={advancedClass}>
           <TableSearch
             {...filterFormFields.userId}
@@ -115,6 +117,7 @@ const UsersFilters = () => {
             callback={handleFilter}
             filterName={'id'}
             clearAll={clearAll}
+            closed={!isMore}
           />
         </div>
         <div className={advancedClass}>
@@ -125,6 +128,7 @@ const UsersFilters = () => {
             callback={handleFilter}
             filterName={'email'}
             clearAll={clearAll}
+            closed={!isMore}
           />
         </div>
         <div className={styles.clear} role='button' onClick={handleClear}>

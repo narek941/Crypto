@@ -116,6 +116,7 @@ const AccountsFilters = () => {
             callback={handleFilter}
             filterName={'id'}
             clearAll={clearAll}
+            closed={!isMore}
           />
         </div>
         <div className={advancedClass}>
@@ -128,6 +129,7 @@ const AccountsFilters = () => {
                 {...filterFormFields.accountSeed}
                 callback={handleFilter}
                 filterName={'statistics.startCapitalInBaseCurrency'}
+                closed={!isMore}
               />
             )}
           />
@@ -142,6 +144,7 @@ const AccountsFilters = () => {
                 {...filterFormFields.accountCurrentCapital}
                 callback={handleFilter}
                 filterName={'statistics.currentCapitalInBaseCurrency'}
+                closed={!isMore}
               />
             )}
           />
@@ -156,6 +159,7 @@ const AccountsFilters = () => {
                 {...filterFormFields.accountOpenProfit}
                 callback={handleFilter}
                 filterName={'statistics.currentOpenProfitInBaseCurrency'}
+                closed={!isMore}
               />
             )}
           />
@@ -170,6 +174,7 @@ const AccountsFilters = () => {
                 {...filterFormFields.accountEarnedCapital}
                 callback={handleFilter}
                 filterName={'statistics.earnedCapitalInBaseCurrency'}
+                closed={!isMore}
               />
             )}
           />

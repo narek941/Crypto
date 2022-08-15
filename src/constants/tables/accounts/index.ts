@@ -37,15 +37,16 @@ const accountsTable: HeadCell[] = [
     id: 'open_profit_2',
     label: 'Open Profit',
   },
+  {
+    id: 'status',
+    label: 'Status',
+  },
 
   {
     id: 'trades',
     label: 'Avg.Trades',
   },
-  {
-    id: 'status',
-    label: 'Status',
-  },
+
   {
     id: 'actions',
     label: 'Actions',

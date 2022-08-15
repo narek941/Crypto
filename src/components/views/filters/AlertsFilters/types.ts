@@ -5,6 +5,7 @@ export type FilterFormShape = {
   alertID: any;
   alertMessage: any;
   alertCreationDate: any;
+  alertName: any;
 };
 
 export interface IFilterForm {

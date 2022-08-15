@@ -21,7 +21,10 @@ const TableHeadWrapper = ({ onRequestSort, headCells, type = 'primary' }: ITable
         {headCells.map((headCell) => (
           <TableCell key={headCell.id} className={styles.table__header__ceil}>
             {headCell.isSort ? (
-              <TableSortLabel onClick={createSortHandler(headCell.id)}>
+              <TableSortLabel
+                onClick={createSortHandler(headCell.id)}
+                className={styles.table__header__ceil__sort}
+              >
                 {headCell.label}
               </TableSortLabel>
             ) : (

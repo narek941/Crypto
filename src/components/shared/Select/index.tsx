@@ -1,4 +1,4 @@
-import React, { ForwardedRef, useState, useRef } from 'react';
+import React, { ForwardedRef, useState, useRef, useEffect } from 'react';
 import classNames from 'classnames';
 
 import { CloseIcon, DropDownIcon } from 'assets/icons';
@@ -24,6 +24,7 @@ const Select = React.forwardRef(
       callback,
       filterName,
       withAction = true,
+      closed,
       ...props
     }: ISelect,
     ref: ForwardedRef<HTMLInputElement>,
@@ -103,11 +104,17 @@ const Select = React.forwardRef(
       setFilteredOption(newOption);
     };
 
-    const handleClear = (event: React.FormEvent<HTMLElement>) => {
-      event.stopPropagation();
+    const handleClear = (event?: React.FormEvent<HTMLElement>) => {
+      event?.stopPropagation();
       onChange('');
       callback(filterName, null);
     };
+
+    useEffect(() => {
+      if (closed && filterName) {
+        handleClear();
+      }
+    }, [closed]);
 
     useOnClickOutside(selectRef, handleSubmit);
 
@@ -126,6 +133,7 @@ const Select = React.forwardRef(
               className={inputClass}
               onChange={handleSearch}
               placeholder={placeholder}
+              autoComplete='off'
               defaultValue={props.defaultValue}
               value={value ? currentOption?.label : ''}
             />
