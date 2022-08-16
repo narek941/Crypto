@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { isNull } from 'lodash';
@@ -21,7 +21,6 @@ const AlertsFilters = () => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const filter = useAppSelector(alertsSelectors.selectAlertsFilter);
-
   const [isMore, setIsMore] = useState(false);
   const [clearAll, setClearAll] = useState(false);
   const { formMethods } = useForm<keyof FilterFormShape, FilterFormShape>({
@@ -32,6 +31,10 @@ const AlertsFilters = () => {
       alertID: '',
       alertMessage: '',
     },
+  });
+
+  const advancedClass = classNames(styles.item, {
+    [styles.advanced__hide]: !isMore,
   });
 
   const handleToggle = () => setIsMore(!isMore);
@@ -56,9 +59,12 @@ const AlertsFilters = () => {
     }
   };
 
-  const advancedClass = classNames(styles.item, {
-    [styles.advanced__hide]: !isMore,
-  });
+  useEffect(() => {
+    return () => {
+      handleClear();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className={styles.container}>

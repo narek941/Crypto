@@ -57,7 +57,10 @@ const TableSearch = React.forwardRef<any, any>(
     return (
       <div className={styles.search}>
         <div className={styles.search__icon}>
-          {!state ? <SearchIcon /> : <CloseIcon onClick={handleClear} />}
+          <div>{state && <CloseIcon onClick={handleClear} />}</div>
+          <div>
+            <SearchIcon />
+          </div>
         </div>
         <div>
           <input

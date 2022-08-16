@@ -54,10 +54,7 @@ const AddAccountForm = ({ onClick, isEditable = false }: IAddAccount) => {
           },
     [alertsDestinations, allowedPairs, isEditable, name, startCapitalInBaseCurrency, wallets],
   );
-  const { formMethods, handleSubmit, isValid } = useForm<
-    keyof AddAccountFormShape,
-    AddAccountFormShape
-  >({
+  const { formMethods, handleSubmit } = useForm<keyof AddAccountFormShape, AddAccountFormShape>({
     schemaKeys: addAccountSchemaKeys,
     defaultValues: addAccountFormDefaultValues,
   });
@@ -74,7 +71,7 @@ const AddAccountForm = ({ onClick, isEditable = false }: IAddAccount) => {
       <Wallet formMethods={formMethods} />
       <TradeSetting formMethods={formMethods} />
       <TradeLimit formMethods={formMethods} />
-      <FormAction formMethods={formMethods} isValid={isValid} />
+      <FormAction formMethods={formMethods} />
     </FormWrapper>
   );
 };

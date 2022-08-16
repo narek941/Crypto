@@ -66,12 +66,9 @@ const DualSelect = React.forwardRef<any, any>(
                 }`
               : placeholder}
           </p>
+          <div>{(selectPairStart || selectPairEnd) && <CloseIcon onClick={handleClear} />}</div>
           <div>
-            {selectPairStart || selectPairEnd ? (
-              <CloseIcon onClick={handleClear} />
-            ) : (
-              <DropDownIcon />
-            )}
+            <DropDownIcon />
           </div>
         </div>
 

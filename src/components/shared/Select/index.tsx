@@ -79,7 +79,7 @@ const Select = React.forwardRef(
       closeDropdown();
     };
 
-    const handleSelect = (selectedItem: string) => {
+    const handleSelect = (selectedItem: string | number) => {
       setFilteredOption(options);
       onChange(selectedItem);
       if (!callback) {
@@ -137,13 +137,12 @@ const Select = React.forwardRef(
               defaultValue={props.defaultValue}
               value={value ? currentOption?.label : ''}
             />
-            {currentOption && callback ? (
+            <div>
               <div className={styles.select__clear} onClick={handleClear}>
-                <CloseIcon />
+                {currentOption && callback && <CloseIcon />}
               </div>
-            ) : (
               <DropDownIcon role='button' className={dropClass} />
-            )}
+            </div>
           </div>
           <div className={optionClass}>
             <div

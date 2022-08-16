@@ -9,7 +9,7 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
   creationDate: {
     name: 'selectCreationDate',
     id: 'filterForm.creationDate',
-    placeholder: 'Choose creation date',
+    placeholder: 'Select creation date',
   },
 
   updatedTime: {
@@ -29,13 +29,13 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
     name: 'selectSide',
     type: 'Select',
     id: 'filterForm.selectSide',
-    placeholder: 'Select Side',
+    placeholder: 'Select side',
     options: sideOptions,
   },
   selectValue: {
     name: 'selectValue',
     id: 'filterForm.selectValue',
-    placeholder: 'Select Value',
+    placeholder: 'Select value',
   },
 
   searchID: {
