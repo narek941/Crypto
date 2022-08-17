@@ -14,6 +14,7 @@ import { useAppDispatch, useAppSelector, useForm } from 'hooks';
 import { ordersFilterClear, ordersFilterUpdate } from 'store/walletsSlice/thunks';
 import { walletsSelectors } from 'store/walletsSlice';
 import { filterObject } from 'utils/filterObject';
+import RangeSwipe from 'components/shared/Range';
 
 import styles from './OrdersHistoryFilters.module.scss';
 import { FilterFormShape } from './types';
@@ -35,9 +36,12 @@ const OrdersHistoryFilters = () => {
     schemaKeys: filterSchemaKeys,
     defaultValues: {
       historyID: '',
-      historyValue: '',
+      historyValue: ['', ''],
       historyUpdateTime: [undefined, undefined],
       historySide: '',
+      historyValueInBaseCurrency: ['', ''],
+      searchHistoryStop: ['', ''],
+      searchHistoryLimit: ['', ''],
     },
   });
 
@@ -143,13 +147,17 @@ const OrdersHistoryFilters = () => {
           />
         </div>
         <div className={styles.item}>
-          <TableSearch
-            {...filterFormFields.historyValue}
-            {...formMethods.register('historyValue')}
-            className={styles.search}
-            callback={handleFilter}
-            filterName={'value'}
-            clearAll={clearAll}
+          <Controller
+            control={formMethods.control}
+            name={filterFormFields.historyValue.name as any}
+            render={({ field }) => (
+              <RangeSwipe
+                {...field}
+                {...filterFormFields.historyValue}
+                callback={handleFilter}
+                filterName={'value'}
+              />
+            )}
           />
         </div>
 
@@ -175,36 +183,45 @@ const OrdersHistoryFilters = () => {
           />
         </div>
         <div className={advancedClass}>
-          <TableSearch
-            {...filterFormFields.historyValueInBaseCurrency}
-            {...formMethods.register('historyValueInBaseCurrency')}
-            className={styles.search}
-            callback={handleFilter}
-            filterName={'valueInBaseCurrency'}
-            clearAll={clearAll}
-            closed={!isMore}
+          <Controller
+            control={formMethods.control}
+            name={filterFormFields.historyValueInBaseCurrency.name as any}
+            render={({ field }) => (
+              <RangeSwipe
+                {...field}
+                {...filterFormFields.historyValueInBaseCurrency}
+                callback={handleFilter}
+                filterName={'valueInBaseCurrency'}
+              />
+            )}
           />
         </div>
         <div className={advancedClass}>
-          <TableSearch
-            {...filterFormFields.searchHistoryStop}
-            {...formMethods.register('searchHistoryStop')}
-            className={styles.search}
-            callback={handleFilter}
-            filterName={'stopPrice'}
-            clearAll={clearAll}
-            closed={!isMore}
+          <Controller
+            control={formMethods.control}
+            name={filterFormFields.searchHistoryStop.name as any}
+            render={({ field }) => (
+              <RangeSwipe
+                {...field}
+                {...filterFormFields.searchHistoryStop}
+                callback={handleFilter}
+                filterName={'stopPrice'}
+              />
+            )}
           />
         </div>
         <div className={advancedClass}>
-          <TableSearch
-            {...filterFormFields.searchHistoryLimit}
-            {...formMethods.register('searchHistoryLimit')}
-            className={styles.search}
-            callback={handleFilter}
-            filterName={'limitPrice'}
-            clearAll={clearAll}
-            closed={!isMore}
+          <Controller
+            control={formMethods.control}
+            name={filterFormFields.searchHistoryLimit.name as any}
+            render={({ field }) => (
+              <RangeSwipe
+                {...field}
+                {...filterFormFields.searchHistoryLimit}
+                callback={handleFilter}
+                filterName={'limitPrice'}
+              />
+            )}
           />
         </div>
         <div className={advancedClass}>
