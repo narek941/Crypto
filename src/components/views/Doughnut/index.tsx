@@ -4,9 +4,6 @@ import { ArcElement, Chart as ChartJS, Legend, Title } from 'chart.js';
 import { Doughnut as DoughnutJs } from 'react-chartjs-2';
 import classNames from 'classnames';
 
-import { useAppSelector } from 'hooks';
-import { authSelectors } from 'store/authSlice';
-
 import styles from './Doughnut.module.scss';
 
 const Doughnut = ({
@@ -19,8 +16,10 @@ const Doughnut = ({
   legendPosition = 'right',
   legendMaxWidth = '284',
   wrapperClassName,
+  pointStyle = 'rect',
+
+  colors,
 }: any): JSX.Element => {
-  const isDarkMode = useAppSelector(authSelectors.selectIsDarkMode);
   const wrapperClass = classNames(wrapperClassName ? wrapperClassName : styles.wrapper);
   const fakeData = {
     labels: labels,
@@ -28,29 +27,7 @@ const Doughnut = ({
       {
         label: '%',
         data: data,
-        backgroundColor: isDarkMode
-          ? [
-              '#6771DC',
-              '#6794DC',
-              '#67B7DC',
-              '#14AB6C',
-              '#FE8463',
-              '#8067DC',
-              '#C667DC',
-              '#DC67AB',
-              '#D6504D',
-            ]
-          : [
-              '#6794DC',
-              '#6771DC',
-              '#9B67DC',
-              '#DC67B4',
-              '#D7504B',
-              '#14AB6C',
-              '#14AB6C',
-              '#E4B514',
-              '#FE8463',
-            ],
+        backgroundColor: colors,
         borderWidth: 0,
       },
     ],
@@ -73,6 +50,8 @@ const Doughnut = ({
           boxHeight: 11,
           textAlign: 'left',
           padding: 8,
+          usePointStyle: true,
+          pointStyle,
         },
       },
     },

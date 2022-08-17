@@ -9,6 +9,7 @@ import { accountsActions, accountsSelectors } from 'store/accountsSlice';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { Doughnut } from 'components';
 import { parseChartLabels } from 'utils/parseChartLabels';
+import { AccountModalChartColor } from 'constants/charts';
 
 import styles from './Modal.module.scss';
 import { IModalProps } from './types';
@@ -92,6 +93,8 @@ const Modal = ({ id, open, setOpen, modalList }: IModalProps): JSX.Element => {
                   legendPosition='bottom'
                   labels={tradingPairsLabel}
                   wrapperClassName={styles.chart__wrapper}
+                  colors={AccountModalChartColor()}
+                  pointStyle='circle'
                 />
               </div>
             </div>
@@ -107,6 +110,8 @@ const Modal = ({ id, open, setOpen, modalList }: IModalProps): JSX.Element => {
                   legendPosition='bottom'
                   labels={assetsLabel}
                   wrapperClassName={styles.chart__wrapper}
+                  colors={AccountModalChartColor()}
+                  pointStyle='circle'
                 />
               </div>
             </div>

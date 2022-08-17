@@ -9,6 +9,7 @@ import { adminActions } from 'store/adminSlice';
 import { accountsActions, accountsSelectors } from 'store/accountsSlice';
 import { Bricks, Chart, Doughnut, Export, AnalyticsTabs } from 'components';
 import { parseChartLabels } from 'utils/parseChartLabels';
+import { AccountAnalyticsChartColor } from 'constants/charts';
 
 import styles from './AccountsAnalytics.module.scss';
 
@@ -106,10 +107,16 @@ const AccountsAnalytics = (): JSX.Element => {
             labels={tradingPairsLabel}
             data={tradingPairsData}
             header={'Trading Pairs Chart'}
+            colors={AccountAnalyticsChartColor()}
           />
         )}
         {accountAssetsChartData && (
-          <Doughnut labels={assetsLabel} data={assetsData} header={'Account Assets Chart'} />
+          <Doughnut
+            labels={assetsLabel}
+            data={assetsData}
+            header={'Account Assets Chart'}
+            colors={AccountAnalyticsChartColor()}
+          />
         )}
       </div>
 
