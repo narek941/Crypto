@@ -10,13 +10,12 @@ const Doughnut = ({
   data,
   labels,
   header,
-  width = '448',
-  height = '199',
   legendDisplay = true,
   legendPosition = 'right',
   legendMaxWidth = '284',
   wrapperClassName,
   pointStyle = 'rect',
+  textColor,
 
   colors,
 }: any): JSX.Element => {
@@ -35,15 +34,15 @@ const Doughnut = ({
 
   const options: any = {
     cutout: '90%',
-    responsive: false,
+    responsive: true,
     spacing: 2,
-
     plugins: {
       legend: {
         display: legendDisplay,
         position: legendPosition,
         maxWidth: legendMaxWidth,
         usePointStyle: true,
+        // fontColor: 'red',
 
         // maxHeight:400,
         labels: {
@@ -54,7 +53,12 @@ const Doughnut = ({
           padding: 8,
           usePointStyle: true,
           pointStyle,
-          pointStyleWidth: 15,
+          pointStyleWidth: 13,
+          color: textColor,
+          font: {
+            size: 10,
+            weight: 400,
+          },
         },
       },
     },
@@ -66,7 +70,7 @@ const Doughnut = ({
     <div className={wrapperClass}>
       <h1 className={styles.wrapper__title}>{header}</h1>
       <div className={styles.chart}>
-        <DoughnutJs data={fakeData} options={options} width={width} height={height} />
+        <DoughnutJs data={fakeData} options={options} />
       </div>
     </div>
   );

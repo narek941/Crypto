@@ -27,6 +27,11 @@ export const AccountAnalyticsChartColor = () => {
         '#FE8463',
       ];
 };
+
+export const AccountAnalyticsChartTextColor = () => {
+  const isDarkMode = useAppSelector(authSelectors.selectIsDarkMode);
+  return isDarkMode ? '#FFFFFF' : '#212121';
+};
 export const AccountModalChartColor = () => {
   const isDarkMode = useAppSelector(authSelectors.selectIsDarkMode);
   return isDarkMode

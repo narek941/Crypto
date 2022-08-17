@@ -9,7 +9,7 @@ import { accountsActions, accountsSelectors } from 'store/accountsSlice';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { Doughnut } from 'components';
 import { parseChartLabels } from 'utils/parseChartLabels';
-import { AccountModalChartColor } from 'constants/charts';
+import { AccountAnalyticsChartTextColor, AccountModalChartColor } from 'constants/charts';
 
 import styles from './Modal.module.scss';
 import { IModalProps } from './types';
@@ -95,6 +95,7 @@ const Modal = ({ id, open, setOpen, modalList }: IModalProps): JSX.Element => {
                   wrapperClassName={styles.chart__wrapper}
                   colors={AccountModalChartColor()}
                   pointStyle='circle'
+                  textColor={AccountAnalyticsChartTextColor()}
                 />
               </div>
             </div>
@@ -104,14 +105,13 @@ const Modal = ({ id, open, setOpen, modalList }: IModalProps): JSX.Element => {
               <div className={styles.chart__inner__doughnut}>
                 <Doughnut
                   header='Asset Chart'
-                  width='224px'
-                  height='241px'
                   data={assetsData}
                   legendPosition='bottom'
                   labels={assetsLabel}
                   wrapperClassName={styles.chart__wrapper}
                   colors={AccountModalChartColor()}
                   pointStyle='circle'
+                  textColor={AccountAnalyticsChartTextColor()}
                 />
               </div>
             </div>

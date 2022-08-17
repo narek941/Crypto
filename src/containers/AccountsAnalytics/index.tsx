@@ -8,7 +8,7 @@ import { adminActions } from 'store/adminSlice';
 import { accountsActions, accountsSelectors } from 'store/accountsSlice';
 import { Bricks, Chart, Doughnut, Export, AnalyticsTabs } from 'components';
 import { parseChartLabels } from 'utils/parseChartLabels';
-import { AccountAnalyticsChartColor } from 'constants/charts';
+import { AccountAnalyticsChartColor, AccountAnalyticsChartTextColor } from 'constants/charts';
 import { LineChartLabels } from 'constants/charts/accountsAnalytics';
 
 import styles from './AccountsAnalytics.module.scss';
@@ -107,22 +107,34 @@ const AccountsAnalytics = (): JSX.Element => {
         <Chart labels={LineChartLabels} />
       </div>
       <div className={styles.analytics__chart}>
-        {accountTradingPairsChartData && (
-          <Doughnut
-            labels={tradingPairsLabel}
-            data={tradingPairsData}
-            header={'Trading Pairs Chart'}
-            colors={AccountAnalyticsChartColor()}
-          />
-        )}
-        {accountAssetsChartData && (
-          <Doughnut
-            labels={assetsLabel}
-            data={assetsData}
-            header={'Account Assets Chart'}
-            colors={AccountAnalyticsChartColor()}
-          />
-        )}
+        <div className={styles.analytics__chart__inner}>
+          <div className={styles.analytics__chart__item}>
+            {accountTradingPairsChartData && (
+              <Doughnut
+                labels={tradingPairsLabel}
+                data={tradingPairsData}
+                header={'Trading Pairs Chart'}
+                colors={AccountAnalyticsChartColor()}
+                textColor={AccountAnalyticsChartTextColor()}
+                wrapperClassName={styles.chart__wrapper}
+              />
+            )}
+          </div>
+        </div>
+        <div className={styles.analytics__chart__inner}>
+          <div className={styles.analytics__chart__item}>
+            {accountAssetsChartData && (
+              <Doughnut
+                labels={assetsLabel}
+                data={assetsData}
+                header={'Account Assets Chart'}
+                colors={AccountAnalyticsChartColor()}
+                textColor={AccountAnalyticsChartTextColor()}
+                wrapperClassName={styles.chart__wrapper}
+              />
+            )}
+          </div>
+        </div>
       </div>
 
       <AnalyticsTabs />
