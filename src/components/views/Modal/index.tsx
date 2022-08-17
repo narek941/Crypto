@@ -34,7 +34,7 @@ const Modal = ({ id, open, setOpen, modalList }: IModalProps): JSX.Element => {
     accountAssetsChartData,
     'assetCoin',
     'relativePercentage',
-  ).map(({ key, value }: any) => `${key} - ${value}%`);
+  ).map(({ key, value }: any) => `${key}-${value}%`);
 
   const assetsData = parseChartLabels(
     accountAssetsChartData,
@@ -46,7 +46,7 @@ const Modal = ({ id, open, setOpen, modalList }: IModalProps): JSX.Element => {
     accountTradingPairsChartData,
     'pairName',
     'relativePercentage',
-  ).map(({ key, value }: any) => `${key} - ${value}%`);
+  ).map(({ key, value }: any) => `${key}-${value}%`);
   const tradingPairsData = parseChartLabels(
     accountTradingPairsChartData,
     'pairName',

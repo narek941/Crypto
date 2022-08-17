@@ -6,12 +6,12 @@ export const parseChartLabels = (data: any, key: string, value: string) => {
     if (asset[value] >= 1) {
       label.push({
         key: asset[key],
-        value: Number(asset[value]).toFixed(3),
+        value: Number(asset[value]).toFixed(0),
       });
     } else {
       others = others + Number(asset[value]);
     }
   });
-  label.push({ key: 'others', value: others.toFixed(3) });
+  label.push({ key: 'Others', value: others.toFixed(0) });
   return label;
 };

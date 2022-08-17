@@ -3,13 +3,13 @@ import moment from 'moment';
 import { useParams } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from 'hooks';
-import { charts } from 'constants/index';
 import { wrapWithBaseCurrency } from 'utils';
 import { adminActions } from 'store/adminSlice';
 import { accountsActions, accountsSelectors } from 'store/accountsSlice';
 import { Bricks, Chart, Doughnut, Export, AnalyticsTabs } from 'components';
 import { parseChartLabels } from 'utils/parseChartLabels';
 import { AccountAnalyticsChartColor } from 'constants/charts';
+import { LineChartLabels } from 'constants/charts/accountsAnalytics';
 
 import styles from './AccountsAnalytics.module.scss';
 
@@ -49,11 +49,13 @@ const AccountsAnalytics = (): JSX.Element => {
     'pairName',
     'relativePercentage',
   ).map(({ value }: any) => value);
-
-  const renderLineCharts = charts.accountsAnalyticsChart.lineChart.map((_, index) => (
-    <Chart key={index} />
-  ));
-
+  const capitalData = parseChartLabels(
+    accountCapitalChartData,
+    'pairName',
+    'relativePercentage',
+  ).map(({ value }: any) => value);
+  // eslint-disable-next-line no-console
+  console.log(capitalData);
   useEffect(() => {
     dispatch(adminActions.getCoins());
     dispatch(adminActions.getTradingPairs());
@@ -100,7 +102,10 @@ const AccountsAnalytics = (): JSX.Element => {
         />
       </div>
 
-      <div className={styles.analytics__chart}>{renderLineCharts}</div>
+      <div className={styles.analytics__chart}>
+        <Chart labels={LineChartLabels} chartData={capitalData} />
+        <Chart labels={LineChartLabels} />
+      </div>
       <div className={styles.analytics__chart}>
         {accountTradingPairsChartData && (
           <Doughnut
