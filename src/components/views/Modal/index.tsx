@@ -97,6 +97,7 @@ const Modal = ({ id, open, setOpen, modalList }: IModalProps): JSX.Element => {
                   pointStyle='circle'
                   font={10}
                   textColor={AccountAnalyticsChartTextColor()}
+                  radius={50}
                 />
               </div>
             </div>
@@ -114,6 +115,7 @@ const Modal = ({ id, open, setOpen, modalList }: IModalProps): JSX.Element => {
                   pointStyle='circle'
                   font={10}
                   textColor={AccountAnalyticsChartTextColor()}
+                  radius={50}
                 />
               </div>
             </div>
