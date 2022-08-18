@@ -95,6 +95,7 @@ const Modal = ({ id, open, setOpen, modalList }: IModalProps): JSX.Element => {
                   wrapperClassName={styles.chart__wrapper}
                   colors={AccountModalChartColor()}
                   pointStyle='circle'
+                  font={10}
                   textColor={AccountAnalyticsChartTextColor()}
                 />
               </div>
@@ -111,6 +112,7 @@ const Modal = ({ id, open, setOpen, modalList }: IModalProps): JSX.Element => {
                   wrapperClassName={styles.chart__wrapper}
                   colors={AccountModalChartColor()}
                   pointStyle='circle'
+                  font={10}
                   textColor={AccountAnalyticsChartTextColor()}
                 />
               </div>

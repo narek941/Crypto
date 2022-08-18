@@ -1,6 +1,5 @@
 import React from 'react';
-ChartJS.register(Legend, Title, ArcElement);
-import { ArcElement, Chart as ChartJS, Legend, Title } from 'chart.js';
+import { ArcElement, Chart as ChartJS, Legend } from 'chart.js';
 import { Doughnut as DoughnutJs } from 'react-chartjs-2';
 import classNames from 'classnames';
 
@@ -16,6 +15,7 @@ const Doughnut = ({
   wrapperClassName,
   pointStyle = 'rect',
   textColor,
+  font = 13,
 
   colors,
 }: any): JSX.Element => {
@@ -35,16 +35,23 @@ const Doughnut = ({
   const options: any = {
     cutout: '90%',
     responsive: true,
-    spacing: 2,
+    spacing: 4,
+
+    layout: {
+      // padding: {
+      //   between: 30,
+      // },
+    },
     plugins: {
       legend: {
+        padding: {
+          right: 30,
+        },
         display: legendDisplay,
         position: legendPosition,
         maxWidth: legendMaxWidth,
         usePointStyle: true,
-        // fontColor: 'red',
 
-        // maxHeight:400,
         labels: {
           fontColor: '#333',
           boxWidth: 11,
@@ -56,7 +63,7 @@ const Doughnut = ({
           pointStyleWidth: 13,
           color: textColor,
           font: {
-            size: 10,
+            size: font,
             weight: 400,
           },
         },
@@ -64,7 +71,7 @@ const Doughnut = ({
     },
   };
 
-  ChartJS.register(Legend, Title, ArcElement);
+  ChartJS.register(Legend, ArcElement);
 
   return (
     <div className={wrapperClass}>
