@@ -9,6 +9,10 @@ export type AccountsSliceState = {
   error?: SerializedError | null;
   accountById: any;
   coins: any[];
+  accountAssetChart: any[];
+  accountTradingPairsChart: any[];
+  accountCapitalChart: any[];
+  accountPerformanceChart: any[];
   accountsList: {
     totalCount: number;
     list: any[];
