@@ -323,3 +323,83 @@
 .MuiTableSortLabel-root:hover {
   color: inherit !important;
 }
+
+.multipleSelect__control {
+  margin: 0 !important;
+  width: 100% !important;
+  appearance: none !important;
+  border-radius: 4px !important;
+  min-height: 40px !important;
+  position: relative !important;
+  border: 1px solid transparent !important;
+  color: var(--font) !important;
+  background-color: var(--select-background) !important;
+  padding: 7px 12px 7px 10px !important;
+  text-transform: capitalize !important;
+  cursor: pointer !important;
+  min-width: 93px !important;
+  box-shadow: none !important;
+
+  @extend %flex-center;
+
+  &:hover {
+    border: 1px solid var(--select-border) !important;
+    background-color: unset !important;
+  }
+  &--is--focused {
+    border: 1px solid var(--select-border) !important;
+    box-shadow: none !important;
+  }
+
+  &--menu-is-open .multipleSelect__indicators {
+    .multipleSelect__indicators:last-child {
+      svg {
+        transform: rotate(180deg) !important;
+      }
+    }
+  }
+}
+.multipleSelect__input-container {
+  margin: 0 !important;
+  border: none !important;
+  color: var(--placeholder) !important;
+  background-color: transparent !important;
+  @extend %text-14;
+  padding: 0 !important;
+
+  &::placeholder {
+    color: var(--placeholder) !important;
+  }
+}
+.multipleSelect__value-container {
+  padding: 0 !important;
+}
+
+.multipleSelect__indicator-separator {
+  display: none !important;
+}
+.multipleSelect__multi-value {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 12px !important;
+  color: var(--font) !important;
+  border-radius: 12px !important;
+  background: var(--popup-background) !important;
+
+  @extend %flex-align;
+  gap: 4px !important;
+
+  &__remove:hover {
+    background-color: transparent !important;
+  }
+}
+.react-select__option {
+  .option--is-focused,
+  .option--is-selected {
+    background-color: unset !important;
+    border: unset !important;
+  }
+
+  background-color: unset !important;
+  border: unset !important;
+}
