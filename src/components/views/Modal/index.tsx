@@ -1,37 +1,63 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
-import { Doughnut } from 'react-chartjs-2';
 
 import { Routes } from 'types';
-import { charts } from 'constants/index';
 import { CloseModalIcon } from 'assets/icons';
 import useOnClickOutside from 'hooks/useOutsideClick';
+import { accountsActions, accountsSelectors } from 'store/accountsSlice';
+import { useAppDispatch, useAppSelector } from 'hooks';
+import { Doughnut } from 'components';
+import { parseChartLabels } from 'utils/parseChartLabels';
+import { AccountAnalyticsChartTextColor, AccountModalChartColor } from 'constants/charts';
 
 import styles from './Modal.module.scss';
 import { IModalProps } from './types';
 
 const Modal = ({ id, open, setOpen, modalList }: IModalProps): JSX.Element => {
   const ref = useRef(null);
+  const dispatch = useAppDispatch();
+  const accountAssetsChartData = useAppSelector(accountsSelectors.selectAccountAssetChartData);
+  const accountTradingPairsChartData = useAppSelector(
+    accountsSelectors.selectAccountTradingPairsChartData,
+  );
+  useEffect(() => {
+    accountAssetsChartData.length ||
+      dispatch(accountsActions.getAccountAssetsChartData(Number(id)));
+    accountTradingPairsChartData.length ||
+      dispatch(accountsActions.getAccountTradingPairsChartData(Number(id)));
+  }, [id, dispatch]);
+
+  const handleClickOutside = (): void => setOpen(false);
+
+  const assetsLabel = parseChartLabels(
+    accountAssetsChartData,
+    'assetCoin',
+    'relativePercentage',
+  ).map(({ key, value }: any) => `${key}-${value}%`);
+
+  const assetsData = parseChartLabels(
+    accountAssetsChartData,
+    'assetCoin',
+    'relativePercentage',
+  ).map(({ value }: any) => value);
+
+  const tradingPairsLabel = parseChartLabels(
+    accountTradingPairsChartData,
+    'pairName',
+    'relativePercentage',
+  ).map(({ key, value }: any) => `${key}-${value}%`);
+  const tradingPairsData = parseChartLabels(
+    accountTradingPairsChartData,
+    'pairName',
+    'relativePercentage',
+  ).map(({ value }: any) => value);
 
   const headerClass = classNames(styles.item, styles.item__header);
   const linkClass = classNames(styles.link, styles.item);
   const modalClass = classNames(styles.wrapper, {
     [styles.wrapper__open]: open,
   });
-
-  const handleClickOutside = (): void => setOpen(false);
-
-  const options: any = {
-    cutout: '85%',
-    responsive: false,
-    spacing: 4,
-    plugins: {
-      legend: {
-        display: false,
-      },
-    },
-  };
 
   useOnClickOutside(ref, handleClickOutside);
 
@@ -45,25 +71,6 @@ const Modal = ({ id, open, setOpen, modalList }: IModalProps): JSX.Element => {
     </div>
   ));
 
-  const renderAccountOverviewCharts = charts.accountOverviewChart.map(({ id, header, data }) => (
-    <div className={styles.chart} key={id}>
-      <p className={styles.chart__header}>{header}</p>
-      <div className={styles.chart__inner}>
-        <div className={styles.chart__inner__doughnut}>
-          <Doughnut data={data} options={options} width='71px' height='71px' />
-        </div>
-        <div className={styles.chart__inner__label}>
-          {data.labels.map((item, index) => (
-            <div key={index} className={styles.chart__inner__label__item}>
-              <span style={{ backgroundColor: charts.chartColor[index] }} />
-              <p>{item}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  ));
-
   return (
     <div ref={ref} className={modalClass}>
       <div className={headerClass}>
@@ -74,7 +81,46 @@ const Modal = ({ id, open, setOpen, modalList }: IModalProps): JSX.Element => {
       </div>
       <div className={styles.inner}>
         <div>{renderModalList}</div>
-        <div>{renderAccountOverviewCharts}</div>
+        <div>
+          <div className={styles.chart}>
+            <div className={styles.chart__inner}>
+              <div className={styles.chart__inner__doughnut}>
+                <Doughnut
+                  header='Trading Pairs Chart'
+                  width='224px'
+                  height='241px'
+                  data={tradingPairsData}
+                  legendPosition='bottom'
+                  labels={tradingPairsLabel}
+                  wrapperClassName={styles.chart__wrapper}
+                  colors={AccountModalChartColor()}
+                  pointStyle='circle'
+                  font={10}
+                  textColor={AccountAnalyticsChartTextColor()}
+                  radius={50}
+                />
+              </div>
+            </div>
+          </div>
+          <div className={styles.chart}>
+            <div className={styles.chart__inner}>
+              <div className={styles.chart__inner__doughnut}>
+                <Doughnut
+                  header='Asset Chart'
+                  data={assetsData}
+                  legendPosition='bottom'
+                  labels={assetsLabel}
+                  wrapperClassName={styles.chart__wrapper}
+                  colors={AccountModalChartColor()}
+                  pointStyle='circle'
+                  font={10}
+                  textColor={AccountAnalyticsChartTextColor()}
+                  radius={50}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
         <Link className={linkClass} to={`${Routes.Accounts}/analytics/${id}`}>
           more details
         </Link>

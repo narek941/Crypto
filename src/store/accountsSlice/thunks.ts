@@ -117,6 +117,65 @@ export const getAccountAlerts = createAsyncThunk(
   },
 );
 
+export const getAccountAssetsChartData = createAsyncThunk(
+  `${Slice.Accounts}/accounts/id/assets-chart-data`,
+  async (id: number, thunkAPI) => {
+    try {
+      const response = await accountsApi.accountAssetChartRequest(id);
+
+      return {
+        chart: response.data,
+      };
+    } catch {
+      return thunkAPI.rejectWithValue({ error: '* Incorrect' });
+    }
+  },
+);
+export const getAccountTradingPairsChartData = createAsyncThunk(
+  `${Slice.Accounts}/accounts/id/trading-pairs-chart-data`,
+  async (id: number, thunkAPI) => {
+    try {
+      const response = await accountsApi.accountTradingPairsChartRequest(id);
+
+      return {
+        chart: response.data,
+      };
+    } catch {
+      return thunkAPI.rejectWithValue({ error: '* Incorrect' });
+    }
+  },
+);
+
+export const getAccountCapitalChartData = createAsyncThunk(
+  `${Slice.Accounts}/:id/daily-account-statistics`,
+  async (id: number, thunkAPI) => {
+    try {
+      const response = await accountsApi.accountTradingPairsChartRequest(id);
+
+      return {
+        chart: response.data,
+      };
+    } catch {
+      return thunkAPI.rejectWithValue({ error: '* Incorrect' });
+    }
+  },
+);
+
+export const getAccountPerformanceChartData = createAsyncThunk(
+  `${Slice.Accounts}/:id/daily-wallets-statistics`,
+  async (id: number, thunkAPI) => {
+    try {
+      const response = await accountsApi.accountPerformanceChartRequest(id);
+
+      return {
+        chart: response.data,
+      };
+    } catch {
+      return thunkAPI.rejectWithValue({ error: '* Incorrect' });
+    }
+  },
+);
+
 export const accountsFilterUpdate = createAction<Partial<ITableFilter>>('accountsFilter');
 
 export const accountsFilterClear = createAction<Partial<ITableFilter>>('accountsFilterClear');

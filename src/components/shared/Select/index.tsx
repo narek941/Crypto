@@ -133,7 +133,7 @@ const Select = React.forwardRef(
               className={inputClass}
               onChange={handleSearch}
               placeholder={placeholder}
-              autoComplete='off'
+              autoComplete='none'
               defaultValue={props.defaultValue}
               value={value ? currentOption?.label : ''}
             />

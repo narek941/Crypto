@@ -41,8 +41,8 @@
   text-transform: capitalize !important;
   @extend %text-13;
   @extend %flex-column;
-  padding: 0 !important;
   background-color: unset;
+  width: 100%;
 
   &__wrapper {
     box-shadow: var(--option-shadow) !important;
@@ -50,12 +50,7 @@
   }
 
   div {
-    padding: 6px 12px !important;
     background-color: transparent !important;
-    // &:hover,
-    // &:focus {
-    //   background-color: var(--select-hover) !important;
-    // }
   }
 }
 
@@ -83,7 +78,5 @@
   }
 }
 .single_option {
-  &:hover,
-  &:focus {
-  }
+  padding: 0 12px;
 }

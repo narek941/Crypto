@@ -11,14 +11,12 @@ import { Line } from 'react-chartjs-2';
 
 import styles from './Chart.module.scss';
 
-const Chart: React.FC = () => {
-  const labels = ['Jan', '', 'Mar', '', 'May', '', 'Jul', '', 'Sep', '', 'Nov', ''];
-
+const Chart = ({ labels, chartData }: any): JSX.Element => {
   const data = {
     labels,
     datasets: [
       {
-        data: [50, 44, 59, 59, 67, 70, 74, 62, 76, 71, 72, 68, 81, 77, 78, 75, 58, 58, 51],
+        data: chartData,
         borderColor: '#009688',
         borderWidth: 2,
         yAxisID: 'y-axis',
@@ -62,7 +60,7 @@ const Chart: React.FC = () => {
       'y-axis': {
         type: 'linear',
         position: 'right',
-        min: 20,
+        min: 0,
         max: 100,
         ticks: {
           stepSize: 20,

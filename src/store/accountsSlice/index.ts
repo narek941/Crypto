@@ -12,6 +12,10 @@ const internalInitialState: AccountsSliceState = {
   loading: AccountStates.IDLE,
   coins: [],
   accountById: {},
+  accountAssetChart: [],
+  accountTradingPairsChart: [],
+  accountCapitalChart: [],
+  accountPerformanceChart: [],
   accountsList: {
     totalCount: 0,
     list: [],
@@ -113,25 +117,44 @@ const accountsSlice = createSlice({
     builder.addCase(accountsThunks.accountsFilterClear, (state, action) => {
       state.accountsList.filter.filter = action.payload;
     });
-
+    builder.addCase(accountsThunks.getAccountAssetsChartData.fulfilled, (state, action) => {
+      state.accountAssetChart = action.payload.chart;
+    });
+    builder.addCase(accountsThunks.getAccountTradingPairsChartData.fulfilled, (state, action) => {
+      state.accountTradingPairsChart = action.payload.chart;
+    });
+    builder.addCase(accountsThunks.getAccountCapitalChartData.fulfilled, (state, action) => {
+      state.accountCapitalChart = action.payload.chart;
+    });
+    builder.addCase(accountsThunks.getAccountPerformanceChartData.fulfilled, (state, action) => {
+      state.accountPerformanceChart = action.payload.chart;
+    });
     builder.addMatcher(
       isAnyOf(
-        accountsThunks.getAccountSummary.pending,
-        accountsThunks.getAccountList.pending,
         accountsThunks.getAccountById.pending,
-        accountsThunks.getAccountTradesList.pending,
+        accountsThunks.getAccountList.pending,
         accountsThunks.getAccountAlerts.pending,
+        accountsThunks.getAccountSummary.pending,
+        accountsThunks.getAccountTradesList.pending,
+        accountsThunks.getAccountAssetsChartData.pending,
+        accountsThunks.getAccountCapitalChartData.pending,
+        accountsThunks.getAccountPerformanceChartData.pending,
+        accountsThunks.getAccountTradingPairsChartData.pending,
       ),
       extraReducers.pendingReducer,
     );
 
     builder.addMatcher(
       isAnyOf(
-        accountsThunks.getAccountSummary.rejected,
         accountsThunks.getAccountList.rejected,
         accountsThunks.getAccountById.rejected,
-        accountsThunks.getAccountTradesList.rejected,
         accountsThunks.getAccountAlerts.rejected,
+        accountsThunks.getAccountSummary.rejected,
+        accountsThunks.getAccountTradesList.rejected,
+        accountsThunks.getAccountAssetsChartData.rejected,
+        accountsThunks.getAccountCapitalChartData.rejected,
+        accountsThunks.getAccountPerformanceChartData.rejected,
+        accountsThunks.getAccountTradingPairsChartData.rejected,
       ),
       extraReducers.errorReducer,
     );

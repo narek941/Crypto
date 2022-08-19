@@ -2,16 +2,16 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { isNull } from 'lodash';
-import { Controller } from 'react-hook-form';
 
 import DateRangePicker from 'components/shared/DateRangePicker';
 import { CloseIcon } from 'assets/icons';
-import { Select, TableSearch } from 'components';
+import { TableSearch } from 'components';
 import { useAppDispatch, useAppSelector, useForm } from 'hooks';
 import { createObject } from 'utils/createObject';
 import { alertsFilterClear, alertsFilterUpdate } from 'store/alertsSlice/thunks';
 import { filterObject } from 'utils/filterObject';
 import { alertsSelectors } from 'store/alertsSlice';
+import MultipleSelect from 'components/shared/MultipleSelect';
 
 import styles from './AlertsFilters.module.scss';
 import { FilterFormShape } from './types';
@@ -89,19 +89,13 @@ const AlertsFilters = () => {
           />
         </div>
 
-        <div className={styles.item}>
-          <Controller
-            control={formMethods.control}
-            name={filterFormFields.alertType.name as any}
-            render={({ field }) => (
-              <Select
-                {...filterFormFields.alertType}
-                {...field}
-                className={styles.select}
-                callback={handleFilter}
-                filterName={'type'}
-              />
-            )}
+        <div className={(styles.item, styles.multipleSelect)}>
+          <MultipleSelect
+            formMethods={formMethods}
+            {...filterFormFields.alertType}
+            className={styles.select}
+            callback={handleFilter}
+            filterName={'type'}
           />
         </div>
 
