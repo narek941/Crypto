@@ -54,8 +54,7 @@ const AccountsAnalytics = (): JSX.Element => {
     'pairName',
     'relativePercentage',
   ).map(({ value }: any) => value);
-  // eslint-disable-next-line no-console
-  console.log(capitalData);
+
   useEffect(() => {
     dispatch(adminActions.getCoins());
     dispatch(adminActions.getTradingPairs());
