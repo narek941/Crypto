@@ -3,7 +3,7 @@ import { Controller } from 'react-hook-form';
 import { isNull } from 'lodash';
 
 import { CloseIcon } from 'assets/icons';
-import { Select } from 'components';
+import { MultipleSelect } from 'components';
 import { createObject } from 'utils/createObject';
 import { adminSelectors } from 'store/adminSlice';
 import { walletsActions, walletsSelectors } from 'store/walletsSlice';
@@ -65,20 +65,13 @@ const WalletsFilters = () => {
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
-        <div className={styles.item}>
-          <Controller
-            control={formMethods.control}
-            name={walletFilterFormFields.selectWalletAsset.name as any}
-            render={({ field }) => (
-              <Select
-                {...walletFilterFormFields.selectWalletAsset}
-                {...field}
-                className={styles.select}
-                options={coinOptions}
-                callback={handleFilter}
-                filterName={'coinId'}
-              />
-            )}
+        <div className={(styles.item, styles.multipleSelect)}>
+          <MultipleSelect
+            formMethods={formMethods}
+            {...walletFilterFormFields.selectWalletAsset}
+            callback={handleFilter}
+            filterName={'coinId'}
+            options={coinOptions}
           />
         </div>
 

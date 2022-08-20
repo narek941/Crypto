@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { isNull } from 'lodash';
 
 import { CloseIcon } from 'assets/icons';
-import { Select, TableSearch } from 'components';
+import { MultipleSelect, TableSearch } from 'components';
 import { createObject } from 'utils/createObject';
 import { adminSelectors } from 'store/adminSlice';
 import DualSelect from 'components/shared/DualSelect';
@@ -116,36 +116,23 @@ const OrdersHistoryFilters = () => {
           />
         </div>
 
-        <div className={styles.item}>
-          <Controller
-            control={formMethods.control}
-            name={filterFormFields.historySide.name as any}
-            render={({ field }) => (
-              <Select
-                {...filterFormFields.historySide}
-                {...field}
-                className={styles.select}
-                callback={handleFilter}
-                filterName={'side'}
-              />
-            )}
+        <div className={(styles.item, styles.multipleSelect)}>
+          <MultipleSelect
+            formMethods={formMethods}
+            {...filterFormFields.historySide}
+            callback={handleFilter}
+            filterName={'side'}
           />
         </div>
-        <div className={styles.item}>
-          <Controller
-            control={formMethods.control}
-            name={filterFormFields.historyType.name as any}
-            render={({ field }) => (
-              <Select
-                {...filterFormFields.historyType}
-                {...field}
-                className={styles.select}
-                callback={handleFilter}
-                filterName={'type'}
-              />
-            )}
+        <div className={(styles.item, styles.multipleSelect)}>
+          <MultipleSelect
+            formMethods={formMethods}
+            {...filterFormFields.historyType}
+            callback={handleFilter}
+            filterName={'type'}
           />
         </div>
+
         <div className={styles.item}>
           <Controller
             control={formMethods.control}

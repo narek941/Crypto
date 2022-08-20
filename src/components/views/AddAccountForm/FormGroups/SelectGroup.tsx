@@ -59,7 +59,7 @@ const SelectGroup = ({
                   {...addAccountFormFields.allowedPairs}
                   {...field}
                   options={coinOptions}
-                  multiple={true}
+                  withAction={false}
                 />
               )}
             />
@@ -71,7 +71,7 @@ const SelectGroup = ({
                   {...addAccountFormFields.allowedPairs}
                   {...field}
                   options={coinOptions}
-                  multiple={true}
+                  withAction={false}
                 />
               )}
             />
@@ -82,7 +82,11 @@ const SelectGroup = ({
               control={formMethods.control}
               name={`alertsDestinations[${index}].${leftInputName}` as any}
               render={({ field }) => (
-                <Select {...addAccountFormFields.alertsDestinations} {...field} multiple={true} />
+                <Select
+                  {...addAccountFormFields.alertsDestinations}
+                  {...field}
+                  withAction={false}
+                />
               )}
             />
             <Controller

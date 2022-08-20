@@ -106,8 +106,8 @@ export const composeFormSchema = <K extends FormFieldNames>(fields: K[]): AnyObj
 
     //login
 
-    login_email: Yup.string().required('* Login field is required'),
-    login_password: Yup.string().required('* Password field is required'),
+    login_email: Yup.string().required('* Enter your email to login'),
+    login_password: Yup.string().required('* Enter your password to login'),
     login_rememberMe: Yup.bool(),
 
     // Account Filter

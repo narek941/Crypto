@@ -14,7 +14,9 @@ const TradeLimit = ({ formMethods }: any) => (
         control={formMethods.control}
         {...formMethods.register('maxDrawdown')}
         name={addAccountFormFields.maxDrawdown.name as keyof AddAccountFormShape}
-        render={({ field }) => <Select {...addAccountFormFields.maxDrawdown} {...field} />}
+        render={({ field }) => (
+          <Select {...addAccountFormFields.maxDrawdown} {...field} withAction={false} />
+        )}
       />
 
       <Input {...addAccountFormFields.maxPosition} {...formMethods.register('maxPosition')} />

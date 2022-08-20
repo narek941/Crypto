@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { isNull } from 'lodash';
 
 import { CloseIcon } from 'assets/icons';
-import { Select } from 'components';
+import { MultipleSelect } from 'components';
 import { adminSelectors } from 'store/adminSlice';
 import { createObject } from 'utils/createObject';
 import DualSelect from 'components/shared/DualSelect';
@@ -121,19 +121,13 @@ const TradesFilters = () => {
             filterName={'pair'}
           />
         </div>
-        <div className={styles.item}>
-          <Controller
-            control={formMethods.control}
-            name={filterFormFields.tradesSide.name as any}
-            render={({ field }) => (
-              <Select
-                {...filterFormFields.tradesSide}
-                {...field}
-                className={styles.select}
-                callback={handleFilter}
-                filterName={'side'}
-              />
-            )}
+
+        <div className={(styles.item, styles.multipleSelect)}>
+          <MultipleSelect
+            formMethods={formMethods}
+            {...filterFormFields.tradesSide}
+            callback={handleFilter}
+            filterName={'side'}
           />
         </div>
 

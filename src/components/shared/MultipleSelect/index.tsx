@@ -104,11 +104,11 @@ const handleSelect = ({ selectProps, getValue }: any) => {
 };
 
 const handleSelectAll = (props: any) => {
-  // if (props.getValue().length === props.options.length) {
-  //   props.clearValue();
-  // } else {
-  props.setValue(props.options);
-  // }
+  if (props.getValue().length === props.options.length) {
+    props.clearValue();
+  } else {
+    props.setValue(props.options);
+  }
 };
 
 const ClearIndicator = (props: ClearIndicatorProps<any, true>) => (

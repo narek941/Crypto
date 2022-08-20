@@ -19,7 +19,9 @@ const BaseSetting = ({ formMethods }: any) => {
           {...formMethods.register('baseCurrency')}
           control={formMethods.control}
           name={addAccountFormFields.baseCurrency.name as keyof AddAccountFormShape}
-          render={({ field }) => <Select {...addAccountFormFields.baseCurrency} {...field} />}
+          render={({ field }) => (
+            <Select {...addAccountFormFields.baseCurrency} {...field} withAction={false} />
+          )}
         />
         <Input {...addAccountFormFields.startCapital} {...formMethods.register('startCapital')} />
       </>

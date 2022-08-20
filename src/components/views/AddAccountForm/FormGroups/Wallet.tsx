@@ -19,7 +19,9 @@ const AddAccountForm = ({ formMethods }: any) => {
           control={formMethods.control}
           {...formMethods.register('exchange')}
           name={addAccountFormFields.exchange.name as keyof AddAccountFormShape}
-          render={({ field }) => <Select {...addAccountFormFields.exchange} {...field} />}
+          render={({ field }) => (
+            <Select {...addAccountFormFields.exchange} {...field} withAction={false} />
+          )}
         />
         <Input {...addAccountFormFields.apiKey} {...formMethods.register('apiKey')} />
         <Input {...addAccountFormFields.apiSecret} {...formMethods.register('apiSecret')} />
@@ -27,7 +29,9 @@ const AddAccountForm = ({ formMethods }: any) => {
           control={formMethods.control}
           {...formMethods.register('refreshInterval')}
           name={addAccountFormFields.refreshInterval.name as keyof AddAccountFormShape}
-          render={({ field }) => <Select {...addAccountFormFields.refreshInterval} {...field} />}
+          render={({ field }) => (
+            <Select {...addAccountFormFields.refreshInterval} {...field} withAction={false} />
+          )}
         />
       </>
     </FormGroup>

@@ -6,7 +6,7 @@ import { isNull } from 'lodash';
 
 import { CloseIcon } from 'assets/icons';
 import RangeSwipe from 'components/shared/Range';
-import { Select, TableSearch } from 'components';
+import { MultipleSelect, Select, TableSearch } from 'components';
 import { createObject } from 'utils/createObject';
 import { adminSelectors } from 'store/adminSlice';
 import { useAppDispatch, useAppSelector, useForm } from 'hooks';
@@ -80,19 +80,12 @@ const InflowsFilters = () => {
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
-        <div className={styles.item}>
-          <Controller
-            control={formMethods.control}
-            name={inflowFilterFormFields.selectInflowType.name as any}
-            render={({ field }) => (
-              <Select
-                {...inflowFilterFormFields.selectInflowType}
-                {...field}
-                className={styles.select}
-                callback={handleFilter}
-                filterName={'type'}
-              />
-            )}
+        <div className={(styles.item, styles.multipleSelect)}>
+          <MultipleSelect
+            formMethods={formMethods}
+            {...inflowFilterFormFields.selectInflowType}
+            callback={handleFilter}
+            filterName={'type'}
           />
         </div>
         <div className={styles.item}>
