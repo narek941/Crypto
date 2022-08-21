@@ -37,6 +37,7 @@
   --table-inner: transparent;
   --collapse-table-header: #0097a7;
   --table-border-style: hidden;
+  --secondary-checkbox: #505051;
 
   --table-header-font: #ffffff;
   --table-header-secondary: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), #009688;
@@ -87,7 +88,7 @@
   --icon-selected: #605d7b;
   --svg: #4c4b53;
   --dropdown-svg: #080808;
-
+  --secondary-checkbox-check: #212121;
   --calendar: #e5e5e5;
   --calendar-alpha: rgba(0, 151, 167, 0.05);
   --select-btn: #3700b3;
@@ -106,10 +107,13 @@
   --button-border: rgba(88, 195, 190, 0.1);
   --button-border-secondary: #413ac7;
   --checkbox-input: #6c7c7c;
+  --secondary-checkbox-check: #ffffff;
   --checkbox-color: rgba(255, 255, 255, 1);
   --danger: #b22424;
   --copyright: #677a7a;
   --input-color: #ffffff;
+  --secondary-checkbox: #505051;
+
   --input-background: rgba(56, 56, 56, 0.2);
   --input-background-secondary: rgba(152, 172, 171, 0.25);
   --input-active: rgba(56, 56, 56, 0.22);

@@ -30,38 +30,38 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
     name: 'tradesPrice',
     type: 'number',
     id: 'filterForm.tradesPrice',
-    placeholder: 'Enter Price',
+    placeholder: 'Select Price',
   },
   tradesValue: {
     name: 'tradesValue',
     type: 'number',
     id: 'filterForm.tradesValue',
-    placeholder: 'Enter Value',
+    placeholder: 'Select Value',
   },
 
   tradesTotalPrice: {
     name: 'tradesTotalPrice',
     type: 'number',
     id: 'filterForm.tradesTotalPrice',
-    placeholder: 'Total Price',
+    placeholder: 'Select Total Price',
   },
   tradesValueInBaseCurrency: {
     name: 'tradesValueInBaseCurrency',
     type: 'number',
     id: 'filterForm.tradesValueInBaseCurrency',
-    placeholder: 'Value, USDT',
+    placeholder: 'Select Value, USDT',
   },
   tradesFee: {
     name: 'tradesFee',
     type: 'number',
     id: 'filterForm.tradesFee',
-    placeholder: 'Fees',
+    placeholder: 'Select Fees',
   },
   tradesFeeInBaseCurrency: {
     name: 'tradesFeeInBaseCurrency',
     type: 'number',
     id: 'filterForm.tradesFeeInBaseCurrency',
-    placeholder: 'Fees, USDT',
+    placeholder: 'Select Fees, USDT',
   },
 };
 

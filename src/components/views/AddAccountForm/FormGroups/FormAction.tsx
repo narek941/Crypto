@@ -10,7 +10,7 @@ import { Routes } from 'types';
 import styles from '../AddAccountForm.module.scss';
 import { addAccountFormFields } from '../fields';
 
-const FormAction = ({ formMethods, isValid }: any) => {
+const FormAction = ({ formMethods }: any) => {
   const { t } = useTranslation();
 
   const firstCheckbox = formMethods.watch('stopLossOrder');
@@ -54,7 +54,6 @@ const FormAction = ({ formMethods, isValid }: any) => {
               type='submit'
               color='secondary'
               size='l'
-              disabled={!isValid}
             >
               {t('save_settings')}
             </Button>

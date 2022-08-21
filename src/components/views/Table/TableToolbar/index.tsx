@@ -1,5 +1,7 @@
 import classNames from 'classnames';
 import { useState } from 'react';
+import { Tooltip } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 import { FilterIcon } from 'assets/icons';
 import { LinkButton } from 'components';
@@ -11,6 +13,7 @@ import styles from './TableToolbar.module.scss';
 import { ITableToolbarProps } from './types';
 
 const TableToolbar = ({ linkText, linkTo }: ITableToolbarProps): JSX.Element => {
+  const { t } = useTranslation();
   const [filterVisible, setFilterVisible] = useState(false);
   const text = `+ ADD NEW ${linkText}`;
   const toolbarClasses = classNames(styles.toolbar, {
@@ -37,7 +40,9 @@ const TableToolbar = ({ linkText, linkTo }: ITableToolbarProps): JSX.Element => 
           </div>
         )}
         <div className={styles.toolbar__filter}>
-          <FilterIcon onClick={handleFilter} />
+          <Tooltip followCursor={true} placement='bottom' title={t('filters')}>
+            <FilterIcon onClick={handleFilter} />
+          </Tooltip>
         </div>
       </div>
       {filterVisible && renderFilter()}

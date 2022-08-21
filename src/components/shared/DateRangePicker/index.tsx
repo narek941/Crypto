@@ -117,7 +117,8 @@ const DateRangePicker = React.forwardRef<any, any>(
       <div className={styles.calendar} ref={customRef}>
         <div className={styles.calendar__header} role='button' onClick={toggleCalendar}>
           <span className={headerTextClass}>{text}</span>
-          {!state.startDate ? <CalendarIcon /> : <CloseIcon onClick={handleClear} />}
+          {state.startDate && <CloseIcon onClick={handleClear} />}
+          <CalendarIcon />
         </div>
         <div className={calendarWrapperClass}>
           <Controller

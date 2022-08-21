@@ -17,7 +17,7 @@ import OrdersHistoryFilters from 'components/views/filters/OrdersHistoryFilters'
 import styles from './OrdersHistoryTable.module.scss';
 import OrdersHistoryTableRow from './OrdersHistoryTableRow';
 
-const OrdersHistoryTable = () => {
+const OrdersHistoryTable = ({ filterVisible }: any) => {
   const accountById = useSelector(accountsSelectors.selectAccountById);
   const { filter, list, totalCount } = useSelector(walletsSelectors.selectOrders);
 
@@ -55,7 +55,7 @@ const OrdersHistoryTable = () => {
   return (
     <>
       <div className={styles.wrapper}>
-        <OrdersHistoryFilters />
+        {filterVisible && <OrdersHistoryFilters />}
         <ScrollWrapper>
           <Table className={styles.inner}>
             <TableHead className={styles.container__header}>

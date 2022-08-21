@@ -3,12 +3,13 @@ import { Controller } from 'react-hook-form';
 import { isNull } from 'lodash';
 
 import { CloseIcon } from 'assets/icons';
-import { Select, TableSearch } from 'components';
+import { MultipleSelect } from 'components';
 import { createObject } from 'utils/createObject';
 import { adminSelectors } from 'store/adminSlice';
 import { walletsActions, walletsSelectors } from 'store/walletsSlice';
 import { useAppDispatch, useAppSelector, useForm } from 'hooks';
 import { filterObject } from 'utils/filterObject';
+import RangeSwipe from 'components/shared/Range';
 
 import styles from './WalletsFilters.module.scss';
 import { FilterFormShape } from './types';
@@ -24,8 +25,8 @@ const WalletsFilters = () => {
     schemaKeys: filterSchemaKeys,
     defaultValues: {
       selectWalletAsset: undefined,
-      searchWalletValue: '',
-      searchWalletValueInBaseCurrency: '',
+      searchWalletValue: ['', ''],
+      searchWalletValueInBaseCurrency: ['', ''],
     },
   });
 
@@ -64,42 +65,43 @@ const WalletsFilters = () => {
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
+        <div className={(styles.item, styles.multipleSelect)}>
+          <MultipleSelect
+            formMethods={formMethods}
+            {...walletFilterFormFields.selectWalletAsset}
+            callback={handleFilter}
+            filterName={'coinId'}
+            options={coinOptions}
+          />
+        </div>
+
         <div className={styles.item}>
           <Controller
             control={formMethods.control}
-            name={walletFilterFormFields.selectWalletAsset.name as any}
+            name={walletFilterFormFields.searchWalletValue.name as any}
             render={({ field }) => (
-              <Select
-                {...walletFilterFormFields.selectWalletAsset}
+              <RangeSwipe
                 {...field}
-                className={styles.select}
-                options={coinOptions}
+                {...walletFilterFormFields.searchWalletValue}
                 callback={handleFilter}
-                filterName={'coinId'}
+                filterName={'value'}
               />
             )}
           />
         </div>
 
         <div className={styles.item}>
-          <TableSearch
-            {...walletFilterFormFields.searchWalletValue}
-            {...formMethods.register('searchWalletValue')}
-            className={styles.search}
-            callback={handleFilter}
-            filterName={'value'}
-            clearAll={clearAll}
-          />
-        </div>
-
-        <div className={styles.item}>
-          <TableSearch
-            {...walletFilterFormFields.searchWalletValueInBaseCurrency}
-            {...formMethods.register('searchWalletValueInBaseCurrency')}
-            className={styles.search}
-            callback={handleFilter}
-            filterName={'baseCurrencyValue'}
-            clearAll={clearAll}
+          <Controller
+            control={formMethods.control}
+            name={walletFilterFormFields.searchWalletValueInBaseCurrency.name as any}
+            render={({ field }) => (
+              <RangeSwipe
+                {...field}
+                {...walletFilterFormFields.searchWalletValueInBaseCurrency}
+                callback={handleFilter}
+                filterName={'baseCurrencyValue'}
+              />
+            )}
           />
         </div>
 

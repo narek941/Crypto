@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 
@@ -85,38 +85,46 @@ const Modal = ({ id, open, setOpen, modalList }: IModalProps): JSX.Element => {
           <div className={styles.chart}>
             <div className={styles.chart__inner}>
               <div className={styles.chart__inner__doughnut}>
-                <Doughnut
-                  header='Trading Pairs Chart'
-                  width='224px'
-                  height='241px'
-                  data={tradingPairsData}
-                  legendPosition='bottom'
-                  labels={tradingPairsLabel}
-                  wrapperClassName={styles.chart__wrapper}
-                  colors={AccountModalChartColor()}
-                  pointStyle='circle'
-                  font={10}
-                  textColor={AccountAnalyticsChartTextColor()}
-                  radius={50}
-                />
+                {tradingPairsData ? (
+                  <Doughnut
+                    header='Trading Pairs Chart'
+                    width='224px'
+                    height='241px'
+                    data={tradingPairsData}
+                    legendPosition='bottom'
+                    labels={tradingPairsLabel}
+                    wrapperClassName={styles.chart__wrapper}
+                    colors={AccountModalChartColor()}
+                    pointStyle='circle'
+                    font={10}
+                    textColor={AccountAnalyticsChartTextColor()}
+                    radius={50}
+                  />
+                ) : (
+                  <></>
+                )}
               </div>
             </div>
           </div>
           <div className={styles.chart}>
             <div className={styles.chart__inner}>
               <div className={styles.chart__inner__doughnut}>
-                <Doughnut
-                  header='Asset Chart'
-                  data={assetsData}
-                  legendPosition='bottom'
-                  labels={assetsLabel}
-                  wrapperClassName={styles.chart__wrapper}
-                  colors={AccountModalChartColor()}
-                  pointStyle='circle'
-                  font={10}
-                  textColor={AccountAnalyticsChartTextColor()}
-                  radius={50}
-                />
+                {assetsData && assetsLabel ? (
+                  <Doughnut
+                    header='Asset Chart'
+                    data={assetsData}
+                    legendPosition='bottom'
+                    labels={assetsLabel}
+                    wrapperClassName={styles.chart__wrapper}
+                    colors={AccountModalChartColor()}
+                    pointStyle='circle'
+                    font={10}
+                    textColor={AccountAnalyticsChartTextColor()}
+                    radius={50}
+                  />
+                ) : (
+                  <></>
+                )}
               </div>
             </div>
           </div>

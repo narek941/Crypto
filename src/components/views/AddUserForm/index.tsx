@@ -42,7 +42,6 @@ const AddUserForm = ({ onClick, isEditable = false }: IAddUser) => {
     defaultValues: addUserFormDefaultValues,
   });
 
-  const accountWatch = formMethods.watch();
   const accountsOptions = useMemo(
     () =>
       accountList.list.map((account) => ({
@@ -72,6 +71,11 @@ const AddUserForm = ({ onClick, isEditable = false }: IAddUser) => {
       );
     }
   }, []);
+
+  const aaa = formMethods.watch(addUserFormFields.usersAccountList.name as keyof AddUserFormShape);
+  // eslint-disable-next-line no-console
+  console.log(aaa);
+  const accountWatch = formMethods.watch();
 
   return (
     <>
@@ -126,20 +130,14 @@ const AddUserForm = ({ onClick, isEditable = false }: IAddUser) => {
               )}
             />
             {accountWatch.usersAccountType == 'VIEWER' && (
-              <Controller
-                control={formMethods.control}
-                name={addUserFormFields.usersAccountList.name as keyof AddUserFormShape}
-                render={({ field }) => (
-                  <MultipleSelect
-                    {...addUserFormFields.usersAccountList}
-                    {...field}
-                    options={accountsOptions}
-                    error={formMethods.formState.errors.usersAccountList?.message}
-                  />
-                )}
+              <MultipleSelect
+                formMethods={formMethods}
+                {...addUserFormFields.usersAccountList}
+                options={accountsOptions}
+                error={formMethods.formState.errors.usersAccountList?.message}
+                filterName='sss'
               />
             )}
-
             {!isEditable ? (
               <div className={styles.signIn__form__group__button}>
                 <Button type='submit' color='secondary' size='m' disabled={!!isValid}>

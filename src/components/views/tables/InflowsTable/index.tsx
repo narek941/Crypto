@@ -18,7 +18,7 @@ import { walletsActions, walletsSelectors } from 'store/walletsSlice';
 import InflowsTableRow from './InflowsTableRow';
 import styles from './InflowsTable.module.scss';
 
-const InflowsTable = () => {
+const InflowsTable = ({ filterVisible }: any) => {
   const accountById = useSelector(accountsSelectors.selectAccountById);
   const { filter, list, totalCount } = useSelector(walletsSelectors.selectInflow);
   const walletId = accountById?.wallets?.length && accountById.wallets[0]?.id;
@@ -59,7 +59,7 @@ const InflowsTable = () => {
   return (
     <>
       <div className={styles.wrapper}>
-        <InflowsFilters />
+        {filterVisible && <InflowsFilters />}
         <ScrollWrapper>
           <Table className={styles.inner}>
             <TableHead className={styles.container__header}>

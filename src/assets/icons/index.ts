@@ -13,6 +13,8 @@ export { ReactComponent as SearchIcon } from './search.svg';
 export { ReactComponent as BurgerIcon } from './burger.svg';
 export { ReactComponent as HandIcon } from './hand-coin.svg';
 export { ReactComponent as UnblockIcon } from './unblock.svg';
+export { ReactComponent as RangeIcon } from './range.svg';
+
 export { ReactComponent as SettingIcon } from './setting.svg';
 export { ReactComponent as PercentIcon } from './percent.svg';
 export { ReactComponent as BellIcon } from './bell_alert.svg';

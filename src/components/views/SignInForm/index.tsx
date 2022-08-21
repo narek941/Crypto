@@ -43,7 +43,6 @@ const SignInForm: React.FC = () => {
       <FormGroup className={styles.signIn__form__group}>
         <>
           <Input
-            isDisabledError
             {...signInFormFields.login_email}
             {...formMethods.register('login_email')}
             className={styles.signIn__form__group__input}

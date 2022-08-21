@@ -15,6 +15,7 @@ const Checkbox = React.forwardRef(
       const checkboxClass: string = classNames(styles['checkbox-wrapper'], className, {
         [styles['checkbox-primary']]: color === 'primary',
         [styles['checkbox-default']]: color === 'default',
+        [styles['checkbox-secondary']]: color === 'secondary',
       });
       return checkboxClass;
     };

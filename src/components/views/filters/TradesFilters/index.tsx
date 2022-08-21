@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { isNull } from 'lodash';
 
 import { CloseIcon } from 'assets/icons';
-import { Select, TableSearch } from 'components';
+import { MultipleSelect } from 'components';
 import { adminSelectors } from 'store/adminSlice';
 import { createObject } from 'utils/createObject';
 import DualSelect from 'components/shared/DualSelect';
@@ -14,6 +14,7 @@ import { useAppDispatch, useAppSelector, useForm } from 'hooks';
 import { accountsTradesFilterClear, accountsTradesFilterUpdate } from 'store/accountsSlice/thunks';
 import { accountsSelectors } from 'store/accountsSlice';
 import { filterObject } from 'utils/filterObject';
+import RangeSwipe from 'components/shared/Range';
 
 import styles from './TradesFilters.module.scss';
 import { FilterFormShape } from './types';
@@ -33,12 +34,12 @@ const TradesFilters = () => {
     mode: 'onChange',
     schemaKeys: filterSchemaKeys,
     defaultValues: {
-      tradesPrice: '',
-      tradesValue: '',
-      tradesTotalPrice: '',
-      tradesValueInBaseCurrency: '',
-      tradesFee: '',
-      tradesFeeInBaseCurrency: '',
+      tradesPrice: ['', ''],
+      tradesValue: ['', ''],
+      tradesTotalPrice: ['', ''],
+      tradesValueInBaseCurrency: ['', ''],
+      tradesFee: ['', ''],
+      tradesFeeInBaseCurrency: ['', ''],
       tradesSide: '',
     },
   });
@@ -120,89 +121,101 @@ const TradesFilters = () => {
             filterName={'pair'}
           />
         </div>
+
+        <div className={(styles.item, styles.multipleSelect)}>
+          <MultipleSelect
+            formMethods={formMethods}
+            {...filterFormFields.tradesSide}
+            callback={handleFilter}
+            filterName={'side'}
+          />
+        </div>
+
         <div className={styles.item}>
           <Controller
             control={formMethods.control}
-            name={filterFormFields.tradesSide.name as any}
+            name={filterFormFields.tradesPrice.name as any}
             render={({ field }) => (
-              <Select
-                {...filterFormFields.tradesSide}
+              <RangeSwipe
                 {...field}
-                className={styles.select}
+                {...filterFormFields.tradesPrice}
                 callback={handleFilter}
-                filterName={'side'}
+                filterName={'price'}
               />
             )}
           />
         </div>
 
         <div className={styles.item}>
-          <TableSearch
-            {...filterFormFields.tradesPrice}
-            {...formMethods.register('tradesPrice')}
-            className={styles.search}
-            callback={handleFilter}
-            filterName={'price'}
-            clearAll={clearAll}
-            closed={!isMore}
-          />
-        </div>
-
-        <div className={styles.item}>
-          <TableSearch
-            {...filterFormFields.tradesTotalPrice}
-            {...formMethods.register('tradesTotalPrice')}
-            className={styles.search}
-            callback={handleFilter}
-            filterName={'amount'}
-            clearAll={clearAll}
-            closed={!isMore}
+          <Controller
+            control={formMethods.control}
+            name={filterFormFields.tradesTotalPrice.name as any}
+            render={({ field }) => (
+              <RangeSwipe
+                {...field}
+                {...filterFormFields.tradesTotalPrice}
+                callback={handleFilter}
+                filterName={'amount'}
+              />
+            )}
           />
         </div>
 
         <div className={advancedClass}>
-          <TableSearch
-            {...filterFormFields.tradesValue}
-            {...formMethods.register('tradesValue')}
-            className={styles.search}
-            callback={handleFilter}
-            filterName={'totalPrice'}
-            clearAll={clearAll}
-            closed={!isMore}
+          <Controller
+            control={formMethods.control}
+            name={filterFormFields.tradesValue.name as any}
+            render={({ field }) => (
+              <RangeSwipe
+                {...field}
+                {...filterFormFields.tradesValue}
+                callback={handleFilter}
+                filterName={'totalPrice'}
+              />
+            )}
           />
         </div>
 
         <div className={advancedClass}>
-          <TableSearch
-            {...filterFormFields.tradesValueInBaseCurrency}
-            {...formMethods.register('tradesValueInBaseCurrency')}
-            className={styles.search}
-            callback={handleFilter}
-            filterName={'totalPriceInBaseCurrency'}
-            clearAll={clearAll}
-            closed={!isMore}
+          <Controller
+            control={formMethods.control}
+            name={filterFormFields.tradesValueInBaseCurrency.name as any}
+            render={({ field }) => (
+              <RangeSwipe
+                {...field}
+                {...filterFormFields.tradesValueInBaseCurrency}
+                callback={handleFilter}
+                filterName={'totalPriceInBaseCurrency'}
+              />
+            )}
           />
         </div>
         <div className={advancedClass}>
-          <TableSearch
-            {...filterFormFields.tradesFee}
-            {...formMethods.register('tradesFee')}
-            className={styles.search}
-            callback={handleFilter}
-            filterName={'fees'}
-            clearAll={clearAll}
-            closed={!isMore}
+          <Controller
+            control={formMethods.control}
+            name={filterFormFields.tradesFee.name as any}
+            render={({ field }) => (
+              <RangeSwipe
+                {...field}
+                {...filterFormFields.tradesFee}
+                callback={handleFilter}
+                filterName={'fees'}
+              />
+            )}
           />
         </div>
         <div className={advancedClass}>
-          <TableSearch
-            {...filterFormFields.tradesFeeInBaseCurrency}
-            {...formMethods.register('tradesFeeInBaseCurrency')}
-            className={styles.search}
-            callback={handleFilter}
-            filterName={'feesInBaseCurrency'}
-            clearAll={clearAll}
-            closed={!isMore}
+          <Controller
+            control={formMethods.control}
+            name={filterFormFields.tradesFeeInBaseCurrency.name as any}
+            render={({ field }) => (
+              <RangeSwipe
+                {...field}
+                {...filterFormFields.tradesFeeInBaseCurrency}
+                callback={handleFilter}
+                filterName={'feesInBaseCurrency'}
+              />
+            )}
           />
         </div>
         <div className={styles.clear} role='button' onClick={handleClear}>

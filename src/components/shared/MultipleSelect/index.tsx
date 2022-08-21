@@ -1,86 +1,187 @@
-import * as React from 'react';
-import { ForwardedRef, useRef } from 'react';
-import { Chip } from '@mui/material';
-import MenuItem from '@mui/material/MenuItem';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import SelectMultiple, {
+  ClearIndicatorProps,
+  components,
+  DropdownIndicatorProps,
+  MenuListProps,
+  MenuProps,
+  MultiValueRemoveProps,
+  NoticeProps,
+} from 'react-select';
+import { Controller } from 'react-hook-form';
+import { useState } from 'react';
 
-import { CloseIcon } from 'assets/icons';
+import { CloseIcon, DropDownIcon } from 'assets/icons';
+
+import Checkbox from '../Checkbox';
 
 import styles from './MultipleSelect.module.scss';
 
-const MultipleSelect = React.forwardRef(
-  (
-    { id, name, error, label, placeholder, options, onChange, value = [] }: any,
-    ref: ForwardedRef<HTMLInputElement>,
-  ): JSX.Element => {
-    const handleChange = (event: SelectChangeEvent<typeof options>) => {
-      const {
-        target: { value },
-      } = event;
-      onChange(typeof value === 'string' ? value.split(',') : value);
-    };
+const MultipleSelect = ({
+  label,
+  name,
+  options,
+  formMethods,
+  placeholder,
+  filterName,
+  callback,
+}: any) => {
+  const [isOpen, setIsOpen] = useState(false);
 
-    const selectRef = useRef(null);
+  const handleClose = () => {
+    if (isOpen) {
+      formMethods.resetField(name);
+      setIsOpen(false);
+    } else setIsOpen(false);
+  };
 
-    const handleRemove = (event: React.MouseEvent, props: any) => {
-      const filteredSelected = value.filter((item: string) => item !== props);
-      event.preventDefault();
-      onChange(
-        typeof filteredSelected === 'string' ? filteredSelected.split(',') : filteredSelected,
-      );
-    };
+  const handleToggle = (bool: boolean) => {
+    setIsOpen(bool);
+  };
+  return (
+    <div>
+      <label>{label}</label>
+      <Controller
+        name={name}
+        control={formMethods.control}
+        render={({ field: { value, onChange, onBlur } }) => {
+          return (
+            <SelectMultiple
+              options={options}
+              classNamePrefix='multipleSelect'
+              isMulti
+              menuIsOpen={isOpen}
+              onMenuOpen={() => setIsOpen(true)}
+              onMenuClose={() => handleClose()}
+              hideSelectedOptions={false}
+              placeholder={placeholder}
+              closeMenuOnSelect={false}
+              onChange={(options) => {
+                onChange(options?.map((option) => option.value));
+              }}
+              onBlur={onBlur}
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              // @ts-ignore
+              customProps={{ filterName, callback, handleToggle }}
+              value={options.filter((option: any) => value?.includes(option.value))}
+              components={{
+                ClearIndicator,
+                DropdownIndicator,
+                MultiValueRemove,
+                Menu,
+                MenuList,
+                Option,
+                NoOptionsMessage,
+              }}
+            />
+          );
+        }}
+      />
+    </div>
+  );
+};
 
-    return (
-      <div className={styles.select}>
-        <label htmlFor={name} className={styles.select__label}>
-          {label}
-        </label>
+const handleCancel = (props: any) => {
+  props.clearValue();
+};
 
-        <Select
-          id={id}
-          ref={ref}
-          multiple
-          value={value}
-          name={name}
-          displayEmpty
-          error={error}
-          onChange={handleChange}
-          input={<OutlinedInput />}
-          renderValue={(selected) => (
-            <div className={styles.select__chip__wrapper}>
-              {selected.length === 0 ? (
-                <div className={styles.select__placeholder}>{placeholder}</div>
-              ) : (
-                selected.map((item: any) => (
-                  <Chip
-                    key={item}
-                    label={item}
-                    clickable
-                    deleteIcon={
-                      <CloseIcon
-                        className={styles.select__chip__icon}
-                        onMouseDown={(event) => event.stopPropagation()}
-                      />
-                    }
-                    className={styles.select__chip}
-                    onDelete={(e) => handleRemove(e, item)}
-                  />
-                ))
-              )}
-            </div>
-          )}
-        >
-          {options.map(({ label }: any) => (
-            <MenuItem key={label} value={label} disableRipple ref={selectRef}>
-              {label}
-            </MenuItem>
-          ))}
-        </Select>
-        {error && <span className={styles['select-errorMsg']}>{error}</span>}
-      </div>
-    );
-  },
+const handleClear = (props: any) => {
+  props.clearValue();
+  if (props.selectProps?.customProps?.callback) {
+    props.selectProps?.customProps?.callback(props.selectProps?.customProps?.filterName, null);
+  }
+};
+
+const handleSelect = ({ selectProps, getValue }: any) => {
+  if (selectProps?.customProps?.callback) {
+    let value = '';
+    getValue().map((item: any) => {
+      value = `${item.value}${value && '||' + value}`;
+    });
+
+    selectProps?.customProps?.callback(selectProps?.customProps?.filterName, value);
+  }
+  selectProps?.customProps?.handleToggle(false);
+};
+
+const handleSelectAll = (props: any) => {
+  if (props.getValue().length === props.options.length) {
+    props.clearValue();
+  } else {
+    props.setValue(props.options);
+  }
+};
+
+const ClearIndicator = (props: ClearIndicatorProps<any, true>) => (
+  <div className={styles.clear} onClick={() => handleClear(props)}>
+    <CloseIcon />
+  </div>
 );
+
+const DropdownIndicator = (props: DropdownIndicatorProps<any, true>) => {
+  return (
+    <div className={styles.icon} {...props}>
+      <DropDownIcon />
+    </div>
+  );
+};
+const MultiValueRemove = (props: MultiValueRemoveProps<any>) => {
+  return (
+    <components.MultiValueRemove {...props}>
+      <CloseIcon />
+    </components.MultiValueRemove>
+  );
+};
+const Menu = (props: MenuProps<any>) => (
+  <components.Menu {...props} className={styles.item__wrapper}>
+    <div className={styles.option}>{props.children}</div>
+  </components.Menu>
+);
+
+const MenuList = (props: MenuListProps<any>) => {
+  return (
+    <>
+      <components.MenuList className={styles.item} {...props}>
+        {props.children}
+      </components.MenuList>
+      <div className={styles.action}>
+        <div>
+          <div className={styles.action__select} onClick={() => handleSelectAll(props)}>
+            {props.getValue().length !== props.options.length ? 'Select All' : 'Deselect All'}
+          </div>
+        </div>
+        <div className={styles.action__inner}>
+          <div className={styles.action__cancel} onClick={() => handleCancel(props)}>
+            Cancel
+          </div>
+          <div className={styles.action__select} role='button' onClick={() => handleSelect(props)}>
+            Apply
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+const Option = (props: any) => {
+  return (
+    <components.Option {...props}>
+      <div>
+        <Checkbox
+          checked={props.isSelected}
+          onChange={() => null}
+          text={props.label}
+          color='secondary'
+        />
+      </div>
+    </components.Option>
+  );
+};
+
+const NoOptionsMessage = (props: NoticeProps) => {
+  return (
+    <div className={styles.item}>
+      <div className={styles.item_noItem} {...props} />
+    </div>
+  );
+};
 
 export default MultipleSelect;

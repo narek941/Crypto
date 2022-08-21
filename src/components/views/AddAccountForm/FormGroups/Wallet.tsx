@@ -19,15 +19,37 @@ const AddAccountForm = ({ formMethods }: any) => {
           control={formMethods.control}
           {...formMethods.register('exchange')}
           name={addAccountFormFields.exchange.name as keyof AddAccountFormShape}
-          render={({ field }) => <Select {...addAccountFormFields.exchange} {...field} />}
+          render={({ field }) => (
+            <Select
+              {...addAccountFormFields.exchange}
+              {...field}
+              withAction={false}
+              error={formMethods.formState.errors.exchange?.message}
+            />
+          )}
         />
-        <Input {...addAccountFormFields.apiKey} {...formMethods.register('apiKey')} />
-        <Input {...addAccountFormFields.apiSecret} {...formMethods.register('apiSecret')} />
+        <Input
+          {...addAccountFormFields.apiKey}
+          {...formMethods.register('apiKey')}
+          error={formMethods.formState.errors.apiKey?.message}
+        />
+        <Input
+          {...addAccountFormFields.apiSecret}
+          {...formMethods.register('apiSecret')}
+          error={formMethods.formState.errors.apiSecret?.message}
+        />
         <Controller
           control={formMethods.control}
           {...formMethods.register('refreshInterval')}
           name={addAccountFormFields.refreshInterval.name as keyof AddAccountFormShape}
-          render={({ field }) => <Select {...addAccountFormFields.refreshInterval} {...field} />}
+          render={({ field }) => (
+            <Select
+              {...addAccountFormFields.refreshInterval}
+              {...field}
+              withAction={false}
+              error={formMethods.formState.errors.refreshInterval?.message}
+            />
+          )}
         />
       </>
     </FormGroup>

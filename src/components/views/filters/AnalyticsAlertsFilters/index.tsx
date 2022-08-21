@@ -2,11 +2,10 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { isNull } from 'lodash';
-import { Controller } from 'react-hook-form';
 
 import DateRangePicker from 'components/shared/DateRangePicker';
 import { CloseIcon } from 'assets/icons';
-import { Select, TableSearch } from 'components';
+import { MultipleSelect, TableSearch } from 'components';
 import { useAppDispatch, useAppSelector, useForm } from 'hooks';
 import { accountsAlertsFilterClear, accountsAlertsFilterUpdate } from 'store/accountsSlice/thunks';
 import { createObject } from 'utils/createObject';
@@ -75,19 +74,13 @@ const AnalyticsAlertsFilters = () => {
           />
         </div>
 
-        <div className={styles.item}>
-          <Controller
-            control={formMethods.control}
-            name={filterFormFields.alertType.name as any}
-            render={({ field }) => (
-              <Select
-                {...filterFormFields.alertType}
-                {...field}
-                className={styles.select}
-                callback={handleFilter}
-                filterName={'type'}
-              />
-            )}
+        <div className={(styles.item, styles.multipleSelect)}>
+          <MultipleSelect
+            formMethods={formMethods}
+            {...filterFormFields.alertType}
+            className={styles.select}
+            callback={handleFilter}
+            filterName={'type'}
           />
         </div>
         <div className={advancedClass}>

@@ -7,7 +7,6 @@ export { default as Sidebar } from './Sidebar';
 export { default as Doughnut } from './Doughnut';
 export { default as Pagination } from './Pagination';
 export { default as SignInForm } from './SignInForm';
-export { default as TableSearch } from './TableSearch';
 export { default as AddUserForm } from './AddUserForm';
 export { default as AnalyticsTabs } from './AnalyticsTabs';
 export { default as AddAccountForm } from './AddAccountForm';
