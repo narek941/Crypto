@@ -5,7 +5,7 @@
   color: var(--font);
   border: 1px solid var(--header-border);
   z-index: 4;
-  display: none;
+  display: block;
   position: fixed;
   max-width: 258px;
   overflow-y: scroll;
@@ -14,13 +14,14 @@
   background-color: var(--sidebar-background);
   @extend %flex-column;
   @extend %modal-shadow;
+  visibility: hidden;
 
   &::-webkit-scrollbar {
     display: none;
   }
 
   &__open {
-    display: block;
+    visibility: visible;
   }
 }
 .info {

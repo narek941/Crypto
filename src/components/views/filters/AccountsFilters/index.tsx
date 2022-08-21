@@ -6,7 +6,7 @@ import { isNull } from 'lodash';
 import { useSelector } from 'react-redux';
 
 import { CloseIcon } from 'assets/icons';
-import { Select, TableSearch } from 'components';
+import { Select } from 'components';
 import { useAppDispatch, useForm } from 'hooks';
 import { accountsFilterClear, accountsFilterUpdate } from 'store/accountsSlice/thunks';
 import { createObject } from 'utils/createObject';
@@ -14,6 +14,7 @@ import { statusOptions } from 'utils/filterHelper';
 import RangeSwipe from 'components/shared/Range';
 import { accountsSelectors } from 'store/accountsSlice';
 import { filterObject } from 'utils/filterObject';
+import TableSearch from 'components/shared/TableSearch';
 
 import styles from './AccountsFilters.module.scss';
 import { FilterFormShape } from './types';

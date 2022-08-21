@@ -36,4 +36,14 @@
   justify-content: start;
   @extend %flex-align;
   @extend %text-16-bold;
+
+  &__wrapper {
+    @extend %flex-between;
+  }
+}
+.toolbar__filter {
+  display: flex;
+  align-items: flex-start;
+  cursor: pointer;
+  margin-bottom: 24px;
 }

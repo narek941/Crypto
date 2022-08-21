@@ -230,15 +230,10 @@
   color: none !important;
 }
 
-// .rdrDayToday {
-//   color: var(--background) !important;
-//   span {
-//     background-color: transparent !important;
-//     color: var(--font) !important;
-//     border-color: transparent !important;
-//   }
-// }
-/// Range swipe
+.rdrDayToday {
+  color: var(--background);
+  border: 1px solid #6200ee;
+}
 
 .MuiSlider-rail {
   background: #29292e !important;

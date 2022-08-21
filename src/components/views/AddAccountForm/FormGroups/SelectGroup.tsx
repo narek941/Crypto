@@ -1,6 +1,7 @@
 import { Controller } from 'react-hook-form';
 import { useMemo } from 'react';
 import { isString } from 'lodash';
+import { Tooltip } from '@mui/material';
 
 import { BinIcon } from 'assets/icons';
 import { useAppSelector } from 'hooks';
@@ -60,6 +61,7 @@ const SelectGroup = ({
                   {...field}
                   options={coinOptions}
                   withAction={false}
+                  error={formMethods.formState.errors.allowedPairs?.message}
                 />
               )}
             />
@@ -86,6 +88,7 @@ const SelectGroup = ({
                   {...addAccountFormFields.alertsDestinations}
                   {...field}
                   withAction={false}
+                  error={formMethods.formState.errors.alertsDestinations?.message}
                 />
               )}
             />
@@ -108,8 +111,9 @@ const SelectGroup = ({
             />
           </>
         )}
-
-        <BinIcon onClick={() => removePair(id)} className={styles.bin} />
+        <Tooltip followCursor={true} placement='bottom' title='Delete'>
+          <BinIcon onClick={() => removePair(id)} className={styles.bin} />
+        </Tooltip>
       </div>
     </div>
   );

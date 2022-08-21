@@ -32,7 +32,12 @@
     top: calc(50% - 12px);
 
     path {
-      fill: var(--dropdown-svg) !important;
+      fill: var(--dropdown-svg);
+    }
+    &__disable {
+      path {
+        fill: var(--placeholder) !important;
+      }
     }
 
     &__open {
