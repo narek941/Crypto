@@ -25,16 +25,6 @@ const OrdersTable = () => {
 
   const [page, setPage] = useState(0);
   const dispatch = useAppDispatch();
-  // const [orderBy, setOrderBy] = useState<KeyOfData>('id');
-
-  // const handleRequestSort = (event: React.MouseEvent<unknown>, property: KeyOfData) => {
-  //   const isAsc = orderBy === property && filter.order === 'ASC';
-  //   const orderText = isAsc ? 'DESC' : 'ASC';
-
-  //   dispatch(openOrdersFilterUpdate({ order: orderText }));
-
-  //   setOrderBy(property);
-  // };
 
   const handleChangePage = (_event: unknown, newPage: number) => {
     dispatch(openOrdersFilterUpdate({ skip: Number(newPage) * filter.take }));

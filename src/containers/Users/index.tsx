@@ -11,7 +11,7 @@ const Users = () => {
   const dispatch = useAppDispatch();
   const { list, usersFilter, totalCount } = useSelector(adminSelectors.selectAdmin);
 
-  const { take, order } = usersFilter;
+  const { take, order, sort } = usersFilter;
 
   useEffect(() => {
     dispatch(adminActions.getUsersList(usersFilter));
@@ -21,6 +21,7 @@ const Users = () => {
     <Table
       take={take}
       rows={list}
+      sort={sort}
       order={order}
       action='users'
       linkText='user'

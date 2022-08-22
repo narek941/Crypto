@@ -26,6 +26,7 @@ export interface ITableProps {
   rows: RowsType[];
   headCells: HeadCell[];
   type: TypeType;
+  sort?: string;
   action: 'users' | 'accounts' | 'alerts';
   linkText?: 'user' | 'account';
   linkTo?: Routes;

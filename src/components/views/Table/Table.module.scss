@@ -43,8 +43,29 @@
       }
 
       &__sort {
+        display: flex;
+        position: relative;
+        align-items: center;
+        min-width: max-content;
+        background-color: transparent; 
         color: var(--table-header-font) !important;
+
+        &__up {
+          display: none;
+        }
       }
+      
+      &__sort:hover &__sort__up{
+        z-index: 15;
+        cursor: alias;
+        display: block;
+        padding-left: 14px;
+        background-color: transparent;
+
+        &_icon {
+          transform: rotate(180deg);
+        }
+      }  
     }
   }
   &__body {
