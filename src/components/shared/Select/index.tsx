@@ -44,15 +44,16 @@ const Select = React.forwardRef(
     };
 
     const dropClass: string = classNames(styles.select__dropdown, {
-      [styles.select__dropdown__open]: isOpen,
+      [styles.select__dropdown__open]: isOpen && options.length > 1,
+      [styles.select__dropdown__disable]: options.length <= 1,
     });
 
     const optionClass: string = classNames(styles.select__option, {
-      [styles.select__option__open]: isOpen,
+      [styles.select__option__open]: isOpen && options.length > 1,
     });
 
     const headerClass: string = classNames(styles.header, {
-      [styles.header__open]: isOpen,
+      [styles.header__open]: isOpen && options.length > 1,
       [styles.select__placeholder]: !currentOption?.label,
     });
 
@@ -79,7 +80,7 @@ const Select = React.forwardRef(
       closeDropdown();
     };
 
-    const handleSelect = (selectedItem: string) => {
+    const handleSelect = (selectedItem: string | number) => {
       setFilteredOption(options);
       onChange(selectedItem);
       if (!callback) {
@@ -133,17 +134,17 @@ const Select = React.forwardRef(
               className={inputClass}
               onChange={handleSearch}
               placeholder={placeholder}
-              autoComplete='off'
+              autoComplete='none'
+              readOnly={options.length <= 1}
               defaultValue={props.defaultValue}
               value={value ? currentOption?.label : ''}
             />
-            {currentOption && callback ? (
+            <div>
               <div className={styles.select__clear} onClick={handleClear}>
-                <CloseIcon />
+                {currentOption && callback && <CloseIcon />}
               </div>
-            ) : (
               <DropDownIcon role='button' className={dropClass} />
-            )}
+            </div>
           </div>
           <div className={optionClass}>
             <div

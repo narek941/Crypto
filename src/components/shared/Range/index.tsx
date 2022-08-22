@@ -3,7 +3,7 @@ import Slider from '@mui/material/Slider';
 import classNames from 'classnames';
 
 import useOnClickOutside from 'hooks/useOutsideClick';
-import { CloseIcon, DollarIcon } from 'assets/icons';
+import { CloseIcon, RangeIcon } from 'assets/icons';
 
 import Input from '../Input';
 
@@ -91,18 +91,11 @@ const RangeSwipe = React.forwardRef<any, any>(
         <p className={textClass}>
           {value[0] === '' && value[1] === '' ? placeholder : `${value[0]} / ${value[1]}`}
         </p>
-        <div>
-          {value[0] === '' && value[1] === '' ? (
-            Icon ? (
-              <Icon />
-            ) : (
-              <DollarIcon />
-            )
-          ) : (
-            <div className={styles.icon} onClick={handleClear}>
-              <CloseIcon />
-            </div>
-          )}
+        <div className={styles.icon__wrapper}>
+          <div className={styles.icon} onClick={handleClear}>
+            {(value[0] === '' && value[1] === '') || <CloseIcon />}
+          </div>
+          <div className={styles.icon}>{Icon ? <Icon /> : <RangeIcon />}</div>
         </div>
         <div className={modalClass} ref={customRef}>
           <div className={styles.wrapper}>

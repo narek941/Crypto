@@ -55,7 +55,7 @@
 
 .MuiSwitch-switchBase {
   padding: 9px 0 !important;
-
+  align-items: baseline !important;
   &:hover {
     background-color: transparent !important;
   }
@@ -230,15 +230,10 @@
   color: none !important;
 }
 
-// .rdrDayToday {
-//   color: var(--background) !important;
-//   span {
-//     background-color: transparent !important;
-//     color: var(--font) !important;
-//     border-color: transparent !important;
-//   }
-// }
-/// Range swipe
+.rdrDayToday {
+  color: var(--background);
+  border: 1px solid #6200ee;
+}
 
 .MuiSlider-rail {
   background: #29292e !important;
@@ -322,4 +317,98 @@
 
 .MuiTableSortLabel-root:hover {
   color: inherit !important;
+}
+
+.multipleSelect__control {
+  margin: 0 !important;
+  width: 100% !important;
+  appearance: none !important;
+  border-radius: 4px !important;
+  min-height: 40px !important;
+  position: relative !important;
+  border: 1px solid transparent !important;
+  color: var(--font) !important;
+  background-color: var(--select-background) !important;
+  padding: 0px 12px 0px 10px !important;
+  text-transform: capitalize !important;
+  cursor: pointer !important;
+  min-width: 93px !important;
+  box-shadow: none !important;
+
+  @extend %flex-center;
+
+  &:hover {
+    border: 1px solid var(--select-border) !important;
+    background-color: unset !important;
+  }
+  &--is--focused {
+    border: 1px solid var(--select-border) !important;
+    box-shadow: none !important;
+  }
+
+  &--menu-is-open .multipleSelect__indicators {
+    .multipleSelect__indicators:last-child {
+      svg {
+        transform: rotate(180deg) !important;
+      }
+    }
+  }
+}
+.multipleSelect__input-container {
+  margin: 0 !important;
+  border: none !important;
+  color: var(--placeholder) !important;
+  background-color: transparent !important;
+  @extend %text-14;
+  padding: 0 !important;
+
+  &::placeholder {
+    color: var(--placeholder) !important;
+  }
+}
+.multipleSelect__value-container {
+  padding: 0 !important;
+  flex-wrap: nowrap !important;
+  overflow-x: scroll !important;
+  max-width: max-content;
+  white-space: nowrap;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.multipleSelect__indicator-separator {
+  display: none !important;
+}
+.multipleSelect__multi-value {
+  display: flex !important;
+  gap: 12px !important;
+  min-width: min-content !important;
+  color: var(--font) !important;
+  border-radius: 12px !important;
+  background: var(--popup-background) !important;
+
+  @extend %flex-align;
+  gap: 4px !important;
+
+  &__remove:hover {
+    background-color: transparent !important;
+  }
+}
+.react-select__option {
+  .option--is-focused,
+  .option--is-selected {
+    padding: 0 !important;
+    background-color: unset !important;
+    border: unset !important;
+  }
+
+  background-color: unset !important;
+  border: unset !important;
+}
+.multipleSelect__multi-value__label {
+  @extend %text-ellipsis;
+  max-width: 80px;
+  width: 100%;
 }

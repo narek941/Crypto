@@ -33,5 +33,6 @@
 "wallet": "Wallet",
 "hide_filter_text":"Click Here to Hide Advanced Filters",
 "show_filter_text":"Click Here to Show Advanced Filters",
-"clear_all":"Clear All"
+"clear_all":"Clear All",
+"filters": "Filters"
 }

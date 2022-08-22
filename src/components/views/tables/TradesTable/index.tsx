@@ -20,7 +20,7 @@ import { accountsTradesFilterUpdate } from 'store/accountsSlice/thunks';
 import TradesTableRow from './TradesTableRow';
 import styles from './TradesTable.module.scss';
 
-const TradesTable = () => {
+const TradesTable = ({ filterVisible }: any) => {
   const accountById = useSelector(accountsSelectors.selectAccountById);
   const { filter, list, totalCount } = useSelector(accountsSelectors.selectAccountAccountsTrades);
   const { id } = useParams<ParamsWithId>();
@@ -59,7 +59,7 @@ const TradesTable = () => {
   return (
     <>
       <div className={styles.wrapper}>
-        <TradesFilters />
+        {filterVisible && <TradesFilters />}
         <ScrollWrapper>
           <Table className={styles.inner}>
             <TableHead className={styles.container__header}>

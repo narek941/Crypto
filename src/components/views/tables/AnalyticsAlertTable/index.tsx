@@ -17,7 +17,7 @@ import AnalyticsAlertsFilters from 'components/views/filters/AnalyticsAlertsFilt
 import AnalyticsAlertTableRow from './AnalyticsAlertTableRow';
 import styles from './AnalyticsAlertTable.module.scss';
 
-const AnalyticsAlertTable = () => {
+const AnalyticsAlertTable = ({ filterVisible }: any) => {
   const { id } = useParams<ParamsWithId>();
   const dispatch = useAppDispatch();
   const { filter, list, totalCount } = useSelector(accountsSelectors.selectAccountAccountsAlerts);
@@ -58,7 +58,7 @@ const AnalyticsAlertTable = () => {
   return (
     <>
       <div className={styles.wrapper}>
-        <AnalyticsAlertsFilters />
+        {filterVisible && <AnalyticsAlertsFilters />}
         <ScrollWrapper>
           <Table className={styles.inner}>
             <TableHead className={styles.container__header}>

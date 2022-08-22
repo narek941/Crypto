@@ -1,71 +1,85 @@
 import React from 'react';
-ChartJS.register(Legend, Title, ArcElement);
-import { ArcElement, Chart as ChartJS, Legend, Title } from 'chart.js';
+import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js';
 import { Doughnut as DoughnutJs } from 'react-chartjs-2';
+import classNames from 'classnames';
 
 import styles from './Doughnut.module.scss';
 
-const Doughnut: React.FC = () => {
-  const data = {
-    labels: [
-      'USDT/BTC - 20%',
-      'XRP/USDC - 18%',
-      'XRP/USDT - 10%',
-      'BTC/USDC - 10%',
-      'BTC/XRP - 5%',
-      'BTC/USDT - 5%',
-      'BTC/USDT - 10%',
-      'BTC/USDT - 10%',
-      'Others - 2,5%',
-    ],
+const Doughnut = ({
+  data,
+  labels,
+  header,
+  legendDisplay = true,
+  legendPosition = 'right',
+  legendMaxWidth = '284',
+  wrapperClassName,
+  pointStyle = 'rect',
+  textColor,
+  font = 13,
+  radius = '120',
+
+  colors,
+}: any): JSX.Element => {
+  const wrapperClass = classNames(wrapperClassName ? wrapperClassName : styles.wrapper);
+  const fakeData = {
+    labels: labels,
     datasets: [
       {
         label: '%',
-        data: [20, 18, 10, 10, 5, 5, 10, 10, 2.5],
-        backgroundColor: [
-          '#6771DC',
-          '#6794DC',
-          '#67B7DC',
-          '#14AB6C',
-          '#FE8463',
-          '#8067DC',
-          '#C667DC',
-          '#DC67AB',
-          '#D6504D',
-        ],
+        data: data,
+        backgroundColor: colors,
         borderWidth: 0,
       },
     ],
   };
+
   const options: any = {
     cutout: '90%',
-    responsive: false,
+    responsive: true,
     spacing: 4,
-
+    // offset: 4,
+    radius: radius,
+    layout: {
+      // padding: {
+      //   between: 30,
+      // },
+    },
     plugins: {
       legend: {
-        display: true,
-        position: 'right',
-        maxWidth: '284',
+        padding: {
+          right: 30,
+        },
+        display: legendDisplay,
+        position: legendPosition,
+        maxWidth: legendMaxWidth,
+        usePointStyle: true,
+
         labels: {
           fontColor: '#333',
-          fontSize: 16,
           boxWidth: 11,
           boxHeight: 11,
           textAlign: 'left',
           padding: 8,
+          usePointStyle: true,
+          pointStyle,
+          pointStyleWidth: 13,
+          color: textColor,
+          font: {
+            size: font,
+            weight: 400,
+          },
         },
       },
     },
   };
 
-  ChartJS.register(Legend, Title, ArcElement);
+  ChartJS.register(Legend, ArcElement, Tooltip);
 
   return (
-    <div className={styles.wrapper}>
-      <h1 className={styles.wrapper__title}>Trading Pairs Chart</h1>
+    <div className={wrapperClass}>
+      <h1 className={styles.wrapper__title}>{header}</h1>
       <div className={styles.chart}>
-        <DoughnutJs data={data} options={options} width='448' height='199' />
+        <DoughnutJs data={fakeData} options={options} />
       </div>
     </div>
   );

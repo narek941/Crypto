@@ -14,14 +14,29 @@ const BaseSetting = ({ formMethods }: any) => {
     <FormGroup className={styles.form__section}>
       <>
         <div className={styles.form__header}>{t('basic_settings')}</div>
-        <Input {...addAccountFormFields.name} {...formMethods.register('name')} />
+        <Input
+          {...addAccountFormFields.name}
+          {...formMethods.register('name')}
+          error={formMethods.formState.errors.name?.message}
+        />
         <Controller
           {...formMethods.register('baseCurrency')}
           control={formMethods.control}
           name={addAccountFormFields.baseCurrency.name as keyof AddAccountFormShape}
-          render={({ field }) => <Select {...addAccountFormFields.baseCurrency} {...field} />}
+          render={({ field }) => (
+            <Select
+              {...addAccountFormFields.baseCurrency}
+              {...field}
+              withAction={false}
+              error={formMethods.formState.errors.baseCurrency?.message}
+            />
+          )}
         />
-        <Input {...addAccountFormFields.startCapital} {...formMethods.register('startCapital')} />
+        <Input
+          {...addAccountFormFields.startCapital}
+          {...formMethods.register('startCapital')}
+          error={formMethods.formState.errors.startCapital?.message}
+        />
       </>
     </FormGroup>
   );

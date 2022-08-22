@@ -18,7 +18,7 @@ import styles from './WalletsTable.module.scss';
 import WalletsTableRow from './WalletsTableRow';
 import WalletsSummaryTableRow from './WalletsSummaryTableRow';
 
-const WalletsTable = () => {
+const WalletsTable = ({ filterVisible }: any) => {
   const dispatch = useAppDispatch();
   const accountById = useSelector(accountsSelectors.selectAccountById);
   const summary = useSelector(walletsSelectors.selectSummary);
@@ -76,9 +76,11 @@ const WalletsTable = () => {
             <WalletsSummaryTableRow row={summary} />
           </TableBody>
         </Table>
-        <div className={styles.filter}>
-          <WalletsFilters />
-        </div>
+        {filterVisible && (
+          <div className={styles.filter}>
+            <WalletsFilters />
+          </div>
+        )}
         <Typography className={styles.wrapper__title}>Assets</Typography>
         <Table className={styles.inner}>
           <TableHead className={styles.container__header}>

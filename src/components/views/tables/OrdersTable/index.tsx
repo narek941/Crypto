@@ -18,7 +18,7 @@ import OpenOrdersFilters from 'components/views/filters/OpenOrdersFilters';
 import OrdersTableRow from './OrdersTableRow';
 import styles from './OrdersTable.module.scss';
 
-const OrdersTable = () => {
+const OrdersTable = ({ filterVisible }: any) => {
   const { filter, list, totalCount } = useSelector(walletsSelectors.selectOpenOrders);
   const accountById = useSelector(accountsSelectors.selectAccountById);
   const walletId = accountById?.wallets?.length && accountById.wallets[0]?.id;
@@ -45,7 +45,7 @@ const OrdersTable = () => {
   return (
     <>
       <div className={styles.wrapper}>
-        <OpenOrdersFilters />
+        {filterVisible && <OpenOrdersFilters />}
         <ScrollWrapper>
           <Table aria-label='collapsible table' className={styles.inner}>
             <TableHead className={styles.container__header}>

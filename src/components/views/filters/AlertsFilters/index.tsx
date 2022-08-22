@@ -1,17 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { isNull } from 'lodash';
-import { Controller } from 'react-hook-form';
 
 import DateRangePicker from 'components/shared/DateRangePicker';
 import { CloseIcon } from 'assets/icons';
-import { Select, TableSearch } from 'components';
+import { TableSearch } from 'components';
 import { useAppDispatch, useAppSelector, useForm } from 'hooks';
 import { createObject } from 'utils/createObject';
 import { alertsFilterClear, alertsFilterUpdate } from 'store/alertsSlice/thunks';
 import { filterObject } from 'utils/filterObject';
 import { alertsSelectors } from 'store/alertsSlice';
+import MultipleSelect from 'components/shared/MultipleSelect';
 
 import styles from './AlertsFilters.module.scss';
 import { FilterFormShape } from './types';
@@ -21,7 +21,6 @@ const AlertsFilters = () => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const filter = useAppSelector(alertsSelectors.selectAlertsFilter);
-
   const [isMore, setIsMore] = useState(false);
   const [clearAll, setClearAll] = useState(false);
   const { formMethods } = useForm<keyof FilterFormShape, FilterFormShape>({
@@ -32,6 +31,10 @@ const AlertsFilters = () => {
       alertID: '',
       alertMessage: '',
     },
+  });
+
+  const advancedClass = classNames(styles.item, {
+    [styles.advanced__hide]: !isMore,
   });
 
   const handleToggle = () => setIsMore(!isMore);
@@ -56,9 +59,12 @@ const AlertsFilters = () => {
     }
   };
 
-  const advancedClass = classNames(styles.item, {
-    [styles.advanced__hide]: !isMore,
-  });
+  useEffect(() => {
+    return () => {
+      handleClear();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -83,19 +89,13 @@ const AlertsFilters = () => {
           />
         </div>
 
-        <div className={styles.item}>
-          <Controller
-            control={formMethods.control}
-            name={filterFormFields.alertType.name as any}
-            render={({ field }) => (
-              <Select
-                {...filterFormFields.alertType}
-                {...field}
-                className={styles.select}
-                callback={handleFilter}
-                filterName={'type'}
-              />
-            )}
+        <div className={(styles.item, styles.multipleSelect)}>
+          <MultipleSelect
+            formMethods={formMethods}
+            {...filterFormFields.alertType}
+            className={styles.select}
+            callback={handleFilter}
+            filterName={'type'}
           />
         </div>
 

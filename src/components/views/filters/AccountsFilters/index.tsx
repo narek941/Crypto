@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
@@ -6,7 +6,7 @@ import { isNull } from 'lodash';
 import { useSelector } from 'react-redux';
 
 import { CloseIcon } from 'assets/icons';
-import { Select, TableSearch } from 'components';
+import { Select } from 'components';
 import { useAppDispatch, useForm } from 'hooks';
 import { accountsFilterClear, accountsFilterUpdate } from 'store/accountsSlice/thunks';
 import { createObject } from 'utils/createObject';
@@ -14,6 +14,7 @@ import { statusOptions } from 'utils/filterHelper';
 import RangeSwipe from 'components/shared/Range';
 import { accountsSelectors } from 'store/accountsSlice';
 import { filterObject } from 'utils/filterObject';
+import TableSearch from 'components/shared/TableSearch';
 
 import styles from './AccountsFilters.module.scss';
 import { FilterFormShape } from './types';
@@ -64,6 +65,13 @@ const AccountsFilters = () => {
       }
     }
   };
+
+  useEffect(() => {
+    return () => {
+      handleClear();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className={styles.container}>

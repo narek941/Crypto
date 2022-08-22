@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { isNull } from 'lodash';
 
 import { CloseIcon } from 'assets/icons';
-import { Select, TableSearch } from 'components';
+import { MultipleSelect, TableSearch } from 'components';
 import { createObject } from 'utils/createObject';
 import { adminSelectors } from 'store/adminSlice';
 import DualSelect from 'components/shared/DualSelect';
@@ -14,6 +14,7 @@ import { useAppDispatch, useAppSelector, useForm } from 'hooks';
 import { ordersFilterClear, ordersFilterUpdate } from 'store/walletsSlice/thunks';
 import { walletsSelectors } from 'store/walletsSlice';
 import { filterObject } from 'utils/filterObject';
+import RangeSwipe from 'components/shared/Range';
 
 import styles from './OrdersHistoryFilters.module.scss';
 import { FilterFormShape } from './types';
@@ -35,9 +36,12 @@ const OrdersHistoryFilters = () => {
     schemaKeys: filterSchemaKeys,
     defaultValues: {
       historyID: '',
-      historyValue: '',
+      historyValue: ['', ''],
       historyUpdateTime: [undefined, undefined],
       historySide: '',
+      historyValueInBaseCurrency: ['', ''],
+      searchHistoryStop: ['', ''],
+      searchHistoryLimit: ['', ''],
     },
   });
 
@@ -112,44 +116,35 @@ const OrdersHistoryFilters = () => {
           />
         </div>
 
-        <div className={styles.item}>
-          <Controller
-            control={formMethods.control}
-            name={filterFormFields.historySide.name as any}
-            render={({ field }) => (
-              <Select
-                {...filterFormFields.historySide}
-                {...field}
-                className={styles.select}
-                callback={handleFilter}
-                filterName={'side'}
-              />
-            )}
-          />
-        </div>
-        <div className={styles.item}>
-          <Controller
-            control={formMethods.control}
-            name={filterFormFields.historyType.name as any}
-            render={({ field }) => (
-              <Select
-                {...filterFormFields.historyType}
-                {...field}
-                className={styles.select}
-                callback={handleFilter}
-                filterName={'type'}
-              />
-            )}
-          />
-        </div>
-        <div className={styles.item}>
-          <TableSearch
-            {...filterFormFields.historyValue}
-            {...formMethods.register('historyValue')}
-            className={styles.search}
+        <div className={(styles.item, styles.multipleSelect)}>
+          <MultipleSelect
+            formMethods={formMethods}
+            {...filterFormFields.historySide}
             callback={handleFilter}
-            filterName={'value'}
-            clearAll={clearAll}
+            filterName={'side'}
+          />
+        </div>
+        <div className={(styles.item, styles.multipleSelect)}>
+          <MultipleSelect
+            formMethods={formMethods}
+            {...filterFormFields.historyType}
+            callback={handleFilter}
+            filterName={'type'}
+          />
+        </div>
+
+        <div className={styles.item}>
+          <Controller
+            control={formMethods.control}
+            name={filterFormFields.historyValue.name as any}
+            render={({ field }) => (
+              <RangeSwipe
+                {...field}
+                {...filterFormFields.historyValue}
+                callback={handleFilter}
+                filterName={'value'}
+              />
+            )}
           />
         </div>
 
@@ -175,36 +170,45 @@ const OrdersHistoryFilters = () => {
           />
         </div>
         <div className={advancedClass}>
-          <TableSearch
-            {...filterFormFields.historyValueInBaseCurrency}
-            {...formMethods.register('historyValueInBaseCurrency')}
-            className={styles.search}
-            callback={handleFilter}
-            filterName={'valueInBaseCurrency'}
-            clearAll={clearAll}
-            closed={!isMore}
+          <Controller
+            control={formMethods.control}
+            name={filterFormFields.historyValueInBaseCurrency.name as any}
+            render={({ field }) => (
+              <RangeSwipe
+                {...field}
+                {...filterFormFields.historyValueInBaseCurrency}
+                callback={handleFilter}
+                filterName={'valueInBaseCurrency'}
+              />
+            )}
           />
         </div>
         <div className={advancedClass}>
-          <TableSearch
-            {...filterFormFields.searchHistoryStop}
-            {...formMethods.register('searchHistoryStop')}
-            className={styles.search}
-            callback={handleFilter}
-            filterName={'stopPrice'}
-            clearAll={clearAll}
-            closed={!isMore}
+          <Controller
+            control={formMethods.control}
+            name={filterFormFields.searchHistoryStop.name as any}
+            render={({ field }) => (
+              <RangeSwipe
+                {...field}
+                {...filterFormFields.searchHistoryStop}
+                callback={handleFilter}
+                filterName={'stopPrice'}
+              />
+            )}
           />
         </div>
         <div className={advancedClass}>
-          <TableSearch
-            {...filterFormFields.searchHistoryLimit}
-            {...formMethods.register('searchHistoryLimit')}
-            className={styles.search}
-            callback={handleFilter}
-            filterName={'limitPrice'}
-            clearAll={clearAll}
-            closed={!isMore}
+          <Controller
+            control={formMethods.control}
+            name={filterFormFields.searchHistoryLimit.name as any}
+            render={({ field }) => (
+              <RangeSwipe
+                {...field}
+                {...filterFormFields.searchHistoryLimit}
+                callback={handleFilter}
+                filterName={'limitPrice'}
+              />
+            )}
           />
         </div>
         <div className={advancedClass}>

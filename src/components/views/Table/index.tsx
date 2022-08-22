@@ -250,27 +250,33 @@ const Table = ({
           {
             id: 1,
             key: 'Seed Capital',
-            value: selectedAccountData.startCapitalInBaseCurrency,
+            value: Number(selectedAccountData.startCapitalInBaseCurrency).toFixed(6) || 0,
           },
           {
             id: 2,
             key: wrapWithBaseCurrency('Current open profit'),
-            value: selectedAccountData.statistics?.currentOpenProfitInBaseCurrency,
+            value:
+              Number(selectedAccountData.statistics?.currentOpenProfitInBaseCurrency).toFixed(6) ||
+              0,
           },
           {
             id: 3,
             key: wrapWithBaseCurrency('Earned capital'),
-            value: selectedAccountData.statistics?.earnedCapitalInBaseCurrency,
+            value:
+              Number(selectedAccountData.statistics?.earnedCapitalInBaseCurrency).toFixed(6) || 0,
           },
           {
             id: 4,
             key: 'Performance',
-            value: `${selectedAccountData.statistics?.productivityInPercent}%`,
+            value: `${
+              Number(selectedAccountData.statistics?.productivityInPercent).toFixed(6) || 0
+            }%`,
           },
           {
             id: 5,
             key: wrapWithBaseCurrency('Current Capital'),
-            value: selectedAccountData.statistics?.startCapitalInBaseCurrency,
+            value:
+              Number(selectedAccountData.statistics?.startCapitalInBaseCurrency).toFixed(6) || 0,
             info: `Updated at ${moment(selectedAccountData.statistics?.refreshDate).format(
               'DD.MM.YYYY HH:MM:SS',
             )}`,

@@ -15,7 +15,7 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
   historyUpdateTime: {
     name: 'selectHistoryUpdateTime',
     id: 'filterForm.historyUpdateTime',
-    placeholder: 'Last Operation Time',
+    placeholder: 'Select Last Operation Time',
   },
 
   historySide: {
@@ -37,7 +37,7 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
     name: 'historyValue',
     type: 'number',
     id: 'filterForm.historyValue',
-    placeholder: 'Enter Value',
+    placeholder: 'Select Value',
   },
 
   historyID: {
@@ -51,20 +51,20 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
     name: 'historyValueInBaseCurrency',
     type: 'number',
     id: 'filterForm.historyValueInBaseCurrency',
-    placeholder: 'Enter value, USDT',
+    placeholder: 'Select value, USDT',
   },
 
   searchHistoryStop: {
     name: 'searchHistoryStop',
     type: 'number',
     id: 'filterForm.searchHistoryStop',
-    placeholder: 'Stop price',
+    placeholder: 'Select Stop price',
   },
   searchHistoryLimit: {
     name: 'searchHistoryLimit',
     type: 'number',
     id: 'filterForm.searchHistoryLimit',
-    placeholder: 'Limit price',
+    placeholder: 'Select Limit price',
   },
 
   searchHistoryModifiers: {

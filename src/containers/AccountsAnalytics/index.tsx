@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react';
 import moment from 'moment';
-import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import { useAppDispatch } from 'hooks';
-import { charts } from 'constants/index';
+import { useAppDispatch, useAppSelector } from 'hooks';
 import { wrapWithBaseCurrency } from 'utils';
 import { adminActions } from 'store/adminSlice';
 import { accountsActions, accountsSelectors } from 'store/accountsSlice';
 import { Bricks, Chart, Doughnut, Export, AnalyticsTabs } from 'components';
+import { parseChartLabels } from 'utils/parseChartLabels';
+import { AccountAnalyticsChartColor, AccountAnalyticsChartTextColor } from 'constants/charts';
+import { LineChartLabels } from 'constants/charts/accountsAnalytics';
 
 import styles from './AccountsAnalytics.module.scss';
 
@@ -17,21 +18,56 @@ const AccountsAnalytics = (): JSX.Element => {
   const { id } = useParams();
   const convertedId = Number(id);
 
-  const accountById = useSelector(accountsSelectors.selectAccountById);
+  const accountById = useAppSelector(accountsSelectors.selectAccountById);
+  const accountAssetsChartData = useAppSelector(accountsSelectors.selectAccountAssetChartData);
+  const accountTradingPairsChartData = useAppSelector(
+    accountsSelectors.selectAccountTradingPairsChartData,
+  );
+  const accountPerformanceChartData = useAppSelector(
+    accountsSelectors.selectAccountPerformanceChartData,
+  );
+  const accountCapitalChartData = useAppSelector(accountsSelectors.selectAccountCapitalChartData);
 
-  const renderLineCharts = charts.accountsAnalyticsChart.lineChart.map((_, index) => (
-    <Chart key={index} />
-  ));
+  const assetsLabel = parseChartLabels(
+    accountAssetsChartData,
+    'assetCoin',
+    'relativePercentage',
+  ).map(({ key, value }: any) => `${key} - ${value}%`);
+  const assetsData = parseChartLabels(
+    accountAssetsChartData,
+    'assetCoin',
+    'relativePercentage',
+  ).map(({ value }: any) => value);
 
-  const renderDoughnutCharts = charts.accountsAnalyticsChart.lineChart.map((_, index) => (
-    <Doughnut key={index} />
-  ));
+  const tradingPairsLabel = parseChartLabels(
+    accountTradingPairsChartData,
+    'pairName',
+    'relativePercentage',
+  ).map(({ key, value }: any) => `${key} - ${value}%`);
+  const tradingPairsData = parseChartLabels(
+    accountTradingPairsChartData,
+    'pairName',
+    'relativePercentage',
+  ).map(({ value }: any) => value);
+  const capitalData = parseChartLabels(
+    accountCapitalChartData,
+    'pairName',
+    'relativePercentage',
+  ).map(({ value }: any) => value);
 
   useEffect(() => {
-    dispatch(accountsActions.getAccountSummary(convertedId));
-    dispatch(accountsActions.getAccountById(convertedId));
     dispatch(adminActions.getCoins());
     dispatch(adminActions.getTradingPairs());
+    dispatch(accountsActions.getAccountById(convertedId));
+    dispatch(accountsActions.getAccountSummary(convertedId));
+    accountAssetsChartData.length ||
+      dispatch(accountsActions.getAccountAssetsChartData(convertedId));
+    accountCapitalChartData.length ||
+      dispatch(accountsActions.getAccountCapitalChartData(convertedId));
+    accountPerformanceChartData.length ||
+      dispatch(accountsActions.getAccountPerformanceChartData(convertedId));
+    accountTradingPairsChartData.length ||
+      dispatch(accountsActions.getAccountTradingPairsChartData(convertedId));
 
     return () => {
       dispatch(accountsActions.removeAccountById());
@@ -65,8 +101,40 @@ const AccountsAnalytics = (): JSX.Element => {
         />
       </div>
 
-      <div className={styles.analytics__chart}>{renderLineCharts}</div>
-      <div className={styles.analytics__chart}>{renderDoughnutCharts}</div>
+      <div className={styles.analytics__chart}>
+        <Chart labels={LineChartLabels} chartData={capitalData} />
+        <Chart labels={LineChartLabels} />
+      </div>
+      <div className={styles.analytics__chart}>
+        <div className={styles.analytics__chart__inner}>
+          <div className={styles.analytics__chart__item}>
+            {accountTradingPairsChartData && (
+              <Doughnut
+                labels={tradingPairsLabel}
+                data={tradingPairsData}
+                header={'Trading Pairs Chart'}
+                colors={AccountAnalyticsChartColor()}
+                textColor={AccountAnalyticsChartTextColor()}
+                wrapperClassName={styles.chart__wrapper}
+              />
+            )}
+          </div>
+        </div>
+        <div className={styles.analytics__chart__inner}>
+          <div className={styles.analytics__chart__item}>
+            {accountAssetsChartData && (
+              <Doughnut
+                labels={assetsLabel}
+                data={assetsData}
+                header={'Account Assets Chart'}
+                colors={AccountAnalyticsChartColor()}
+                textColor={AccountAnalyticsChartTextColor()}
+                wrapperClassName={styles.chart__wrapper}
+              />
+            )}
+          </div>
+        </div>
+      </div>
 
       <AnalyticsTabs />
     </div>
