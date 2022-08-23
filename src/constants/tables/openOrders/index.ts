@@ -2,63 +2,77 @@ import { TableHeaderRow } from 'types';
 
 const openOrdersTable: TableHeaderRow[] = [
   {
-    id: 1,
-    value: 'ID',
+    id: 'ID',
+    value: 'originalId',
+    label: 'ID',
   },
   {
-    id: 2,
-    value: 'Created at',
+    id: 'createdAt',
+    label: 'Created at',
+    value: 'creationTime',
   },
   {
-    id: 3,
-    value: 'Pair',
+    id: 'pair',
+    value: 'coinsPair.name',
+    label: 'Pair',
   },
   {
-    id: 4,
-    value: 'Side',
+    id: 'Side',
+    value: 'side',
+    label: 'Side',
   },
   {
-    id: 5,
-    value: 'Value',
+    id: 'Value',
+    value: 'value',
+    label: 'Value',
   },
   {
-    id: 6,
-    value: 'Value',
+    id: 'value',
+    value: 'valueInBaseCurrency',
+    withBaseCurrency: true,
+    label: 'Value',
+  },
+  {
+    id: 'stop_price',
+    label: 'Stop Price',
+    value: 'stopPrice',
+  },
+  {
+    id: 'limitPrice',
+    label: 'Limit Price',
+    value: 'limitPrice',
+  },
+  {
+    id: 'receives',
+    label: 'Received',
+    value: 'tradesTotalPriceSum',
+  },
+  {
+    id: 'receivedInBaseCurrency',
+    label: 'Received',
+    value: 'tradesTotalPriceInBaseCurrencySum',
     withBaseCurrency: true,
   },
   {
-    id: 7,
-    value: 'Stop Price',
+    id: 'Fee',
+    value: 'feesSum',
+    label: 'Fee',
   },
   {
-    id: 8,
-    value: 'Limit Price',
-  },
-  {
-    id: 9,
-    value: 'Received',
-  },
-  {
-    id: 10,
-    value: 'Received',
+    id: 'FeeInBaseCurrency',
+    value: 'feesSumInBaseCurrency',
+    label: 'Fee',
     withBaseCurrency: true,
   },
   {
-    id: 11,
-    value: 'Fee',
+    id: 'share',
+    value: 'relativePercentageToAccount',
+    label: 'Share',
   },
   {
-    id: 12,
-    value: 'Fee',
-    withBaseCurrency: true,
-  },
-  {
-    id: 13,
-    value: 'Share',
-  },
-  {
-    id: 14,
-    value: 'Updated',
+    id: 'Updated',
+    value: 'updatedAt',
+    label: 'Updated',
   },
 ];
 

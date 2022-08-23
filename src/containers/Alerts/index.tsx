@@ -10,7 +10,7 @@ const Alerts = () => {
   const dispatch = useAppDispatch();
   const { list, totalCount, filter } = useSelector(alertsSelectors.selectAlerts);
 
-  const { take, order } = filter;
+  const { take, order, sort } = filter;
 
   useEffect(() => {
     dispatch(alertsActions.getAlertList(filter));
@@ -20,6 +20,7 @@ const Alerts = () => {
     <Table
       take={take}
       rows={list}
+      sort={sort}
       order={order}
       type='primary'
       action='alerts'

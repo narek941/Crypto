@@ -1,11 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { DateRange } from 'react-date-range';
-import classNames from 'classnames';
-import moment from 'moment';
 import { Controller } from 'react-hook-form';
+import classNames from 'classnames';
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
-
+import moment from 'moment';
 import { isNull } from 'lodash';
 
 import { useAppSelector, useOnClickOutside } from 'hooks';
@@ -47,9 +46,9 @@ const DateRangePicker = React.forwardRef<any, any>(
 
     const toggleCalendar = () => setOpenCalendar(true);
 
-    const handleCloseCalendar = () => {
-      setOpenCalendar(false);
-    };
+    // const handleCloseCalendar = () => {
+    //   setOpenCalendar(false);
+    // };
 
     const handleChange = (item: any) => {
       const start = item.selection.startDate;
@@ -104,6 +103,7 @@ const DateRangePicker = React.forwardRef<any, any>(
       if (closed) {
         handleClear();
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [closed]);
 
     useEffect(() => {
@@ -143,11 +143,11 @@ const DateRangePicker = React.forwardRef<any, any>(
           />
 
           <div className={styles.calendar__action}>
-            <p className={styles.calendar__action__cancel} onClick={handleCloseCalendar}>
+            {/* <p className={styles.calendar__action__cancel} onClick={handleCloseCalendar}>
               cancel
-            </p>
+            </p> */}
             <p className={styles.calendar__action__select} onClick={handleSubmit}>
-              select
+              apply
             </p>
           </div>
         </div>

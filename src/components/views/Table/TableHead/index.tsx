@@ -1,16 +1,20 @@
 import React from 'react';
 import classNames from 'classnames';
-import { TableCell, TableHead, TableRow, TableSortLabel } from '@mui/material';
+import { TableCell, TableHead, TableRow } from '@mui/material';
 
-import { KeyOfData } from '../types';
+import { VectorIcon } from 'assets/icons';
+
 import styles from '../Table.module.scss';
 
 import { ITableHeadProps } from './types';
 
-const TableHeadWrapper = ({ onRequestSort, headCells, type = 'primary' }: ITableHeadProps) => {
-  const createSortHandler = (property: KeyOfData) => (event: React.MouseEvent<unknown>) => {
-    onRequestSort(event, property);
-  };
+const TableHeadWrapper = ({
+  sort,
+  order,
+  headCells,
+  onRequestSort,
+  type = 'primary',
+}: ITableHeadProps) => {
   const headerClass = classNames(styles.table__header, styles.table__header__row, {
     [styles.table__header__secondary]: type === 'secondary',
   });
@@ -18,17 +22,27 @@ const TableHeadWrapper = ({ onRequestSort, headCells, type = 'primary' }: ITable
   return (
     <TableHead>
       <TableRow className={headerClass}>
-        {headCells.map((headCell) => (
-          <TableCell key={headCell.id} className={styles.table__header__ceil}>
-            {headCell.isSort ? (
-              <TableSortLabel
-                onClick={createSortHandler(headCell.id)}
+        {headCells.map(({ id, value, label }) => (
+          <TableCell key={id} className={styles.table__header__ceil}>
+            {label !== 'Actions' ? (
+              <button
+                onClick={(e) => onRequestSort(e, value)}
                 className={styles.table__header__ceil__sort}
               >
-                {headCell.label}
-              </TableSortLabel>
+                {label}
+
+                {value === sort && (
+                  <span title='Sort' className={styles.table__header__ceil__sort__up}>
+                    <VectorIcon
+                      className={classNames({
+                        [styles.table__header__ceil__sort__up_icon]: order === 'ASC',
+                      })}
+                    />
+                  </span>
+                )}
+              </button>
             ) : (
-              <div onClick={createSortHandler(headCell.id)}>{headCell.label}</div>
+              <p>{label}</p>
             )}
           </TableCell>
         ))}

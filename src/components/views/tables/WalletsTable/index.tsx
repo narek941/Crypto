@@ -4,7 +4,8 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { useSelector } from 'react-redux';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, MouseEvent } from 'react';
+import classNames from 'classnames';
 
 import { useAppDispatch } from 'hooks';
 import { wrapWithBaseCurrency } from 'utils';
@@ -13,6 +14,7 @@ import { accountsSelectors } from 'store/accountsSlice';
 import { EmptyData, Typography, Pagination } from 'components';
 import { walletsActions, walletsSelectors } from 'store/walletsSlice';
 import WalletsFilters from 'components/views/filters/WalletsFilters';
+import { VectorIcon } from 'assets/icons';
 
 import styles from './WalletsTable.module.scss';
 import WalletsTableRow from './WalletsTableRow';
@@ -28,23 +30,23 @@ const WalletsTable = ({ filterVisible }: any) => {
 
   const walletId = accountById?.wallets?.length && accountById.wallets[0]?.id;
 
-  // const [orderBy, setOrderBy] = useState<KeyOfData>('id');
-
-  // const handleRequestSort = (event: React.MouseEvent<unknown>, property: KeyOfData) => {
-  //   const isAsc = orderBy === property && filter.order === 'ASC';
-  //   const orderText = isAsc ? 'DESC' : 'ASC';
-
-  //   dispatch(accountsFilterUpdate({ order: orderText }));
-
-  //   setOrderBy(property);
-  // };
-
   const handleChangePage = (_event: unknown, newPage: number) => {
     dispatch(walletsActions.recordsFilterUpdate({ skip: Number(newPage) * filter.take }));
 
     setPage(newPage);
   };
 
+  const orderSort = (elem: any): 'DESC' | 'ASC' => (elem.order === 'DESC' ? 'ASC' : 'DESC');
+
+  const handleRequestSort = (_event: MouseEvent<unknown>, sort: any): void => {
+    let newOrder = 'DESC';
+    if (sort === filter.sort) {
+      newOrder = orderSort(filter);
+    } else {
+      newOrder = 'DESC';
+    }
+    dispatch(walletsActions.recordsFilterUpdate({ sort, order: newOrder as 'DESC' | 'ASC' }));
+  };
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (totalCount) {
       dispatch(walletsActions.recordsFilterUpdate({ take: parseInt(event.target.value), skip: 0 }));
@@ -63,11 +65,11 @@ const WalletsTable = ({ filterVisible }: any) => {
         <Table className={styles.inner}>
           <TableHead className={styles.container__header}>
             <TableRow className={styles.container__header__row}>
-              {walletTable.summaryTable.map(({ id, value, withBaseCurrency }) => (
+              {walletTable.summaryTable.map(({ id, label, withBaseCurrency }) => (
                 <TableCell align='left' className={styles.container__header__ceil} key={id}>
                   {!withBaseCurrency
-                    ? value
-                    : wrapWithBaseCurrency(value, accountById?.baseCurrency?.name)}
+                    ? label
+                    : wrapWithBaseCurrency(label, accountById?.baseCurrency?.name)}
                 </TableCell>
               ))}
             </TableRow>
@@ -85,11 +87,29 @@ const WalletsTable = ({ filterVisible }: any) => {
         <Table className={styles.inner}>
           <TableHead className={styles.container__header}>
             <TableRow className={styles.container__header__row}>
-              {walletTable.assetsTable.map(({ id, value, withBaseCurrency }) => (
+              {walletTable.assetsTable.map(({ id, value, withBaseCurrency, label }) => (
                 <TableCell align='left' className={styles.container__header__ceil} key={id}>
-                  {!withBaseCurrency
-                    ? value
-                    : wrapWithBaseCurrency(value, accountById?.baseCurrency?.name)}
+                  <div
+                    role='button'
+                    onClick={(e) => handleRequestSort(e, value)}
+                    className={styles.container__header__ceil__sort}
+                  >
+                    <span style={{ position: 'relative' }}>
+                      {!withBaseCurrency
+                        ? label
+                        : wrapWithBaseCurrency(label, accountById?.baseCurrency?.name)}
+                      {value === filter.sort && (
+                        <span title='Sort' className={styles.container__header__ceil__sort__up}>
+                          <VectorIcon
+                            className={classNames({
+                              [styles.container__header__ceil__sort__up_icon]:
+                                filter.order === 'ASC',
+                            })}
+                          />
+                        </span>
+                      )}
+                    </span>
+                  </div>
                 </TableCell>
               ))}
             </TableRow>

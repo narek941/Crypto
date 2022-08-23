@@ -12,7 +12,7 @@ const Accounts = () => {
   const dispatch = useAppDispatch();
   const { list, totalCount, filter } = useSelector(accountsSelectors.selectAccountAccountsList);
 
-  const { take, order } = filter;
+  const { take, order, sort } = filter;
 
   useEffect(() => {
     dispatch(accountsActions.getAccountList(filter));
@@ -22,6 +22,7 @@ const Accounts = () => {
     <Table
       take={take}
       rows={list}
+      sort={sort}
       order={order}
       type='primary'
       action='accounts'

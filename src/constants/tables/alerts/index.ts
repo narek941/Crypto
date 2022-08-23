@@ -2,42 +2,51 @@ import { HeadCell, TableHeaderRow } from 'types';
 
 const alertsAccountAnalyticsTable: TableHeaderRow[] = [
   {
-    id: 1,
-    value: 'ID',
+    id: 'id',
+    value: 'id',
+    label: 'ID',
   },
   {
-    id: 2,
-    value: 'Alerts trigger',
+    id: 'type',
+    value: 'type',
+    label: 'Alerts trigger',
   },
   {
-    id: 3,
-    value: 'Message',
+    id: 'message',
+    value: 'message',
+    label: 'Message',
   },
   {
-    id: 4,
-    value: 'Alert Time',
+    id: 'createdAt',
+    value: 'createdAt',
+    label: 'Alert Time',
   },
 ];
 
 const alertsMainTable: HeadCell[] = [
   {
     id: 'id',
+    value: 'id',
     label: 'ID',
   },
   {
     id: 'name',
+    value: 'name',
     label: 'Name',
   },
   {
-    id: 'alertTrigger',
+    id: 'type',
+    value: 'type',
     label: 'Alerts trigger',
   },
   {
     id: 'message',
+    value: 'message',
     label: 'Message',
   },
   {
-    id: 'alertTime',
+    id: 'createdAt',
+    value: 'createdAt',
     label: 'Alert Time',
   },
 ];

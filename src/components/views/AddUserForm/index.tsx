@@ -70,6 +70,7 @@ const AddUserForm = ({ onClick, isEditable = false }: IAddUser) => {
         }),
       );
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const aaa = formMethods.watch(addUserFormFields.usersAccountList.name as keyof AddUserFormShape);

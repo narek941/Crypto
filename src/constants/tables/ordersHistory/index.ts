@@ -3,48 +3,59 @@ import { TableHeaderRow } from 'types';
 const ordersHistoryTable: TableHeaderRow[] = [
   {
     id: 1,
-    value: 'ID',
+    value: 'originalId',
+    label: 'ID',
   },
   {
     id: 2,
-    value: 'Pair',
+    value: 'coinsPair.name',
+    label: 'Pair',
   },
   {
     id: 3,
-    value: 'Side',
+    value: 'side',
+    label: 'Side',
   },
   {
     id: 4,
-    value: 'Type',
+    value: 'type',
+    label: 'Type',
   },
   {
     id: 5,
-    value: 'Value',
+    label: 'Value',
+    value: 'value',
   },
   {
     id: 6,
-    value: 'Value',
+    label: 'Value',
+    value: 'valueInBaseCurrency',
     withBaseCurrency: true,
   },
   {
     id: 7,
-    value: 'Stop Price',
+    label: 'Stop Price',
+    value: 'stopPrice',
   },
   {
     id: 8,
-    value: 'Limit Price',
+    label: 'Limit Price',
+    value: 'limitPrice',
   },
   {
     id: 9,
-    value: 'Status',
+    label: 'Status',
+    value: 'status',
   },
   {
     id: 10,
-    value: 'Modifiers',
+    value: 'modifiers',
+    label: 'Modifiers',
   },
   {
     id: 11,
-    value: 'Last Operation Time',
+    value: 'lastOperationTime',
+    label: 'Last Operation Time',
   },
 ];
 

@@ -1,3 +1,4 @@
+import { MouseEvent } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -6,6 +7,7 @@ import TableRow from '@mui/material/TableRow';
 import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import classNames from 'classnames';
 
 import { ParamsWithId } from 'types';
 import { useAppDispatch } from 'hooks';
@@ -13,6 +15,7 @@ import { alertsTable } from 'constants/index';
 import { EmptyData, Pagination, ScrollWrapper } from 'components';
 import { accountsActions, accountsSelectors } from 'store/accountsSlice';
 import AnalyticsAlertsFilters from 'components/views/filters/AnalyticsAlertsFilters';
+import { VectorIcon } from 'assets/icons';
 
 import AnalyticsAlertTableRow from './AnalyticsAlertTableRow';
 import styles from './AnalyticsAlertTable.module.scss';
@@ -24,21 +27,24 @@ const AnalyticsAlertTable = ({ filterVisible }: any) => {
 
   const [page, setPage] = useState(0);
 
-  // const [orderBy, setOrderBy] = useState<KeyOfData>('id');
-
-  // const handleRequestSort = (event: React.MouseEvent<unknown>, property: KeyOfData) => {
-  //   const isAsc = orderBy === property && filter.order === 'ASC';
-  //   const orderText = isAsc ? 'DESC' : 'ASC';
-
-  //   dispatch(accountsFilterUpdate({ order: orderText }));
-
-  //   setOrderBy(property);
-  // };
-
   const handleChangePage = (_event: unknown, newPage: number) => {
     dispatch(accountsActions.accountsAlertsFilterUpdate({ skip: Number(newPage) * filter.take }));
 
     setPage(newPage);
+  };
+
+  const orderSort = (elem: any): 'DESC' | 'ASC' => (elem.order === 'DESC' ? 'ASC' : 'DESC');
+
+  const handleRequestSort = (_event: MouseEvent<unknown>, sort: any): void => {
+    let newOrder = 'DESC';
+    if (sort === filter.sort) {
+      newOrder = orderSort(filter);
+    } else {
+      newOrder = 'DESC';
+    }
+    dispatch(
+      accountsActions.accountsAlertsFilterUpdate({ sort, order: newOrder as 'DESC' | 'ASC' }),
+    );
   };
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,9 +69,27 @@ const AnalyticsAlertTable = ({ filterVisible }: any) => {
           <Table className={styles.inner}>
             <TableHead className={styles.container__header}>
               <TableRow className={styles.container__header__row}>
-                {alertsTable.accountAnalyticsTable.map(({ id, value }) => (
+                {alertsTable.accountAnalyticsTable.map(({ id, label, value }) => (
                   <TableCell align='left' className={styles.container__header__ceil} key={id}>
-                    {value}
+                    <div
+                      role='button'
+                      onClick={(e) => handleRequestSort(e, value)}
+                      className={styles.container__header__ceil__sort}
+                    >
+                      <span style={{ position: 'relative' }}>
+                        {label}
+                        {value === filter.sort && (
+                          <span title='Sort' className={styles.container__header__ceil__sort__up}>
+                            <VectorIcon
+                              className={classNames({
+                                [styles.container__header__ceil__sort__up_icon]:
+                                  filter.order === 'ASC',
+                              })}
+                            />
+                          </span>
+                        )}
+                      </span>
+                    </div>
                   </TableCell>
                 ))}
               </TableRow>

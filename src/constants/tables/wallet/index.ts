@@ -3,45 +3,49 @@ import { TableHeaderRow } from 'types';
 const walletSummaryTable: TableHeaderRow[] = [
   {
     id: 2,
-    value: 'Capital, BTC',
+    label: 'Capital, BTC',
   },
   {
     id: 3,
-    value: 'Capital',
+    label: 'Capital',
     withBaseCurrency: true,
   },
   {
     id: 4,
-    value: 'Profit/Loss',
+    label: 'Profit/Loss',
     withBaseCurrency: true,
   },
   {
     id: 5,
-    value: 'Profit/Loss, %',
+    label: 'Profit/Loss, %',
   },
   {
     id: 6,
-    value: 'Time',
+    label: 'Time',
   },
 ];
 
 const walletAssetsTable: TableHeaderRow[] = [
   {
     id: 1,
-    value: 'Asset',
+    value: 'coin.name',
+    label: 'Asset',
   },
   {
     id: 2,
-    value: 'Amount',
+    value: 'value',
+    label: 'Amount',
   },
   {
     id: 3,
-    value: 'Amount',
+    value: 'baseCurrencyValue',
+    label: 'Amount',
     withBaseCurrency: true,
   },
   {
     id: 4,
-    value: 'Time',
+    label: 'Time',
+    value: 'createdAt',
   },
 ];
 

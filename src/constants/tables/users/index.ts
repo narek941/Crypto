@@ -1,34 +1,32 @@
 import { HeadCell } from 'types';
-
 const usersTable: HeadCell[] = [
   {
     id: 'id',
-    isSort: true,
+    value: 'id',
     label: 'ID',
   },
   {
     id: 'name',
-    isSort: false,
+    value: 'username',
     label: 'Name',
   },
   {
     id: 'email',
-    isSort: false,
+    value: 'email',
     label: 'Email',
   },
   {
     id: 'accountType',
-    isSort: false,
+    value: 'role',
     label: 'Account Type',
   },
   {
     id: 'status',
-    isSort: false,
+    value: 'status',
     label: 'Status',
   },
   {
     id: 'actions',
-    isSort: false,
     label: 'Actions',
   },
 ];
