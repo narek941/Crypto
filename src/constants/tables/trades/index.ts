@@ -3,40 +3,49 @@ import { TableHeaderRow } from 'types';
 const tradesTable: TableHeaderRow[] = [
   {
     id: 1,
-    value: 'Time',
+    label: 'Time',
+    value: 'tradeTime',
   },
   {
     id: 2,
-    value: 'Currency pair',
+    label: 'Currency pair',
+    value: 'coinsPair.name',
   },
   {
     id: 3,
-    value: 'Side',
+    label: 'Side',
+    value: 'side',
   },
   {
     id: 4,
-    value: 'Price',
+    label: 'Price',
+    value: 'price',
   },
   {
     id: 5,
-    value: 'Amount',
+    label: 'Amount',
+    value: 'amount',
   },
   {
     id: 7,
-    value: 'Total price',
+    label: 'Total price',
+    value: 'totalPrice',
   },
   {
     id: 8,
-    value: 'Total price',
+    label: 'Total price',
+    value: 'totalPriceInBaseCurrency',
     withBaseCurrency: true,
   },
   {
     id: 9,
-    value: 'Fees',
+    label: 'Fees',
+    value: 'fees',
   },
   {
     id: 10,
-    value: 'Fees',
+    label: 'Fees',
+    value: 'feesInBaseCurrency',
     withBaseCurrency: true,
   },
 ];

@@ -2,35 +2,42 @@ import { TableHeaderRow } from 'types';
 
 export const inflowOutflowTable: TableHeaderRow[] = [
   {
-    id: 1,
-    value: 'ID',
+    id: 'id',
+    value: 'id',
+    label: 'ID',
   },
 
   {
-    id: 2,
-    value: 'Type',
+    id: 'Type',
+    label: 'Type',
+    value: 'type',
   },
 
   {
-    id: 3,
-    value: 'Asset',
+    id: 'Asset',
+    label: 'Asset',
+    value: 'network',
   },
   {
-    id: 4,
-    value: 'Amount',
+    id: 'Amount',
+    label: 'Amount',
+    value: 'amount',
   },
   {
-    id: 5,
-    value: 'Amount',
+    id: 'Amount',
+    label: 'Amount',
+    value: 'amountInBaseCurrency',
     withBaseCurrency: true,
   },
   {
-    id: 6,
-    value: 'Fees',
+    id: 'Fees',
+    label: 'Fees',
+    value: 'transactionFee',
   },
   {
-    id: 7,
-    value: 'Time',
+    id: 'time',
+    label: 'Time',
+    value: 'insertTime',
   },
 ];
 

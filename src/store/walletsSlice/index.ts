@@ -13,7 +13,7 @@ const internalInitialState: WalletsSliceState = {
   openOrders: {
     list: [],
     totalCount: 0,
-    filter: { skip: 0, take: 10, sort: 'id', order: 'DESC', search: '', filter: {} },
+    filter: { skip: 0, take: 10, sort: 'originalId', order: 'DESC', search: '', filter: {} },
   },
   orderTrades: {
     list: [],

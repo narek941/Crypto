@@ -1,5 +1,5 @@
 export { ReactComponent as BinIcon } from './bin.svg';
-export { ReactComponent as Vector } from './Vector.svg';
+export { ReactComponent as VectorIcon } from './Vector.svg';
 export { ReactComponent as EditIcon } from './edit.svg';
 export { ReactComponent as ListIcon } from './list.svg';
 export { ReactComponent as ChartIcon } from './chart.svg';

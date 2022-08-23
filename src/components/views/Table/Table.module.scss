@@ -20,6 +20,10 @@
   &__wrapper {
     border: 1px solid var(--table-border);
     border-radius: 8px;
+    overflow-x: auto;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   &__header {
@@ -35,7 +39,7 @@
       font-size: 13px !important;
       line-height: 16px !important;
       color: var(--table-header-font) !important;
-
+      position: relative;
       border-color: var(--table-border) !important;
 
       span {
@@ -47,25 +51,23 @@
         position: relative;
         align-items: center;
         min-width: max-content;
-        background-color: transparent; 
+        background-color: transparent;
         color: var(--table-header-font) !important;
 
         &__up {
-          display: none;
+          position: absolute;
+          right: -8px;
+          background-color: transparent;
+
+          svg path {
+            fill: var(--table-svg);
+          }
+
+          &_icon {
+            transform: rotate(180deg);
+          }
         }
       }
-      
-      &__sort:hover &__sort__up{
-        z-index: 15;
-        cursor: alias;
-        display: block;
-        padding-left: 14px;
-        background-color: transparent;
-
-        &_icon {
-          transform: rotate(180deg);
-        }
-      }  
     }
   }
   &__body {

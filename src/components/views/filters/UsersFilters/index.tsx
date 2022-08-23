@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
-import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { isNull } from 'lodash';
 
 import { CloseIcon } from 'assets/icons';
-import { Select, TableSearch } from 'components';
+import { MultipleSelect, TableSearch } from 'components';
 import { useAppDispatch, useAppSelector, useForm } from 'hooks';
 import { createObject } from 'utils/createObject';
 import { statusOptions, AccountTypeOptions } from 'utils/filterHelper';
@@ -81,38 +80,25 @@ const UsersFilters = () => {
             clearAll={clearAll}
           />
         </div>
-
-        <div className={styles.item}>
-          <Controller
-            control={formMethods.control}
-            name={filterFormFields.userStatus.name as any}
-            render={({ field }) => (
-              <Select
-                {...filterFormFields.userStatus}
-                {...field}
-                className={styles.select}
-                options={statusOptions}
-                callback={handleFilter}
-                filterName={'status'}
-              />
-            )}
+        <div className={(styles.item, styles.multipleSelect)}>
+          <MultipleSelect
+            formMethods={formMethods}
+            {...filterFormFields.userStatus}
+            className={styles.select}
+            callback={handleFilter}
+            filterName={'status'}
+            options={statusOptions}
           />
         </div>
 
-        <div className={styles.item}>
-          <Controller
-            control={formMethods.control}
-            name={filterFormFields.userType.name as any}
-            render={({ field }) => (
-              <Select
-                {...filterFormFields.userType}
-                {...field}
-                className={styles.select}
-                options={AccountTypeOptions}
-                callback={handleFilter}
-                filterName={'role'}
-              />
-            )}
+        <div className={(styles.item, styles.multipleSelect)}>
+          <MultipleSelect
+            formMethods={formMethods}
+            {...filterFormFields.userType}
+            className={styles.select}
+            callback={handleFilter}
+            filterName={'role'}
+            options={AccountTypeOptions}
           />
         </div>
 

@@ -2,9 +2,8 @@ import React from 'react';
 import classNames from 'classnames';
 import { TableCell, TableHead, TableRow } from '@mui/material';
 
-import { Vector } from 'assets/icons';
+import { VectorIcon } from 'assets/icons';
 
-import { KeyOfData } from '../types';
 import styles from '../Table.module.scss';
 
 import { ITableHeadProps } from './types';
@@ -16,12 +15,6 @@ const TableHeadWrapper = ({
   onRequestSort,
   type = 'primary',
 }: ITableHeadProps) => {
-  const createSortHandler = (property?: KeyOfData | any) => (event: React.MouseEvent<unknown>) => {
-    if (property) {
-      onRequestSort(event, property);
-    }
-  };
-
   const headerClass = classNames(styles.table__header, styles.table__header__row, {
     [styles.table__header__secondary]: type === 'secondary',
   });
@@ -29,18 +22,18 @@ const TableHeadWrapper = ({
   return (
     <TableHead>
       <TableRow className={headerClass}>
-        {headCells.map((headCell) => (
-          <TableCell key={headCell.id} className={styles.table__header__ceil}>
-            {headCell.label !== 'Actions' ? (
+        {headCells.map(({ id, value, label }) => (
+          <TableCell key={id} className={styles.table__header__ceil}>
+            {label !== 'Actions' ? (
               <button
-                onClick={createSortHandler(headCell?.value)}
+                onClick={(e) => onRequestSort(e, value)}
                 className={styles.table__header__ceil__sort}
               >
-                {headCell.label}
+                {label}
 
-                {headCell?.value === sort && (
+                {value === sort && (
                   <span title='Sort' className={styles.table__header__ceil__sort__up}>
-                    <Vector
+                    <VectorIcon
                       className={classNames({
                         [styles.table__header__ceil__sort__up_icon]: order === 'ASC',
                       })}
@@ -49,7 +42,7 @@ const TableHeadWrapper = ({
                 )}
               </button>
             ) : (
-              <p>{headCell.label}</p>
+              <p>{label}</p>
             )}
           </TableCell>
         ))}

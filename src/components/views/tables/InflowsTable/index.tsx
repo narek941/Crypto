@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, MouseEvent } from 'react';
 import { useSelector } from 'react-redux';
 import Table from '@mui/material/Table';
 import TableRow from '@mui/material/TableRow';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
+import classNames from 'classnames';
 
 import { useAppDispatch } from 'hooks';
 import { wrapWithBaseCurrency } from 'utils';
@@ -14,6 +15,7 @@ import { accountsSelectors } from 'store/accountsSlice';
 import { inflowFilterUpdate } from 'store/walletsSlice/thunks';
 import InflowsFilters from 'components/views/filters/InflowsFilters';
 import { walletsActions, walletsSelectors } from 'store/walletsSlice';
+import { VectorIcon } from 'assets/icons';
 
 import InflowsTableRow from './InflowsTableRow';
 import styles from './InflowsTable.module.scss';
@@ -22,26 +24,26 @@ const InflowsTable = ({ filterVisible }: any) => {
   const accountById = useSelector(accountsSelectors.selectAccountById);
   const { filter, list, totalCount } = useSelector(walletsSelectors.selectInflow);
   const walletId = accountById?.wallets?.length && accountById.wallets[0]?.id;
-  // const { id } = useParams();
-  // const convertedId = Number(id);
+
   const [page, setPage] = useState(0);
 
   const dispatch = useAppDispatch();
-  // const [orderBy, setOrderBy] = useState<KeyOfData>('id');
-
-  // const handleRequestSort = (event: React.MouseEvent<unknown>, property: KeyOfData) => {
-  //   const isAsc = orderBy === property && filter.order === 'ASC';
-  //   const orderText = isAsc ? 'DESC' : 'ASC';
-
-  //   dispatch(inflowFilterUpdate({ order: orderText }));
-
-  //   setOrderBy(property);
-  // };
 
   const handleChangePage = (_event: unknown, newPage: number) => {
     dispatch(inflowFilterUpdate({ skip: Number(newPage) * filter.take }));
 
     setPage(newPage);
+  };
+  const orderSort = (elem: any): 'DESC' | 'ASC' => (elem.order === 'DESC' ? 'ASC' : 'DESC');
+
+  const handleRequestSort = (_event: MouseEvent<unknown>, sort: any): void => {
+    let newOrder = 'DESC';
+    if (sort === filter.sort) {
+      newOrder = orderSort(filter);
+    } else {
+      newOrder = 'DESC';
+    }
+    dispatch(inflowFilterUpdate({ sort, order: newOrder as 'DESC' | 'ASC' }));
   };
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,11 +66,29 @@ const InflowsTable = ({ filterVisible }: any) => {
           <Table className={styles.inner}>
             <TableHead className={styles.container__header}>
               <TableRow className={styles.container__header__row}>
-                {inflowOutflowTable.map(({ id, value, withBaseCurrency }) => (
+                {inflowOutflowTable.map(({ id, label, withBaseCurrency, value }) => (
                   <TableCell align='left' className={styles.container__header__ceil} key={id}>
-                    {!withBaseCurrency
-                      ? value
-                      : wrapWithBaseCurrency(value, accountById?.baseCurrency?.name)}
+                    <div
+                      role='button'
+                      onClick={(e) => handleRequestSort(e, value)}
+                      className={styles.container__header__ceil__sort}
+                    >
+                      <span style={{ position: 'relative' }}>
+                        {!withBaseCurrency
+                          ? label
+                          : wrapWithBaseCurrency(label, accountById?.baseCurrency?.name)}
+                        {value === filter.sort && (
+                          <span title='Sort' className={styles.container__header__ceil__sort__up}>
+                            <VectorIcon
+                              className={classNames({
+                                [styles.container__header__ceil__sort__up_icon]:
+                                  filter.order === 'ASC',
+                              })}
+                            />
+                          </span>
+                        )}
+                      </span>
+                    </div>
                   </TableCell>
                 ))}
               </TableRow>

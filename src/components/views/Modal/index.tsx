@@ -26,6 +26,7 @@ const Modal = ({ id, open, setOpen, modalList }: IModalProps): JSX.Element => {
       dispatch(accountsActions.getAccountAssetsChartData(Number(id)));
     accountTradingPairsChartData.length ||
       dispatch(accountsActions.getAccountTradingPairsChartData(Number(id)));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, dispatch]);
 
   const handleClickOutside = (): void => setOpen(false);

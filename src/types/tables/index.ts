@@ -1,14 +1,13 @@
-import { KeyOfData } from 'components/views/Table/types';
-
 export interface HeadCell {
-  id: KeyOfData;
+  id: any;
   label: string;
   value?: string;
   isSort?: boolean;
 }
 
 export type TableHeaderRow = {
-  id: number;
-  value: string;
+  id: any;
+  value?: string;
+  label: string;
   withBaseCurrency?: boolean;
 };

@@ -1,9 +1,9 @@
 import { HeadCell } from 'types';
 
-import { KeyOfData, TypeType } from '../types';
+import { TypeType } from '../types';
 
 export interface ITableHeadProps {
-  onRequestSort: (event: React.MouseEvent<unknown>, property: KeyOfData) => void;
+  onRequestSort: (event: React.MouseEvent<unknown>, property: any) => void;
   rowCount: any;
   sort?: string;
   order?: string;

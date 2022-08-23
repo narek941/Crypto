@@ -20,7 +20,7 @@ import TableToolbar from './TableToolbar';
 import TableUsersBody from './TableBody/TableUsersBody';
 import TableAlertsBody from './TableBody/TableAlertsBody';
 import TableAccountBody from './TableBody/TableAccountsBody';
-import { ITableProps, KeyOfData, SelectedAccount } from './types';
+import { ITableProps, SelectedAccount } from './types';
 
 const Table = ({
   take,
@@ -52,13 +52,31 @@ const Table = ({
 
   const orderSort = (elem: any): 'DESC' | 'ASC' => (elem.order === 'DESC' ? 'ASC' : 'DESC');
 
-  const handleRequestSort = (_event: MouseEvent<unknown>, sort: KeyOfData): void => {
+  const handleRequestSort = (_event: MouseEvent<unknown>, sort: any): void => {
     if (action === 'users') {
-      dispatch(usersFilterUpdate({ sort, order: orderSort(usersFilter) }));
+      let newOrder = 'DESC';
+      if (sort === usersFilter.sort) {
+        newOrder = orderSort(usersFilter);
+      } else {
+        newOrder = 'DESC';
+      }
+      dispatch(usersFilterUpdate({ sort, order: newOrder as 'DESC' | 'ASC' }));
     } else if (action === 'accounts') {
-      dispatch(accountsFilterUpdate({ sort, order: orderSort(accountFilter) }));
+      let newOrder = 'DESC';
+      if (sort === accountFilter.sort) {
+        newOrder = orderSort(accountFilter);
+      } else {
+        newOrder = 'DESC';
+      }
+      dispatch(accountsFilterUpdate({ sort, order: newOrder as 'DESC' | 'ASC' }));
     } else {
-      dispatch(alertsFilterUpdate({ sort, order: orderSort(alertsFilter) }));
+      let newOrder = 'DESC';
+      if (sort === alertsFilter.sort) {
+        newOrder = orderSort(alertsFilter);
+      } else {
+        newOrder = 'DESC';
+      }
+      dispatch(alertsFilterUpdate({ sort, order: newOrder as 'DESC' | 'ASC' }));
     }
   };
 
@@ -118,41 +136,6 @@ const Table = ({
   const handleClose = () => {
     setOpen(false);
   };
-
-  // const handleFilter = () => {
-  // switch (action) {
-  //   case 'users': {
-  //     dispatch(
-  //       usersFilterUpdate({
-  //         search: {
-  //           role: value.search,
-  //           email: value.search,
-  //           status: value.search,
-  //           username: value.search,
-  //           id: Number(value.search) || -1,
-  //         },
-  //       }),
-  //     );
-  //     break;
-  //   }
-  //   case 'accounts': {
-  //     dispatch(
-  //       accountsFilterUpdate({ search: { id: Number(value.search) || -1, name: value.search } }),
-  //     );
-  //     break;
-  //   }
-  //   case 'alerts': {
-  //     dispatch(
-  //       alertsActions.alertsFilterUpdate({
-  //         search: { id: Number(value.search) || -1, message: value.search },
-  //       }),
-  //     );
-  //     break;
-  //   }
-  //   default:
-  //     break;
-  // }
-  // };
 
   const handleBlock = useCallback(
     async (id: number) => {
