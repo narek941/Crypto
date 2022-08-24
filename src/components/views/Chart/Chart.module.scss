@@ -15,3 +15,18 @@
 .chart {
   margin: 10px 0 50px;
 }
+
+.tooltip {
+  box-sizing: border-box;
+  text-align: left;
+  z-index: 1000;
+  pointer-events: none;
+  border-radius: 4px;
+  background: rgba(8, 8, 8, 0.9);
+  max-width: 182px;
+  width: 100%;
+  position: absolute;
+  backdrop-filter: blur(12px);
+  border-radius: 4px;
+  display: none;
+}

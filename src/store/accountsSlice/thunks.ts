@@ -147,10 +147,10 @@ export const getAccountTradingPairsChartData = createAsyncThunk(
 );
 
 export const getAccountCapitalChartData = createAsyncThunk(
-  `${Slice.Accounts}/:id/daily-account-statistics`,
+  `${Slice.Accounts}/accounts/:id/daily-account-statistics`,
   async (id: number, thunkAPI) => {
     try {
-      const response = await accountsApi.accountTradingPairsChartRequest(id);
+      const response = await accountsApi.accountCapitalChartRequest(id);
 
       return {
         chart: response.data,
@@ -162,7 +162,7 @@ export const getAccountCapitalChartData = createAsyncThunk(
 );
 
 export const getAccountPerformanceChartData = createAsyncThunk(
-  `${Slice.Accounts}/:id/daily-wallets-statistics`,
+  `${Slice.Accounts}/accounts/:id/daily-wallets-statistics`,
   async (id: number, thunkAPI) => {
     try {
       const response = await accountsApi.accountPerformanceChartRequest(id);

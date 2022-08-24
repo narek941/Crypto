@@ -1,5 +1,5 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { Slice } from 'types';
 import { parseAddUserError } from 'utils/errorConverter';
