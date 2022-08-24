@@ -26,7 +26,7 @@ export const accountTradingPairsChartRequest = (id: number) =>
   client.get(`/accounts/${id}/trading-pairs-chart-data`);
 
 export const accountCapitalChartRequest = (id: number) =>
-  client.get(`/:${id}/daily-account-statistics`);
+  client.get(`/accounts/${id}/daily-account-statistics`);
 
 export const accountPerformanceChartRequest = (id: number) =>
-  client.get(`/:${id}/daily-wallets-statistics`);
+  client.get(`/accounts/${id}/daily-wallets-statistics`);

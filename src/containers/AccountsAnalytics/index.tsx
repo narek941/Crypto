@@ -1,15 +1,14 @@
 import React, { useEffect } from 'react';
-import moment from 'moment';
 import { useParams } from 'react-router-dom';
+import moment from 'moment';
 
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { wrapWithBaseCurrency } from 'utils';
 import { adminActions } from 'store/adminSlice';
 import { accountsActions, accountsSelectors } from 'store/accountsSlice';
 import { Bricks, Chart, Doughnut, Export, AnalyticsTabs } from 'components';
-import { parseChartLabels } from 'utils/parseChartLabels';
 import { AccountAnalyticsChartColor, AccountAnalyticsChartTextColor } from 'constants/charts';
-import { LineChartLabels } from 'constants/charts/accountsAnalytics';
+import { useWindowSize } from 'hooks/useWindowsWidth';
 
 import styles from './AccountsAnalytics.module.scss';
 
@@ -17,7 +16,7 @@ const AccountsAnalytics = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const { id } = useParams();
   const convertedId = Number(id);
-
+  const windowWidth = useWindowSize();
   const accountById = useAppSelector(accountsSelectors.selectAccountById);
   const accountAssetsChartData = useAppSelector(accountsSelectors.selectAccountAssetChartData);
   const accountTradingPairsChartData = useAppSelector(
@@ -27,33 +26,6 @@ const AccountsAnalytics = (): JSX.Element => {
     accountsSelectors.selectAccountPerformanceChartData,
   );
   const accountCapitalChartData = useAppSelector(accountsSelectors.selectAccountCapitalChartData);
-
-  const assetsLabel = parseChartLabels(
-    accountAssetsChartData,
-    'assetCoin',
-    'relativePercentage',
-  ).map(({ key, value }: any) => `${key} - ${value}%`);
-  const assetsData = parseChartLabels(
-    accountAssetsChartData,
-    'assetCoin',
-    'relativePercentage',
-  ).map(({ value }: any) => value);
-
-  const tradingPairsLabel = parseChartLabels(
-    accountTradingPairsChartData,
-    'pairName',
-    'relativePercentage',
-  ).map(({ key, value }: any) => `${key} - ${value}%`);
-  const tradingPairsData = parseChartLabels(
-    accountTradingPairsChartData,
-    'pairName',
-    'relativePercentage',
-  ).map(({ value }: any) => value);
-  const capitalData = parseChartLabels(
-    accountCapitalChartData,
-    'pairName',
-    'relativePercentage',
-  ).map(({ value }: any) => value);
 
   useEffect(() => {
     dispatch(adminActions.getCoins());
@@ -72,6 +44,7 @@ const AccountsAnalytics = (): JSX.Element => {
     return () => {
       dispatch(accountsActions.removeAccountById());
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [convertedId, dispatch]);
 
   return (
@@ -102,34 +75,60 @@ const AccountsAnalytics = (): JSX.Element => {
       </div>
 
       <div className={styles.analytics__chart}>
-        <Chart labels={LineChartLabels} chartData={capitalData} />
-        <Chart labels={LineChartLabels} />
+        {accountCapitalChartData.length && windowWidth && (
+          <Chart
+            data={accountCapitalChartData}
+            title='Account Capital Chart'
+            subTitle={accountById?.baseCurrency?.name}
+            timeField='snapshotDate'
+            field='currentCapitalInBaseCurrency'
+            width={(windowWidth.width - 240) / 2}
+            type='AREA'
+            baseCurrency={accountById?.baseCurrency?.name}
+          />
+        )}
+        {accountPerformanceChartData.length && windowWidth && (
+          <Chart
+            data={accountPerformanceChartData}
+            title='P&L Share Chart'
+            subTitle='%'
+            timeField='snapshotDate'
+            field='currentCapitalInBaseCurrency'
+            width={(windowWidth.width - 240) / 2}
+            type='AREA'
+            baseCurrency={accountById?.baseCurrency?.name}
+          />
+        )}
       </div>
       <div className={styles.analytics__chart}>
         <div className={styles.analytics__chart__inner}>
           <div className={styles.analytics__chart__item}>
-            {accountTradingPairsChartData && (
+            {accountTradingPairsChartData && windowWidth && (
               <Doughnut
-                labels={tradingPairsLabel}
-                data={tradingPairsData}
+                data={accountTradingPairsChartData}
+                field={'pairName'}
+                value={'relativePercentage'}
+                width={(windowWidth.width - 240) / 2}
                 header={'Trading Pairs Chart'}
                 colors={AccountAnalyticsChartColor()}
                 textColor={AccountAnalyticsChartTextColor()}
-                wrapperClassName={styles.chart__wrapper}
+                tooltipFields={['totalSum', 'toCurrencyName', 'totalBaseSum']}
               />
             )}
           </div>
         </div>
         <div className={styles.analytics__chart__inner}>
           <div className={styles.analytics__chart__item}>
-            {accountAssetsChartData && (
+            {accountAssetsChartData && windowWidth && (
               <Doughnut
-                labels={assetsLabel}
-                data={assetsData}
+                data={accountAssetsChartData}
+                field={'assetCoin'}
+                value={'relativePercentage'}
+                width={(windowWidth.width - 240) / 2}
                 header={'Account Assets Chart'}
                 colors={AccountAnalyticsChartColor()}
                 textColor={AccountAnalyticsChartTextColor()}
-                wrapperClassName={styles.chart__wrapper}
+                tooltipFields={['baseCurrencyValue', 'baseCurrencyName', 'value', 'assetCoin']}
               />
             )}
           </div>

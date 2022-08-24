@@ -16,7 +16,7 @@ const internalInitialState: AuthSliceState = {
   error: null,
   loading: AuthStates.IDLE,
   twoFactorAuthEnabled: false,
-  isDarkMode: false,
+  isDarkMode: BrowserStorageService.get(BrowserStorageKeys.Mode) === 'dark',
   accessToken:
     BrowserStorageService.get(BrowserStorageKeys.AccessToken) ||
     BrowserStorageService.get(BrowserStorageKeys.AccessToken, { session: true }) ||

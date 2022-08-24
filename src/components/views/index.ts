@@ -10,6 +10,7 @@ export { default as SignInForm } from './SignInForm';
 export { default as AddUserForm } from './AddUserForm';
 export { default as AnalyticsTabs } from './AnalyticsTabs';
 export { default as AddAccountForm } from './AddAccountForm';
+export { default as TradeChart } from './TradeChart';
 
 // Tables
 export { default as TradesTable } from './tables/TradesTable';
