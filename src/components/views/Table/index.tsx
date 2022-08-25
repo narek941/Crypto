@@ -233,33 +233,39 @@ const Table = ({
           {
             id: 1,
             key: 'Seed Capital',
-            value: Number(selectedAccountData.startCapitalInBaseCurrency).toFixed(6) || 0,
+            value: selectedAccountData.startCapitalInBaseCurrency
+              ? Number(selectedAccountData.startCapitalInBaseCurrency).toFixed(6)
+              : 0,
           },
           {
             id: 2,
             key: wrapWithBaseCurrency('Current open profit'),
-            value:
-              Number(selectedAccountData.statistics?.currentOpenProfitInBaseCurrency).toFixed(6) ||
-              0,
+            value: selectedAccountData.statistics?.currentOpenProfitInBaseCurrency
+              ? Number(selectedAccountData.statistics?.currentOpenProfitInBaseCurrency).toFixed(6)
+              : 0,
           },
           {
             id: 3,
             key: wrapWithBaseCurrency('Earned capital'),
-            value:
-              Number(selectedAccountData.statistics?.earnedCapitalInBaseCurrency).toFixed(6) || 0,
+            value: selectedAccountData.statistics?.earnedCapitalInBaseCurrency
+              ? Number(selectedAccountData.statistics?.earnedCapitalInBaseCurrency).toFixed(6)
+              : 0,
           },
           {
             id: 4,
             key: 'Performance',
             value: `${
-              Number(selectedAccountData.statistics?.productivityInPercent).toFixed(6) || 0
+              selectedAccountData.statistics?.productivityInPercent
+                ? Number(selectedAccountData.statistics?.productivityInPercent).toFixed(6)
+                : 0
             }%`,
           },
           {
             id: 5,
             key: wrapWithBaseCurrency('Current Capital'),
-            value:
-              Number(selectedAccountData.statistics?.startCapitalInBaseCurrency).toFixed(6) || 0,
+            value: selectedAccountData.statistics?.startCapitalInBaseCurrency
+              ? Number(selectedAccountData.statistics?.startCapitalInBaseCurrency).toFixed(6)
+              : 0,
             info: `Updated at ${moment(selectedAccountData.statistics?.refreshDate).format(
               'DD.MM.YYYY HH:MM:SS',
             )}`,
