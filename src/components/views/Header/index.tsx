@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 // import { useSelector } from 'react-redux';
 
 import { ArrowLeftIcon, AvatarIcon } from 'assets/icons';
-import useOnClickOutside from 'hooks/useOutsideClick';
+import { useOnClickOutside } from 'hooks';
 import { Popup } from 'components';
 // import { accountsSelectors } from 'store/accountsSlice';
 

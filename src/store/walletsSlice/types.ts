@@ -2,10 +2,8 @@ import { SerializedError } from '@reduxjs/toolkit';
 
 import { ITableFilter } from 'types/api';
 
-import { WalletsStates } from './constants';
-
 export type WalletsSliceState = {
-  loading: WalletsStates;
+  loading: boolean;
   error?: SerializedError | null;
   summary: any;
   openOrders: {

@@ -4,12 +4,11 @@ import { Slice } from 'types';
 import { extraReducers } from 'utils';
 
 import * as usersThunks from './thunks';
-import { UserStates } from './constants';
 import { UsersSliceState } from './types';
 
 const internalInitialState: UsersSliceState = {
   error: null,
-  loading: UserStates.IDLE,
+  loading: false,
 };
 
 const usersSlice = createSlice({
@@ -18,7 +17,13 @@ const usersSlice = createSlice({
   reducers: {
     reset: () => internalInitialState,
   },
+
   extraReducers: (builder) => {
+    builder.addCase(usersThunks.addNewUser.fulfilled, (state) => {
+      state.loading = false;
+      state.error = null;
+    });
+
     builder.addMatcher(isAnyOf(usersThunks.addNewUser.pending), extraReducers.pendingReducer);
 
     builder.addMatcher(isAnyOf(usersThunks.addNewUser.rejected), extraReducers.errorReducer);

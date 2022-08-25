@@ -2,10 +2,8 @@ import { SerializedError } from '@reduxjs/toolkit';
 
 import { ITableFilter } from 'types/api';
 
-import { AccountStates } from './constants';
-
 export type AccountsSliceState = {
-  loading: AccountStates;
+  loading: boolean;
   error?: SerializedError | null;
   accountById: any;
   coins: any[];

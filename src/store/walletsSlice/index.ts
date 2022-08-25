@@ -4,12 +4,11 @@ import { Slice } from 'types';
 import { extraReducers } from 'utils';
 
 import * as walletsThunks from './thunks';
-import { WalletsStates } from './constants';
 import { WalletsSliceState } from './types';
 
 const internalInitialState: WalletsSliceState = {
   error: null,
-  loading: WalletsStates.IDLE,
+  loading: false,
   openOrders: {
     list: [],
     totalCount: 0,
@@ -61,32 +60,44 @@ const walletsSlice = createSlice({
     builder.addCase(
       walletsThunks.getWalletOpenOrders.fulfilled,
       (state, action: PayloadAction<any>) => {
+        state.loading = false;
+        state.error = null;
         state.openOrders.list = action.payload.list;
         state.openOrders.totalCount = action.payload.totalCount;
       },
     );
 
     builder.addCase(walletsThunks.getWalletOrderTrades.fulfilled, (state, action) => {
+      state.loading = false;
+      state.error = null;
       state.orderTrades.list = action.payload.list;
       state.orderTrades.totalCount = action.payload.totalCount;
     });
 
     builder.addCase(walletsThunks.getWalletOrders.fulfilled, (state, action) => {
+      state.loading = false;
+      state.error = null;
       state.orders.list = action.payload.list;
       state.orders.totalCount = action.payload.totalCount;
     });
 
     builder.addCase(walletsThunks.getWalletInflow.fulfilled, (state, action) => {
+      state.loading = false;
+      state.error = null;
       state.inflow.list = action.payload.list;
       state.inflow.totalCount = action.payload.totalCount;
     });
 
     builder.addCase(walletsThunks.getWalletRecords.fulfilled, (state, action) => {
+      state.loading = false;
+      state.error = null;
       state.records.list = action.payload.list;
       state.records.totalCount = action.payload.totalCount;
     });
 
     builder.addCase(walletsThunks.getWalletSummary.fulfilled, (state, action) => {
+      state.loading = false;
+      state.error = null;
       state.summary = action.payload.list;
     });
 

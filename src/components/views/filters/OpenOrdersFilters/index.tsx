@@ -84,8 +84,6 @@ const OpenOrdersFilters = () => {
       const newKey = key === 'pair' ? 'coinsPairId' : key;
       const obj = filterObject(filter.filter, newKey as string);
       dispatch(openOrdersFilterClear(obj));
-      // eslint-disable-next-line no-console
-      console.log(obj, 'sss');
     } else {
       if (key === 'pair') {
         const coinsPair = tradingPairs.find((pair) => {

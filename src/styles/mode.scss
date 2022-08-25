@@ -38,6 +38,7 @@
   --collapse-table-header: #0097a7;
   --table-border-style: hidden;
   --secondary-checkbox: #505051;
+  --loader-background: #ffffff;
 
   --table-header-font: #ffffff;
   --table-header-secondary: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), #009688;
@@ -93,6 +94,7 @@
   --calendar-alpha: rgba(0, 151, 167, 0.05);
   --select-btn: #3700b3;
   --table-svg: #ffffff;
+  --loading: rgba(0, 0, 0, 1.5);
 }
 
 [data-theme='dark'] {
@@ -114,6 +116,7 @@
   --copyright: #677a7a;
   --input-color: #ffffff;
   --secondary-checkbox: #505051;
+  --loader-background: rgba(0, 0, 0, 0.9);
 
   --input-background: rgba(56, 56, 56, 0.2);
   --input-background-secondary: rgba(152, 172, 171, 0.25);
@@ -192,4 +195,5 @@
   --calendar: rgba(65, 58, 199, 0.15);
   --calendar-alpha: rgba(65, 58, 199, 0.15);
   --select-btn: #3700b3;
+  --loading: rgba(0, 0, 0, 0.5);
 }

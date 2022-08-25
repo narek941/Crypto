@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 
 import { ChevronLeftIcon, ChevronRightIcon, SkipToFirstIcon, SkipToLastIcon } from 'assets/icons';
-import { usePaginationRange, DOTS } from 'hooks/usePaginationRange';
+import usePaginationRange, { DOTS } from 'hooks/usePaginationRange';
 
 import { TablePaginationActionsProps } from './types';
 import styles from './PaginationAction.module.scss';

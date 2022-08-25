@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import Slider from '@mui/material/Slider';
 import classNames from 'classnames';
 
-import useOnClickOutside from 'hooks/useOutsideClick';
+import { useOnClickOutside } from 'hooks';
 import { CloseIcon, RangeIcon } from 'assets/icons';
 
 import Input from '../Input';

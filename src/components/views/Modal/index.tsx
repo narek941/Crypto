@@ -4,11 +4,10 @@ import { Link } from 'react-router-dom';
 
 import { Routes } from 'types';
 import { CloseModalIcon } from 'assets/icons';
-import useOnClickOutside from 'hooks/useOutsideClick';
+import { useOnClickOutside } from 'hooks';
 import { accountsActions, accountsSelectors } from 'store/accountsSlice';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { Doughnut } from 'components';
-import { parseChartLabels } from 'utils/parseChartLabels';
 import { AccountAnalyticsChartTextColor, AccountModalChartColor } from 'constants/charts';
 
 import styles from './Modal.module.scss';
@@ -21,46 +20,21 @@ const Modal = ({ id, open, setOpen, modalList }: IModalProps): JSX.Element => {
   const accountTradingPairsChartData = useAppSelector(
     accountsSelectors.selectAccountTradingPairsChartData,
   );
-  useEffect(() => {
-    accountAssetsChartData.length ||
-      dispatch(accountsActions.getAccountAssetsChartData(Number(id)));
-    accountTradingPairsChartData.length ||
-      dispatch(accountsActions.getAccountTradingPairsChartData(Number(id)));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, dispatch]);
-
-  const handleClickOutside = (): void => setOpen(false);
-
-  const assetsLabel = parseChartLabels(
-    accountAssetsChartData,
-    'assetCoin',
-    'relativePercentage',
-  ).map(({ key, value }: any) => `${key}-${value}%`);
-
-  const assetsData = parseChartLabels(
-    accountAssetsChartData,
-    'assetCoin',
-    'relativePercentage',
-  ).map(({ value }: any) => value);
-
-  const tradingPairsLabel = parseChartLabels(
-    accountTradingPairsChartData,
-    'pairName',
-    'relativePercentage',
-  ).map(({ key, value }: any) => `${key}-${value}%`);
-  const tradingPairsData = parseChartLabels(
-    accountTradingPairsChartData,
-    'pairName',
-    'relativePercentage',
-  ).map(({ value }: any) => value);
-
   const headerClass = classNames(styles.item, styles.item__header);
   const linkClass = classNames(styles.link, styles.item);
   const modalClass = classNames(styles.wrapper, {
     [styles.wrapper__open]: open,
   });
 
+  const handleClickOutside = (): void => setOpen(false);
+
   useOnClickOutside(ref, handleClickOutside);
+
+  useEffect(() => {
+    dispatch(accountsActions.getAccountAssetsChartData(Number(id)));
+    dispatch(accountsActions.getAccountTradingPairsChartData(Number(id)));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id, dispatch]);
 
   const renderModalList = modalList.map(({ id, key, value, info }) => (
     <div className={styles.item} key={id}>
@@ -86,23 +60,23 @@ const Modal = ({ id, open, setOpen, modalList }: IModalProps): JSX.Element => {
           <div className={styles.chart}>
             <div className={styles.chart__inner}>
               <div className={styles.chart__inner__doughnut}>
-                {tradingPairsData ? (
+                {accountTradingPairsChartData && (
                   <Doughnut
                     header='Trading Pairs Chart'
                     width='224px'
-                    height='241px'
-                    data={tradingPairsData}
+                    field={'pairName'}
+                    className={styles.doughnut}
+                    value={'relativePercentage'}
+                    data={accountTradingPairsChartData}
                     legendPosition='bottom'
-                    labels={tradingPairsLabel}
                     wrapperClassName={styles.chart__wrapper}
                     colors={AccountModalChartColor()}
                     pointStyle='circle'
                     font={10}
                     textColor={AccountAnalyticsChartTextColor()}
-                    radius={50}
+                    radius={40}
+                    tooltipFields={['totalSum', 'toCurrencyName', 'totalBaseSum']}
                   />
-                ) : (
-                  <></>
                 )}
               </div>
             </div>
@@ -110,21 +84,23 @@ const Modal = ({ id, open, setOpen, modalList }: IModalProps): JSX.Element => {
           <div className={styles.chart}>
             <div className={styles.chart__inner}>
               <div className={styles.chart__inner__doughnut}>
-                {assetsData && assetsLabel ? (
+                {accountAssetsChartData && (
                   <Doughnut
                     header='Asset Chart'
-                    data={assetsData}
+                    data={accountAssetsChartData}
+                    field={'assetCoin'}
+                    value={'relativePercentage'}
+                    width='224px'
+                    className={styles.doughnut}
                     legendPosition='bottom'
-                    labels={assetsLabel}
+                    tooltipFields={['baseCurrencyValue', 'baseCurrencyName', 'value', 'assetCoin']}
                     wrapperClassName={styles.chart__wrapper}
                     colors={AccountModalChartColor()}
                     pointStyle='circle'
                     font={10}
                     textColor={AccountAnalyticsChartTextColor()}
-                    radius={50}
+                    radius={40}
                   />
-                ) : (
-                  <></>
                 )}
               </div>
             </div>

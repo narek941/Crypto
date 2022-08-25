@@ -4,12 +4,11 @@ import { Slice } from 'types';
 import { extraReducers } from 'utils';
 
 import * as accountsThunks from './thunks';
-import { AccountStates } from './constants';
 import { AccountsSliceState } from './types';
 
 const internalInitialState: AccountsSliceState = {
   error: null,
-  loading: AccountStates.IDLE,
+  loading: false,
   coins: [],
   accountById: {},
   accountAssetChart: [],
@@ -50,10 +49,10 @@ const accountsSlice = createSlice({
     builder.addCase(
       accountsThunks.getAccountList.fulfilled,
       (state, action: PayloadAction<any>) => {
-        state.error = null;
-        state.loading = AccountStates.IDLE;
         state.accountsList.list = action.payload.list;
         state.accountsList.totalCount = action.payload.totalCount;
+        state.error = null;
+        state.loading = false;
       },
     );
 
@@ -62,6 +61,8 @@ const accountsSlice = createSlice({
       (state, action: PayloadAction<any>) => {
         state.trades.list = action.payload.list;
         state.trades.totalCount = action.payload.totalCount;
+        state.error = null;
+        state.loading = false;
       },
     );
 
@@ -70,15 +71,17 @@ const accountsSlice = createSlice({
       (state, action: PayloadAction<any>) => {
         state.alerts.list = action.payload.list;
         state.alerts.totalCount = action.payload.totalCount;
+        state.loading = false;
+        state.error = null;
       },
     );
 
     builder.addCase(
       accountsThunks.getAccountById.fulfilled,
       (state, action: PayloadAction<any>) => {
-        state.error = null;
-        state.loading = AccountStates.IDLE;
         state.accountById = action.payload.account;
+        state.error = null;
+        state.loading = false;
       },
     );
 
@@ -87,6 +90,29 @@ const accountsSlice = createSlice({
         ...state.accountById,
         statistics: action.payload.summary,
       };
+      state.loading = false;
+      state.error = null;
+    });
+
+    builder.addCase(accountsThunks.getAccountAssetsChartData.fulfilled, (state, action) => {
+      state.accountAssetChart = action.payload.chart;
+      state.loading = false;
+      state.error = null;
+    });
+    builder.addCase(accountsThunks.getAccountTradingPairsChartData.fulfilled, (state, action) => {
+      state.accountTradingPairsChart = action.payload.chart;
+      state.loading = false;
+      state.error = null;
+    });
+    builder.addCase(accountsThunks.getAccountCapitalChartData.fulfilled, (state, action) => {
+      state.accountCapitalChart = action.payload.chart;
+      state.loading = false;
+      state.error = null;
+    });
+    builder.addCase(accountsThunks.getAccountPerformanceChartData.fulfilled, (state, action) => {
+      state.accountPerformanceChart = action.payload.chart;
+      state.loading = false;
+      state.error = null;
     });
 
     builder.addCase(accountsThunks.removeAccountById, (state) => {
@@ -117,18 +143,7 @@ const accountsSlice = createSlice({
     builder.addCase(accountsThunks.accountsFilterClear, (state, action) => {
       state.accountsList.filter.filter = action.payload;
     });
-    builder.addCase(accountsThunks.getAccountAssetsChartData.fulfilled, (state, action) => {
-      state.accountAssetChart = action.payload.chart;
-    });
-    builder.addCase(accountsThunks.getAccountTradingPairsChartData.fulfilled, (state, action) => {
-      state.accountTradingPairsChart = action.payload.chart;
-    });
-    builder.addCase(accountsThunks.getAccountCapitalChartData.fulfilled, (state, action) => {
-      state.accountCapitalChart = action.payload.chart;
-    });
-    builder.addCase(accountsThunks.getAccountPerformanceChartData.fulfilled, (state, action) => {
-      state.accountPerformanceChart = action.payload.chart;
-    });
+
     builder.addMatcher(
       isAnyOf(
         accountsThunks.getAccountById.pending,

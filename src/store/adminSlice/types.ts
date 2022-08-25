@@ -1,10 +1,8 @@
 import { IFilter, ITableFilter } from 'types/api';
 
-import { AdminStates } from './constants';
-
 export type AdminSliceState = {
   accessToken: string;
-  loading: AdminStates;
+  loading: boolean;
   error?: any;
   role: string | null;
   twoFactorAdminEnabled: boolean;

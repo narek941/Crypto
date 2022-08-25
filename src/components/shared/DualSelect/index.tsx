@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import classNames from 'classnames';
 import { Controller } from 'react-hook-form';
 
-import useOnClickOutside from 'hooks/useOutsideClick';
+import { useOnClickOutside } from 'hooks';
 import { CloseIcon, DropDownIcon } from 'assets/icons';
 
 import Select from '../Select';

@@ -1,10 +1,10 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, isAnyOf } from '@reduxjs/toolkit';
 
 import { Slice } from 'types';
 import { BrowserStorageKeys, BrowserStorageService } from 'services';
+import { extraReducers } from 'utils';
 
 import * as authThunks from './thunks';
-import { AuthStates } from './constants';
 import { AuthSliceState, UpdateAccessTokenAction } from './types';
 
 const isEng =
@@ -14,7 +14,7 @@ const isEng =
 const internalInitialState: AuthSliceState = {
   role: '',
   error: null,
-  loading: AuthStates.IDLE,
+  loading: false,
   twoFactorAuthEnabled: false,
   isDarkMode: BrowserStorageService.get(BrowserStorageKeys.Mode) === 'dark',
   accessToken:
@@ -35,44 +35,37 @@ const authSlice = createSlice({
     reset: () => internalInitialState,
   },
   extraReducers: (builder) => {
-    builder.addCase(authThunks.signIn.pending, (state) => {
-      state.loading = AuthStates.LOADING;
-    });
     builder.addCase(authThunks.userInfoRequest.fulfilled, (state, action) => {
       state.personalInfo = action.payload.personalInfo;
+      state.loading = false;
+      state.error = null;
     });
 
     builder.addCase(authThunks.signIn.fulfilled, (state, action) => {
+      state.loading = false;
       state.error = null;
       state.accessToken = action.payload.accessToken;
-      state.loading = AuthStates.IDLE;
       state.role = action.payload.role;
       state.twoFactorAuthEnabled = action.payload.twoFactorAuthEnabled;
     });
-    builder.addCase(authThunks.signIn.rejected, (state, action: PayloadAction<any>) => {
-      state.loading = AuthStates.IDLE;
-      state.error = action.payload.error;
-    });
 
-    builder.addCase(authThunks.signOut.pending, (state) => {
-      state.loading = AuthStates.LOADING;
-    });
     builder.addCase(authThunks.signOut.fulfilled, () => ({
       ...internalInitialState,
       accessToken: '',
+      loading: false,
+      error: null,
     }));
-    builder.addCase(authThunks.signOut.rejected, (state, action) => {
-      state.loading = AuthStates.IDLE;
-      state.error = action.error;
-    });
+
     builder.addCase(authThunks.setDarkTheme, (state) => {
       state.isDarkMode = true;
       document.querySelector('body')?.setAttribute('data-theme', 'dark');
     });
+
     builder.addCase(authThunks.setLightTheme, (state) => {
       state.isDarkMode = false;
       document.querySelector('body')?.setAttribute('data-theme', 'light');
     });
+
     builder.addCase(authThunks.setTheme, (state) => {
       state.isDarkMode = !state.isDarkMode;
       const activeTheme = state.isDarkMode ? 'dark' : 'light';
@@ -82,6 +75,24 @@ const authSlice = createSlice({
     builder.addCase(authThunks.setLang, (state) => {
       state.isEnglish = !state.isEnglish;
     });
+
+    builder.addMatcher(
+      isAnyOf(
+        authThunks.signIn.pending,
+        authThunks.userInfoRequest.pending,
+        authThunks.signOut.pending,
+      ),
+      extraReducers.pendingReducer,
+    );
+
+    builder.addMatcher(
+      isAnyOf(
+        authThunks.signIn.rejected,
+        authThunks.userInfoRequest.rejected,
+        authThunks.signOut.rejected,
+      ),
+      extraReducers.errorReducer,
+    );
   },
 });
 

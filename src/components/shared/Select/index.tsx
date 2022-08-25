@@ -2,7 +2,7 @@ import React, { ForwardedRef, useState, useRef, useEffect } from 'react';
 import classNames from 'classnames';
 
 import { CloseIcon, DropDownIcon } from 'assets/icons';
-import useOnClickOutside from 'hooks/useOutsideClick';
+import { useOnClickOutside } from 'hooks';
 
 import styles from './Select.module.scss';
 import { ColorType, ISelect } from './types';
