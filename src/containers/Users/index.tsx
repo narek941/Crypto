@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { Loader, Table } from 'components';
@@ -10,12 +10,20 @@ import { adminActions, adminSelectors } from 'store/adminSlice';
 const Users = () => {
   const dispatch = useAppDispatch();
   const { list, usersFilter, totalCount } = useSelector(adminSelectors.selectAdmin);
-  const isLoading = useSelector(adminSelectors.selectAdminLoading);
+  const [isLoading, setIsLoading] = useState(true);
 
   const { take, order, sort } = usersFilter;
 
   useEffect(() => {
-    dispatch(adminActions.getUsersList(usersFilter));
+    const getUsers = async () => {
+      try {
+        await dispatch(adminActions.getUsersList(usersFilter)).unwrap();
+        setIsLoading(false);
+      } catch {
+        setIsLoading(false);
+      }
+    };
+    getUsers();
   }, [dispatch, usersFilter]);
 
   if (isLoading) {
