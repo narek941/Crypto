@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { Loader, Table } from 'components';
@@ -9,13 +9,21 @@ import { alertsActions, alertsSelectors } from 'store/alertsSlice';
 const Alerts = () => {
   const dispatch = useAppDispatch();
   const { list, totalCount, filter } = useSelector(alertsSelectors.selectAlerts);
-  const isLoading = useSelector(alertsSelectors.selectAlertsLoading);
+  const [isLoading, setIsLoading] = useState(true);
 
   const { take, order, sort } = filter;
 
   useEffect(() => {
-    dispatch(alertsActions.getAlertList(filter));
-  }, [dispatch, filter, filter.filter]);
+    const getAlerts = async () => {
+      try {
+        await dispatch(alertsActions.getAlertList(filter)).unwrap();
+        setIsLoading(false);
+      } catch {
+        setIsLoading(false);
+      }
+    };
+    getAlerts();
+  }, [filter, filter.filter]);
 
   if (isLoading) {
     return <Loader />;
