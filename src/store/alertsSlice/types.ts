@@ -2,10 +2,8 @@ import { SerializedError } from '@reduxjs/toolkit';
 
 import { ITableFilter } from 'types/api';
 
-import { AlertStates } from './constants';
-
 export type AlertsSliceState = {
-  loading: AlertStates;
+  loading: boolean;
   error?: SerializedError | null;
   totalCount: number;
   list: any[];

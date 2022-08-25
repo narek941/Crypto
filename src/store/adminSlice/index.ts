@@ -5,13 +5,12 @@ import { extraReducers } from 'utils';
 import { BrowserStorageKeys, BrowserStorageService } from 'services';
 
 import * as adminThunks from './thunks';
-import { AdminStates } from './constants';
 import { AdminSliceState, UpdateAccessTokenAction } from './types';
 
 const internalInitialState: AdminSliceState = {
   role: '',
   error: null,
-  loading: AdminStates.IDLE,
+  loading: false,
   twoFactorAdminEnabled: false,
   list: [],
   coins: [],
@@ -44,14 +43,14 @@ const adminSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(adminThunks.addNewAccount.fulfilled, (state) => {
       state.error = null;
-      state.loading = AdminStates.IDLE;
+      state.loading = false;
     });
 
     builder.addCase(adminThunks.getUsersList.fulfilled, (state, action: PayloadAction<any>) => {
-      state.error = null;
-      state.loading = AdminStates.IDLE;
       state.list = action.payload.list;
       state.totalCount = action.payload.totalCount;
+      state.error = null;
+      state.loading = false;
     });
 
     builder.addCase(adminThunks.usersFilterUpdate, (state, action) => {
@@ -62,18 +61,18 @@ const adminSlice = createSlice({
 
     builder.addCase(adminThunks.blockUser.fulfilled, (state) => {
       state.error = null;
-      state.loading = AdminStates.IDLE;
+      state.loading = false;
     });
 
     builder.addCase(adminThunks.deleteUser.fulfilled, (state) => {
       state.error = null;
-      state.loading = AdminStates.IDLE;
+      state.loading = false;
     });
 
     builder.addCase(adminThunks.getUserById.fulfilled, (state, action: PayloadAction<any>) => {
-      state.error = null;
-      state.loading = AdminStates.IDLE;
       state.userById = action.payload.user;
+      state.error = null;
+      state.loading = false;
     });
 
     builder.addCase(adminThunks.removeUserById, (state) => {
@@ -82,14 +81,20 @@ const adminSlice = createSlice({
 
     builder.addCase(adminThunks.getCoins.fulfilled, (state, action) => {
       state.coins = action.payload.coins;
+      state.error = null;
+      state.loading = false;
     });
 
     builder.addCase(adminThunks.getTradingPairs.fulfilled, (state, action) => {
       state.tradingPairs = action.payload.tradingPairs;
+      state.error = null;
+      state.loading = false;
     });
 
     builder.addCase(adminThunks.userFilterClear, (state, action) => {
       state.usersFilter.filter = action.payload;
+      state.error = null;
+      state.loading = false;
     });
 
     builder.addMatcher(

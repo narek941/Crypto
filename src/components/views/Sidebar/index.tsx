@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { Routes } from 'types';
 import { BurgerIcon, LogoIcon } from 'assets/icons';
 import { sidebarNavigation } from 'constants/index';
-import useOnClickOutside from 'hooks/useOutsideClick';
+import { useOnClickOutside } from 'hooks';
 import '../../../i18';
 
 import styles from './Sidebar.module.scss';

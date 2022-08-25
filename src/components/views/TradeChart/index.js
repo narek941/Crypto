@@ -51,12 +51,12 @@ const TradingViewChart = ({
       // remove the tooltip element
       const tooltip = document.getElementById('tooltip-id' + type);
       const node = document.getElementById('test-id' + type);
-      node.removeChild(tooltip);
+      node?.removeChild(tooltip);
       // node.children.display = 'none';
       // node.children[0].display = 'block';
       chartCreated.resize(0, 0);
       setChartCreated();
-      chartCreated.removeChild();
+      // chartCreated?.removeChild();
     }
   }, [chartCreated, data, dataPrev, type]);
 

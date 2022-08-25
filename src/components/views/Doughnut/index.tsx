@@ -54,9 +54,6 @@ const Doughnut = ({
   };
 
   const externalTooltipHandler = (context: any) => {
-    // eslint-disable-next-line no-console
-    // console.log(context);
-    // Tooltip Element
     const { chart, tooltip } = context;
     const tooltipEl = getOrCreateTooltip(chart);
 
@@ -75,8 +72,7 @@ const Doughnut = ({
         (el: any) =>
           el['id'] == tooltip.dataPoints[0].dataset.id[Number(tooltip.dataPoints[0].dataIndex)],
       );
-      // eslint-disable-next-line no-console
-      console.log(isUndefined(obj));
+
       const bodyLines = [
         `${isUndefined(obj[tooltipFields[0]]) ? '' : Number(obj[tooltipFields[0]]).toFixed(1)}  ${
           isUndefined(obj[tooltipFields[1]]) ? '' : obj[tooltipFields[1]]

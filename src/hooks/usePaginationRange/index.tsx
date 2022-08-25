@@ -9,7 +9,7 @@ const range = (start: number, end: number) => {
   return Array.from({ length }, (_, index) => index + start);
 };
 
-export const usePaginationRange = ({
+const usePaginationRange = ({
   totalPageCount,
   buttonConst = 1,
   siblingCount = 1,
@@ -53,3 +53,5 @@ export const usePaginationRange = ({
 
   return paginationRange;
 };
+
+export default usePaginationRange;

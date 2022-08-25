@@ -1,8 +1,8 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { Routes } from 'types';
-import { Table } from 'components';
+import { Loader, Table } from 'components';
 import { useAppDispatch } from 'hooks';
 import { accountsTable } from 'constants/index';
 import { accountsActions } from 'store/accountsSlice';
@@ -11,12 +11,25 @@ import { accountsSelectors } from 'store/accountsSlice';
 const Accounts = () => {
   const dispatch = useAppDispatch();
   const { list, totalCount, filter } = useSelector(accountsSelectors.selectAccountAccountsList);
-
   const { take, order, sort } = filter;
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    dispatch(accountsActions.getAccountList(filter));
+    const getAccounts = async () => {
+      try {
+        await dispatch(accountsActions.getAccountList(filter)).unwrap();
+        setIsLoading(false);
+      } catch {
+        setIsLoading(false);
+      }
+    };
+
+    getAccounts();
   }, [dispatch, filter, filter.filter]);
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <Table

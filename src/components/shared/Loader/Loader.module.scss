@@ -1,0 +1,43 @@
+.loader {
+  top: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  margin: 0 auto;
+  position: absolute;
+  background: rgba(0, 0, 0, 0.15);
+  @extend %flex-center;
+
+  &__wrapper {
+    width: 100%;
+    padding: 24px;
+    margin: 0 auto;
+    max-width: 280px;
+    border-radius: 4px;
+    color: var(--alert-font);
+    backdrop-filter: blur(4px);
+    background: var(--loader-background);
+    border: 1px solid var(--header-border);
+    @extend %flex-column;
+
+    &__title,
+    &__icon {
+      text-align: center;
+    }
+  }
+
+  &__spinner {
+    animation: spin 1s linear infinite;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

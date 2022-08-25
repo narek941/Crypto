@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 
 import { CloseIcon, SearchIcon } from 'assets/icons';
-import useDebounce from 'hooks/useDebounce';
+import { useDebounce } from 'hooks';
 
 import styles from './TableSearch.module.scss';
 
