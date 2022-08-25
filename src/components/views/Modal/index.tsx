@@ -25,6 +25,8 @@ const Modal = ({ id, open, setOpen, modalList }: IModalProps): JSX.Element => {
   const modalClass = classNames(styles.wrapper, {
     [styles.wrapper__open]: open,
   });
+  const accountAnalyticsChartColors = AccountModalChartColor();
+  const accountAnalyticsChartTextColors = AccountAnalyticsChartTextColor();
 
   const handleClickOutside = (): void => setOpen(false);
 
@@ -57,10 +59,10 @@ const Modal = ({ id, open, setOpen, modalList }: IModalProps): JSX.Element => {
       <div className={styles.inner}>
         <div>{renderModalList}</div>
         <div>
-          <div className={styles.chart}>
-            <div className={styles.chart__inner}>
-              <div className={styles.chart__inner__doughnut}>
-                {accountTradingPairsChartData && (
+          {!!accountTradingPairsChartData.length && (
+            <div className={styles.chart}>
+              <div className={styles.chart__inner}>
+                <div className={styles.chart__inner__doughnut}>
                   <Doughnut
                     header='Trading Pairs Chart'
                     width='224px'
@@ -70,21 +72,21 @@ const Modal = ({ id, open, setOpen, modalList }: IModalProps): JSX.Element => {
                     data={accountTradingPairsChartData}
                     legendPosition='bottom'
                     wrapperClassName={styles.chart__wrapper}
-                    colors={AccountModalChartColor()}
+                    colors={accountAnalyticsChartColors}
                     pointStyle='circle'
                     font={10}
-                    textColor={AccountAnalyticsChartTextColor()}
+                    textColor={accountAnalyticsChartTextColors}
                     radius={40}
                     tooltipFields={['totalSum', 'toCurrencyName', 'totalBaseSum']}
                   />
-                )}
+                </div>
               </div>
             </div>
-          </div>
-          <div className={styles.chart}>
-            <div className={styles.chart__inner}>
-              <div className={styles.chart__inner__doughnut}>
-                {accountAssetsChartData && (
+          )}
+          {!!accountAssetsChartData.length && (
+            <div className={styles.chart}>
+              <div className={styles.chart__inner}>
+                <div className={styles.chart__inner__doughnut}>
                   <Doughnut
                     header='Asset Chart'
                     data={accountAssetsChartData}
@@ -95,16 +97,16 @@ const Modal = ({ id, open, setOpen, modalList }: IModalProps): JSX.Element => {
                     legendPosition='bottom'
                     tooltipFields={['baseCurrencyValue', 'baseCurrencyName', 'value', 'assetCoin']}
                     wrapperClassName={styles.chart__wrapper}
-                    colors={AccountModalChartColor()}
+                    colors={accountAnalyticsChartColors}
                     pointStyle='circle'
                     font={10}
-                    textColor={AccountAnalyticsChartTextColor()}
+                    textColor={accountAnalyticsChartTextColors}
                     radius={40}
                   />
-                )}
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
         <Link className={linkClass} to={`${Routes.Accounts}/analytics/${id}`}>
           more details

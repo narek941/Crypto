@@ -15,6 +15,6 @@ export const parseChartLabels = (data: any, key: string, value: string) => {
       othersID.push(asset.id);
     }
   });
-  label.push({ key: 'Others', value: others.toFixed(0) });
+  others > 0 && label.push({ key: 'Others', value: others.toFixed(0) });
   return label;
 };
