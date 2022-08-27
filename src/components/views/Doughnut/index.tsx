@@ -1,4 +1,3 @@
-import React from 'react';
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js';
 import { Doughnut as DoughnutJs } from 'react-chartjs-2';
 import classNames from 'classnames';
@@ -63,24 +62,29 @@ const Doughnut = ({
       return;
     }
 
+    const obj = data.find(
+      (el: any) =>
+        el['id'] == tooltip.dataPoints[0].dataset.id[Number(tooltip.dataPoints[0].dataIndex)],
+    );
+
     // Set Text
     if (tooltip.body) {
       const titleLines =
         [`${tooltip.dataPoints[0].formattedValue} ${tooltip.dataPoints[0].dataset.label}`] || [];
 
-      const obj = data.find(
-        (el: any) =>
-          el['id'] == tooltip.dataPoints[0].dataset.id[Number(tooltip.dataPoints[0].dataIndex)],
-      );
-
-      const bodyLines = [
-        `${isUndefined(obj[tooltipFields[0]]) ? '' : Number(obj[tooltipFields[0]]).toFixed(1)}  ${
-          isUndefined(obj[tooltipFields[1]]) ? '' : obj[tooltipFields[1]]
-        }`,
-        `${isUndefined(obj[tooltipFields[2]]) ? '' : Number(obj[tooltipFields[2]]).toFixed(1)} ${
-          isUndefined(obj[tooltipFields[3]]) ? '' : obj[tooltipFields[3]]
-        }`,
-      ];
+      const bodyLines = !chart.tooltip.dataPoints[0].label.includes('others')
+        ? [
+            `${formattedData.others[tooltipFields[0].toString()]}`,
+            `${formattedData.others[tooltipFields[2].toString()]}`,
+          ]
+        : [
+            `${
+              isUndefined(obj[tooltipFields[0]]) ? '' : Number(obj[tooltipFields[0]]).toFixed(1)
+            }  ${isUndefined(obj[tooltipFields[1]]) ? '' : obj[tooltipFields[1]]}`,
+            `${
+              isUndefined(obj[tooltipFields[2]]) ? '' : Number(obj[tooltipFields[2]]).toFixed(1)
+            } ${isUndefined(obj[tooltipFields[3]]) ? '' : obj[tooltipFields[3]]}`,
+          ];
 
       const tableHead = document.createElement('thead');
 
@@ -144,14 +148,14 @@ const Doughnut = ({
   };
 
   const optionData = {
-    labels: formattedData.map(({ key, value }: any) => `${key} - ${value}%`),
+    labels: formattedData.label.map(({ key, value }: any) => `${key} - ${value}%`),
     datasets: [
       {
         label: '%',
-        data: formattedData.map(({ value }: any) => value),
+        data: formattedData.label.map(({ value }: any) => value),
         backgroundColor: colors,
         borderWidth: 0,
-        id: formattedData.map(({ id }: any) => id),
+        id: formattedData.label.map(({ id }: any) => id),
       },
     ],
   };
@@ -175,7 +179,7 @@ const Doughnut = ({
         display: legendDisplay,
         position: legendPosition,
         usePointStyle: true,
-
+        onClick: () => null,
         labels: {
           fontColor: '#333',
           boxWidth: 11,

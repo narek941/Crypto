@@ -40,6 +40,13 @@ export const addUserFormFields: FormField<keyof AddUserFormShape> = {
     id: 'addUser.password',
     placeholder: 'Enter Password',
   },
+  // confirmEmptyPassword: {
+  //   name: 'confirmEmptyPassword',
+  //   type: 'password',
+  //   label: 'Password',
+  //   id: 'addUser.confirmEmptyPassword',
+  //   placeholder: 'Enter Password',
+  // },
   usersAccountType: {
     name: 'usersAccountType',
     label: 'Account type',

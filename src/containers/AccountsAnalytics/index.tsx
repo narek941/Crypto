@@ -72,7 +72,10 @@ const AccountsAnalytics = (): JSX.Element => {
         </div>
 
         <div className={styles.analytics__bricks__wrapper}>
-          <Bricks header='Seed Capital' value={accountById.startCapitalInBaseCurrency || 0} />
+          <Bricks
+            header='Seed Capital'
+            value={accountById.statistics.startCapitalInBaseCurrency || 0}
+          />
           <Bricks
             header='Performance'
             value={`${accountById.statistics?.productivityInPercent || 0}%`}

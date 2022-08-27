@@ -7,6 +7,10 @@ import { AccountsSliceState } from './types';
 const selectAccounts = (state: RootState): AccountsSliceState => state.accounts;
 
 export const selectAccountsError = createSelector(selectAccounts, (accounts) => accounts.error);
+export const selectAllAccountList = createSelector(
+  selectAccounts,
+  (accounts) => accounts.allAccountsList,
+);
 
 export const selectAccountById = createSelector(selectAccounts, (accounts) => accounts.accountById);
 export const selectAccountLoading = createSelector(selectAccounts, (accounts) => accounts.loading);

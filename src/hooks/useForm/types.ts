@@ -13,6 +13,7 @@ export type FormFieldNames =
   | 'apiSecret'
   | 'selectSide'
   | 'updatedTime'
+  | 'confirmEmptyPassword'
   | 'selectPair'
   | 'rememberMe'
   | 'selectShare'

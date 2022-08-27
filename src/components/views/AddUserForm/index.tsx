@@ -5,7 +5,7 @@ import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { Routes } from 'types';
-import { useAppDispatch, useForm } from 'hooks';
+import { useForm } from 'hooks';
 import { adminSelectors } from 'store/adminSlice';
 import { Button, Input, Select } from 'components';
 import FormGroup from 'components/forms/FormGroup';
@@ -13,7 +13,7 @@ import FormWrapper from 'components/forms/FormWrapper';
 import { AccountTypeOptions } from 'utils/filterHelper';
 import MultipleSelect from 'components/shared/MultipleSelect';
 import { usersSelectors } from 'store/usersSlice';
-import { accountsActions, accountsSelectors } from 'store/accountsSlice';
+import { accountsSelectors } from 'store/accountsSlice';
 
 import styles from './AddUserForm.module.scss';
 import { AddUserFormShape, IAddUser } from './types';
@@ -21,9 +21,9 @@ import { addUserFormFields, addSchemaKeys } from './fields';
 
 const AddUserForm = ({ onClick, isEditable = false }: IAddUser) => {
   const { t } = useTranslation();
-  const dispatch = useAppDispatch();
   const userErrors = useSelector(usersSelectors.selectUsersError);
-  const accountList = useSelector(accountsSelectors.selectAccountAccountsList);
+  const accountList = useSelector(accountsSelectors.selectAllAccountList);
+
   const { username, email, role } = useSelector(adminSelectors.selectUserById);
 
   const addUserFormDefaultValues = useMemo(
@@ -37,14 +37,15 @@ const AddUserForm = ({ onClick, isEditable = false }: IAddUser) => {
         : {},
     [email, isEditable, role, username],
   );
-  const { formMethods, handleSubmit, isValid } = useForm<keyof AddUserFormShape, AddUserFormShape>({
+
+  const { formMethods, handleSubmit } = useForm<keyof AddUserFormShape, AddUserFormShape>({
     schemaKeys: addSchemaKeys,
     defaultValues: addUserFormDefaultValues,
   });
 
   const accountsOptions = useMemo(
     () =>
-      accountList.list.map((account) => ({
+      accountList?.map((account: any) => ({
         label: account.name,
         value: account.id,
       })),
@@ -57,23 +58,8 @@ const AddUserForm = ({ onClick, isEditable = false }: IAddUser) => {
     }
   }, [addUserFormDefaultValues, formMethods, isEditable]);
 
-  useEffect(() => {
-    if (!accountList?.totalCount) {
-      dispatch(
-        accountsActions.getAccountList({
-          skip: 0,
-          take: 10,
-          sort: 'id',
-          order: 'DESC',
-          search: '',
-          filter: {},
-        }),
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const accountWatch = formMethods.watch();
+  const defaultMultipleValue = accountWatch.usersAccountType == 'VIEWER' && [];
 
   return (
     <>
@@ -127,18 +113,18 @@ const AddUserForm = ({ onClick, isEditable = false }: IAddUser) => {
                 />
               )}
             />
-            {accountWatch.usersAccountType == 'VIEWER' && (
+            {accountWatch.usersAccountType == 'VIEWER' && accountsOptions && (
               <MultipleSelect
                 formMethods={formMethods}
                 {...addUserFormFields.usersAccountList}
                 options={accountsOptions}
+                defaultValues={defaultMultipleValue}
                 error={formMethods.formState.errors.usersAccountList?.message}
-                filterName='sss'
               />
             )}
             {!isEditable ? (
               <div className={styles.signIn__form__group__button}>
-                <Button type='submit' color='secondary' size='m' disabled={!!isValid}>
+                <Button type='submit' color='secondary' size='m'>
                   {t('add_user')}
                 </Button>
               </div>
@@ -151,7 +137,6 @@ const AddUserForm = ({ onClick, isEditable = false }: IAddUser) => {
                   type='submit'
                   color='secondary'
                   size='m'
-                  disabled={!isValid}
                   className={styles.signIn__form__group__edit__save}
                 >
                   {t('save_changes')}

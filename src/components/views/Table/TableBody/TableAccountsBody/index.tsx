@@ -40,7 +40,10 @@ const TableAccountBody = ({
     });
 
   const renderRows = rows.map(
-    ({ id, startCapitalInBaseCurrency, name, createdAt, status, statistics }: any, index) => {
+    (
+      { id, startCapitalInBaseCurrency, name, createdAt, status, statistics, baseCurrency }: any,
+      index,
+    ) => {
       const formattedDate = moment(createdAt).format('DD.MM.YYYY HH:MM:SS');
       const isLastItem = index === rows.length - 1;
       const tooltipClasses = classNames({
@@ -61,10 +64,16 @@ const TableAccountBody = ({
             {name}
           </TableCell>
           <TableCell className={styles.table__body__row__ceil} align='left'>
-            {Number(statistics?.startCapitalInBaseCurrency).toFixed(8) + ' USDT'}
+            {Number(statistics?.startCapitalInBaseCurrency)
+              ? Number(statistics?.startCapitalInBaseCurrency).toFixed(8)
+              : 0}{' '}
+            {baseCurrency.name}
           </TableCell>
           <TableCell className={styles.table__body__row__ceil} align='left'>
-            {Number(statistics.currentCapitalInBaseCurrency).toFixed(8) + ' USDT'}
+            {Number(statistics.currentCapitalInBaseCurrency)
+              ? Number(statistics.currentCapitalInBaseCurrency).toFixed(8)
+              : 0}{' '}
+            {baseCurrency.name}
           </TableCell>
           <TableCell className={styles.table__body__row__ceil} align='left'>
             {formattedDate}
@@ -73,13 +82,22 @@ const TableAccountBody = ({
             {Number(statistics?.currentOpenProfitInBaseCurrency).toFixed(8) + ' %'}
           </TableCell>
           <TableCell className={styles.table__body__row__ceil} align='left'>
-            {Number(statistics?.earnedCapitalInBaseCurrency).toFixed(8) + ' USDT'}
+            {Number(statistics?.currentOpenProfitInBaseCurrency)
+              ? Number(statistics?.earnedCapitalInBaseCurrency).toFixed(8)
+              : 0}{' '}
+            {baseCurrency.name}
           </TableCell>
           <TableCell className={styles.table__body__row__ceil} align='left'>
-            {Number(statistics?.earnedCapitalInPercent).toFixed(8) + ' %'}
+            {Number(statistics?.earnedCapitalInPercent)
+              ? Number(statistics?.earnedCapitalInPercent).toFixed(8)
+              : 0}
+            {' %'}
           </TableCell>
           <TableCell className={styles.table__body__row__ceil} align='left'>
-            {Number(statistics?.currentOpenProfitInBaseCurrency).toFixed(8) + ' USDT'}
+            {Number(statistics?.currentOpenProfitInBaseCurrency)
+              ? Number(statistics?.currentOpenProfitInBaseCurrency).toFixed(8)
+              : 0}{' '}
+            {baseCurrency.name}
           </TableCell>
           <TableCell className={styles.table__body__row__ceil} align='left'>
             {status}
@@ -118,7 +136,8 @@ const TableAccountBody = ({
             {status !== 'DELETED' && handleClose && (
               <div
                 className={styles.table__body__row__ceil__actions__bin}
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   setID(id);
                   toggleAlertOpen && toggleAlertOpen();
                 }}

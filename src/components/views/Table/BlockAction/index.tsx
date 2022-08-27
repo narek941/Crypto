@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { SyntheticEvent, useState } from 'react';
 
 import { AccountBlockIcon, UnblockIcon } from 'assets/icons';
 import { Alert } from 'components';
@@ -17,7 +17,10 @@ const BlockAction = ({
 }: IBlockAction) => {
   const [openAlert, setOpenAlert] = useState(false);
 
-  const handleCloseAlert = () => setOpenAlert(!openAlert);
+  const handleCloseAlert = (e: SyntheticEvent) => {
+    e.stopPropagation();
+    setOpenAlert(!openAlert);
+  };
 
   return (
     <>
@@ -37,7 +40,7 @@ const BlockAction = ({
         open={openAlert}
         type={status == 'BLOCKED' ? 'UNBLOCK' : 'BLOCK'}
         handleAction={status === 'BLOCKED' ? handleUnblock : handleBlock}
-        handleClose={() => handleCloseAlert && handleCloseAlert()}
+        handleClose={handleCloseAlert}
       />
     </>
   );

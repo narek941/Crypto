@@ -10,6 +10,7 @@ const internalInitialState: AccountsSliceState = {
   error: null,
   loading: false,
   coins: [],
+  allAccountsList: [],
   accountById: {},
   accountAssetChart: [],
   accountTradingPairsChart: [],
@@ -114,7 +115,11 @@ const accountsSlice = createSlice({
       state.loading = false;
       state.error = null;
     });
-
+    builder.addCase(accountsThunks.getAllAccounts.fulfilled, (state, action) => {
+      state.allAccountsList = action.payload.list;
+      state.loading = false;
+      state.error = null;
+    });
     builder.addCase(accountsThunks.removeAccountById, (state) => {
       state.accountById = {};
     });

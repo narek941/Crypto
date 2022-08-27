@@ -80,3 +80,13 @@
 .single_option {
   padding: 0 12px;
 }
+
+.select-errorMsg {
+  left: 0;
+  color: var(--danger);
+  bottom: 0;
+  margin-top: 6px;
+  // position: absolute;
+  // transform: translate(0, 100%);
+  @extend %text-14;
+}

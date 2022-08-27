@@ -176,6 +176,18 @@ export const getAccountPerformanceChartData = createAsyncThunk(
   },
 );
 
+export const getAllAccounts = createAsyncThunk(`${Slice.Accounts}/list`, async (_, thunkAPI) => {
+  try {
+    const response = await accountsApi.getAllAccountsRequest();
+
+    return {
+      list: response.data,
+    };
+  } catch {
+    return thunkAPI.rejectWithValue({ error: '* Incorrect' });
+  }
+});
+
 export const accountsFilterUpdate = createAction<Partial<ITableFilter>>('accountsFilter');
 
 export const accountsFilterClear = createAction<Partial<ITableFilter>>('accountsFilterClear');

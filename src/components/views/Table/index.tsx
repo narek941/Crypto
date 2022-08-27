@@ -233,8 +233,8 @@ const Table = ({
           {
             id: 1,
             key: 'Seed Capital',
-            value: selectedAccountData.startCapitalInBaseCurrency
-              ? Number(selectedAccountData.startCapitalInBaseCurrency).toFixed(6)
+            value: selectedAccountData.statistics?.startCapitalInBaseCurrency
+              ? Number(selectedAccountData.statistics?.startCapitalInBaseCurrency).toFixed(6)
               : 0,
           },
           {

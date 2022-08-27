@@ -21,7 +21,6 @@ const AddNewAccount: React.FC = () => {
 
   const handleSubmit: SubmitHandler<AddAccountFormShape> = async (values) => {
     const body = parseBody.parseAccountBody(values);
-
     if (!id) {
       await dispatch(adminActions.addNewAccount(body)).unwrap();
     } else {

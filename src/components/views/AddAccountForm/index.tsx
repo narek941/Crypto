@@ -1,5 +1,4 @@
 import { useEffect, useMemo } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import { useSelector } from 'react-redux';
 
 import { useForm } from 'hooks';
@@ -50,7 +49,7 @@ const AddAccountForm = ({ onClick, isEditable = false }: IAddAccount) => {
                 },
               },
             ],
-            alertsDestinations: [{ id: uuidv4(), type: '', emailAddress: '', phoneNumber: '' }],
+            alertsDestinations: [{ type: '', emailAddress: '', phoneNumber: '' }],
           },
     [alertsDestinations, allowedPairs, isEditable, name, startCapitalInBaseCurrency, wallets],
   );

@@ -7,6 +7,7 @@ export type AccountsSliceState = {
   error?: SerializedError | null;
   accountById: any;
   coins: any[];
+  allAccountsList: any[];
   accountAssetChart: any[];
   accountTradingPairsChart: any[];
   accountCapitalChart: any[];
