@@ -64,21 +64,19 @@ const Doughnut = ({
 
     // Set Text
     if (tooltip.body) {
-      // eslint-disable-next-line no-console
-      console.log(chart.tooltip.dataPoints[0].label.includes('Others'));
       const bodyLines = chart?.tooltip.dataPoints[0].label.includes('Others')
         ? [
             `${tooltip.dataPoints[0].formattedValue} ${tooltip.dataPoints[0].dataset.label}` || '',
             `${
               chart.tooltip.dataPoints[0].dataset?.others
-                ? chart.tooltip.dataPoints[0].dataset?.others[tooltipFields[0]]
+                ? chart.tooltip.dataPoints[0].dataset?.others[tooltipFields[0]].toFixed(1)
                 : ''
             }`,
-            `${
-              chart.tooltip.dataPoints[0].dataset?.others
-                ? chart.tooltip.dataPoints[0].dataset?.others[tooltipFields[2]]
-                : ''
-            }`,
+            // `${
+            //   chart.tooltip.dataPoints[0].dataset?.others
+            //     ? chart.tooltip.dataPoints[0].dataset?.others[tooltipFields[2]]
+            //     : ''
+            // }`,
           ]
         : [
             `${tooltip.dataPoints[0].formattedValue} ${tooltip.dataPoints[0].dataset.label}` || '',

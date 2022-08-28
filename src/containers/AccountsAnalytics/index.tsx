@@ -129,7 +129,7 @@ const AccountsAnalytics = (): JSX.Element => {
                 header={'Trading Pairs Chart'}
                 colors={accountAnalyticsChartColors}
                 textColor={accountAnalyticsChartTextColors}
-                tooltipFields={['totalSum', 'toCurrencyName', 'totalBaseSum', 'baseCurrencyName']}
+                tooltipFields={['totalBaseSum', 'baseCurrencyName', 'totalSum', 'toCurrencyName']}
               />
             </div>
           </div>

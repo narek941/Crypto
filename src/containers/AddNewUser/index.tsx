@@ -55,10 +55,10 @@ const AddNewUser = () => {
           ).unwrap(),
         );
       }
-      if (values.emptyPassword && !isEqual(values.emptyPassword, password)) {
+      if (values.password && !isEqual(values.password, password)) {
         userUpdatedFieldsPromises.push(
           dispatch(
-            adminActions.updateUserPassword({ userID: id, password: values.emptyPassword }),
+            adminActions.updateUserPassword({ userID: id, password: values.password }),
           ).unwrap(),
         );
       }

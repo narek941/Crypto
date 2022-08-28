@@ -86,6 +86,8 @@ const TradingViewChart = ({
       borderVisible: false,
     },
     timeScale: {
+      fixRightEdge: true,
+      fixLeftEdge: true,
       borderVisible: true,
       borderColor: 'rgba(255, 255, 255, 0.12)',
     },
@@ -136,6 +138,8 @@ const TradingViewChart = ({
     timeScale: {
       borderVisible: true,
       borderColor: 'rgba(255, 255, 255, 0.12)',
+      fixRightEdge: true,
+      fixLeftEdge: true,
     },
 
     grid: {
@@ -254,8 +258,6 @@ const TradingViewChart = ({
           toolTip.style.top = coordinateY + 'px';
         }
       });
-
-      // chart.timeScale().fitContent();
 
       setChartCreated(chart);
     }

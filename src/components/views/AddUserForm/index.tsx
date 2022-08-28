@@ -30,11 +30,14 @@ const AddUserForm = ({ onClick, isEditable = false }: IAddUser) => {
     () =>
       isEditable
         ? {
+            isEditable: true,
             name: username,
             email: email,
             usersAccountType: AccountTypeOptions.find((option) => option.value === role)?.value,
           }
-        : {},
+        : {
+            isEditable: false,
+          },
     [email, isEditable, role, username],
   );
 
@@ -82,22 +85,14 @@ const AddUserForm = ({ onClick, isEditable = false }: IAddUser) => {
               {...formMethods.register('email')}
             />
             <Input
-              error={
-                formMethods.formState.errors.emptyPassword?.message ||
-                formMethods.formState.errors.password?.message
-              }
-              {...(isEditable ? addUserFormFields.emptyPassword : addUserFormFields.password)}
-              {...formMethods.register(isEditable ? 'emptyPassword' : 'password')}
+              error={formMethods.formState.errors.password?.message}
+              {...addUserFormFields.password}
+              {...formMethods.register('password')}
               haveRightIcon={true}
             />
             <Input
-              error={
-                formMethods.formState.errors.emptyPassword?.message ||
-                formMethods.formState.errors.confirmPassword?.message
-              }
-              {...(isEditable
-                ? addUserFormFields.emptyPassword
-                : addUserFormFields.confirmPassword)}
+              error={formMethods.formState.errors.confirmPassword?.message}
+              {...addUserFormFields.confirmPassword}
               {...formMethods.register('confirmPassword')}
               haveRightIcon={true}
             />

@@ -6,24 +6,27 @@ import { FormFieldNames } from './types';
 
 export const composeFormSchema = <K extends FormFieldNames>(fields: K[]): AnyObjectSchema => {
   const schemaMap: Record<FormFieldNames, SchemaLike> = {
+    isEditable: Yup.boolean(),
     email: Yup.string()
       .email('* Enter email address to finish adding new user')
       .required('* Enter email address to finish adding new user'),
-    emptyPassword: Yup.string().matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/, {
-      excludeEmptyString: true,
-      message: '* This password is too weak',
+    password: Yup.string().when('isEditable', {
+      is: (isEditable: boolean) => isEditable === true,
+      then: Yup.string().matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/, {
+        excludeEmptyString: true,
+        message: '* This password is too weak',
+      }),
+      otherwise: Yup.string()
+        .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/, '* This password is too weak')
+        .required('* Enter password to finish adding new user'),
     }),
-    confirmEmptyPassword: Yup.string().oneOf(
-      [Yup.ref('emptyPassword'), null],
-      'Passwords must match',
-    ),
-    password: Yup.string()
-      .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/, '* This password is too weak')
-      .required('* Enter password to finish adding new user'),
-
-    confirmPassword: Yup.string()
-      .required('* Repeat password to finish adding new user')
-      .oneOf([Yup.ref('password'), null], 'Passwords must match'),
+    confirmPassword: Yup.string().when('isEditable', {
+      is: (isEditable: boolean) => isEditable === true,
+      then: Yup.string(),
+      otherwise: Yup.string()
+        .required('* Repeat password to finish adding new user')
+        .oneOf([Yup.ref('password'), null], 'Passwords must match'),
+    }),
     usersAccountType: Yup.string().required('* Choose account type to finish adding new user'),
     usersAccountList: Yup.array().when('usersAccountType', {
       is: (value: string) => value === 'VIEWER',
