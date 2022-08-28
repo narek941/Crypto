@@ -62,14 +62,16 @@
   }
 }
 .chart {
-  padding: 16px;
   border-bottom: 1px solid var(--header-border);
+  h1 {
+    padding: 16px;
+  }
 
   &__inner {
     &__doughnut {
       padding-bottom: 8px;
-      max-width: 224px;
-      min-height: 251px;
+      max-width: 100%;
+      min-height: 271px;
       display: flex;
       align-items: center;
       justify-content: center;

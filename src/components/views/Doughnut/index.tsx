@@ -157,7 +157,7 @@ const Doughnut = ({
           boxWidth: 11,
           boxHeight: 11,
           textAlign: 'left',
-          padding: 8,
+          padding: 6,
           usePointStyle: true,
           pointStyle,
           pointStyleWidth: 13,
