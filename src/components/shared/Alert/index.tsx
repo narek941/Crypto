@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { SyntheticEvent, useState } from 'react';
 import classNames from 'classnames';
 
 import styles from './Alert.module.scss';
@@ -36,8 +36,8 @@ const Alert = ({ open, handleClose, handleAction, id, type }: AlertProps) => {
     }
   };
 
-  const handleContinueClick = () => {
-    handleClose();
+  const handleContinueClick = (e: SyntheticEvent) => {
+    handleClose(e);
     setActionIsDone(false);
   };
 

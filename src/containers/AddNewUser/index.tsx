@@ -11,6 +11,7 @@ import { AppDispatch, Routes } from 'types';
 import { usersActions } from 'store/usersSlice';
 import { adminActions, adminSelectors } from 'store/adminSlice';
 import { AddUserFormShape } from 'components/views/AddUserForm/types';
+import { accountsActions } from 'store/accountsSlice';
 
 import styles from './AddNewUser.module.scss';
 
@@ -20,7 +21,6 @@ const AddNewUser = () => {
   const { id: userId } = useParams();
   const id = Number(userId);
   const { username, role, email, password } = useSelector(adminSelectors.selectUserById);
-
   const handleSubmit: SubmitHandler<AddUserFormShape> = async (values) => {
     const body = {
       email: values.email,
@@ -28,7 +28,10 @@ const AddNewUser = () => {
       name: values.name,
       role: values.usersAccountType,
       deviceToken: uuidv4(),
+      allowedAccountIds: values.usersAccountList || [],
     } as any;
+    // eslint-disable-next-line no-console
+    console.log(values);
 
     if (!id) {
       await dispatch(usersActions.addNewUser(body)).unwrap();
@@ -74,6 +77,7 @@ const AddNewUser = () => {
         dispatch(adminActions.removeUserById());
       };
     }
+    dispatch(accountsActions.getAllAccounts());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

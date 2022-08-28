@@ -1,6 +1,4 @@
 .wrapper {
-  // width: inherit;
-  // height: inherit;
   background: var(--sidebar-background);
   box-shadow: 0px 2px 25px 2px rgba(0, 0, 0, 0.12);
   border-radius: 8px;
@@ -10,11 +8,22 @@
   &__title {
     @extend %text-18;
     color: var(--font);
-    // padding-bottom: 29px !important;
   }
 }
 .chart {
-  // width: inherit;
-  // height: inherit;
   position: inherit;
+}
+
+.tooltip {
+  background: rgba(46, 46, 46, 0.7);
+  backdrop-filter: blur(12px);
+  border-radius: 4px;
+  padding: 12px;
+  gap: 12px;
+  @extend %flex-column;
+
+  &__item {
+    color: #ffffff;
+    @extend %text-12;
+  }
 }

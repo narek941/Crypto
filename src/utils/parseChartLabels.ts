@@ -1,7 +1,9 @@
+import { mergeObjects } from 'utils/mergeObject';
+
 export const parseChartLabels = (data: any, key: string, value: string) => {
   let others = 0;
   const label = [];
-  const othersID = [];
+  const othersID: any[] = [];
 
   data.map((asset: any) => {
     if (asset[value] >= 1) {
@@ -12,9 +14,13 @@ export const parseChartLabels = (data: any, key: string, value: string) => {
       });
     } else {
       others = others + Number(asset[value]);
-      othersID.push(asset.id);
+      othersID.push(asset);
     }
   });
   others > 0 && label.push({ key: 'Others', value: others.toFixed(0) });
-  return label;
+
+  return {
+    label: label,
+    others: mergeObjects(othersID),
+  };
 };

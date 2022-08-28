@@ -65,13 +65,12 @@ const Modal = ({ id, open, setOpen, modalList }: IModalProps): JSX.Element => {
                 <div className={styles.chart__inner__doughnut}>
                   <Doughnut
                     header='Trading Pairs Chart'
-                    width='224px'
+                    width='253px'
                     field={'pairName'}
                     className={styles.doughnut}
                     value={'relativePercentage'}
                     data={accountTradingPairsChartData}
                     legendPosition='bottom'
-                    wrapperClassName={styles.chart__wrapper}
                     colors={accountAnalyticsChartColors}
                     pointStyle='circle'
                     font={10}
@@ -92,7 +91,7 @@ const Modal = ({ id, open, setOpen, modalList }: IModalProps): JSX.Element => {
                     data={accountAssetsChartData}
                     field={'assetCoin'}
                     value={'relativePercentage'}
-                    width='224px'
+                    width='253px'
                     className={styles.doughnut}
                     legendPosition='bottom'
                     tooltipFields={['baseCurrencyValue', 'baseCurrencyName', 'value', 'assetCoin']}

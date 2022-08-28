@@ -89,7 +89,6 @@ const TableUsersBody = ({
   return (
     <tbody className={styles.table__body}>
       {renderRows}
-
       <Alert
         id={delID}
         open={open}

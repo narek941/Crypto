@@ -26,9 +26,9 @@ const AccountsAnalytics = (): JSX.Element => {
   const accountTradingPairsChartData = useAppSelector(
     accountsSelectors.selectAccountTradingPairsChartData,
   );
-  const accountPerformanceChartData = useAppSelector(
-    accountsSelectors.selectAccountPerformanceChartData,
-  );
+  // const accountPerformanceChartData = useAppSelector(
+  //   accountsSelectors.selectAccountPerformanceChartData,
+  // );
   const accountCapitalChartData = useAppSelector(accountsSelectors.selectAccountCapitalChartData);
 
   const accountAnalyticsChartColors = AccountAnalyticsChartColor();
@@ -43,7 +43,7 @@ const AccountsAnalytics = (): JSX.Element => {
         await dispatch(accountsActions.getAccountSummary(convertedId)).unwrap();
         await dispatch(accountsActions.getAccountAssetsChartData(convertedId)).unwrap();
         await dispatch(accountsActions.getAccountCapitalChartData(convertedId)).unwrap();
-        await dispatch(accountsActions.getAccountPerformanceChartData(convertedId)).unwrap();
+        // await dispatch(accountsActions.getAccountPerformanceChartData(convertedId)).unwrap();
         await dispatch(accountsActions.getAccountTradingPairsChartData(convertedId)).unwrap();
 
         setIsLoading(false);
@@ -72,7 +72,10 @@ const AccountsAnalytics = (): JSX.Element => {
         </div>
 
         <div className={styles.analytics__bricks__wrapper}>
-          <Bricks header='Seed Capital' value={accountById.startCapitalInBaseCurrency || 0} />
+          <Bricks
+            header='Seed Capital'
+            value={accountById.statistics.startCapitalInBaseCurrency || 0}
+          />
           <Bricks
             header='Performance'
             value={`${accountById.statistics?.productivityInPercent || 0}%`}
@@ -104,11 +107,12 @@ const AccountsAnalytics = (): JSX.Element => {
             baseCurrency={accountById?.baseCurrency?.name}
           />
           <Chart
-            data={accountPerformanceChartData}
+            // data={accountPerformanceChartData}
+            data={accountCapitalChartData}
             title='P&L Share Chart'
             subTitle='%'
             timeField='snapshotDate'
-            field='currentCapitalInBaseCurrency'
+            field='earnedCapitalInPercent'
             width={(windowWidth.width - 240) / 2}
             type='AREA'
             baseCurrency={accountById?.baseCurrency?.name}
@@ -125,7 +129,7 @@ const AccountsAnalytics = (): JSX.Element => {
                 header={'Trading Pairs Chart'}
                 colors={accountAnalyticsChartColors}
                 textColor={accountAnalyticsChartTextColors}
-                tooltipFields={['totalSum', 'toCurrencyName', 'totalBaseSum']}
+                tooltipFields={['totalBaseSum', 'baseCurrencyName', 'totalSum', 'toCurrencyName']}
               />
             </div>
           </div>

@@ -24,6 +24,8 @@ const MultipleSelect = ({
   placeholder,
   filterName,
   callback,
+  error,
+  defaultValues,
 }: any) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -49,6 +51,7 @@ const MultipleSelect = ({
               options={options}
               classNamePrefix='multipleSelect'
               isMulti
+              defaultValue={defaultValues}
               menuIsOpen={isOpen}
               onMenuOpen={() => setIsOpen(true)}
               onMenuClose={() => handleClose()}
@@ -76,6 +79,7 @@ const MultipleSelect = ({
           );
         }}
       />
+      {error && <div className={styles['select-errorMsg']}>{error}</div>}
     </div>
   );
 };
