@@ -71,7 +71,6 @@ const Modal = ({ id, open, setOpen, modalList }: IModalProps): JSX.Element => {
                     value={'relativePercentage'}
                     data={accountTradingPairsChartData}
                     legendPosition='bottom'
-                    wrapperClassName={styles.chart__wrapper}
                     colors={accountAnalyticsChartColors}
                     pointStyle='circle'
                     font={10}

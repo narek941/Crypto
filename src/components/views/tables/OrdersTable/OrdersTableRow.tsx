@@ -129,7 +129,7 @@ const OrdersTableRow = ({ row }: any): JSX.Element => {
                             className={styles.container__body__row__ceil__collapse}
                             align='left'
                           >
-                            {`${Number(order?.price)?.toFixed(8) || 0} ${coinName}`}
+                            {`${Number(order?.price)?.toFixed(8) || 0} ${order?.feesCoin}`}
                           </TableCell>
                         </Tooltip>
                         <Tooltip followCursor={true} placement='bottom' title='Amount'>
@@ -137,7 +137,7 @@ const OrdersTableRow = ({ row }: any): JSX.Element => {
                             className={styles.container__body__row__ceil__collapse}
                             align='left'
                           >
-                            {`${Number(order?.amount).toFixed(8) || 0} ${coinName}`}
+                            {`${Number(order?.amount).toFixed(8) || 0} ${order?.feesCoin}`}
                           </TableCell>
                         </Tooltip>
 
@@ -146,7 +146,7 @@ const OrdersTableRow = ({ row }: any): JSX.Element => {
                             className={styles.container__body__row__ceil__collapse}
                             align='left'
                           >
-                            {`${Number(order?.totalPrice).toFixed(8) || 0} ${coinName}`}
+                            {`${Number(order?.totalPrice).toFixed(8) || 0} ${order?.feesCoin}`}
                           </TableCell>
                         </Tooltip>
 
@@ -170,7 +170,7 @@ const OrdersTableRow = ({ row }: any): JSX.Element => {
                             className={styles.container__body__row__ceil__collapse}
                             align='left'
                           >
-                            {`${Number(order?.fees).toFixed(8) || 0} ${coinName}`}
+                            {`${Number(order?.fees).toFixed(8) || 0} ${order?.feesCoin}`}
                           </TableCell>
                         </Tooltip>
 

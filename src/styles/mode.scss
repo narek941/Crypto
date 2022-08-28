@@ -95,6 +95,7 @@
   --select-btn: #3700b3;
   --table-svg: #ffffff;
   --loading: rgba(0, 0, 0, 1.5);
+  --chart-tooltip: rgba(46, 46, 46, 0.7);
 }
 
 [data-theme='dark'] {
@@ -196,4 +197,5 @@
   --calendar-alpha: rgba(65, 58, 199, 0.15);
   --select-btn: #3700b3;
   --loading: rgba(0, 0, 0, 0.5);
+  --chart-tooltip: rgba(46, 46, 46, 0.7);
 }

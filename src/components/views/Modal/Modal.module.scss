@@ -9,8 +9,7 @@
   position: fixed;
   max-width: 258px;
   overflow-y: scroll;
-  max-height: 90vh;
-  height: auto;
+  height: 90vh;
   border-radius: 4px;
   background-color: var(--sidebar-background);
   @extend %flex-column;
@@ -70,7 +69,7 @@
     &__doughnut {
       padding-bottom: 8px;
       max-width: 224px;
-      // min-height: 241px;
+      min-height: 251px;
       display: flex;
       align-items: center;
       justify-content: center;
