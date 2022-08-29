@@ -263,8 +263,8 @@ const Table = ({
           {
             id: 5,
             key: wrapWithBaseCurrency('Current Capital'),
-            value: selectedAccountData.statistics?.startCapitalInBaseCurrency
-              ? Number(selectedAccountData.statistics?.startCapitalInBaseCurrency).toFixed(6)
+            value: selectedAccountData.statistics?.currentCapitalInBaseCurrency
+              ? Number(selectedAccountData.statistics?.currentCapitalInBaseCurrency).toFixed(6)
               : 0,
             info: `Updated at ${moment(selectedAccountData.statistics?.refreshDate).format(
               'DD.MM.YYYY HH:MM:SS',

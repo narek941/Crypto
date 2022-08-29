@@ -76,7 +76,12 @@ const Modal = ({ id, open, setOpen, modalList }: IModalProps): JSX.Element => {
                     font={10}
                     textColor={accountAnalyticsChartTextColors}
                     radius={40}
-                    tooltipFields={['totalSum', 'toCurrencyName', 'totalBaseSum']}
+                    tooltipFields={[
+                      'totalBaseSum',
+                      'baseCurrencyName',
+                      'totalSum',
+                      'toCurrencyName',
+                    ]}
                   />
                 </div>
               </div>
