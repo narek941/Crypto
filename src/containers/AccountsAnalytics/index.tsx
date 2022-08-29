@@ -115,7 +115,7 @@ const AccountsAnalytics = (): JSX.Element => {
             field='earnedCapitalInPercent'
             width={(windowWidth.width - 240) / 2}
             type='AREA'
-            baseCurrency={accountById?.baseCurrency?.name}
+            baseCurrency='%'
           />
         </div>
         <div className={styles.analytics__chart}>

@@ -215,16 +215,16 @@ const TradingViewChart = ({
             : moment(param.time.year + '.' + param.time.month + '.' + param.time.day).format(
                 'DD.MM.YYYY HH:MM:SS',
               );
-          var price = param.seriesPrices.get(series)?.toFixed(0);
+          var price = param.seriesPrices.get(series);
 
           toolTip.innerHTML =
-            `<div id={tooltip_wrapper}>` +
-            `<div style="font-size: 12px; margin-bottom: 8px; color: ${textColor}">` +
+            `<div id={tooltip_wrapper} color:#ffffff; background-color:rgba(46, 46, 46, 0.7); backdrop-filter: blur(12px);>` +
+            `<div style="font-size: 12px; margin-bottom: 8px;  color:#ffffff">` +
             price +
             ' ' +
             baseCurrency +
             '</div>' +
-            `<div style="font-size: 13px; margin-bottom: 8px; color:rgba(171, 154, 183, 0.3);">` +
+            `<div style="font-size: 12px; color:#ffffff">` +
             dateStr +
             '</div>' +
             '</div>';

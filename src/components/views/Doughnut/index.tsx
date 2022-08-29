@@ -61,15 +61,17 @@ const Doughnut = ({
       (el: any) =>
         el['id'] == tooltip.dataPoints[0].dataset.id[Number(tooltip.dataPoints[0].dataIndex)],
     );
+    // eslint-disable-next-line no-console
+    console.log(tooltip.dataPoints);
 
     // Set Text
     if (tooltip.body) {
       const bodyLines = chart?.tooltip.dataPoints[0].label.includes('Others')
         ? [
-            `${tooltip.dataPoints[0].formattedValue} ${tooltip.dataPoints[0].dataset.label}` || '',
+            ` ${tooltip.dataPoints[0].label}` || '',
             `${
               chart.tooltip.dataPoints[0].dataset?.others
-                ? chart.tooltip.dataPoints[0].dataset?.others[tooltipFields[0]].toFixed(1)
+                ? chart.tooltip.dataPoints[0].dataset?.others[tooltipFields[0]]
                 : ''
             }`,
             // `${
@@ -79,13 +81,13 @@ const Doughnut = ({
             // }`,
           ]
         : [
-            `${tooltip.dataPoints[0].formattedValue} ${tooltip.dataPoints[0].dataset.label}` || '',
-            `${
-              isUndefined(obj[tooltipFields[0]]) ? '' : Number(obj[tooltipFields[0]]).toFixed(1)
-            }  ${isUndefined(obj[tooltipFields[1]]) ? '' : obj[tooltipFields[1]]}`,
-            `${
-              isUndefined(obj[tooltipFields[2]]) ? '' : Number(obj[tooltipFields[2]]).toFixed(1)
-            } ${isUndefined(obj[tooltipFields[3]]) ? '' : obj[tooltipFields[3]]}`,
+            ` ${tooltip.dataPoints[0].label}` || '',
+            `${isUndefined(obj[tooltipFields[0]]) ? '' : Number(obj[tooltipFields[0]])}  ${
+              isUndefined(obj[tooltipFields[1]]) ? '' : obj[tooltipFields[1]]
+            }`,
+            `${isUndefined(obj[tooltipFields[2]]) ? '' : Number(obj[tooltipFields[2]])} ${
+              isUndefined(obj[tooltipFields[3]]) ? '' : obj[tooltipFields[3]]
+            }`,
           ];
 
       const tableBody = document.createElement('div');
