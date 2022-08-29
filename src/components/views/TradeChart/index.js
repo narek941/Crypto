@@ -218,7 +218,7 @@ const TradingViewChart = ({
           var price = param.seriesPrices.get(series);
 
           toolTip.innerHTML =
-            `<div id={tooltip_wrapper} color:#ffffff; background-color:rgba(46, 46, 46, 0.7); backdrop-filter: blur(12px);>` +
+            `<div id={tooltip_wrapper} style="background-color:rgba(46, 46, 46, 0.7); backdrop-filter: blur(12px);">` +
             `<div style="font-size: 12px; margin-bottom: 8px;  color:#ffffff">` +
             price +
             ' ' +
@@ -230,7 +230,6 @@ const TradingViewChart = ({
             '</div>';
           var coordinate = series.priceToCoordinate(price);
           var shiftedCoordinate = param.point.x;
-
           var toolTipWidth = 80;
           var toolTipHeight = 80;
           var toolTipMargin = 0;

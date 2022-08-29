@@ -37,16 +37,17 @@ const AccountsAnalytics = (): JSX.Element => {
   useEffect(() => {
     const getAccountsAnalytics = async () => {
       try {
-        await dispatch(adminActions.getCoins()).unwrap();
-        await dispatch(adminActions.getTradingPairs()).unwrap();
         await dispatch(accountsActions.getAccountById(convertedId)).unwrap();
-        await dispatch(accountsActions.getAccountSummary(convertedId)).unwrap();
-        await dispatch(accountsActions.getAccountAssetsChartData(convertedId)).unwrap();
         await dispatch(accountsActions.getAccountCapitalChartData(convertedId)).unwrap();
-        // await dispatch(accountsActions.getAccountPerformanceChartData(convertedId)).unwrap();
         await dispatch(accountsActions.getAccountTradingPairsChartData(convertedId)).unwrap();
 
         setIsLoading(false);
+
+        await dispatch(adminActions.getCoins()).unwrap();
+        await dispatch(accountsActions.getAccountSummary(convertedId)).unwrap();
+        await dispatch(adminActions.getTradingPairs()).unwrap();
+        await dispatch(accountsActions.getAccountPerformanceChartData(convertedId)).unwrap();
+        await dispatch(accountsActions.getAccountAssetsChartData(convertedId)).unwrap();
       } catch {
         setIsLoading(false);
       }
@@ -74,7 +75,7 @@ const AccountsAnalytics = (): JSX.Element => {
         <div className={styles.analytics__bricks__wrapper}>
           <Bricks
             header='Seed Capital'
-            value={accountById.statistics.startCapitalInBaseCurrency || 0}
+            value={accountById.statistics?.startCapitalInBaseCurrency || 0}
           />
           <Bricks
             header='Performance'
