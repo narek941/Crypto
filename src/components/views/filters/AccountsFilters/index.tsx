@@ -6,7 +6,7 @@ import { isNull } from 'lodash';
 import { useSelector } from 'react-redux';
 
 import { CloseIcon } from 'assets/icons';
-import { Select } from 'components';
+import { MultipleSelect } from 'components';
 import { useAppDispatch, useForm } from 'hooks';
 import { accountsFilterClear, accountsFilterUpdate } from 'store/accountsSlice/thunks';
 import { createObject } from 'utils/createObject';
@@ -86,22 +86,17 @@ const AccountsFilters = () => {
             clearAll={clearAll}
           />
         </div>
-        <div className={styles.item}>
-          <Controller
-            control={formMethods.control}
-            name={filterFormFields.accountStatus.name as any}
-            render={({ field }) => (
-              <Select
-                {...filterFormFields.accountStatus}
-                {...field}
-                className={styles.select}
-                options={statusOptions}
-                callback={handleFilter}
-                filterName={'status'}
-              />
-            )}
+        <div className={(styles.item, styles.multipleSelect)}>
+          <MultipleSelect
+            formMethods={formMethods}
+            {...filterFormFields.accountStatus}
+            className={styles.select}
+            callback={handleFilter}
+            filterName={'status'}
+            options={statusOptions}
           />
         </div>
+
         <div className={styles.item}>
           <Controller
             control={formMethods.control}

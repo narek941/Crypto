@@ -22,7 +22,7 @@ export const composeFormSchema = <K extends FormFieldNames>(fields: K[]): AnyObj
     }),
     confirmPassword: Yup.string().when('isEditable', {
       is: (isEditable: boolean) => isEditable === true,
-      then: Yup.string(),
+      then: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match'),
       otherwise: Yup.string()
         .required('* Repeat password to finish adding new user')
         .oneOf([Yup.ref('password'), null], 'Passwords must match'),

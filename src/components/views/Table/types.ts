@@ -50,7 +50,7 @@ export interface UserData {
 
 export type Order = 'asc' | 'desc';
 
-export type IStatus = 'ACTIVE' | 'DELETED' | 'BLOCKED' | 'EMAIL_VERIFICATION';
+export type IStatus = 'ACTIVE' | 'DELETED' | 'BLOCKED';
 
 export type SelectedAccount = {
   id: number | null;

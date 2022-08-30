@@ -22,5 +22,6 @@ export interface ISelect {
   filterName?: string;
   withAction?: boolean;
   closed?: boolean;
+  withClear?: boolean;
   [prop: string]: any;
 }

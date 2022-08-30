@@ -43,10 +43,10 @@ const AccountsAnalytics = (): JSX.Element => {
 
         setIsLoading(false);
 
-        await dispatch(adminActions.getCoins()).unwrap();
         await dispatch(accountsActions.getAccountSummary(convertedId)).unwrap();
+        await dispatch(adminActions.getCoins()).unwrap();
         await dispatch(adminActions.getTradingPairs()).unwrap();
-        await dispatch(accountsActions.getAccountPerformanceChartData(convertedId)).unwrap();
+        // await dispatch(accountsActions.getAccountPerformanceChartData(convertedId)).unwrap();
         await dispatch(accountsActions.getAccountAssetsChartData(convertedId)).unwrap();
       } catch {
         setIsLoading(false);
@@ -75,23 +75,43 @@ const AccountsAnalytics = (): JSX.Element => {
         <div className={styles.analytics__bricks__wrapper}>
           <Bricks
             header='Seed Capital'
-            value={accountById.statistics?.startCapitalInBaseCurrency || 0}
+            value={
+              !isNaN(Number(accountById.statistics?.startCapitalInBaseCurrency))
+                ? Number(accountById.statistics?.startCapitalInBaseCurrency).toFixed(8)
+                : 0
+            }
           />
           <Bricks
             header='Performance'
-            value={`${accountById.statistics?.productivityInPercent || 0}%`}
+            value={`${
+              !isNaN(Number(accountById.statistics?.productivityInPercent))
+                ? Number(accountById.statistics?.productivityInPercent).toFixed(8)
+                : 0
+            }%`}
           />
           <Bricks
-            value={accountById.statistics?.startCapitalInBaseCurrency || 0}
+            value={
+              !isNaN(Number(accountById.statistics?.startCapitalInBaseCurrency))
+                ? Number(accountById.statistics?.startCapitalInBaseCurrency).toFixed(8)
+                : 0
+            }
             header={wrapWithBaseCurrency('Current Capital', accountById?.baseCurrency?.name)}
             moreText={moment(accountById.statistics?.refreshDate).format('DD.MM.YYYY HH:MM:SS')}
           />
           <Bricks
-            value={accountById.statistics?.currentOpenProfitInBaseCurrency || 0}
+            value={
+              !isNaN(Number(accountById.statistics?.currentOpenProfitInBaseCurrency))
+                ? Number(accountById.statistics?.currentOpenProfitInBaseCurrency).toFixed(8)
+                : 0
+            }
             header={wrapWithBaseCurrency('Current open profit', accountById?.baseCurrency?.name)}
           />
           <Bricks
-            value={accountById.statistics?.earnedCapitalInBaseCurrency || 0}
+            value={
+              !isNaN(Number(accountById.statistics?.earnedCapitalInBaseCurrency))
+                ? Number(accountById.statistics?.earnedCapitalInBaseCurrency).toFixed(8)
+                : 0
+            }
             header={wrapWithBaseCurrency('Earned capital', accountById?.baseCurrency?.name)}
           />
         </div>
@@ -130,6 +150,7 @@ const AccountsAnalytics = (): JSX.Element => {
                 header={'Trading Pairs Chart'}
                 colors={accountAnalyticsChartColors}
                 textColor={accountAnalyticsChartTextColors}
+                baseCurrency={accountById?.baseCurrency?.name}
                 tooltipFields={['totalBaseSum', 'baseCurrencyName', 'totalSum', 'toCurrencyName']}
               />
             </div>
@@ -144,6 +165,7 @@ const AccountsAnalytics = (): JSX.Element => {
                 header={'Account Assets Chart'}
                 colors={accountAnalyticsChartColors}
                 textColor={accountAnalyticsChartTextColors}
+                baseCurrency={accountById?.baseCurrency?.name}
                 tooltipFields={['baseCurrencyValue', 'baseCurrencyName', 'value', 'assetCoin']}
               />
             </div>

@@ -24,6 +24,7 @@ const Select = React.forwardRef(
       callback,
       filterName,
       withAction = true,
+      withClear = true,
       closed,
       ...props
     }: ISelect,
@@ -140,9 +141,11 @@ const Select = React.forwardRef(
               value={value ? currentOption?.label : ''}
             />
             <div>
-              <div className={styles.select__clear} onClick={handleClear}>
-                {currentOption && callback && <CloseIcon />}
-              </div>
+              {withClear && (
+                <div className={styles.select__clear} onClick={handleClear}>
+                  {currentOption && callback && <CloseIcon />}
+                </div>
+              )}
               <DropDownIcon role='button' className={dropClass} />
             </div>
           </div>

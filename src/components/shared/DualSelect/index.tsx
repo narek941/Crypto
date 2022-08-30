@@ -52,6 +52,7 @@ const DualSelect = React.forwardRef<any, any>(
       if (closed && filterName) {
         handleClear();
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [closed]);
 
     useOnClickOutside(customWrapperRef, handleSubmit);
@@ -60,10 +61,10 @@ const DualSelect = React.forwardRef<any, any>(
       <div className={headerClass}>
         <div role='button' onClick={toggleDrop} className={styles.header__inner}>
           <p className={textClass}>
-            {selectPairStart && selectPairEnd
-              ? `${firstOptions[Number(selectPairStart) - 1]?.label || ''} / ${
-                  secondOptions[Number(selectPairEnd) - 1]?.label || ''
-                }`
+            {selectPairStart || selectPairEnd
+              ? `${firstOptions[Number(selectPairStart) - 1]?.label || ''} ${
+                  secondOptions[Number(selectPairEnd) - 1]?.label ? '/' : ''
+                } ${secondOptions[Number(selectPairEnd) - 1]?.label || ''}`
               : placeholder}
           </p>
           <div>{(selectPairStart || selectPairEnd) && <CloseIcon onClick={handleClear} />}</div>
@@ -87,6 +88,7 @@ const DualSelect = React.forwardRef<any, any>(
                       defaultValue={'BTC'}
                       ref={ref}
                       withAction={false}
+                      withClear={false}
                     />
                   )}
                 ></Controller>
@@ -103,6 +105,7 @@ const DualSelect = React.forwardRef<any, any>(
                       defaultValue={'BTC'}
                       ref={ref}
                       withAction={false}
+                      withClear={false}
                     />
                   )}
                 ></Controller>

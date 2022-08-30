@@ -17,6 +17,7 @@ const Doughnut = ({
   legendPosition = 'right',
   className,
   pointStyle = 'rect',
+  baseCurrency,
   textColor,
   font = 13,
   width,
@@ -61,8 +62,6 @@ const Doughnut = ({
       (el: any) =>
         el['id'] == tooltip.dataPoints[0].dataset.id[Number(tooltip.dataPoints[0].dataIndex)],
     );
-    // eslint-disable-next-line no-console
-    console.log(tooltip.dataPoints);
 
     // Set Text
     if (tooltip.body) {
@@ -71,14 +70,9 @@ const Doughnut = ({
             ` ${tooltip.dataPoints[0].label}` || '',
             `${
               chart.tooltip.dataPoints[0].dataset?.others
-                ? chart.tooltip.dataPoints[0].dataset?.others[tooltipFields[0]]
+                ? chart.tooltip.dataPoints[0].dataset?.others[tooltipFields[0]] + ' ' + baseCurrency
                 : ''
             }`,
-            // `${
-            //   chart.tooltip.dataPoints[0].dataset?.others
-            //     ? chart.tooltip.dataPoints[0].dataset?.others[tooltipFields[2]]
-            //     : ''
-            // }`,
           ]
         : [
             ` ${tooltip.dataPoints[0].label}` || '',
@@ -159,7 +153,7 @@ const Doughnut = ({
           boxWidth: 11,
           boxHeight: 11,
           textAlign: 'left',
-          padding: 6,
+          padding: 8,
           usePointStyle: true,
           pointStyle,
           pointStyleWidth: 13,
