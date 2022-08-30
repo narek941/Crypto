@@ -16,6 +16,19 @@ const WalletsTableRow = ({ row }: any) => (
       {Number(row.baseCurrencyValue)?.toFixed(8) || 0}
     </TableCell>
     <TableCell align='left' className={styles.ceil}>
+      {!isNaN(Number(row.statistics?.currentRate))
+        ? Number(row.statistics?.currentRate)?.toFixed(8)
+        : 0}
+    </TableCell>
+    <TableCell align='left' className={styles.ceil}>
+      {!isNaN(Number(row.statistics?.buyRate)) ? Number(row.statistics?.buyRate)?.toFixed(8) : 0}
+    </TableCell>
+    <TableCell align='left' className={styles.ceil}>
+      {!isNaN(Number(row.statistics?.openProfit))
+        ? Number(row.statistics?.openProfit)?.toFixed(8)
+        : 0}
+    </TableCell>
+    <TableCell align='left' className={styles.ceil}>
       {moment(row.refreshAt).format('DD.MM.YYYY HH:MM:SS')}
     </TableCell>
   </TableRow>

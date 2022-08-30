@@ -44,6 +44,21 @@ const walletAssetsTable: TableHeaderRow[] = [
   },
   {
     id: 4,
+    value: 'statistics.currentRate',
+    label: 'Current rate',
+  },
+  {
+    id: 5,
+    value: 'statistics.buyRate',
+    label: 'Buy rate',
+  },
+  {
+    id: 6,
+    value: 'statistics.openProfit',
+    label: 'Open profit',
+  },
+  {
+    id: 7,
     label: 'Time',
     value: 'createdAt',
   },

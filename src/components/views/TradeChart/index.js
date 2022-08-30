@@ -52,11 +52,8 @@ const TradingViewChart = ({
       const tooltip = document.getElementById('tooltip-id' + type);
       const node = document.getElementById('test-id' + type);
       node?.removeChild(tooltip);
-      // node.children.display = 'none';
-      // node.children[0].display = 'block';
       chartCreated.resize(0, 0);
       setChartCreated();
-      // chartCreated?.removeChild();
     }
   }, [chartCreated, data, dataPrev, type]);
 
@@ -188,6 +185,12 @@ const TradingViewChart = ({
       toolTip.className = className;
       ref.current.appendChild(toolTip);
       toolTip.style.display = 'block';
+      // toolTip.style.background = 'unset';
+
+      //pti vor mi dzev stananq
+
+      // toolTip.style.filter = 'blur(0.2px)';
+      // toolTip.style.backgroundColor = 'background-color:rgba(46, 46, 46)';
 
       // get the title of the chart
       // eslint-disable-next-line no-inner-declarations
@@ -218,13 +221,18 @@ const TradingViewChart = ({
           var price = param.seriesPrices.get(series);
 
           toolTip.innerHTML =
-            `<div id={tooltip_wrapper} style="background-color:rgba(46, 46, 46, 0.7); backdrop-filter: blur(12px);">` +
-            `<div style="font-size: 12px; margin-bottom: 8px;  color:#ffffff">` +
+            `<div id={tooltip_wrapper}" style="background: rgba(46, 46, 46, 0.9);border-radius:4px; padding:12px; width:100%;height:100%; display:flex; flex-direction:column;gap:8px;" >` +
+            `<div style="font-size: 12px; color:#ffffff">` +
             price +
             ' ' +
             baseCurrency +
             '</div>' +
             `<div style="font-size: 12px; color:#ffffff">` +
+            price +
+            ' ' +
+            baseCurrency +
+            '</div>' +
+            `<div style="font-size: 12px; color:rgba(171, 154, 183, 0.3);">` +
             dateStr +
             '</div>' +
             '</div>';

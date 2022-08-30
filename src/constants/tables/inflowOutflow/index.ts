@@ -37,7 +37,7 @@ export const inflowOutflowTable: TableHeaderRow[] = [
   {
     id: 'time',
     label: 'Time',
-    value: 'insertTime',
+    value: 'createdAt',
   },
 ];
 

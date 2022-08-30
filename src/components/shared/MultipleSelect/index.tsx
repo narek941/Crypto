@@ -4,7 +4,6 @@ import SelectMultiple, {
   DropdownIndicatorProps,
   MenuListProps,
   MenuProps,
-  MultiValueRemoveProps,
   NoticeProps,
 } from 'react-select';
 import { Controller } from 'react-hook-form';
@@ -48,9 +47,9 @@ const MultipleSelect = ({
         render={({ field: { value, onChange, onBlur } }) => {
           return (
             <SelectMultiple
+              isMulti
               options={options}
               classNamePrefix='multipleSelect'
-              isMulti
               defaultValue={defaultValues}
               menuIsOpen={isOpen}
               onMenuOpen={() => setIsOpen(true)}
@@ -128,10 +127,22 @@ const DropdownIndicator = (props: DropdownIndicatorProps<any, true>) => {
     </div>
   );
 };
-const MultiValueRemove = (props: MultiValueRemoveProps<any>) => {
+const MultiValueRemove = (props: any) => {
+  const handleItemClick = () => {
+    if (props.selectProps?.customProps?.callback) {
+      let value = '';
+      props.selectProps.value
+        .filter((item: any) => item.value !== props.data.value)
+        .map((item: any) => {
+          value = `${item.value}${value && '||' + value}`;
+        });
+
+      props.selectProps?.customProps?.callback(props.selectProps?.customProps?.filterName, value);
+    }
+  };
   return (
     <components.MultiValueRemove {...props}>
-      <CloseIcon />
+      <CloseIcon onClick={handleItemClick} />
     </components.MultiValueRemove>
   );
 };

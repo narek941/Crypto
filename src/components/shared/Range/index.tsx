@@ -69,6 +69,12 @@ const RangeSwipe = React.forwardRef<any, any>(
       setFirstInput(target.value);
     };
 
+    const handleRangeChange = ({ target }: any) => {
+      setFirstInput(NaN);
+      setSecondInput(NaN);
+      onChange(target.value);
+    };
+
     const handleSecondChange = ({ target }: any) => {
       setSecondInput(target.value);
     };
@@ -123,7 +129,7 @@ const RangeSwipe = React.forwardRef<any, any>(
             <div className={styles.slider}>
               <Slider
                 value={value}
-                onChange={onChange}
+                onChange={handleRangeChange}
                 aria-labelledby='input-slider'
                 {...rest}
                 id={name}

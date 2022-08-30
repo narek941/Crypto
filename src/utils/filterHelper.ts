@@ -6,8 +6,13 @@ export const sideOptions = [
 ];
 
 export const ordersTypeOptions = [
+  { label: 'Market', value: 'MARKET' },
   { label: 'Limit', value: 'LIMIT' },
+  { label: 'Stop loss', value: 'STOP_LOSS' },
   { label: 'Stop loss limit', value: 'STOP_LOSS_LIMIT' },
+  { label: 'Take profit', value: 'TAKE_PROFIT' },
+  { label: 'Take profit limit', value: 'TAKE_PROFIT_LIMIT' },
+  { label: 'Limit maker', value: 'LIMIT_MAKER' },
 ];
 
 export const typeOptions = [
@@ -19,7 +24,6 @@ export const statusOptions = [
   { label: 'Active', value: 'ACTIVE' },
   { label: 'Blocked', value: 'BLOCKED' },
   { label: 'Deleted', value: 'DELETED' },
-  { label: 'Email verification', value: 'EMAIL_VERIFICATION' },
 ];
 
 export const AccountTypeOptions = [
