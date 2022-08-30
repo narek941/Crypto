@@ -79,6 +79,12 @@ const DateRangePicker = React.forwardRef<any, any>(
       }
     };
 
+    const addDays = function (str: any, days: any) {
+      const myDate = new Date(str);
+      myDate.setDate(myDate.getDate() + parseInt(days));
+      return myDate;
+    };
+
     const handleSubmit = () => {
       if (
         !isNull(state.endDate) &&
@@ -86,7 +92,10 @@ const DateRangePicker = React.forwardRef<any, any>(
         openCalendar &&
         state.startDate !== undefined
       ) {
-        callback(filterName, [state.startDate, state.endDate]);
+        callback(filterName, [
+          addDays(moment(state.startDate).toISOString(), 1),
+          addDays(moment(state.endDate).toISOString(), 1),
+        ]);
       }
 
       setOpenCalendar(false);

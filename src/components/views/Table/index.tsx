@@ -234,21 +234,21 @@ const Table = ({
             id: 1,
             key: 'Seed Capital',
             value: selectedAccountData.statistics?.startCapitalInBaseCurrency
-              ? Number(selectedAccountData.statistics?.startCapitalInBaseCurrency).toFixed(6)
+              ? Number(selectedAccountData.statistics?.startCapitalInBaseCurrency).toFixed(8)
               : 0,
           },
           {
             id: 2,
             key: wrapWithBaseCurrency('Current open profit'),
             value: selectedAccountData.statistics?.currentOpenProfitInBaseCurrency
-              ? Number(selectedAccountData.statistics?.currentOpenProfitInBaseCurrency).toFixed(6)
+              ? Number(selectedAccountData.statistics?.currentOpenProfitInBaseCurrency).toFixed(8)
               : 0,
           },
           {
             id: 3,
             key: wrapWithBaseCurrency('Earned capital'),
             value: selectedAccountData.statistics?.earnedCapitalInBaseCurrency
-              ? Number(selectedAccountData.statistics?.earnedCapitalInBaseCurrency).toFixed(6)
+              ? Number(selectedAccountData.statistics?.earnedCapitalInBaseCurrency).toFixed(8)
               : 0,
           },
           {
@@ -264,7 +264,7 @@ const Table = ({
             id: 5,
             key: wrapWithBaseCurrency('Current Capital'),
             value: selectedAccountData.statistics?.currentCapitalInBaseCurrency
-              ? Number(selectedAccountData.statistics?.currentCapitalInBaseCurrency).toFixed(6)
+              ? Number(selectedAccountData.statistics?.currentCapitalInBaseCurrency).toFixed(8)
               : 0,
             info: `Updated at ${moment(selectedAccountData.statistics?.refreshDate).format(
               'DD.MM.YYYY HH:mm:ss',
