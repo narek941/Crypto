@@ -37,7 +37,7 @@ const OrdersHistoryTableRow = ({ row }: any): JSX.Element => (
       {row?.modifiers || '-'}
     </TableCell>
     <TableCell align='left' className={styles.ceil}>
-      {moment(row?.lastOperationTime).format('DD.MM.YYYY HH:MM:SS')}
+      {moment(row?.lastOperationTime).format('DD.MM.YYYY HH:mm:ss')}
     </TableCell>
   </TableRow>
 );

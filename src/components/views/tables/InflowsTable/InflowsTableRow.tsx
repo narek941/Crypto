@@ -26,7 +26,7 @@ const InflowsTableRow = ({ row }: any) => (
     </TableCell>
     <TableCell align='left' className={styles.ceil}>
       {moment(row?.type === 'DEPOSIT' ? row.createdAt : row?.createdAt).format(
-        'DD.MM.YYYY HH:MM:SS',
+        'DD.MM.YYYY HH:mm:ss',
       )}
     </TableCell>
   </TableRow>

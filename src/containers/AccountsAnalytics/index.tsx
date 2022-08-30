@@ -84,8 +84,8 @@ const AccountsAnalytics = (): JSX.Element => {
           <Bricks
             header='Performance'
             value={`${
-              !isNaN(Number(accountById.statistics?.productivityInPercent))
-                ? Number(accountById.statistics?.productivityInPercent).toFixed(8)
+              !isNaN(Number(accountById.statistics?.earnedCapitalInPercent))
+                ? Number(accountById.statistics?.earnedCapitalInPercent)
                 : 0
             }%`}
           />
@@ -96,7 +96,7 @@ const AccountsAnalytics = (): JSX.Element => {
                 : 0
             }
             header={wrapWithBaseCurrency('Current Capital', accountById?.baseCurrency?.name)}
-            moreText={moment(accountById.statistics?.refreshDate).format('DD.MM.YYYY HH:MM:SS')}
+            moreText={moment(accountById.statistics?.refreshDate).format('DD.MM.YYYY HH:mm:ss')}
           />
           <Bricks
             value={

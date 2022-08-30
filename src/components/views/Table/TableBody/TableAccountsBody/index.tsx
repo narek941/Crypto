@@ -44,7 +44,7 @@ const TableAccountBody = ({
       { id, startCapitalInBaseCurrency, name, createdAt, status, statistics, baseCurrency }: any,
       index,
     ) => {
-      const formattedDate = moment(createdAt).format('DD.MM.YYYY HH:MM:SS');
+      const formattedDate = moment(createdAt).format('DD.MM.YYYY HH:mm:ss');
       const isLastItem = index === rows.length - 1;
       const tooltipClasses = classNames({
         [styles.table__body__row__ceil__actions__bin__span_last]: isLastItem,
@@ -79,7 +79,7 @@ const TableAccountBody = ({
             {formattedDate}
           </TableCell>
           <TableCell className={styles.table__body__row__ceil} align='left'>
-            {Number(statistics?.currentOpenProfitInPercent).toFixed(8) + ' %'}
+            {Number(statistics?.currentOpenProfitInPercent) + ' %'}
           </TableCell>
           <TableCell className={styles.table__body__row__ceil} align='left'>
             {Number(statistics?.currentOpenProfitInBaseCurrency)
@@ -89,7 +89,7 @@ const TableAccountBody = ({
           </TableCell>
           <TableCell className={styles.table__body__row__ceil} align='left'>
             {Number(statistics?.earnedCapitalInPercent)
-              ? Number(statistics?.earnedCapitalInPercent).toFixed(8)
+              ? Number(statistics?.earnedCapitalInPercent)
               : 0}
             {' %'}
           </TableCell>

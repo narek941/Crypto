@@ -7,7 +7,7 @@ import styles from './TradesTable.module.scss';
 const TradesTableRow = ({ row }: any) => (
   <TableRow className={styles.container__body__row}>
     <TableCell align='left' className={styles.ceil}>
-      {moment(row?.tradeTime).format('DD.MM.YYYY HH:MM:SS')}
+      {moment(row?.tradeTime).format('DD.MM.YYYY HH:mm:ss')}
     </TableCell>
     <TableCell align='left' className={styles.ceil}>
       {row?.coinsPair?.name}

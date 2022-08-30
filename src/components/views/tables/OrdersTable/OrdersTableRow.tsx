@@ -60,7 +60,7 @@ const OrdersTableRow = ({ row }: any): JSX.Element => {
           {row?.originalId}
         </TableCell>
         <TableCell align='left' className={styles.ceil}>
-          {moment(row.creationTime).format('DD.MM.YYYY HH:MM:SS')}
+          {moment(row.creationTime).format('DD.MM.YYYY HH:mm:ss')}
         </TableCell>
         <TableCell align='left' className={styles.ceil}>
           {row?.coinsPair?.name}
@@ -100,7 +100,7 @@ const OrdersTableRow = ({ row }: any): JSX.Element => {
           {row.relativePercentageToAccount || 0}
         </TableCell>
         <TableCell align='left' className={styles.ceil}>
-          {moment(row.lastOperationTime).format('DD.MM.YYYY HH:MM:SS')}
+          {moment(row.lastOperationTime).format('DD.MM.YYYY HH:mm:ss')}
         </TableCell>
       </TableRow>
       <TableRow>
@@ -121,7 +121,7 @@ const OrdersTableRow = ({ row }: any): JSX.Element => {
                             className={styles.container__body__row__ceil__collapse}
                             align='left'
                           >
-                            {moment(order?.tradeTime).format('DD.MM.YYYY HH:MM:SS')}
+                            {moment(order?.tradeTime).format('DD.MM.YYYY HH:mm:ss')}
                           </TableCell>
                         </Tooltip>
                         <Tooltip followCursor={true} placement='bottom' title='Price'>
