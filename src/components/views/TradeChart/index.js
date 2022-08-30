@@ -227,11 +227,11 @@ const TradingViewChart = ({
             ' ' +
             baseCurrency +
             '</div>' +
-            `<div style="font-size: 12px; color:#ffffff">` +
-            price +
-            ' ' +
-            baseCurrency +
-            '</div>' +
+            // `<div style="font-size: 12px; color:#ffffff">` +
+            // price +
+            // ' ' +
+            // baseCurrency +
+            // '</div>' +
             `<div style="font-size: 12px; color:rgba(171, 154, 183, 0.3);">` +
             dateStr +
             '</div>' +
