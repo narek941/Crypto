@@ -25,7 +25,7 @@ const InflowsTableRow = ({ row }: any) => (
       {Number(row?.transactionFee)?.toFixed(8) || 0}
     </TableCell>
     <TableCell align='left' className={styles.ceil}>
-      {moment(row?.type === 'DEPOSIT' ? row.insertTime : row?.applyTime).format(
+      {moment(row?.type === 'DEPOSIT' ? row.createdAt : row?.createdAt).format(
         'DD.MM.YYYY HH:MM:SS',
       )}
     </TableCell>

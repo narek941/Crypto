@@ -137,6 +137,7 @@ const AccountsAnalytics = (): JSX.Element => {
             width={(windowWidth.width - 240) / 2}
             type='AREA'
             baseCurrency='%'
+            field2='currentOpenProfitInBaseCurrency'
           />
         </div>
         <div className={styles.analytics__chart}>

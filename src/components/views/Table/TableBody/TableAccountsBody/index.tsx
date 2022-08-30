@@ -79,7 +79,7 @@ const TableAccountBody = ({
             {formattedDate}
           </TableCell>
           <TableCell className={styles.table__body__row__ceil} align='left'>
-            {Number(statistics?.currentOpenProfitInBaseCurrency).toFixed(8) + ' %'}
+            {Number(statistics?.currentOpenProfitInPercent).toFixed(8) + ' %'}
           </TableCell>
           <TableCell className={styles.table__body__row__ceil} align='left'>
             {Number(statistics?.currentOpenProfitInBaseCurrency)

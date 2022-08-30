@@ -221,13 +221,18 @@ const TradingViewChart = ({
           var price = param.seriesPrices.get(series);
 
           toolTip.innerHTML =
-            `<div id={tooltip_wrapper}" style="background-color:#6B6C6C;border-radius:4px; padding:12px; width:100%;height:100%; display:flex; flex-direction:column;gap:8px;" >` +
+            `<div id={tooltip_wrapper}" style="background: rgba(46, 46, 46, 0.9);border-radius:4px; padding:12px; width:100%;height:100%; display:flex; flex-direction:column;gap:8px;" >` +
             `<div style="font-size: 12px; color:#ffffff">` +
             price +
             ' ' +
             baseCurrency +
             '</div>' +
             `<div style="font-size: 12px; color:#ffffff">` +
+            price +
+            ' ' +
+            baseCurrency +
+            '</div>' +
+            `<div style="font-size: 12px; color:rgba(171, 154, 183, 0.3);">` +
             dateStr +
             '</div>' +
             '</div>';
