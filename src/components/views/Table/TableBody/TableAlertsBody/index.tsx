@@ -22,7 +22,7 @@ const TableAlertsBody = ({ rows }: ITableAlertsBodyProps) => {
         {message}
       </TableCell>
       <TableCell align='left' className={styles.table__body__row__ceil}>
-        {moment(createdAt).format('DD.MM.YYYY HH:MM:SS')}
+        {moment(createdAt).format('DD.MM.YYYY HH:mm:ss')}
       </TableCell>
     </TableRow>
   ));

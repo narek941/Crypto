@@ -255,8 +255,8 @@ const Table = ({
             id: 4,
             key: 'Performance',
             value: `${
-              selectedAccountData.statistics?.productivityInPercent
-                ? Number(selectedAccountData.statistics?.productivityInPercent).toFixed(6)
+              selectedAccountData.statistics?.earnedCapitalInPercent
+                ? Number(selectedAccountData.statistics?.earnedCapitalInPercent)
                 : 0
             }%`,
           },
@@ -267,7 +267,7 @@ const Table = ({
               ? Number(selectedAccountData.statistics?.currentCapitalInBaseCurrency).toFixed(6)
               : 0,
             info: `Updated at ${moment(selectedAccountData.statistics?.refreshDate).format(
-              'DD.MM.YYYY HH:MM:SS',
+              'DD.MM.YYYY HH:mm:ss',
             )}`,
           },
         ]}

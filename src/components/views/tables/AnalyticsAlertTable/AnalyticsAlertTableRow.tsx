@@ -17,7 +17,7 @@ const AnalyticsAlertTableRow = ({ row }: any) => (
         {row?.message}
       </TableCell>
       <TableCell align='left' className={styles.ceil}>
-        {moment(row?.createdAt).format('DD.MM.YYYY HH:MM:SS')}
+        {moment(row?.createdAt).format('DD.MM.YYYY HH:mm:ss')}
       </TableCell>
     </TableRow>
   </>

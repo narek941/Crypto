@@ -29,7 +29,8 @@ const TradingViewChart = ({
 
   const [chartCreated, setChartCreated] = useState(false);
   const dataPrev = usePrevious(data);
-
+  // eslint-disable-next-line no-console
+  console.log(data, '11');
   // parese the data and format for tardingview consumption
   const formattedData = useMemo(
     () =>
@@ -65,6 +66,7 @@ const TradingViewChart = ({
         chartCreated.applyOptions(lightOptions);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [darkMode]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -196,6 +198,7 @@ const TradingViewChart = ({
       // eslint-disable-next-line no-inner-declarations
 
       // update the title when hovering on the chart
+
       chart.subscribeCrosshairMove(function (param) {
         if (
           param === undefined ||
@@ -216,7 +219,7 @@ const TradingViewChart = ({
                 .endOf('week')
                 .format('MMMM D, YYYY')
             : moment(param.time.year + '.' + param.time.month + '.' + param.time.day).format(
-                'DD.MM.YYYY HH:MM:SS',
+                'DD.MM.YYYY HH:mm:ss',
               );
           var price = param.seriesPrices.get(series);
 

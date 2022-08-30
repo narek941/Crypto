@@ -29,7 +29,7 @@ const WalletsTableRow = ({ row }: any) => (
         : 0}
     </TableCell>
     <TableCell align='left' className={styles.ceil}>
-      {moment(row.refreshAt).format('DD.MM.YYYY HH:MM:SS')}
+      {moment(row.refreshAt).format('DD.MM.YYYY HH:mm:ss')}
     </TableCell>
   </TableRow>
 );

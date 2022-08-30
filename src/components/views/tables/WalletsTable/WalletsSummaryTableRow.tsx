@@ -19,7 +19,7 @@ const WalletsSummaryTableRow = ({ row }: any) => (
       {row?.profitLossInPercent || 0}
     </TableCell>
     <TableCell align='left' className={styles.ceil}>
-      {moment(row?.lastRefreshDate).format('DD.MM.YYYY HH:MM:SS')}
+      {moment(row?.lastRefreshDate).format('DD.MM.YYYY HH:mm:ss')}
     </TableCell>
   </TableRow>
 );
