@@ -35,7 +35,6 @@ const Table = ({
   totalCount,
 }: ITableProps) => {
   const dispatch = useAppDispatch();
-  const [page, setPage] = useState(0);
   const [open, setOpen] = useState(false);
   const [openChart, setOpenChart] = useState(false);
   const [selectedAccountData, setSelectedAccountData] = useState<SelectedAccount>({
@@ -50,6 +49,12 @@ const Table = ({
   const alertsFilter = useAppSelector(alertsSelectors?.selectAlertsFilter);
   const accountFilter = useAppSelector(accountsSelectors?.selectAccountAccountsList).filter;
 
+  const pageFromRedux =
+    action === 'users'
+      ? usersFilter.skip / usersFilter.take
+      : action === 'accounts'
+      ? accountFilter.skip / accountFilter.take
+      : alertsFilter.skip / alertsFilter.take;
   const orderSort = (elem: any): 'DESC' | 'ASC' => (elem.order === 'DESC' ? 'ASC' : 'DESC');
 
   const handleRequestSort = (_event: MouseEvent<unknown>, sort: any): void => {
@@ -100,8 +105,6 @@ const Table = ({
       default:
         break;
     }
-
-    setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -219,7 +222,7 @@ const Table = ({
           <Pagination
             handleChangePage={handleChangePage}
             handleChangeRowsPerPage={handleChangeRowsPerPage}
-            currentPage={page}
+            currentPage={pageFromRedux}
             rowsPerPage={take}
             totalCount={totalCount}
           />

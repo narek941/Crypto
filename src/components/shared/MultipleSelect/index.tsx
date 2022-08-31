@@ -55,7 +55,7 @@ const MultipleSelect = ({
               onMenuOpen={() => setIsOpen(true)}
               onMenuClose={() => handleClose()}
               hideSelectedOptions={false}
-              placeholder={placeholder}
+              placeholder={<div className={styles.placeholder}>{placeholder}</div>}
               closeMenuOnSelect={false}
               onChange={(options) => {
                 onChange(options?.map((option) => option.value));

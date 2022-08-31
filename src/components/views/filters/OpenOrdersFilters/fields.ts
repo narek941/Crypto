@@ -58,7 +58,7 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
   },
   searchReceived: {
     name: 'searchReceived',
-    type: 'Search',
+    type: 'select',
     id: 'filterForm.searchReceived',
     placeholder: 'Select Received',
   },

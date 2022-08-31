@@ -91,8 +91,8 @@ const AccountsAnalytics = (): JSX.Element => {
           />
           <Bricks
             value={
-              !isNaN(Number(accountById.statistics?.startCapitalInBaseCurrency))
-                ? Number(accountById.statistics?.startCapitalInBaseCurrency).toFixed(8)
+              !isNaN(Number(accountById.statistics?.currentCapitalInBaseCurrency))
+                ? Number(accountById.statistics?.currentCapitalInBaseCurrency).toFixed(8)
                 : 0
             }
             header={wrapWithBaseCurrency('Current Capital', accountById?.baseCurrency?.name)}
@@ -126,6 +126,7 @@ const AccountsAnalytics = (): JSX.Element => {
             width={(windowWidth.width - 240) / 2}
             type='AREA'
             baseCurrency={accountById?.baseCurrency?.name}
+            field2='currentOpenProfitInBaseCurrency'
           />
           <Chart
             // data={accountPerformanceChartData}

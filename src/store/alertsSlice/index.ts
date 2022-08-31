@@ -29,12 +29,14 @@ const alertsSlice = createSlice({
     });
 
     builder.addCase(alertsThunks.alertsFilterUpdate, (state, action) => {
+      state.filter.skip = 0;
       const filter = state.filter;
       state.filter = { ...filter, ...action.payload };
       state.filter.filter = { ...filter.filter, ...action.payload.filter };
     });
 
     builder.addCase(alertsThunks.alertsFilterClear, (state, action) => {
+      state.filter.skip = 0;
       state.filter.filter = action.payload;
     });
 

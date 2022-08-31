@@ -1,4 +1,4 @@
-import React, { useEffect, useState, MouseEvent } from 'react';
+import React, { useEffect, MouseEvent } from 'react';
 import Table from '@mui/material/Table';
 import { useSelector } from 'react-redux';
 import TableRow from '@mui/material/TableRow';
@@ -25,13 +25,10 @@ const OrdersHistoryTable = ({ filterVisible }: any) => {
 
   const walletId = accountById?.wallets?.length && accountById.wallets[0]?.id;
 
-  const [page, setPage] = useState(0);
   const dispatch = useAppDispatch();
 
   const handleChangePage = (event: unknown, newPage: number) => {
     dispatch(walletsActions.ordersFilterUpdate({ skip: Number(newPage) * filter.take }));
-
-    setPage(newPage);
   };
 
   const orderSort = (elem: any): 'DESC' | 'ASC' => (elem.order === 'DESC' ? 'ASC' : 'DESC');
@@ -104,7 +101,7 @@ const OrdersHistoryTable = ({ filterVisible }: any) => {
       <Pagination
         handleChangePage={handleChangePage}
         handleChangeRowsPerPage={handleChangeRowsPerPage}
-        currentPage={page}
+        currentPage={filter.skip / filter.take || 0}
         rowsPerPage={filter?.take}
         totalCount={totalCount}
       />

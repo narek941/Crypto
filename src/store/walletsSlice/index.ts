@@ -102,51 +102,61 @@ const walletsSlice = createSlice({
     });
 
     builder.addCase(walletsThunks.recordsFilterUpdate, (state, action) => {
+      state.records.filter.skip = 0;
       const filter = state.records.filter;
       state.records.filter = { ...filter, ...action.payload };
       state.records.filter.filter = { ...filter.filter, ...action.payload.filter };
     });
 
     builder.addCase(walletsThunks.inflowFilterUpdate, (state, action) => {
+      state.inflow.filter.skip = 0;
       const filter = state.inflow.filter;
       state.inflow.filter = { ...filter, ...action.payload };
       state.inflow.filter.filter = { ...filter.filter, ...action.payload.filter };
     });
 
     builder.addCase(walletsThunks.ordersFilterUpdate, (state, action) => {
+      state.orders.filter.skip = 0;
       const filter = state.orders.filter;
       state.orders.filter = { ...filter, ...action.payload };
       state.orders.filter.filter = { ...filter.filter, ...action.payload.filter };
     });
 
     builder.addCase(walletsThunks.orderTradesFilterUpdate, (state, action) => {
+      state.orderTrades.filter.skip = 0;
       const filter = state.orderTrades.filter;
       state.orderTrades.filter = { ...filter, ...action.payload };
       state.orderTrades.filter.filter = { ...filter.filter, ...action.payload.filter };
     });
 
     builder.addCase(walletsThunks.openOrdersFilterUpdate, (state, action) => {
+      state.openOrders.filter.skip = 0;
       const filter = state.openOrders.filter;
       state.openOrders.filter = { ...filter, ...action.payload };
       state.openOrders.filter.filter = { ...filter.filter, ...action.payload.filter };
     });
     builder.addCase(walletsThunks.recordsFilterClear, (state, action) => {
+      state.records.filter.skip = 0;
       state.records.filter.filter = action.payload;
     });
 
     builder.addCase(walletsThunks.inflowFilterClear, (state, action) => {
+      state.inflow.filter.skip = 0;
       state.inflow.filter.filter = action.payload;
     });
 
     builder.addCase(walletsThunks.ordersFilterClear, (state, action) => {
+      state.orders.filter.skip = 0;
       state.orders.filter.filter = action.payload;
     });
 
     builder.addCase(walletsThunks.orderTradesFilterClear, (state, action) => {
+      state.orderTrades.filter.skip = 0;
       state.orderTrades.filter.filter = action.payload;
     });
 
     builder.addCase(walletsThunks.openOrdersFilterClear, (state, action) => {
+      state.openOrders.filter.skip = 0;
       state.openOrders.filter.filter = action.payload;
     });
     builder.addMatcher(

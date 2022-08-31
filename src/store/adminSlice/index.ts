@@ -54,6 +54,7 @@ const adminSlice = createSlice({
     });
 
     builder.addCase(adminThunks.usersFilterUpdate, (state, action) => {
+      state.usersFilter.skip = 0;
       const usersFilter = state.usersFilter;
       state.usersFilter = { ...usersFilter, ...action.payload };
       state.usersFilter.filter = { ...usersFilter.filter, ...action.payload.filter };
@@ -92,6 +93,7 @@ const adminSlice = createSlice({
     });
 
     builder.addCase(adminThunks.userFilterClear, (state, action) => {
+      state.usersFilter.skip = 0;
       state.usersFilter.filter = action.payload;
       state.error = null;
       state.loading = false;

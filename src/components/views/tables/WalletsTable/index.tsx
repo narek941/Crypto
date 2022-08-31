@@ -4,7 +4,7 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { useSelector } from 'react-redux';
-import React, { useState, useEffect, MouseEvent } from 'react';
+import React, { useEffect, MouseEvent } from 'react';
 import classNames from 'classnames';
 
 import { useAppDispatch } from 'hooks';
@@ -26,14 +26,10 @@ const WalletsTable = ({ filterVisible }: any) => {
   const summary = useSelector(walletsSelectors.selectSummary);
   const { filter, list, totalCount } = useSelector(walletsSelectors.selectRecords);
 
-  const [page, setPage] = useState(0);
-
   const walletId = accountById?.wallets?.length && accountById.wallets[0]?.id;
 
   const handleChangePage = (_event: unknown, newPage: number) => {
     dispatch(walletsActions.recordsFilterUpdate({ skip: Number(newPage) * filter.take }));
-
-    setPage(newPage);
   };
 
   const orderSort = (elem: any): 'DESC' | 'ASC' => (elem.order === 'DESC' ? 'ASC' : 'DESC');
@@ -126,7 +122,7 @@ const WalletsTable = ({ filterVisible }: any) => {
       <Pagination
         handleChangePage={handleChangePage}
         handleChangeRowsPerPage={handleChangeRowsPerPage}
-        currentPage={page}
+        currentPage={filter.skip / filter.take || 0}
         rowsPerPage={filter?.take}
         totalCount={totalCount}
       />

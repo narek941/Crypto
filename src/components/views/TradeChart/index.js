@@ -20,6 +20,7 @@ const TradingViewChart = ({
   field,
   timeField,
   width,
+  field2,
   baseCurrency,
   useWeekly = false,
   className,
@@ -29,13 +30,13 @@ const TradingViewChart = ({
 
   const [chartCreated, setChartCreated] = useState(false);
   const dataPrev = usePrevious(data);
-  // eslint-disable-next-line no-console
-  console.log(data, '11');
+
   // parese the data and format for tardingview consumption
   const formattedData = useMemo(
     () =>
       data?.map((entry) => {
         return {
+          id: entry.id,
           time: moment(entry[timeField]).format('YYYY-MM-DD'),
           value: parseFloat(entry[field]),
         };
@@ -200,6 +201,14 @@ const TradingViewChart = ({
       // update the title when hovering on the chart
 
       chart.subscribeCrosshairMove(function (param) {
+        const nd = new Date(param.time.year, param.time.month, param.time.day);
+        // eslint-disable-next-line no-console
+        const hoveredObject = data.filter(
+          (item) =>
+            moment(item.snapshotDate).toISOString().slice(0, 10) ==
+            moment(nd).toISOString().slice(0, 10),
+        );
+
         if (
           param === undefined ||
           param.time === undefined ||
@@ -230,11 +239,11 @@ const TradingViewChart = ({
             ' ' +
             baseCurrency +
             '</div>' +
-            // `<div style="font-size: 12px; color:#ffffff">` +
-            // price +
-            // ' ' +
-            // baseCurrency +
-            // '</div>' +
+            `<div style="font-size: 12px; color:#ffffff">` +
+            hoveredObject.map((item) => item[field2]) +
+            ' ' +
+            hoveredObject[0].account.baseCurrency.name +
+            '</div>' +
             `<div style="font-size: 12px; color:rgba(171, 154, 183, 0.3);">` +
             dateStr +
             '</div>' +
@@ -278,13 +287,6 @@ const TradingViewChart = ({
   return (
     <div styles={{ positions: 'absolute' }}>
       <div ref={ref} id={'test-id' + type + id} />
-      {/* <IconWrapper>
-        <Play
-          onClick={() => {
-            chartCreated && chartCreated.timeScale().fitContent();
-          }}
-        />
-      </IconWrapper> */}
     </div>
   );
 };

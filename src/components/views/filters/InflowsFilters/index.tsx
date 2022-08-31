@@ -107,7 +107,7 @@ const InflowsFilters = () => {
                 {...field}
                 {...inflowFilterFormFields.selectInflowValue}
                 callback={handleFilter}
-                filterName={'value'}
+                filterName={'amount'}
               />
             )}
           />
@@ -132,7 +132,7 @@ const InflowsFilters = () => {
                 {...field}
                 {...inflowFilterFormFields.selectInflowValueInBaseCurrency}
                 callback={handleFilter}
-                filterName={'baseCurrencyValue'}
+                filterName={'amountInBaseCurrency'}
                 closed={!isMore}
               />
             )}

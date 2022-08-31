@@ -4,7 +4,7 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { useSelector } from 'react-redux';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import classNames from 'classnames';
 import { MouseEvent } from 'react';
@@ -28,13 +28,10 @@ const TradesTable = ({ filterVisible }: any) => {
   const { filter, list, totalCount } = useSelector(accountsSelectors.selectAccountAccountsTrades);
   const { id } = useParams<ParamsWithId>();
 
-  const [page, setPage] = useState(0);
   const dispatch = useAppDispatch();
 
   const handleChangePage = (_event: unknown, newPage: number) => {
     dispatch(accountsTradesFilterUpdate({ skip: Number(newPage) * filter.take }));
-
-    setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -108,7 +105,7 @@ const TradesTable = ({ filterVisible }: any) => {
       <Pagination
         handleChangePage={handleChangePage}
         handleChangeRowsPerPage={handleChangeRowsPerPage}
-        currentPage={page}
+        currentPage={filter.skip / filter.take || 0}
         rowsPerPage={filter?.take}
         totalCount={totalCount}
       />
