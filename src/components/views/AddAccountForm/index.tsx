@@ -14,8 +14,9 @@ import TradeSetting from './FormGroups/TradeSetting';
 import { AddAccountFormShape, IAddAccount } from './types';
 
 const AddAccountForm = ({ onClick, isEditable = false }: IAddAccount) => {
-  const { name, startCapitalInBaseCurrency, allowedPairs, alertsDestinations, wallets } =
-    useSelector(accountsSelectors.selectAccountById);
+  const { name, allowedPairs, alertsDestinations, wallets, baseCurrency } = useSelector(
+    accountsSelectors.selectAccountById,
+  );
 
   const addAccountFormDefaultValues = useMemo(
     () =>
@@ -24,9 +25,9 @@ const AddAccountForm = ({ onClick, isEditable = false }: IAddAccount) => {
             name,
             allowedPairs,
             alertsDestinations,
-            startCapital: startCapitalInBaseCurrency,
+            // startCapital: startCapitalInBaseCurrency,
             exchange: 'Binance',
-            baseCurrency: 'USDT',
+            baseCurrency: baseCurrency?.id,
             apiKey: wallets && wallets[0]?.apiKey,
             apiSecret: wallets && wallets[0]?.apiSecret,
             refreshInterval: wallets && wallets[0]?.refreshInterval,
@@ -38,7 +39,6 @@ const AddAccountForm = ({ onClick, isEditable = false }: IAddAccount) => {
           }
         : {
             exchange: 'Binance',
-            baseCurrency: 'USDT',
             allowedPairs: [
               {
                 from: {
@@ -51,7 +51,7 @@ const AddAccountForm = ({ onClick, isEditable = false }: IAddAccount) => {
             ],
             alertsDestinations: [{ type: '', emailAddress: '', phoneNumber: '' }],
           },
-    [alertsDestinations, allowedPairs, isEditable, name, startCapitalInBaseCurrency, wallets],
+    [alertsDestinations, allowedPairs, baseCurrency, isEditable, name, wallets],
   );
   const { formMethods, handleSubmit } = useForm<keyof AddAccountFormShape, AddAccountFormShape>({
     schemaKeys: addAccountSchemaKeys,

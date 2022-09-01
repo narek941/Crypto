@@ -24,7 +24,6 @@ export type FormFieldNames =
   | 'selectValue'
   | 'creationTime'
   | 'baseCurrency'
-  | 'startCapital'
   | 'creationDate'
   | 'allowedPairs'
   | 'stopLossOrder'

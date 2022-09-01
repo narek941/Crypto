@@ -3,4 +3,5 @@ export interface IModalProps {
   open: boolean;
   modalList: any[];
   id: number | null;
+  baseCurrency?: string;
 }

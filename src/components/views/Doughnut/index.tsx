@@ -13,18 +13,27 @@ const Doughnut = ({
   value,
   header,
   tooltipFields = [],
-  legendDisplay = true,
-  legendPosition = 'right',
   className,
-  pointStyle = 'rect',
   baseCurrency,
-  textColor,
-  font = 13,
-  width,
-  radius = '120',
+  legendPositionBottom = false,
+  radius = '80',
   colors,
 }: any): JSX.Element => {
   const wrapperClass = classNames(className ? className : styles.wrapper);
+  const innerClass = classNames(
+    legendPositionBottom ? styles.legend__inner : styles.legendBig__inner,
+  );
+  const legendClass = classNames(legendPositionBottom ? styles.legend : styles.legendBig);
+  const legendItemClass = classNames(
+    legendPositionBottom ? styles.legend__item : styles.legendBig__item,
+  );
+  const legendItemBoxClass = classNames(
+    legendPositionBottom ? styles.legend__item__box : styles.legendBig__item__box,
+  );
+  const legendItemTextClass = classNames(
+    legendPositionBottom ? styles.legend__item__text : styles.legendBig__item__text,
+  );
+  const chartClass = classNames(legendPositionBottom ? styles.chart : styles.chartBig);
 
   const formattedData = parseChartLabels(data, field, value);
 
@@ -38,6 +47,7 @@ const Doughnut = ({
       tooltipEl.style.position = 'absolute';
       tooltipEl.style.transform = 'translate(-50%, 0)';
       tooltipEl.style.transition = 'all .1s ease';
+      tooltipEl.style.zIndex = '100000';
 
       const table = document.createElement('div');
 
@@ -70,9 +80,9 @@ const Doughnut = ({
             ` ${tooltip.dataPoints[0].label}` || '',
             `${
               chart.tooltip.dataPoints[0].dataset?.others
-                ? chart.tooltip.dataPoints[0].dataset?.others[tooltipFields[0]] + ' ' + baseCurrency
+                ? chart.tooltip.dataPoints[0].dataset?.others[tooltipFields[0]]
                 : ''
-            }`,
+            } ${baseCurrency}`,
           ]
         : [
             ` ${tooltip.dataPoints[0].label}` || '',
@@ -141,28 +151,7 @@ const Doughnut = ({
         external: externalTooltipHandler,
       },
       legend: {
-        padding: {
-          right: 30,
-        },
-        display: legendDisplay,
-        position: legendPosition,
-        usePointStyle: true,
-        onClick: () => null,
-        labels: {
-          fontColor: '#333',
-          boxWidth: 11,
-          boxHeight: 11,
-          textAlign: 'left',
-          padding: 8,
-          usePointStyle: true,
-          pointStyle,
-          pointStyleWidth: 13,
-          color: textColor,
-          font: {
-            size: font,
-            weight: 400,
-          },
-        },
+        display: false,
       },
     },
   };
@@ -172,8 +161,25 @@ const Doughnut = ({
   return (
     <div className={wrapperClass}>
       <h1 className={styles.wrapper__title}>{header}</h1>
-      <div className={styles.chart}>
-        <DoughnutJs data={optionData} options={options} width={width} />
+      <div className={innerClass}>
+        <div className={chartClass}>
+          <DoughnutJs data={optionData} options={options} />
+        </div>
+        <div className={legendClass}>
+          {formattedData?.label &&
+            colors &&
+            formattedData?.label?.map(({ key, value }: any, index) => (
+              <div key={index} className={legendItemClass}>
+                <div
+                  className={legendItemBoxClass}
+                  style={{
+                    background: colors[index] || '',
+                  }}
+                />
+                <span className={legendItemTextClass}>{`${key} - ${value}%`}</span>
+              </div>
+            ))}
+        </div>
       </div>
     </div>
   );

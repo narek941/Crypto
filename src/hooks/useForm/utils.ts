@@ -46,7 +46,7 @@ export const composeFormSchema = <K extends FormFieldNames>(fields: K[]): AnyObj
     allowedPairs: Yup.array().required('* Choose currencies to finish adding account'),
     stopLossOrder: Yup.bool(),
     baseCurrency: Yup.string().required('* Choose base currency to finish adding account'),
-    startCapital: Yup.string().required('* Enter start capital to finish adding account'),
+    // startCapital: Yup.string().required('* Enter start capital to finish adding account'),
     refreshInterval: Yup.string().required('* Choose refresh interval to finish adding account'),
     wrongCurrencyAlert: Yup.bool(),
     alertsDestinations: Yup.array().required('* Enter destination address for account alert '),

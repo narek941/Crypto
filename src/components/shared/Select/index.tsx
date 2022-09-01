@@ -32,9 +32,12 @@ const Select = React.forwardRef(
   ): JSX.Element => {
     const selectRef = useRef(null);
     const [isOpen, setIsOpen] = useState(false);
-    const [filteredOption, setFilteredOption] = useState(options);
+    const sortedOption = options.sort((a, b) => {
+      return a.label.localeCompare(b.label);
+    });
+    const [filteredOption, setFilteredOption] = useState(sortedOption);
 
-    const currentOption = options.find((option) => option.value === value);
+    const currentOption = sortedOption.find((option) => option.value === value);
 
     const getSelectClassName = (color: ColorType): string => {
       const selectClass: string = classNames(styles['select-wrapper'], className, {
@@ -45,16 +48,16 @@ const Select = React.forwardRef(
     };
 
     const dropClass: string = classNames(styles.select__dropdown, {
-      [styles.select__dropdown__open]: isOpen && options.length > 1,
-      [styles.select__dropdown__disable]: options.length <= 1,
+      [styles.select__dropdown__open]: isOpen && sortedOption.length > 1,
+      [styles.select__dropdown__disable]: sortedOption.length <= 1,
     });
 
     const optionClass: string = classNames(styles.select__option, {
-      [styles.select__option__open]: isOpen && options.length > 1,
+      [styles.select__option__open]: isOpen && sortedOption.length > 1,
     });
 
     const headerClass: string = classNames(styles.header, {
-      [styles.header__open]: isOpen && options.length > 1,
+      [styles.header__open]: isOpen && sortedOption.length > 1,
       [styles.select__placeholder]: !currentOption?.label,
     });
 
@@ -72,7 +75,7 @@ const Select = React.forwardRef(
 
     const closeDropdown = () => {
       setIsOpen(false);
-      setFilteredOption(options);
+      setFilteredOption(sortedOption);
     };
 
     const handleCancel = () => {
@@ -82,7 +85,7 @@ const Select = React.forwardRef(
     };
 
     const handleSelect = (selectedItem: string | number) => {
-      setFilteredOption(options);
+      setFilteredOption(sortedOption);
       onChange(selectedItem);
       if (!callback) {
         closeDropdown();
@@ -100,7 +103,7 @@ const Select = React.forwardRef(
 
     const handleSearch = (e: any) => {
       onChange(e.target.value);
-      const newOption = options.filter((item) =>
+      const newOption = sortedOption.filter((item) =>
         item.label.toLowerCase().includes(e.target.value.toLowerCase()),
       );
       setFilteredOption(newOption);
@@ -136,7 +139,7 @@ const Select = React.forwardRef(
               onChange={handleSearch}
               placeholder={placeholder}
               autoComplete='none'
-              readOnly={options.length <= 1}
+              readOnly={sortedOption.length <= 1}
               defaultValue={props.defaultValue}
               value={value ? currentOption?.label : ''}
             />

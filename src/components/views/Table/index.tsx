@@ -41,6 +41,7 @@ const Table = ({
     id: null,
     statistics: null,
     startCapitalInBaseCurrency: null,
+    baseCurrency: undefined,
   });
 
   const toggleAlertOpen = useCallback(() => setOpen(!open), [open]);
@@ -232,6 +233,7 @@ const Table = ({
         open={openChart}
         id={selectedAccountData.id}
         setOpen={setOpenChart}
+        baseCurrency={selectedAccountData?.baseCurrency}
         modalList={[
           {
             id: 1,
@@ -242,14 +244,14 @@ const Table = ({
           },
           {
             id: 2,
-            key: wrapWithBaseCurrency('Current open profit'),
+            key: wrapWithBaseCurrency('Current open profit', selectedAccountData?.baseCurrency),
             value: selectedAccountData.statistics?.currentOpenProfitInBaseCurrency
               ? Number(selectedAccountData.statistics?.currentOpenProfitInBaseCurrency).toFixed(8)
               : 0,
           },
           {
             id: 3,
-            key: wrapWithBaseCurrency('Earned capital'),
+            key: wrapWithBaseCurrency('Earned capital', selectedAccountData?.baseCurrency),
             value: selectedAccountData.statistics?.earnedCapitalInBaseCurrency
               ? Number(selectedAccountData.statistics?.earnedCapitalInBaseCurrency).toFixed(8)
               : 0,
@@ -265,7 +267,7 @@ const Table = ({
           },
           {
             id: 5,
-            key: wrapWithBaseCurrency('Current Capital'),
+            key: wrapWithBaseCurrency('Current Capital', selectedAccountData?.baseCurrency),
             value: selectedAccountData.statistics?.currentCapitalInBaseCurrency
               ? Number(selectedAccountData.statistics?.currentCapitalInBaseCurrency).toFixed(8)
               : 0,

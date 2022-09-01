@@ -3,7 +3,6 @@ import { SubmitHandler } from 'react-hook-form';
 export type AddAccountFormShape = {
   name: string;
   baseCurrency: string;
-  startCapital: string;
   exchange: string;
   apiKey: string;
   apiSecret: string;

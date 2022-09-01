@@ -8,12 +8,12 @@ import { useOnClickOutside } from 'hooks';
 import { accountsActions, accountsSelectors } from 'store/accountsSlice';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { Doughnut } from 'components';
-import { AccountAnalyticsChartTextColor, AccountModalChartColor } from 'constants/charts';
+import { AccountModalChartColor } from 'constants/charts';
 
 import styles from './Modal.module.scss';
 import { IModalProps } from './types';
 
-const Modal = ({ id, open, setOpen, modalList }: IModalProps): JSX.Element => {
+const Modal = ({ id, open, setOpen, modalList, baseCurrency }: IModalProps): JSX.Element => {
   const ref = useRef(null);
   const dispatch = useAppDispatch();
   const accountAssetsChartData = useAppSelector(accountsSelectors.selectAccountAssetChartData);
@@ -26,7 +26,6 @@ const Modal = ({ id, open, setOpen, modalList }: IModalProps): JSX.Element => {
     [styles.wrapper__open]: open,
   });
   const accountAnalyticsChartColors = AccountModalChartColor();
-  const accountAnalyticsChartTextColors = AccountAnalyticsChartTextColor();
 
   const handleClickOutside = (): void => setOpen(false);
 
@@ -38,7 +37,7 @@ const Modal = ({ id, open, setOpen, modalList }: IModalProps): JSX.Element => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, dispatch]);
 
-  const renderModalList = modalList.map(({ id, key, value, info }) => (
+  const renderModalList = modalList?.map(({ id, key, value, info }) => (
     <div className={styles.item} key={id}>
       <p className={styles.item__key}>
         {key}
@@ -65,16 +64,13 @@ const Modal = ({ id, open, setOpen, modalList }: IModalProps): JSX.Element => {
                 <div className={styles.chart__inner__doughnut}>
                   <Doughnut
                     header='Trading Pairs Chart'
-                    width='253px'
                     field={'pairName'}
                     className={styles.doughnut}
                     value={'relativePercentage'}
                     data={accountTradingPairsChartData}
-                    legendPosition='bottom'
+                    legendPositionBottom={true}
                     colors={accountAnalyticsChartColors}
-                    pointStyle='circle'
-                    font={10}
-                    textColor={accountAnalyticsChartTextColors}
+                    baseCurrency={baseCurrency}
                     radius={40}
                     tooltipFields={[
                       'totalBaseSum',
@@ -93,19 +89,16 @@ const Modal = ({ id, open, setOpen, modalList }: IModalProps): JSX.Element => {
                 <div className={styles.chart__inner__doughnut}>
                   <Doughnut
                     header='Asset Chart'
-                    data={accountAssetsChartData}
                     field={'assetCoin'}
+                    data={accountAssetsChartData}
                     value={'relativePercentage'}
-                    width='253px'
+                    baseCurrency={baseCurrency}
                     className={styles.doughnut}
-                    legendPosition='bottom'
+                    legendPositionBottom={true}
                     tooltipFields={['baseCurrencyValue', 'baseCurrencyName', 'value', 'assetCoin']}
                     wrapperClassName={styles.chart__wrapper}
-                    colors={accountAnalyticsChartColors}
-                    pointStyle='circle'
-                    font={10}
-                    textColor={accountAnalyticsChartTextColors}
                     radius={40}
+                    colors={accountAnalyticsChartColors}
                   />
                 </div>
               </div>

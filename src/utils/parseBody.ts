@@ -1,9 +1,9 @@
 const parseAccountBody = (body: any): any => ({
   status: 'ACTIVE',
   name: body.name,
-  startCapitalInBaseCurrency: body.startCapital,
+  // startCapitalInBaseCurrency: body.startCapital,
   baseCurrency: {
-    id: 508,
+    id: body.baseCurrency,
   },
   allowedCurrencies: [
     {
