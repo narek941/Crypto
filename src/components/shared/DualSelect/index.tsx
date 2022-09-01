@@ -35,7 +35,7 @@ const DualSelect = React.forwardRef<any, any>(
     };
 
     const handleSubmit = () => {
-      if (callback && filterName && selectPairStart && selectPairEnd) {
+      if (callback && filterName && selectPairStart && selectPairEnd && isOpenDropdown) {
         callback(filterName, [selectPairStart, selectPairEnd]);
       }
       handleClose();

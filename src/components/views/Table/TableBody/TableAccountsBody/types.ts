@@ -4,6 +4,7 @@ type ChartActionData = {
   id: number;
   statistics: any;
   startCapitalInBaseCurrency: any;
+  baseCurrency: any;
 };
 
 export interface ITableAccountBodyProps {

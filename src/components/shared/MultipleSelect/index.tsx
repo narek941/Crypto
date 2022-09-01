@@ -27,7 +27,9 @@ const MultipleSelect = ({
   defaultValues,
 }: any) => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const sortedOption = options.sort((a: any, b: any) => {
+    return a.label.localeCompare(b.label);
+  });
   const handleClose = () => {
     if (isOpen) {
       formMethods.resetField(name);
@@ -48,23 +50,23 @@ const MultipleSelect = ({
           return (
             <SelectMultiple
               isMulti
-              options={options}
+              options={sortedOption}
               classNamePrefix='multipleSelect'
               defaultValue={defaultValues}
               menuIsOpen={isOpen}
               onMenuOpen={() => setIsOpen(true)}
               onMenuClose={() => handleClose()}
               hideSelectedOptions={false}
-              placeholder={placeholder}
+              placeholder={<div className={styles.placeholder}>{placeholder}</div>}
               closeMenuOnSelect={false}
-              onChange={(options) => {
-                onChange(options?.map((option) => option.value));
+              onChange={(sortedOption) => {
+                onChange(sortedOption?.map((option) => option.value));
               }}
               onBlur={onBlur}
               // eslint-disable-next-line @typescript-eslint/ban-ts-comment
               // @ts-ignore
               customProps={{ filterName, callback, handleToggle }}
-              value={options.filter((option: any) => value?.includes(option.value))}
+              value={sortedOption.filter((option: any) => value?.includes(option.value))}
               components={{
                 ClearIndicator,
                 DropdownIndicator,
@@ -107,10 +109,10 @@ const handleSelect = ({ selectProps, getValue }: any) => {
 };
 
 const handleSelectAll = (props: any) => {
-  if (props.getValue().length === props.options.length) {
+  if (props.getValue().length === props.sortedOption.length) {
     props.clearValue();
   } else {
-    props.setValue(props.options);
+    props.setValue(props.sortedOption);
   }
 };
 

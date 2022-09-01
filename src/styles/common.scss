@@ -361,11 +361,8 @@
   background-color: transparent !important;
   @extend %text-14;
   padding: 0 !important;
-
-  &::placeholder {
-    color: var(--placeholder) !important;
-  }
 }
+
 .multipleSelect__value-container {
   padding: 0 !important;
   flex-wrap: nowrap !important;

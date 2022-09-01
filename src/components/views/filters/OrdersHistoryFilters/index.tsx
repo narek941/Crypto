@@ -164,7 +164,7 @@ const OrdersHistoryFilters = () => {
             {...formMethods.register('historyID')}
             className={styles.search}
             callback={handleFilter}
-            filterName={'id'}
+            filterName={'originalId'}
             clearAll={clearAll}
             closed={!isMore}
           />

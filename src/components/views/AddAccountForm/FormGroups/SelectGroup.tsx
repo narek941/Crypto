@@ -104,6 +104,7 @@ const SelectGroup = ({
                   {...addAccountFormFields.alertsDestinations}
                   isSmall={true}
                   {...field}
+                  innerClassName={styles.input}
                   placeholder={!type ? '' : isEmailInput ? 'Enter Email' : 'Enter Mobile Number'}
                   type={isEmailInput ? 'email' : 'tel'}
                 />

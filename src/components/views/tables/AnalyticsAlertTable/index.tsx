@@ -5,7 +5,7 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { useSelector } from 'react-redux';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import classNames from 'classnames';
 
@@ -25,12 +25,8 @@ const AnalyticsAlertTable = ({ filterVisible }: any) => {
   const dispatch = useAppDispatch();
   const { filter, list, totalCount } = useSelector(accountsSelectors.selectAccountAccountsAlerts);
 
-  const [page, setPage] = useState(0);
-
   const handleChangePage = (_event: unknown, newPage: number) => {
     dispatch(accountsActions.accountsAlertsFilterUpdate({ skip: Number(newPage) * filter.take }));
-
-    setPage(newPage);
   };
 
   const orderSort = (elem: any): 'DESC' | 'ASC' => (elem.order === 'DESC' ? 'ASC' : 'DESC');
@@ -107,7 +103,7 @@ const AnalyticsAlertTable = ({ filterVisible }: any) => {
       <Pagination
         handleChangePage={handleChangePage}
         handleChangeRowsPerPage={handleChangeRowsPerPage}
-        currentPage={page}
+        currentPage={filter.skip / filter.take || 0}
         rowsPerPage={filter?.take}
         totalCount={totalCount}
       />

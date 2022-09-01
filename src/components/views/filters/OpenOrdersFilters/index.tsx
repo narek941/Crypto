@@ -6,7 +6,7 @@ import { isNull } from 'lodash';
 
 import { CloseIcon } from 'assets/icons';
 import RangeSwipe from 'components/shared/Range';
-import { Select, TableSearch } from 'components';
+import { MultipleSelect, TableSearch } from 'components';
 import { createObject } from 'utils/createObject';
 import { adminSelectors } from 'store/adminSlice';
 import DualSelect from 'components/shared/DualSelect';
@@ -38,7 +38,7 @@ const OpenOrdersFilters = () => {
       selectShare: ['', ''],
       selectSide: '',
       searchID: '',
-      searchReceived: '',
+      searchReceived: ['', ''],
       selectPairEnd: '',
       selectPairStart: '',
       creationDate: [
@@ -117,6 +117,7 @@ const OpenOrdersFilters = () => {
             clearAll={clearAll}
           />
         </div>
+
         <div className={styles.item}>
           <DualSelect
             formMethods={formMethods}
@@ -127,21 +128,15 @@ const OpenOrdersFilters = () => {
             filterName={'pair'}
           />
         </div>
-        <div className={styles.item}>
-          <Controller
-            control={formMethods.control}
-            name={filterFormFields.selectSide.name as any}
-            render={({ field }) => (
-              <Select
-                {...filterFormFields.selectSide}
-                {...field}
-                className={styles.select}
-                callback={handleFilter}
-                filterName={'side'}
-              />
-            )}
+        <div className={(styles.item, styles.multipleSelect)}>
+          <MultipleSelect
+            formMethods={formMethods}
+            {...filterFormFields.selectSide}
+            callback={handleFilter}
+            filterName={'side'}
           />
         </div>
+
         <div className={styles.item}>
           <Controller
             control={formMethods.control}
@@ -168,16 +163,19 @@ const OpenOrdersFilters = () => {
             closed={!isMore}
           />
         </div>
-
         <div className={advancedClass}>
-          <TableSearch
-            {...filterFormFields.searchReceived}
-            {...formMethods.register('searchReceived')}
-            className={styles.search}
-            callback={handleFilter}
-            filterName={'tradesTotalPriceSum'}
-            clearAll={clearAll}
-            closed={!isMore}
+          <Controller
+            control={formMethods.control}
+            name={filterFormFields.searchReceived.name as any}
+            render={({ field }) => (
+              <RangeSwipe
+                {...field}
+                {...filterFormFields.searchReceived}
+                callback={handleFilter}
+                filterName={'tradesTotalPriceSum'}
+                closed={!isMore}
+              />
+            )}
           />
         </div>
 

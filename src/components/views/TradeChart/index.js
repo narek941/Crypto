@@ -20,6 +20,7 @@ const TradingViewChart = ({
   field,
   timeField,
   width,
+  field2,
   baseCurrency,
   useWeekly = false,
   className,
@@ -29,13 +30,13 @@ const TradingViewChart = ({
 
   const [chartCreated, setChartCreated] = useState(false);
   const dataPrev = usePrevious(data);
-  // eslint-disable-next-line no-console
-  console.log(data, '11');
+
   // parese the data and format for tardingview consumption
   const formattedData = useMemo(
     () =>
       data?.map((entry) => {
         return {
+          id: entry.id,
           time: moment(entry[timeField]).format('YYYY-MM-DD'),
           value: parseFloat(entry[field]),
         };
@@ -46,6 +47,7 @@ const TradingViewChart = ({
   const topScale = type === CHART_TYPES.AREA ? 0.32 : 0.2;
   const darkMode = useAppSelector(authSelectors.selectIsDarkMode);
   const textColor = darkMode ? 'white' : 'black';
+  const linesColor = darkMode ? 'rgba(255, 255, 255, 0.12)' : 'rgba(33, 33, 33, 0.16)';
 
   useEffect(() => {
     if (data !== dataPrev && chartCreated) {
@@ -93,7 +95,7 @@ const TradingViewChart = ({
 
     grid: {
       horzLines: {
-        color: 'rgba(255, 255, 255, 0.12)',
+        color: linesColor,
         visible: true,
       },
       vertLines: {
@@ -187,19 +189,16 @@ const TradingViewChart = ({
       toolTip.className = className;
       ref.current.appendChild(toolTip);
       toolTip.style.display = 'block';
-      // toolTip.style.background = 'unset';
-
-      //pti vor mi dzev stananq
-
-      // toolTip.style.filter = 'blur(0.2px)';
-      // toolTip.style.backgroundColor = 'background-color:rgba(46, 46, 46)';
-
-      // get the title of the chart
-      // eslint-disable-next-line no-inner-declarations
-
-      // update the title when hovering on the chart
 
       chart.subscribeCrosshairMove(function (param) {
+        const nd = new Date(param.time.year, param.time.month, param.time.day);
+        // eslint-disable-next-line no-console
+        const hoveredObject = data.filter(
+          (item) =>
+            moment(item.snapshotDate).toISOString().slice(0, 10) ==
+            moment(nd).toISOString().slice(0, 10),
+        );
+
         if (
           param === undefined ||
           param.time === undefined ||
@@ -230,11 +229,11 @@ const TradingViewChart = ({
             ' ' +
             baseCurrency +
             '</div>' +
-            // `<div style="font-size: 12px; color:#ffffff">` +
-            // price +
-            // ' ' +
-            // baseCurrency +
-            // '</div>' +
+            `<div style="font-size: 12px; color:#ffffff">` +
+            hoveredObject.map((item) => item[field2]) +
+            ' ' +
+            hoveredObject[0].account.baseCurrency.name +
+            '</div>' +
             `<div style="font-size: 12px; color:rgba(171, 154, 183, 0.3);">` +
             dateStr +
             '</div>' +
@@ -263,7 +262,6 @@ const TradingViewChart = ({
                 );
           toolTip.style.display = 'block';
           toolTip.style.padding = '12px';
-
           toolTip.style.left = shiftedCoordinate + 'px';
           toolTip.style.top = coordinateY + 'px';
         }
@@ -278,13 +276,6 @@ const TradingViewChart = ({
   return (
     <div styles={{ positions: 'absolute' }}>
       <div ref={ref} id={'test-id' + type + id} />
-      {/* <IconWrapper>
-        <Play
-          onClick={() => {
-            chartCreated && chartCreated.timeScale().fitContent();
-          }}
-        />
-      </IconWrapper> */}
     </div>
   );
 };

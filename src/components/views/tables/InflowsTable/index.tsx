@@ -1,4 +1,4 @@
-import { useState, useEffect, MouseEvent } from 'react';
+import { useEffect, MouseEvent } from 'react';
 import { useSelector } from 'react-redux';
 import Table from '@mui/material/Table';
 import TableRow from '@mui/material/TableRow';
@@ -25,14 +25,10 @@ const InflowsTable = ({ filterVisible }: any) => {
   const { filter, list, totalCount } = useSelector(walletsSelectors.selectInflow);
   const walletId = accountById?.wallets?.length && accountById.wallets[0]?.id;
 
-  const [page, setPage] = useState(0);
-
   const dispatch = useAppDispatch();
 
   const handleChangePage = (_event: unknown, newPage: number) => {
     dispatch(inflowFilterUpdate({ skip: Number(newPage) * filter.take }));
-
-    setPage(newPage);
   };
   const orderSort = (elem: any): 'DESC' | 'ASC' => (elem.order === 'DESC' ? 'ASC' : 'DESC');
 
@@ -108,7 +104,7 @@ const InflowsTable = ({ filterVisible }: any) => {
       <Pagination
         handleChangePage={handleChangePage}
         handleChangeRowsPerPage={handleChangeRowsPerPage}
-        currentPage={page}
+        currentPage={filter.skip / filter.take || 0}
         rowsPerPage={filter?.take}
         totalCount={totalCount}
       />

@@ -90,3 +90,10 @@
   // transform: translate(0, 100%);
   @extend %text-14;
 }
+
+.placeholder {
+  color: var(--placeholder);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+}

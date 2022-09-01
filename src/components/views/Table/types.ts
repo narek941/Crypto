@@ -56,4 +56,5 @@ export type SelectedAccount = {
   id: number | null;
   statistics: any | null;
   startCapitalInBaseCurrency: any | null;
+  baseCurrency?: string;
 };

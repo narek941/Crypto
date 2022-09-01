@@ -125,27 +125,33 @@ const accountsSlice = createSlice({
     });
 
     builder.addCase(accountsThunks.accountsFilterUpdate, (state, action) => {
+      state.accountsList.filter.skip = 0;
       const filter = state.accountsList.filter;
       state.accountsList.filter = { ...filter, ...action.payload };
       state.accountsList.filter.filter = { ...filter.filter, ...action.payload.filter };
     });
     builder.addCase(accountsThunks.accountsTradesFilterUpdate, (state, action) => {
+      state.trades.filter.skip = 0;
       const filter = state.trades.filter;
       state.trades.filter = { ...filter, ...action.payload };
       state.trades.filter.filter = { ...filter.filter, ...action.payload.filter };
     });
     builder.addCase(accountsThunks.accountsAlertsFilterUpdate, (state, action) => {
+      state.alerts.filter.skip = 0;
       const filter = state.alerts.filter;
       state.alerts.filter = { ...filter, ...action.payload };
       state.alerts.filter.filter = { ...filter.filter, ...action.payload.filter };
     });
     builder.addCase(accountsThunks.accountsTradesFilterClear, (state, action) => {
+      state.trades.filter.skip = 0;
       state.trades.filter.filter = action.payload;
     });
     builder.addCase(accountsThunks.accountsAlertsFilterClear, (state, action) => {
+      state.alerts.filter.skip = 0;
       state.alerts.filter.filter = action.payload;
     });
     builder.addCase(accountsThunks.accountsFilterClear, (state, action) => {
+      state.accountsList.filter.skip = 0;
       state.accountsList.filter.filter = action.payload;
     });
 

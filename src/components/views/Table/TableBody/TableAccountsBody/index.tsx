@@ -31,12 +31,18 @@ const TableAccountBody = ({
 
   const [delID, setID] = useState<number | null>(null);
 
-  const handleClick = (id: any, statistics: any, startCapitalInBaseCurrency: any) =>
+  const handleClick = (
+    id: any,
+    statistics: any,
+    startCapitalInBaseCurrency: any,
+    baseCurrency: any,
+  ) =>
     handleChartAction &&
     handleChartAction({
       id,
       statistics,
       startCapitalInBaseCurrency,
+      baseCurrency,
     });
 
   const renderRows = rows.map(
@@ -55,7 +61,7 @@ const TableAccountBody = ({
           className={styles.table__body__row}
           tabIndex={id}
           key={index}
-          onClick={() => handleClick(id, statistics, startCapitalInBaseCurrency)}
+          onClick={() => handleClick(id, statistics, startCapitalInBaseCurrency, baseCurrency.name)}
         >
           <TableCell className={styles.table__body__row__ceil} align='left'>
             {id}
