@@ -24,7 +24,7 @@ export const inflowOutflowTable: TableHeaderRow[] = [
     value: 'amount',
   },
   {
-    id: 'Amount',
+    id: 'amountInBaseCurrency',
     label: 'Amount',
     value: 'amountInBaseCurrency',
     withBaseCurrency: true,

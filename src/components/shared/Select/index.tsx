@@ -32,7 +32,7 @@ const Select = React.forwardRef(
   ): JSX.Element => {
     const selectRef = useRef(null);
     const [isOpen, setIsOpen] = useState(false);
-    const sortedOption = options.sort((a, b) => {
+    const sortedOption = options.sort((a: any, b: any) => {
       return a.label.localeCompare(b.label);
     });
     const [filteredOption, setFilteredOption] = useState(sortedOption);

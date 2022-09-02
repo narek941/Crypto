@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Paper, TableContainer, Tooltip } from '@mui/material';
+import { useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import { accountAnalyticsTabs } from 'constants/index';
@@ -17,33 +18,34 @@ import { FilterIcon } from 'assets/icons';
 import styles from './AnalyticsTabs.module.scss';
 
 const AnalyticsTabs = (): JSX.Element => {
-  const { t } = useTranslation();
-  const [selectedTab, setSelectedTab] = useState<number>(accountAnalyticsTabs[0].id || 0);
+  const [searchParams, setSearchParams] = useSearchParams();
   const [openFilter, setOpenFilter] = useState<boolean>(false);
-
-  const handleFilter = () => setOpenFilter(!openFilter);
+  const { t } = useTranslation();
 
   const handleTabUpdateChange = (id: number) => {
-    setSelectedTab(id);
+    setSearchParams({ tab: id.toString() });
   };
+  const handleFilter = () => setOpenFilter(!openFilter);
+
   useEffect(() => {
     setOpenFilter(false);
-  }, [selectedTab]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams.get('tab')]);
 
   const renderTable = () => {
-    switch (selectedTab) {
-      case 0:
-        return <OrdersTable filterVisible={openFilter} />;
-      case 1:
+    switch (searchParams.get('tab')) {
+      case '1':
         return <WalletsTable filterVisible={openFilter} />;
-      case 2:
+      case '2':
         return <InflowsTable filterVisible={openFilter} />;
-      case 3:
+      case '3':
         return <OrdersHistoryTable filterVisible={openFilter} />;
-      case 4:
+      case '4':
         return <TradesTable filterVisible={openFilter} />;
-      default:
+      case '5':
         return <AnalyticsAlertTable filterVisible={openFilter} />;
+      default:
+        return <OrdersTable filterVisible={openFilter} />;
     }
   };
 
@@ -53,7 +55,7 @@ const AnalyticsTabs = (): JSX.Element => {
         <div className={styles.tabs}>
           {accountAnalyticsTabs.map(({ id, name }) => (
             <Tab
-              selectedTab={selectedTab}
+              selectedTab={Number(searchParams.get('tab'))}
               handleChange={handleTabUpdateChange}
               id={id}
               name={name}

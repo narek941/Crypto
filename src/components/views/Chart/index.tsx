@@ -1,4 +1,4 @@
-import TradeChart from '../TradeChart';
+import { TradeChart } from 'components';
 
 import styles from './Chart.module.scss';
 
