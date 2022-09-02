@@ -14,12 +14,17 @@ const DualSelect = React.forwardRef<any, any>(
     { formMethods, name, placeholder, firstOptions, secondOptions, callback, filterName, closed },
     ref: any,
   ) => {
+    const sortedFirstOptions = firstOptions.sort((a: any, b: any) => {
+      return a.label.localeCompare(b.label);
+    });
+    const sortedSecondOptions = secondOptions.sort((a: any, b: any) => {
+      return a.label.localeCompare(b.label);
+    });
     const customWrapperRef = useRef(null);
     const [isOpenDropdown, setIsOpenDropdown] = useState<boolean>(false);
     const fields = formMethods.watch();
     const selectPairStart = fields[`${name}Start`];
     const selectPairEnd = fields[`${name}End`];
-
     const headerClass = classNames(styles.header, { [styles.header__open]: isOpenDropdown });
     const modalClass = classNames(styles.modal, { [styles.modal__open]: isOpenDropdown });
     const textClass = classNames(styles.header__input, {
@@ -62,9 +67,9 @@ const DualSelect = React.forwardRef<any, any>(
         <div role='button' onClick={toggleDrop} className={styles.header__inner}>
           <p className={textClass}>
             {selectPairStart || selectPairEnd
-              ? `${firstOptions[Number(selectPairStart) - 1]?.label || ''} ${
-                  secondOptions[Number(selectPairEnd) - 1]?.label ? '/' : ''
-                } ${secondOptions[Number(selectPairEnd) - 1]?.label || ''}`
+              ? `${firstOptions.find((item: any) => item.value === selectPairStart)?.label || ''} ${
+                  secondOptions.find((item: any) => item.value === selectPairEnd)?.label ? '/' : ''
+                } ${secondOptions.find((item: any) => item.value === selectPairEnd)?.label || ''}`
               : placeholder}
           </p>
           <div>{(selectPairStart || selectPairEnd) && <CloseIcon onClick={handleClear} />}</div>
@@ -83,7 +88,7 @@ const DualSelect = React.forwardRef<any, any>(
                   {...formMethods.register(`${name}Start`)}
                   render={({ field }) => (
                     <Select
-                      options={firstOptions}
+                      options={sortedFirstOptions}
                       {...field}
                       defaultValue={'BTC'}
                       ref={ref}
@@ -100,7 +105,7 @@ const DualSelect = React.forwardRef<any, any>(
                   {...formMethods.register(`${name}End`)}
                   render={({ field }) => (
                     <Select
-                      options={secondOptions}
+                      options={sortedSecondOptions}
                       {...field}
                       defaultValue={'BTC'}
                       ref={ref}

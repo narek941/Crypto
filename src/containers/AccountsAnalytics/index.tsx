@@ -16,7 +16,7 @@ const AccountsAnalytics = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const { id } = useParams();
   const convertedId = Number(id);
-  const windowWidth = useWindowSize();
+  const windowSize = useWindowSize();
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -30,7 +30,7 @@ const AccountsAnalytics = (): JSX.Element => {
   //   accountsSelectors.selectAccountPerformanceChartData,
   // );
   const accountCapitalChartData = useAppSelector(accountsSelectors.selectAccountCapitalChartData);
-
+  const canvasWidth = (windowSize.width - 290) / 2;
   const accountAnalyticsChartColors = AccountModalChartColor();
 
   useEffect(() => {
@@ -120,7 +120,7 @@ const AccountsAnalytics = (): JSX.Element => {
             subTitle={accountById?.baseCurrency?.name}
             timeField='snapshotDate'
             field='currentCapitalInBaseCurrency'
-            width={(windowWidth.width - 240) / 2}
+            width={canvasWidth}
             type='AREA'
             baseCurrency={accountById?.baseCurrency?.name}
             field2='currentOpenProfitInBaseCurrency'
@@ -132,7 +132,7 @@ const AccountsAnalytics = (): JSX.Element => {
             subTitle='%'
             timeField='snapshotDate'
             field='earnedCapitalInPercent'
-            width={(windowWidth.width - 240) / 2}
+            width={canvasWidth}
             type='AREA'
             baseCurrency='%'
             field2='currentOpenProfitInBaseCurrency'
@@ -146,10 +146,11 @@ const AccountsAnalytics = (): JSX.Element => {
                   data={accountTradingPairsChartData}
                   field={'pairName'}
                   value={'relativePercentage'}
-                  width={(windowWidth.width - 240) / 2}
+                  width={(windowSize.width - 240) / 2}
                   header={'Trading Pairs Chart'}
                   colors={accountAnalyticsChartColors}
                   baseCurrency={accountById?.baseCurrency?.name}
+                  navigateTo={3}
                   tooltipFields={['totalBaseSum', 'baseCurrencyName', 'totalSum', 'toCurrencyName']}
                 />
               )}
@@ -162,10 +163,11 @@ const AccountsAnalytics = (): JSX.Element => {
                   data={accountAssetsChartData}
                   field={'assetCoin'}
                   value={'relativePercentage'}
-                  width={(windowWidth.width - 260) / 2}
+                  width={(windowSize.width - 260) / 2}
                   header={'Account Assets Chart'}
                   colors={accountAnalyticsChartColors}
                   baseCurrency={accountById?.baseCurrency?.name}
+                  navigateTo={1}
                   tooltipFields={['baseCurrencyValue', 'baseCurrencyName', 'value', 'assetCoin']}
                 />
               )}

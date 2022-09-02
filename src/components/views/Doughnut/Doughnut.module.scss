@@ -95,3 +95,10 @@
     }
   }
 }
+.more {
+  cursor: pointer;
+  text-align: center;
+  color: var(--link-border);
+  @extend %flex-end;
+  @extend %button-14;
+}

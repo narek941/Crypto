@@ -53,14 +53,13 @@ const DateRangePicker = React.forwardRef<any, any>(
     const handleChange = (item: any) => {
       const start = item.selection.startDate;
       const end = item.selection.endDate;
-
       if (state.endDate && state.startDate && !isNull(state.startDate)) {
         if (moment(start).isBefore(state.startDate)) {
           setState({ ...state, startDate: start });
           formMethods.setValue(name, state);
           setLastChange(1);
         }
-        if (moment(state.endDate).isBefore(end)) {
+        if (moment(end).isAfter(state.endDate)) {
           setState({ ...state, endDate: end });
           setLastChange(2);
           formMethods.setValue(name, state);
@@ -73,8 +72,16 @@ const DateRangePicker = React.forwardRef<any, any>(
           }
           formMethods.setValue(name, state);
         }
+        if (moment(start).isSame(state.startDate, 'day') && moment(start).isSame(end, 'day')) {
+          setState({ ...state, endDate: start });
+          setLastChange(2);
+        }
+        if (moment(end).isSame(state.endDate, 'day') && moment(end).isSame(start, 'day')) {
+          setState({ ...state, startDate: end });
+          setLastChange(1);
+        }
       } else {
-        setState({ ...item.selection, color: isMode, lastChange: true });
+        setState({ ...item.selection, color: isMode, lastChange: 2 });
         formMethods.setValue(name, item.selection);
       }
     };
