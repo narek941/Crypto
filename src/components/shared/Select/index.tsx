@@ -153,13 +153,7 @@ const Select = React.forwardRef(
             </div>
           </div>
           <div className={optionClass}>
-            <div
-              style={{
-                maxHeight: 211,
-                overflowY: 'scroll',
-              }}
-              className={styles.select__option__select_container}
-            >
+            <div className={styles.select__option__select_container}>
               {filteredOption.map((item, index) => (
                 <div
                   key={index}

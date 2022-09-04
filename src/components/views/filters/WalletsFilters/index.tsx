@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Controller } from 'react-hook-form';
 import { isNull } from 'lodash';
+import { useParams } from 'react-router-dom';
 
 import { CloseIcon } from 'assets/icons';
 import { MultipleSelect } from 'components';
@@ -12,11 +13,12 @@ import { filterObject } from 'utils/filterObject';
 import RangeSwipe from 'components/shared/Range';
 
 import styles from './WalletsFilters.module.scss';
-import { FilterFormShape } from './types';
+import { FilterFormShape, IAccountRecordsFilterValue } from './types';
 import { filterSchemaKeys, walletFilterFormFields } from './fields';
 
 const WalletsFilters = () => {
   const dispatch = useAppDispatch();
+  const { id } = useParams();
   const { filter } = useAppSelector(walletsSelectors.selectRecords);
   const coins = useAppSelector(adminSelectors.selectCoins);
   const [clearAll, setClearAll] = useState(false);
@@ -29,6 +31,12 @@ const WalletsFilters = () => {
       searchWalletValueInBaseCurrency: ['', ''],
     },
   });
+  const [filterValue, setFilterValue] = useState<IAccountRecordsFilterValue>({
+    minValue: null,
+    maxValue: null,
+    minBaseCurrencyValue: null,
+    maxBaseCurrencyValue: null,
+  });
 
   const handleClear = () => {
     formMethods.reset({});
@@ -36,7 +44,13 @@ const WalletsFilters = () => {
     setClearAll(!clearAll);
   };
 
+  const getFilterValue = async () => {
+    const { data } = await dispatch(walletsActions.getRecordsFilterValues(Number(id))).unwrap();
+    setFilterValue(data);
+  };
+
   useEffect(() => {
+    getFilterValue();
     return () => {
       handleClear();
     };
@@ -85,6 +99,8 @@ const WalletsFilters = () => {
                 {...walletFilterFormFields.searchWalletValue}
                 callback={handleFilter}
                 filterName={'value'}
+                min={filterValue.minValue}
+                max={filterValue.maxValue}
               />
             )}
           />
@@ -100,6 +116,8 @@ const WalletsFilters = () => {
                 {...walletFilterFormFields.searchWalletValueInBaseCurrency}
                 callback={handleFilter}
                 filterName={'baseCurrencyValue'}
+                min={filterValue.minBaseCurrencyValue}
+                max={filterValue.maxBaseCurrencyValue}
               />
             )}
           />

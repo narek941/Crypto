@@ -98,13 +98,6 @@
   }
 }
 
-// .css-1poimk-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper {
-//   width: 100%;
-//   margin-top: 7px;
-//   left: 50%  !important;
-//   max-width: 420px !important;
-// }
-
 /// DateRangePicker
 
 .rdrDateDisplayWrapper,
@@ -180,7 +173,9 @@
   top: 0;
   left: 0 !important;
 }
-
+.rdrCalendarWrapper {
+  background-color: inherit;
+}
 .rdrDayHovered {
   border-radius: 50%;
   background-color: #6200ee;
@@ -408,4 +403,8 @@
   @extend %text-ellipsis;
   max-width: 80px;
   width: 100%;
+}
+
+.MuiTableContainer-root {
+  overflow-x: unset !important;
 }

@@ -3,6 +3,7 @@ import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { isNull } from 'lodash';
+import { useParams } from 'react-router-dom';
 
 import { CloseIcon } from 'assets/icons';
 import RangeSwipe from 'components/shared/Range';
@@ -11,17 +12,18 @@ import { createObject } from 'utils/createObject';
 import { adminSelectors } from 'store/adminSlice';
 import { useAppDispatch, useAppSelector, useForm } from 'hooks';
 import { inflowFilterClear, inflowFilterUpdate } from 'store/walletsSlice/thunks';
-import { walletsSelectors } from 'store/walletsSlice';
+import { walletsActions, walletsSelectors } from 'store/walletsSlice';
 import { filterObject } from 'utils/filterObject';
 
 import styles from './InflowsFilters.module.scss';
-import { InflowsFilterFormShape } from './types';
+import { IAccountInflowFilterValue, InflowsFilterFormShape } from './types';
 import { inflowFilterFormFields, inflowFilterSchemaKeys } from './fields';
 
 const InflowsFilters = () => {
   const dispatch = useAppDispatch();
   const coins = useAppSelector(adminSelectors.selectCoins);
   const { filter } = useAppSelector(walletsSelectors.selectInflow);
+  const { id } = useParams();
 
   const [isMore, setIsMore] = useState(false);
   const [clearAll, setClearAll] = useState(false);
@@ -39,6 +41,13 @@ const InflowsFilters = () => {
   });
   const { t } = useTranslation();
 
+  const [filterValue, setFilterValue] = useState<IAccountInflowFilterValue>({
+    minAmount: null,
+    maxAmount: null,
+    minAmountInBaseCurrency: null,
+    maxAmountInBaseCurrency: null,
+  });
+
   const handleToggle = () => setIsMore(!isMore);
 
   const handleClear = () => {
@@ -51,7 +60,13 @@ const InflowsFilters = () => {
     [styles.advanced__hide]: !isMore,
   });
 
+  const getFilterValue = async () => {
+    const { data } = await dispatch(walletsActions.getInflowFilterValues(Number(id))).unwrap();
+    setFilterValue(data);
+  };
+
   useEffect(() => {
+    getFilterValue();
     return () => {
       handleClear();
     };
@@ -108,6 +123,8 @@ const InflowsFilters = () => {
                 {...inflowFilterFormFields.selectInflowValue}
                 callback={handleFilter}
                 filterName={'amount'}
+                min={filterValue.minAmount}
+                max={filterValue.maxAmount}
               />
             )}
           />
@@ -134,6 +151,8 @@ const InflowsFilters = () => {
                 callback={handleFilter}
                 filterName={'amountInBaseCurrency'}
                 closed={!isMore}
+                min={filterValue.minAmountInBaseCurrency}
+                max={filterValue.maxAmountInBaseCurrency}
               />
             )}
           />

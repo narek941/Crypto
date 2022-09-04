@@ -21,3 +21,14 @@ export type FilterFormShape = {
 export interface IFilterForm {
   onClick: SubmitHandler<FilterFormShape>;
 }
+
+export interface IOpenOrdersFilterValue {
+  maxCreationTime: number | null;
+  maxRelativePercentageToAccount: number | null;
+  maxTradesTotalPriceSum: number | null;
+  maxValue: number | null;
+  minCreationTime: number | null;
+  minRelativePercentageToAccount: number | null;
+  minTradesTotalPriceSum: number | null;
+  minValue: number | null;
+}

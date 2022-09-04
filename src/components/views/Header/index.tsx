@@ -1,12 +1,13 @@
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-// import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { ArrowLeftIcon, AvatarIcon } from 'assets/icons';
 import { useOnClickOutside } from 'hooks';
 import { Popup } from 'components';
-// import { accountsSelectors } from 'store/accountsSlice';
+import { accountsSelectors } from 'store/accountsSlice';
+import { hideLetters } from 'utils/hideLetters';
 
 import styles from './Header.module.scss';
 import { IHeaderProps } from './types';
@@ -18,12 +19,16 @@ const Header = ({ text, isBackBtn = false, withMail = false }: IHeaderProps): JS
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const handleClickOutside = (): void => setOpen(false);
-  // const accountByID = useSelector(accountsSelectors.selectAccountById);
+  const accountByID = useSelector(accountsSelectors.selectAccountById);
 
   const navigateHandler = () => navigate(-1);
   const handleClick = (): void => setOpen(!open);
 
   useOnClickOutside(ref, handleClickOutside);
+
+  const email = accountByID?.alertsDestinations?.find(
+    (item: any) => item.type === 'EMAIL',
+  )?.emailAddress;
 
   return (
     <header className={styles.header}>
@@ -34,10 +39,11 @@ const Header = ({ text, isBackBtn = false, withMail = false }: IHeaderProps): JS
             <div className={styles.header__item}>
               <span className={styles.header__item__text}>{t(text)}</span>
 
-              {withMail && (
-                <span className={styles.header__item__text__footer}>
-                  {/* {accountByID?.alertDestination?[0]?.emailAddress} */}
-                </span>
+              {withMail && accountByID && (
+                <div className={styles.header__item__text__footer}>
+                  <span>{accountByID.name}</span>
+                  {email && <span>{hideLetters(email)}</span>}
+                </div>
               )}
             </div>
           </div>

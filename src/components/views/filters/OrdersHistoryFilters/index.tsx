@@ -3,6 +3,7 @@ import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { isNull } from 'lodash';
+import { useParams } from 'react-router-dom';
 
 import { CloseIcon } from 'assets/icons';
 import { MultipleSelect, TableSearch } from 'components';
@@ -12,12 +13,12 @@ import DualSelect from 'components/shared/DualSelect';
 import DateRangePicker from 'components/shared/DateRangePicker';
 import { useAppDispatch, useAppSelector, useForm } from 'hooks';
 import { ordersFilterClear, ordersFilterUpdate } from 'store/walletsSlice/thunks';
-import { walletsSelectors } from 'store/walletsSlice';
+import { walletsActions, walletsSelectors } from 'store/walletsSlice';
 import { filterObject } from 'utils/filterObject';
 import RangeSwipe from 'components/shared/Range';
 
 import styles from './OrdersHistoryFilters.module.scss';
-import { FilterFormShape } from './types';
+import { FilterFormShape, IAccountOrdersFilterValue } from './types';
 import { filterFormFields, filterSchemaKeys } from './fields';
 
 const OrdersHistoryFilters = () => {
@@ -25,11 +26,24 @@ const OrdersHistoryFilters = () => {
   const coins = useAppSelector(adminSelectors.selectCoins);
   const tradingPairs = useAppSelector(adminSelectors.selectTradingPairs);
   const { filter } = useAppSelector(walletsSelectors.selectOrders);
+  const { id } = useParams();
 
   const { t } = useTranslation();
 
   const [isMore, setIsMore] = useState(false);
   const [clearAll, setClearAll] = useState(false);
+  const [filterValue, setFilterValue] = useState<IAccountOrdersFilterValue>({
+    minValue: null,
+    maxValue: null,
+    minLastOperationTime: null,
+    maxLastOperationTime: null,
+    minValueInBaseCurrency: null,
+    maxValueInBaseCurrency: null,
+    minStopPrice: null,
+    maxStopPrice: null,
+    minLimitPrice: null,
+    maxLimitPrice: null,
+  });
 
   const { formMethods } = useForm<keyof FilterFormShape, FilterFormShape>({
     mode: 'onChange',
@@ -82,7 +96,13 @@ const OrdersHistoryFilters = () => {
     dispatch(ordersFilterClear({}));
   };
 
+  const getFilterValue = async () => {
+    const { data } = await dispatch(walletsActions.getRecordsFilterValues(Number(id))).unwrap();
+    setFilterValue(data);
+  };
+
   useEffect(() => {
+    getFilterValue();
     return () => {
       handleClear();
     };
@@ -143,6 +163,8 @@ const OrdersHistoryFilters = () => {
                 {...filterFormFields.historyValue}
                 callback={handleFilter}
                 filterName={'value'}
+                min={filterValue.minValue}
+                max={filterValue.maxValue}
               />
             )}
           />
@@ -155,6 +177,8 @@ const OrdersHistoryFilters = () => {
             callback={handleFilter}
             filterName={'lastOperationTime'}
             clearAll={clearAll}
+            min={filterValue.minLastOperationTime}
+            max={filterValue.maxLastOperationTime}
           />
         </div>
 
@@ -179,6 +203,8 @@ const OrdersHistoryFilters = () => {
                 {...filterFormFields.historyValueInBaseCurrency}
                 callback={handleFilter}
                 filterName={'valueInBaseCurrency'}
+                min={filterValue.minValueInBaseCurrency}
+                max={filterValue.maxValueInBaseCurrency}
               />
             )}
           />
@@ -193,6 +219,8 @@ const OrdersHistoryFilters = () => {
                 {...filterFormFields.searchHistoryStop}
                 callback={handleFilter}
                 filterName={'stopPrice'}
+                min={filterValue.minStopPrice}
+                max={filterValue.maxStopPrice}
               />
             )}
           />
@@ -207,6 +235,8 @@ const OrdersHistoryFilters = () => {
                 {...filterFormFields.searchHistoryLimit}
                 callback={handleFilter}
                 filterName={'limitPrice'}
+                min={filterValue.minLimitPrice}
+                max={filterValue.maxLimitPrice}
               />
             )}
           />

@@ -7,33 +7,36 @@ import 'react-date-range/dist/theme/default.css'; // theme css file
 import moment from 'moment';
 import { isNull } from 'lodash';
 
-import { useAppSelector, useOnClickOutside } from 'hooks';
+import { useAppSelector, useOnClickOutside, useWindowSize } from 'hooks';
 import { CalendarIcon, CloseIcon } from 'assets/icons';
 import { authSelectors } from 'store/authSlice';
+import { addDays } from 'utils/addDays';
+import { useRect } from 'hooks/useRect';
 
 import styles from './DateRangePicker.module.scss';
+import { IDateRangePicker } from './types';
 
-const DateRangePicker = React.forwardRef<any, any>(
-  ({ placeholder, formMethods, name, callback, filterName, clearAll, closed }, ref: any) => {
-    const customRef = useRef(null);
-    const [openCalendar, setOpenCalendar] = useState<boolean>(false);
-
+const DateRangePicker = React.forwardRef<IDateRangePicker, any>(
+  (
+    { placeholder, formMethods, name, callback, filterName, clearAll, closed, min, max },
+    ref: any,
+  ) => {
     const defaultValue = {
       startDate: undefined,
       endDate: undefined,
       color: 'transparent',
       key: 'selection',
     };
+    const customRef = useRef<HTMLDivElement>(null);
+    const [openCalendar, setOpenCalendar] = useState<boolean>(false);
     const [lastChange, setLastChange] = useState<number>(2);
-
     const [state, setState] = useState(defaultValue);
+    const [isElementPositionRight, setIsElementPositionRight] = useState<boolean>(false);
 
     const isDarkMode = useAppSelector(authSelectors.selectIsDarkMode);
     const isMode = isDarkMode ? 'rgba(65, 58, 199, 0.15)' : '#e5e5e5';
-
     const startDay = moment(state.startDate).format('LL');
     const endDay = moment(state.endDate).format('LL');
-
     const text = state.startDate === undefined ? placeholder : `${startDay} - ${endDay}`;
 
     const headerTextClass = classNames({
@@ -41,14 +44,24 @@ const DateRangePicker = React.forwardRef<any, any>(
     });
 
     const calendarWrapperClass = classNames(styles.calendar__wrapper, {
-      [styles.calendar__wrapper__open]: openCalendar,
+      [styles.calendar__wrapper__open]: !isElementPositionRight && openCalendar,
+      [styles.calendar__wrapper__open__right]: isElementPositionRight && openCalendar,
     });
 
     const toggleCalendar = () => setOpenCalendar(true);
 
-    // const handleCloseCalendar = () => {
-    //   setOpenCalendar(false);
-    // };
+    const pos = useRect(customRef);
+    const width = useWindowSize().width;
+
+    useEffect(() => {
+      if (width) {
+        if (pos.left + pos.width / 2 < width / 2) {
+          setIsElementPositionRight(false);
+        } else if (pos.left + pos.width / 2 > width / 2) {
+          setIsElementPositionRight(true);
+        }
+      }
+    }, [width]);
 
     const handleChange = (item: any) => {
       const start = item.selection.startDate;
@@ -84,12 +97,6 @@ const DateRangePicker = React.forwardRef<any, any>(
         setState({ ...item.selection, color: isMode, lastChange: 2 });
         formMethods.setValue(name, item.selection);
       }
-    };
-
-    const addDays = function (str: any, days: any) {
-      const myDate = new Date(str);
-      myDate.setDate(myDate.getDate() + parseInt(days));
-      return myDate;
     };
 
     const handleSubmit = () => {
@@ -148,11 +155,14 @@ const DateRangePicker = React.forwardRef<any, any>(
                 ranges={[state]}
                 weekStartsOn={1}
                 showPreview={false}
+                editableDateInputs={true}
+                showMonthAndYearPickers={true}
                 direction='horizontal'
                 onChange={handleChange}
+                minDate={min}
+                maxDate={max}
                 moveRangeOnFirstSelection={false}
                 weekdayDisplayFormat='EEEEE'
-                showMonthAndYearPickers={true}
                 className={styles.calendar__inner}
               />
             )}

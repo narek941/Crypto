@@ -118,6 +118,22 @@ export const updateUsername = createAsyncThunk(
   },
 );
 
+export const updateUserAllowedAccounts = createAsyncThunk(
+  `${Slice.Admin}/users/:id/allowed-accounts`,
+  async ({ userID, allowedAccountIds }: { userID: number; allowedAccountIds: any[] }, thunkAPI) => {
+    try {
+      const response = await adminApi.updateAllowedAccountsRequest(userID, allowedAccountIds);
+
+      return response.data;
+    } catch (exception) {
+      const error = exception as AxiosError<{ message: any }>;
+      return thunkAPI.rejectWithValue({
+        error: { allowedAccountIds: error.response?.data.message[0] },
+      });
+    }
+  },
+);
+
 export const updateUserEmail = createAsyncThunk(
   `${Slice.Admin}/users/email`,
   async ({ userID, email }: { userID: number; email: string }, thunkAPI) => {

@@ -1,4 +1,5 @@
 export { default as Tab } from './Tab';
+export { default as Menu } from './Menu';
 export { default as Alert } from './Alert';
 export { default as Input } from './Input';
 export { default as Popup } from './Popup';

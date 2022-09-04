@@ -20,7 +20,7 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
     name: 'accountAVGTrades',
     type: 'select',
     id: 'filterForm.accountAVGTrades',
-    placeholder: 'Enter Avg. Trades',
+    placeholder: 'Select Avg. Trades',
   },
   accountId: {
     name: 'accountId',
@@ -33,25 +33,25 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
     name: 'accountSeed',
     type: 'select',
     id: 'filterForm.accountSeed',
-    placeholder: 'Enter Seed Capital',
+    placeholder: 'Select Seed Capital',
   },
   accountCurrentCapital: {
     name: 'accountCurrentCapital',
     type: 'Search',
     id: 'filterForm.accountCurrentCapital',
-    placeholder: 'Enter Current Capital',
+    placeholder: 'Select Current Capital',
   },
   accountOpenProfit: {
     name: 'accountOpenProfit',
     type: 'Search',
     id: 'filterForm.accountOpenProfit',
-    placeholder: 'Enter Open Profit',
+    placeholder: 'Select Open Profit',
   },
   accountEarnedCapital: {
     name: 'accountEarnedCapital',
     type: 'Search',
     id: 'filterForm.accountEarnedCapital',
-    placeholder: 'Enter Earned Capital',
+    placeholder: 'Select Earned Capital',
   },
 };
 

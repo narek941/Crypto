@@ -1,9 +1,12 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
+import FileSaver from 'file-saver';
 
 import { Slice } from 'types';
 import { accountsApi } from 'api';
+import { ExportType } from 'components/shared/Export/types';
 
 import { ITableFilter } from './../../types/api/index';
+import { exportThunkType } from './types';
 
 export const getAccountList = createAsyncThunk(
   `${Slice.Accounts}/accounts`,
@@ -131,6 +134,7 @@ export const getAccountAssetsChartData = createAsyncThunk(
     }
   },
 );
+
 export const getAccountTradingPairsChartData = createAsyncThunk(
   `${Slice.Accounts}/accounts/id/trading-pairs-chart-data`,
   async (id: number, thunkAPI) => {
@@ -187,6 +191,82 @@ export const getAllAccounts = createAsyncThunk(`${Slice.Accounts}/list`, async (
     return thunkAPI.rejectWithValue({ error: '* Incorrect' });
   }
 });
+
+export const exportAccountTrades = createAsyncThunk(
+  `${Slice.Accounts}/accounts/id/export/trades/`,
+  async (
+    credentials: {
+      filename: 'account-stats';
+      fromDate: Date;
+      toDate: Date;
+      id: string;
+      type: ExportType;
+    },
+    thunkAPI,
+  ) => {
+    const { id, type, ...restCredentials } = credentials;
+
+    try {
+      const response = await accountsApi.accountTradesExportRequest(id, type, restCredentials);
+
+      if (type === ExportType.pdf) {
+        const blob = new Blob([response.data], { type: exportThunkType.pdf });
+        FileSaver.saveAs(blob, 'filename');
+      } else {
+        const csvData = new Blob([response.data], { type: exportThunkType.csv });
+        FileSaver.saveAs(csvData, 'filename');
+      }
+      return;
+    } catch {
+      return thunkAPI.rejectWithValue({ error: '* Incorrect' });
+    }
+  },
+);
+
+export const getAccountTradesFilterValues = createAsyncThunk(
+  `${Slice.Accounts}/accounts/:id/trades-list/filter-values`,
+  async (id: number, thunkAPI) => {
+    try {
+      const response = await accountsApi.accountTradesFilterValuesRequest(id);
+
+      return {
+        data: response.data,
+      };
+    } catch {
+      return thunkAPI.rejectWithValue({ error: '* Incorrect' });
+    }
+  },
+);
+
+export const getAccountAlertsFilterValues = createAsyncThunk(
+  `${Slice.Accounts}/accounts/:id/alerts/filter-values`,
+  async (id: number, thunkAPI) => {
+    try {
+      const response = await accountsApi.accountAlertsFilterValuesRequest(id);
+
+      return {
+        data: response.data,
+      };
+    } catch {
+      return thunkAPI.rejectWithValue({ error: '* Incorrect' });
+    }
+  },
+);
+
+export const getAccountsFilterValues = createAsyncThunk(
+  `${Slice.Accounts}/accounts/list/filter-values`,
+  async (id: number, thunkAPI) => {
+    try {
+      const response = await accountsApi.accountListFilterValuesRequest(id);
+
+      return {
+        data: response.data,
+      };
+    } catch {
+      return thunkAPI.rejectWithValue({ error: '* Incorrect' });
+    }
+  },
+);
 
 export const accountsFilterUpdate = createAction<Partial<ITableFilter>>('accountsFilter');
 

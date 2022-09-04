@@ -10,19 +10,20 @@ import { useAppDispatch, useAppSelector, useForm } from 'hooks';
 import { createObject } from 'utils/createObject';
 import { alertsFilterClear, alertsFilterUpdate } from 'store/alertsSlice/thunks';
 import { filterObject } from 'utils/filterObject';
-import { alertsSelectors } from 'store/alertsSlice';
+import { alertsActions, alertsSelectors } from 'store/alertsSlice';
 import MultipleSelect from 'components/shared/MultipleSelect';
 
 import styles from './AlertsFilters.module.scss';
-import { FilterFormShape } from './types';
+import { FilterFormShape, IAlertsFilterValue } from './types';
 import { filterFormFields, filterSchemaKeys } from './fields';
 
 const AlertsFilters = () => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const filter = useAppSelector(alertsSelectors.selectAlertsFilter);
-  const [isMore, setIsMore] = useState(false);
-  const [clearAll, setClearAll] = useState(false);
+  const [isMore, setIsMore] = useState<boolean>(false);
+
+  const [clearAll, setClearAll] = useState<boolean>(false);
   const { formMethods } = useForm<keyof FilterFormShape, FilterFormShape>({
     mode: 'onChange',
     schemaKeys: filterSchemaKeys,
@@ -31,6 +32,10 @@ const AlertsFilters = () => {
       alertID: '',
       alertMessage: '',
     },
+  });
+  const [filterValue, setFilterValue] = useState<IAlertsFilterValue>({
+    minCreatedAt: null,
+    maxCreatedAt: null,
   });
 
   const advancedClass = classNames(styles.item, {
@@ -58,8 +63,13 @@ const AlertsFilters = () => {
       }
     }
   };
+  const getFilterValue = async () => {
+    const { data } = await dispatch(alertsActions.getAlertsFilterValue()).unwrap();
+    setFilterValue(data);
+  };
 
   useEffect(() => {
+    getFilterValue();
     return () => {
       handleClear();
     };
@@ -86,6 +96,8 @@ const AlertsFilters = () => {
             callback={handleFilter}
             filterName={'createdAt'}
             clearAll={clearAll}
+            min={filterValue.minCreatedAt}
+            max={filterValue.maxCreatedAt}
           />
         </div>
 

@@ -25,6 +25,7 @@ const AddAccountForm = ({ formMethods }: any) => {
               {...field}
               withAction={false}
               error={formMethods.formState.errors.exchange?.message}
+              withClear={false}
             />
           )}
         />
@@ -48,6 +49,7 @@ const AddAccountForm = ({ formMethods }: any) => {
               {...field}
               withAction={false}
               error={formMethods.formState.errors.refreshInterval?.message}
+              withClear={false}
             />
           )}
         />

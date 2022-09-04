@@ -33,6 +33,8 @@
         position: absolute;
         left: 0;
         bottom: -11px;
+        @extend %flex-align;
+        gap: 4px;
         @extend %header-11;
         color: var(--placeholder-select);
       }

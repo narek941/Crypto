@@ -1,12 +1,115 @@
 .export {
   gap: 6px;
   cursor: pointer;
+  position: relative;
   justify-content: end;
   @extend %flex-align;
 
-  span {
+  &__text {
     color: var(--export-text);
     text-transform: capitalize;
     @extend %text-16-bold;
+  }
+
+  &__popup {
+    right: 0;
+    gap: 8px;
+    z-index: 10000;
+    top: 28px;
+    border-radius: 4px;
+    position: absolute;
+    color: var(--font);
+    padding: 16px 24px;
+    text-transform: capitalize;
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--popup-border);
+    background: var(--popup-background);
+    @extend %flex-column;
+
+    &__title {
+      @extend %header-18;
+    }
+
+    &__subtitle {
+      @extend %text-16-bold;
+      margin-top: 16px;
+    }
+
+    &__calendar {
+      margin-top: 8px;
+      min-width: 100%;
+      min-height: 100%;
+      border-radius: 4px;
+      white-space: nowrap;
+      background-color: transparent;
+      filter: drop-shadow(var(--option-shadow));
+      position: relative;
+
+      &__inner {
+        @extend %flex-align-start;
+
+        &__input {
+          gap: 2px;
+          padding: 8px 16px;
+          border-bottom: 1px solid var(--input-active);
+          @extend %flex-column;
+
+          &:hover {
+            border-bottom: 1px solid var(--input-border);
+          }
+
+          &:hover,
+          &:focus {
+            .export__popup__calendar__inner__input__label {
+              color: var(--input-border) !important;
+            }
+          }
+
+          input {
+            background: transparent;
+            border: none;
+            color: var(--font);
+          }
+
+          label {
+            @extend %label-12;
+          }
+        }
+      }
+
+      &__picker {
+        background-color: var(--background);
+      }
+    }
+
+    &__footer {
+      margin-top: 16px;
+      @extend %flex-align-start;
+
+      &__text {
+        margin-top: 16px;
+        @extend %text-16-bold;
+      }
+
+      &__button {
+        gap: 4px;
+        @extend %flex-align;
+
+        &__wrapper {
+          gap: 24px;
+          margin-top: 6px;
+          @extend %flex-align;
+        }
+
+        &__text {
+          color: var(--input-border);
+          text-transform: uppercase;
+        }
+
+        svg path {
+          fill: var(--input-border);
+        }
+      }
+    }
   }
 }

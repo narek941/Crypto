@@ -14,3 +14,8 @@ export type FilterFormShape = {
 export interface IFilterForm {
   onClick: SubmitHandler<FilterFormShape>;
 }
+
+export interface IAccountsFilterValue {
+  minCurrentOpenProfitInBaseCurrency: number | null;
+  maxCurrentOpenProfitInBaseCurrency: number | null;
+}

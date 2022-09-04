@@ -19,12 +19,12 @@ export const inflowFilterFormFields: FormField<keyof InflowsFilterFormShape> = {
   selectInflowValue: {
     name: 'selectInflowValue',
     id: 'inflowFilterForm.selectInflowValue',
-    placeholder: 'Enter Amount',
+    placeholder: 'Select Amount',
   },
   selectInflowValueInBaseCurrency: {
     name: 'selectInflowValueInBaseCurrency',
     id: 'inflowFilterForm.selectInflowValueInBaseCurrency',
-    placeholder: 'Enter Amount, USDT',
+    placeholder: 'Select Amount, USDT',
   },
 
   searchInflowID: {

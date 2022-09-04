@@ -35,5 +35,12 @@
 "show_filter_text":"Click Here to Show Advanced Filters",
 "clear_all":"Clear All",
 "filters": "Filters",
-"loading": "Loading"
+"loading": "Loading",
+"end_date":"end date",
+"start_date":"start date",
+"to":"to",
+"choose_date": "choose date",
+"export_data":"export data",
+"choose_format":"choose format"
+
 }

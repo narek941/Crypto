@@ -1,4 +1,4 @@
-import { HandIcon, PercentIcon } from 'assets/icons';
+import { HandIcon } from 'assets/icons';
 import { sideOptions } from 'utils/filterHelper';
 
 import { FormField } from '../../../forms/types';
@@ -9,33 +9,33 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
   creationDate: {
     name: 'selectCreationDate',
     id: 'filterForm.creationDate',
-    placeholder: 'Select creation date',
+    placeholder: 'Select Created At',
   },
 
   updatedTime: {
     name: 'selectUpdatedTime',
     id: 'filterForm.updatedTime',
-    placeholder: 'Select updated time',
+    placeholder: 'Select Updated',
   },
 
   selectPair: {
     name: 'selectPair',
     type: 'DualSelect',
     id: 'filterForm.selectPair',
-    placeholder: 'Select pairs',
+    placeholder: 'Select Pair',
   },
 
   selectSide: {
     name: 'selectSide',
     type: 'Select',
     id: 'filterForm.selectSide',
-    placeholder: 'Select side',
+    placeholder: 'Select Side',
     options: sideOptions,
   },
   selectValue: {
     name: 'selectValue',
     id: 'filterForm.selectValue',
-    placeholder: 'Select value',
+    placeholder: 'Select Value',
   },
 
   searchID: {
@@ -87,7 +87,6 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
     type: 'select',
     id: 'filterForm.selectShare',
     placeholder: 'Select Share',
-    Icon: PercentIcon,
   },
 
   selectPairEnd: {

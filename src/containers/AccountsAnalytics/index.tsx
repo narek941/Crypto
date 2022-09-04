@@ -9,6 +9,7 @@ import { adminActions } from 'store/adminSlice';
 import { accountsActions, accountsSelectors } from 'store/accountsSlice';
 import { Bricks, Chart, Doughnut, Export, AnalyticsTabs, Loader } from 'components';
 import { AccountModalChartColor } from 'constants/charts';
+import { ExportType } from 'components/shared/Export/types';
 
 import styles from './AccountsAnalytics.module.scss';
 
@@ -32,6 +33,18 @@ const AccountsAnalytics = (): JSX.Element => {
   const accountCapitalChartData = useAppSelector(accountsSelectors.selectAccountCapitalChartData);
   const canvasWidth = (windowSize.width - 290) / 2;
   const accountAnalyticsChartColors = AccountModalChartColor();
+
+  const handleExportSubmit = (credentials: any) => {
+    if (credentials.type === ExportType.pdf) {
+      dispatch(
+        accountsActions.exportAccountTrades({ id, filename: 'account-stats', ...credentials }),
+      ).unwrap();
+    } else {
+      dispatch(
+        accountsActions.exportAccountTrades({ id, filename: 'account-stats', ...credentials }),
+      ).unwrap();
+    }
+  };
 
   useEffect(() => {
     const getAccountsAnalytics = async () => {
@@ -68,7 +81,7 @@ const AccountsAnalytics = (): JSX.Element => {
     <>
       <div className={styles.analytics}>
         <div className={styles.analytics__export}>
-          <Export />
+          <Export callback={handleExportSubmit} />
         </div>
         <div className={styles.analytics__bricks__wrapper}>
           <Bricks
@@ -123,7 +136,6 @@ const AccountsAnalytics = (): JSX.Element => {
             width={canvasWidth}
             type='AREA'
             baseCurrency={accountById?.baseCurrency?.name}
-            field2='currentOpenProfitInBaseCurrency'
           />
           <Chart
             // data={accountPerformanceChartData}
@@ -135,7 +147,7 @@ const AccountsAnalytics = (): JSX.Element => {
             width={canvasWidth}
             type='AREA'
             baseCurrency='%'
-            field2='currentOpenProfitInBaseCurrency'
+            field2='earnedCapitalInBaseCurrency'
           />
         </div>
         <div className={styles.analytics__chart}>

@@ -23,6 +23,18 @@ export const getAlertList = createAsyncThunk(
   },
 );
 
+export const getAlertsFilterValue = createAsyncThunk(`${Slice.Alerts}`, async (_, thunkAPI) => {
+  try {
+    const response = await alertsApi.alertsFilterValuesRequest();
+
+    return {
+      data: response.data,
+    };
+  } catch {
+    return thunkAPI.rejectWithValue({ error: '* Incorrect' });
+  }
+});
+
 export const alertsFilterUpdate = createAction<Partial<ITableFilter>>('alertsFilter');
 
 export const alertsFilterClear = createAction<Partial<ITableFilter>>('alertsFilterClear');

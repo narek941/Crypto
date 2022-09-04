@@ -33,6 +33,8 @@ const AnalyticsTabs = (): JSX.Element => {
   }, [searchParams.get('tab')]);
 
   const renderTable = () => {
+    const position = window.pageYOffset;
+
     switch (searchParams.get('tab')) {
       case '1':
         return <WalletsTable filterVisible={openFilter} />;
@@ -47,6 +49,7 @@ const AnalyticsTabs = (): JSX.Element => {
       default:
         return <OrdersTable filterVisible={openFilter} />;
     }
+    window.scrollTo(0, position);
   };
 
   return (

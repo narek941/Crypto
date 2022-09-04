@@ -28,3 +28,8 @@ export type AccountsSliceState = {
     filter: ITableFilter;
   };
 };
+
+export enum exportThunkType {
+  pdf = 'application/pdf',
+  csv = 'text/csv;charset=utf-8;',
+}

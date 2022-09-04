@@ -109,10 +109,10 @@ const handleSelect = ({ selectProps, getValue }: any) => {
 };
 
 const handleSelectAll = (props: any) => {
-  if (props.getValue().length === props.sortedOption.length) {
+  if (props.getValue().length === props.options.length) {
     props.clearValue();
   } else {
-    props.setValue(props.sortedOption);
+    props.setValue(props.options);
   }
 };
 
@@ -160,6 +160,7 @@ const MenuList = (props: MenuListProps<any>) => {
       <components.MenuList className={styles.item} {...props}>
         {props.children}
       </components.MenuList>
+
       <div className={styles.action}>
         <div>
           <div className={styles.action__select} onClick={() => handleSelectAll(props)}>

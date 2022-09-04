@@ -18,6 +18,12 @@ export const updateUsernameRequest = (id: number, username: string) => {
   });
 };
 
+export const updateAllowedAccountsRequest = (id: number, allowedAccountIds: any[]) => {
+  return client.put(`/admin/users/${id}/allowed-accounts`, {
+    allowedAccountIds,
+  });
+};
+
 export const updateUserEmailRequest = (id: number, email: string) => {
   return client.put(`/admin/users/${id}/email`, {
     email,

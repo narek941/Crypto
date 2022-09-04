@@ -20,18 +20,18 @@ const AddNewUser = () => {
   const dispatch = useAppDispatch() as AppDispatch;
   const { id: userId } = useParams();
   const id = Number(userId);
-  const { username, role, email, password } = useSelector(adminSelectors.selectUserById);
+  const { username, role, email, password, allowedAccountIds } = useSelector(
+    adminSelectors.selectUserById,
+  );
   const handleSubmit: SubmitHandler<AddUserFormShape> = async (values) => {
     const body = {
-      email: values.email,
+      email: values.email.trim(),
       password: values.password,
-      name: values.name,
+      name: values.name.trim(),
       role: values.usersAccountType,
       deviceToken: uuidv4(),
       allowedAccountIds: values.usersAccountList || [],
     } as any;
-    // eslint-disable-next-line no-console
-    console.log(values);
 
     if (!id) {
       await dispatch(usersActions.addNewUser(body)).unwrap();
@@ -62,10 +62,19 @@ const AddNewUser = () => {
           ).unwrap(),
         );
       }
+      if (values.usersAccountList && !isEqual(values.usersAccountList, allowedAccountIds)) {
+        userUpdatedFieldsPromises.push(
+          dispatch(
+            adminActions.updateUserAllowedAccounts({
+              userID: id,
+              allowedAccountIds: values.usersAccountList,
+            }),
+          ).unwrap(),
+        );
+      }
 
       await Promise.all(userUpdatedFieldsPromises);
     }
-
     navigate(Routes.Users);
   };
 

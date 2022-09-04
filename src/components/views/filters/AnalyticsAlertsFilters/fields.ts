@@ -8,14 +8,14 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
   alertCreationDate: {
     name: 'selectAlertCreationDate',
     id: 'filterForm.alertCreationDate',
-    placeholder: 'Select Creation Time',
+    placeholder: 'Select Alert Time',
   },
 
   alertType: {
     name: 'alertType',
     type: 'Select',
     id: 'filterForm.alertType',
-    placeholder: 'Alert Type',
+    placeholder: 'Select Alerts Trigger',
     options: AlertsTypeOptions,
   },
 
@@ -29,7 +29,7 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
     name: 'alertMessage',
     type: 'Search',
     id: 'filterForm.alertMessage',
-    placeholder: 'Enter Alert Message',
+    placeholder: 'Enter Message',
   },
 };
 

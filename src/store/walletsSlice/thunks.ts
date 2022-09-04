@@ -180,3 +180,63 @@ export const inflowFilterClear = createAction<Partial<ITableFilter>>('inflowFilt
 export const openOrdersFilterClear = createAction<Partial<ITableFilter>>('openOrdersFilterClear');
 export const orderTradesFilterClear = createAction<Partial<ITableFilter>>('orderTradesFilterClear');
 export const recordsFilterClear = createAction<Partial<ITableFilter>>('recordsFilterClear');
+
+export const getOrdersFilterValues = createAsyncThunk(
+  `${Slice.Accounts}/accounts/:id/trades-list/filter-values`,
+  async (id: number, thunkAPI) => {
+    try {
+      const response = await walletsApi.accountOrdersFilterValuesRequest(id);
+
+      return {
+        tradesFilter: response.data,
+      };
+    } catch {
+      return thunkAPI.rejectWithValue({ error: '* Incorrect' });
+    }
+  },
+);
+
+export const getInflowFilterValues = createAsyncThunk(
+  `${Slice.Accounts}/accounts/:id/inflow-outflow/filter-values`,
+  async (id: number, thunkAPI) => {
+    try {
+      const response = await walletsApi.accountInflowFilterValuesRequest(id);
+
+      return {
+        data: response.data,
+      };
+    } catch {
+      return thunkAPI.rejectWithValue({ error: '* Incorrect' });
+    }
+  },
+);
+
+export const getRecordsFilterValues = createAsyncThunk(
+  `${Slice.Accounts}/accounts/:id/records/filter-values`,
+  async (id: number, thunkAPI) => {
+    try {
+      const response = await walletsApi.accountRecordFilterValuesRequest(id);
+
+      return {
+        data: response.data,
+      };
+    } catch {
+      return thunkAPI.rejectWithValue({ error: '* Incorrect' });
+    }
+  },
+);
+
+export const getOpenOrdersFilterValues = createAsyncThunk(
+  `${Slice.Wallets}/:id/trades-list/filter-values`,
+  async (id: number, thunkAPI) => {
+    try {
+      const response = await walletsApi.accountOpenOrdersFilterValuesRequest(id);
+
+      return {
+        data: response.data,
+      };
+    } catch {
+      return thunkAPI.rejectWithValue({ error: '* Incorrect' });
+    }
+  },
+);
