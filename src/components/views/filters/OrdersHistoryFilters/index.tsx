@@ -97,7 +97,7 @@ const OrdersHistoryFilters = () => {
   };
 
   const getFilterValue = async () => {
-    const { data } = await dispatch(walletsActions.getRecordsFilterValues(Number(id))).unwrap();
+    const { data } = await dispatch(walletsActions.getOrdersFilterValues(Number(id))).unwrap();
     setFilterValue(data);
   };
 

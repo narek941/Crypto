@@ -20,8 +20,8 @@ export interface IFilterForm {
 export interface IAccountOrdersFilterValue {
   minValue: null | number;
   maxValue: null | number;
-  minLastOperationTime: null | number;
-  maxLastOperationTime: null | number;
+  minLastOperationTime: null | any;
+  maxLastOperationTime: null | any;
   minValueInBaseCurrency: null | number;
   maxValueInBaseCurrency: null | number;
   minStopPrice: null | number;

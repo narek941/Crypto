@@ -22,8 +22,31 @@
     border: 1px solid var(--button-border);
     border-radius: 4px;
     color: var(--font);
-    padding: 10px;
+    padding: 10px 40px 10px 10px;
     @extend %text-14;
+    position: relative;
+
+    &__dropdown {
+      position: absolute;
+      right: 12px;
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      top: calc(50% - 12px);
+
+      path {
+        fill: var(--dropdown-svg);
+      }
+      &__disable {
+        path {
+          fill: var(--placeholder) !important;
+        }
+      }
+
+      &__open {
+        transform: rotate(180deg);
+      }
+    }
 
     &__options {
       padding: 4px 16px;

@@ -182,13 +182,13 @@ export const orderTradesFilterClear = createAction<Partial<ITableFilter>>('order
 export const recordsFilterClear = createAction<Partial<ITableFilter>>('recordsFilterClear');
 
 export const getOrdersFilterValues = createAsyncThunk(
-  `${Slice.Accounts}/accounts/:id/trades-list/filter-values`,
+  `${Slice.Accounts}/accounts/:id/orders/filter-values`,
   async (id: number, thunkAPI) => {
     try {
       const response = await walletsApi.accountOrdersFilterValuesRequest(id);
 
       return {
-        tradesFilter: response.data,
+        data: response.data,
       };
     } catch {
       return thunkAPI.rejectWithValue({ error: '* Incorrect' });

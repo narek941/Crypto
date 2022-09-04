@@ -34,7 +34,7 @@ export const accountOrdersFilterValuesRequest = (id: number) =>
   client.get(`wallets/${id}/orders/filter-values`);
 
 export const accountRecordFilterValuesRequest = (id: number) =>
-  client.get(`wallets/${id}/record/filter-values`);
+  client.get(`wallets/${id}/records/filter-values`);
 
 export const accountInflowFilterValuesRequest = (id: number) =>
   client.get(`wallets/${id}/inflow-outflow/filter-values`);

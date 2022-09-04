@@ -134,8 +134,8 @@ const TradesFilters = () => {
             callback={handleFilter}
             filterName={'tradeTime'}
             clearAll={clearAll}
-            min={filterValue.minTradeTime}
-            max={filterValue.maxTradeTime}
+            min={new Date(filterValue.minTradeTime)}
+            max={new Date(filterValue.maxTradeTime)}
           />
         </div>
         <div className={styles.item}>

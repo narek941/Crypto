@@ -17,18 +17,18 @@ export interface IFilterForm {
 }
 
 export interface IAccountTradesFilterValue {
-  minTradeTime: null | number;
-  maxTradeTime: null | number;
-  minPrice: null | number;
-  maxPrice: null | number;
-  minTotalPrice: null | number;
-  maxTotalPrice: null | number;
-  minTotalPriceInBaseCurrency: null | number;
-  maxTotalPriceInBaseCurrency: null | number;
-  minAmount: null | number;
-  maxAmount: null | number;
-  minFees: null | number;
-  maxFees: null | number;
-  minFeesInBaseCurrency: null | number;
-  maxFeesInBaseCurrency: null | number;
+  minTradeTime: null | number | string | any;
+  maxTradeTime: null | number | string | any;
+  minPrice: null | number | string;
+  maxPrice: null | number | string;
+  minTotalPrice: null | number | string;
+  maxTotalPrice: null | number | string;
+  minTotalPriceInBaseCurrency: null | number | string;
+  maxTotalPriceInBaseCurrency: null | number | string;
+  minAmount: null | number | string;
+  maxAmount: null | number | string;
+  minFees: null | number | string;
+  maxFees: null | number | string;
+  minFeesInBaseCurrency: null | number | string;
+  maxFeesInBaseCurrency: null | number | string;
 }
