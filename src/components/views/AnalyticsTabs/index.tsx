@@ -33,8 +33,11 @@ const AnalyticsTabs = (): JSX.Element => {
   }, [searchParams.get('tab')]);
 
   const renderTable = () => {
+<<<<<<< HEAD
     const position = window.pageYOffset;
 
+=======
+>>>>>>> cc845c148460ca315be252a4ef2322961e51cc55
     switch (searchParams.get('tab')) {
       case '1':
         return <WalletsTable filterVisible={openFilter} />;
