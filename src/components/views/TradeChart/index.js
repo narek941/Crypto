@@ -221,7 +221,7 @@ const TradingViewChart = ({
           var price = param.seriesPrices.get(series);
           const secondField = hoveredObject.map((item) => item[field2]);
           const secondFieldValue =
-            secondField && hoveredObject.map((item) => item.account.baseCurrency.name);
+            field2 && hoveredObject.map((item) => item.account.baseCurrency.name);
 
           toolTip.innerHTML =
             `<div id={tooltip_wrapper}" style="background: rgba(46, 46, 46, 0.9);border-radius:4px; padding:12px; width:100%;height:100%; display:flex; flex-direction:column;gap:8px;" >` +
