@@ -133,6 +133,15 @@
     }
   }
 }
+.rdrDayDisabled {
+  background-color: unset;
+
+  .rdrDayNumber {
+    span {
+      color: var(--placeholder) !important;
+    }
+  }
+}
 
 .rdrNextPrevButton {
   background-color: transparent !important;

@@ -12,6 +12,6 @@ export interface IFilterForm {
 }
 
 export interface IAccountAlertsFilterValue {
-  minCreatedAt: number | null;
-  maxCreatedAt: number | null;
+  minCreatedAt: any | null;
+  maxCreatedAt: any | null;
 }

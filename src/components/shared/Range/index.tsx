@@ -113,7 +113,7 @@ const RangeSwipe = React.forwardRef<any, any>(
                 name={'firstInput'}
                 type='number'
                 className={styles.input}
-                placeholder={min || 'min'}
+                placeholder={'min'}
                 onChange={handleFirstChange}
                 onBlur={handleFirstBlur}
               />
@@ -123,7 +123,7 @@ const RangeSwipe = React.forwardRef<any, any>(
                 name={'secondInput'}
                 type='number'
                 className={styles.input}
-                placeholder={max || 'max'}
+                placeholder={'max'}
                 onChange={handleSecondChange}
                 onBlur={handleSecondBlur}
               />
@@ -136,8 +136,8 @@ const RangeSwipe = React.forwardRef<any, any>(
                 {...rest}
                 id={name}
                 ref={ref}
-                min={min || 0}
-                max={max || 100000}
+                min={Number(min) || 0}
+                max={Number(max) || 100000}
                 step={100}
                 name={name}
                 autoComplete='off'

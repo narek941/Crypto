@@ -23,11 +23,11 @@ export interface IFilterForm {
 }
 
 export interface IOpenOrdersFilterValue {
-  maxCreationTime: number | null;
+  maxCreationTime: any | null;
   maxRelativePercentageToAccount: number | null;
   maxTradesTotalPriceSum: number | null;
   maxValue: number | null;
-  minCreationTime: number | null;
+  minCreationTime: any | null;
   minRelativePercentageToAccount: number | null;
   minTradesTotalPriceSum: number | null;
   minValue: number | null;

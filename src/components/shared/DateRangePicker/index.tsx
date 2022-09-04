@@ -52,6 +52,8 @@ const DateRangePicker = React.forwardRef<IDateRangePicker, any>(
 
     const pos = useRect(customRef);
     const width = useWindowSize().width;
+    const minDate = isNull(min) ? undefined : new Date(min);
+    const maxDate = isNull(max) ? undefined : new Date(max);
 
     useEffect(() => {
       if (width) {
@@ -159,8 +161,8 @@ const DateRangePicker = React.forwardRef<IDateRangePicker, any>(
                 showMonthAndYearPickers={true}
                 direction='horizontal'
                 onChange={handleChange}
-                minDate={min}
-                maxDate={max}
+                minDate={minDate}
+                maxDate={maxDate}
                 moveRangeOnFirstSelection={false}
                 weekdayDisplayFormat='EEEEE'
                 className={styles.calendar__inner}
