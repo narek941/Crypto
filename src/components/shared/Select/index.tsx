@@ -32,7 +32,7 @@ const Select = React.forwardRef(
   ): JSX.Element => {
     const selectRef = useRef(null);
     const [isOpen, setIsOpen] = useState(false);
-    const sortedOption = options.sort((a, b) => {
+    const sortedOption = options.sort((a: any, b: any) => {
       return a.label.localeCompare(b.label);
     });
     const [filteredOption, setFilteredOption] = useState(sortedOption);
@@ -153,13 +153,7 @@ const Select = React.forwardRef(
             </div>
           </div>
           <div className={optionClass}>
-            <div
-              style={{
-                maxHeight: 211,
-                overflowY: 'scroll',
-              }}
-              className={styles.select__option__select_container}
-            >
+            <div className={styles.select__option__select_container}>
               {filteredOption.map((item, index) => (
                 <div
                   key={index}

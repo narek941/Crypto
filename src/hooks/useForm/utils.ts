@@ -138,6 +138,11 @@ export const composeFormSchema = <K extends FormFieldNames>(fields: K[]): AnyObj
     userId: Yup.string(),
     userType: Yup.string(),
     userEmail: Yup.string(),
+
+    ///export
+    exportDateStart: Yup.string(),
+    exportDateEnd: Yup.string(),
+    exportDate: Yup.string(),
   };
 
   const schema = fields.reduce(

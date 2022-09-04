@@ -9,7 +9,7 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
     name: 'historyPair',
     type: 'DualSelect',
     id: 'filterForm.historyPair',
-    placeholder: 'Select pairs',
+    placeholder: 'Select Pair',
   },
 
   historyUpdateTime: {
@@ -51,20 +51,20 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
     name: 'historyValueInBaseCurrency',
     type: 'number',
     id: 'filterForm.historyValueInBaseCurrency',
-    placeholder: 'Select value, USDT',
+    placeholder: 'Select Value, USDT',
   },
 
   searchHistoryStop: {
     name: 'searchHistoryStop',
     type: 'number',
     id: 'filterForm.searchHistoryStop',
-    placeholder: 'Select Stop price',
+    placeholder: 'Select Stop Price',
   },
   searchHistoryLimit: {
     name: 'searchHistoryLimit',
     type: 'number',
     id: 'filterForm.searchHistoryLimit',
-    placeholder: 'Select Limit price',
+    placeholder: 'Select Limit Price',
   },
 
   searchHistoryModifiers: {

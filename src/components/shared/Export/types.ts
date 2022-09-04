@@ -1,5 +1,23 @@
 export interface IExport {
   className?: string;
   text?: string;
-  onClick?: () => void;
+  callback: any;
+}
+
+export type ExportFormShape = {
+  exportDateStart: any;
+  exportDateEnd: any;
+  exportDate: any;
+};
+
+export enum ExportType {
+  pdf = 'pdf',
+  cvc = 'csv',
+}
+
+export interface DateState {
+  startDate?: any;
+  endDate?: any;
+  color: string;
+  key: 'selection';
 }

@@ -5,7 +5,7 @@ import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { Routes } from 'types';
-import { useForm } from 'hooks';
+import { useAppDispatch, useForm } from 'hooks';
 import { adminSelectors } from 'store/adminSlice';
 import { Button, Input, Select } from 'components';
 import FormGroup from 'components/forms/FormGroup';
@@ -13,7 +13,7 @@ import FormWrapper from 'components/forms/FormWrapper';
 import { AccountTypeOptions } from 'utils/filterHelper';
 import MultipleSelect from 'components/shared/MultipleSelect';
 import { usersSelectors } from 'store/usersSlice';
-import { accountsSelectors } from 'store/accountsSlice';
+import { accountsActions, accountsSelectors } from 'store/accountsSlice';
 
 import styles from './AddUserForm.module.scss';
 import { AddUserFormShape, IAddUser } from './types';
@@ -23,6 +23,14 @@ const AddUserForm = ({ onClick, isEditable = false }: IAddUser) => {
   const { t } = useTranslation();
   const userErrors = useSelector(usersSelectors.selectUsersError);
   const accountList = useSelector(accountsSelectors.selectAllAccountList);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (!accountList.length) {
+      dispatch(accountsActions.getAllAccounts());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const { username, email, role } = useSelector(adminSelectors.selectUserById);
 
@@ -104,6 +112,7 @@ const AddUserForm = ({ onClick, isEditable = false }: IAddUser) => {
                   {...addUserFormFields.usersAccountType}
                   {...field}
                   withAction={false}
+                  withClear={false}
                   error={formMethods.formState.errors.usersAccountType?.message}
                 />
               )}

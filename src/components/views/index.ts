@@ -5,12 +5,12 @@ export { default as Header } from './Header';
 export { default as Search } from './Search';
 export { default as Sidebar } from './Sidebar';
 export { default as Doughnut } from './Doughnut';
+export { default as TradeChart } from './TradeChart';
 export { default as Pagination } from './Pagination';
 export { default as SignInForm } from './SignInForm';
 export { default as AddUserForm } from './AddUserForm';
 export { default as AnalyticsTabs } from './AnalyticsTabs';
 export { default as AddAccountForm } from './AddAccountForm';
-export { default as TradeChart } from './TradeChart';
 
 // Tables
 export { default as TradesTable } from './tables/TradesTable';

@@ -31,7 +31,6 @@ const TradingViewChart = ({
   const [chartCreated, setChartCreated] = useState(false);
   const dataPrev = usePrevious(data);
 
-  // parese the data and format for tardingview consumption
   const formattedData = useMemo(
     () =>
       data?.map((entry) => {
@@ -145,7 +144,7 @@ const TradingViewChart = ({
 
     grid: {
       horzLines: {
-        color: 'rgba(255, 255, 255, 0.12)',
+        color: linesColor,
         visible: true,
       },
       vertLines: {
@@ -191,14 +190,6 @@ const TradingViewChart = ({
       toolTip.style.display = 'block';
 
       chart.subscribeCrosshairMove(function (param) {
-        const nd = new Date(param.time.year, param.time.month, param.time.day);
-        // eslint-disable-next-line no-console
-        const hoveredObject = data.filter(
-          (item) =>
-            moment(item.snapshotDate).toISOString().slice(0, 10) ==
-            moment(nd).toISOString().slice(0, 10),
-        );
-
         if (
           param === undefined ||
           param.time === undefined ||
@@ -209,6 +200,13 @@ const TradingViewChart = ({
         ) {
           toolTip.style.display = 'none';
         } else {
+          const nd = new Date(param.time.year, param.time.month, param.time.day);
+          // eslint-disable-next-line no-console
+          const hoveredObject = data.filter(
+            (item) =>
+              moment(item.snapshotDate).toISOString().slice(0, 10) ==
+              moment(nd).toISOString().slice(0, 10),
+          );
           const dateStr = useWeekly
             ? moment(param.time.year + '.' + param.time.month + '.' + param.time.day)
                 .startOf('week')
@@ -221,6 +219,9 @@ const TradingViewChart = ({
                 'DD.MM.YYYY HH:mm:ss',
               );
           var price = param.seriesPrices.get(series);
+          const secondField = hoveredObject.map((item) => item[field2]);
+          const secondFieldValue =
+            secondField && hoveredObject.map((item) => item.account.baseCurrency.name);
 
           toolTip.innerHTML =
             `<div id={tooltip_wrapper}" style="background: rgba(46, 46, 46, 0.9);border-radius:4px; padding:12px; width:100%;height:100%; display:flex; flex-direction:column;gap:8px;" >` +
@@ -230,9 +231,9 @@ const TradingViewChart = ({
             baseCurrency +
             '</div>' +
             `<div style="font-size: 12px; color:#ffffff">` +
-            hoveredObject.map((item) => item[field2]) +
+            secondField +
             ' ' +
-            hoveredObject[0].account.baseCurrency.name +
+            secondFieldValue +
             '</div>' +
             `<div style="font-size: 12px; color:rgba(171, 154, 183, 0.3);">` +
             dateStr +
@@ -271,7 +272,7 @@ const TradingViewChart = ({
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chartCreated, formattedData]);
+  }, [chartCreated, formattedData, darkMode]);
 
   return (
     <div styles={{ positions: 'absolute' }}>

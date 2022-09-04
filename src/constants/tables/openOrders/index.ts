@@ -8,7 +8,7 @@ const openOrdersTable: TableHeaderRow[] = [
   },
   {
     id: 'createdAt',
-    label: 'Created at',
+    label: 'Created At',
     value: 'creationTime',
   },
   {
@@ -67,7 +67,7 @@ const openOrdersTable: TableHeaderRow[] = [
   {
     id: 'share',
     value: 'relativePercentageToAccount',
-    label: 'Share',
+    label: 'Share, %',
   },
   {
     id: 'Updated',

@@ -3,6 +3,7 @@ import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { isNull } from 'lodash';
+import { useParams } from 'react-router-dom';
 
 import { CloseIcon } from 'assets/icons';
 import { MultipleSelect } from 'components';
@@ -12,12 +13,12 @@ import DualSelect from 'components/shared/DualSelect';
 import DateRangePicker from 'components/shared/DateRangePicker';
 import { useAppDispatch, useAppSelector, useForm } from 'hooks';
 import { accountsTradesFilterClear, accountsTradesFilterUpdate } from 'store/accountsSlice/thunks';
-import { accountsSelectors } from 'store/accountsSlice';
+import { accountsActions, accountsSelectors } from 'store/accountsSlice';
 import { filterObject } from 'utils/filterObject';
 import RangeSwipe from 'components/shared/Range';
 
 import styles from './TradesFilters.module.scss';
-import { FilterFormShape } from './types';
+import { FilterFormShape, IAccountTradesFilterValue } from './types';
 import { filterFormFields, filterSchemaKeys } from './fields';
 
 const TradesFilters = () => {
@@ -26,10 +27,26 @@ const TradesFilters = () => {
   const tradingPairs = useAppSelector(adminSelectors.selectTradingPairs);
   const { filter } = useAppSelector(accountsSelectors.selectAccountAccountsTrades);
   const { t } = useTranslation();
+  const { id } = useParams();
 
   const [isMore, setIsMore] = useState(false);
   const [clearAll, setClearAll] = useState(false);
-
+  const [filterValue, setFilterValue] = useState<IAccountTradesFilterValue>({
+    minTradeTime: null,
+    maxTradeTime: null,
+    minPrice: null,
+    maxPrice: null,
+    minTotalPrice: null,
+    maxTotalPrice: null,
+    minTotalPriceInBaseCurrency: null,
+    maxTotalPriceInBaseCurrency: null,
+    minAmount: null,
+    maxAmount: null,
+    minFees: null,
+    maxFees: null,
+    minFeesInBaseCurrency: null,
+    maxFeesInBaseCurrency: null,
+  });
   const { formMethods } = useForm<keyof FilterFormShape, FilterFormShape>({
     mode: 'onChange',
     schemaKeys: filterSchemaKeys,
@@ -83,7 +100,15 @@ const TradesFilters = () => {
     dispatch(accountsTradesFilterClear({}));
   };
 
+  const getFilterValue = async () => {
+    const { data } = await dispatch(
+      accountsActions.getAccountTradesFilterValues(Number(id)),
+    ).unwrap();
+    setFilterValue(data);
+  };
+
   useEffect(() => {
+    getFilterValue();
     return () => {
       handleClear();
     };
@@ -109,6 +134,8 @@ const TradesFilters = () => {
             callback={handleFilter}
             filterName={'tradeTime'}
             clearAll={clearAll}
+            min={filterValue.minTradeTime}
+            max={filterValue.maxTradeTime}
           />
         </div>
         <div className={styles.item}>
@@ -141,6 +168,8 @@ const TradesFilters = () => {
                 {...filterFormFields.tradesPrice}
                 callback={handleFilter}
                 filterName={'price'}
+                min={filterValue.minPrice}
+                max={filterValue.maxPrice}
               />
             )}
           />
@@ -156,6 +185,8 @@ const TradesFilters = () => {
                 {...filterFormFields.tradesTotalPrice}
                 callback={handleFilter}
                 filterName={'amount'}
+                min={filterValue.minAmount}
+                max={filterValue.maxAmount}
               />
             )}
           />
@@ -171,6 +202,8 @@ const TradesFilters = () => {
                 {...filterFormFields.tradesValue}
                 callback={handleFilter}
                 filterName={'totalPrice'}
+                min={filterValue.minTotalPrice}
+                max={filterValue.maxTotalPrice}
               />
             )}
           />
@@ -186,6 +219,8 @@ const TradesFilters = () => {
                 {...filterFormFields.tradesValueInBaseCurrency}
                 callback={handleFilter}
                 filterName={'totalPriceInBaseCurrency'}
+                min={filterValue.minTotalPriceInBaseCurrency}
+                max={filterValue.maxTotalPriceInBaseCurrency}
               />
             )}
           />
@@ -200,6 +235,8 @@ const TradesFilters = () => {
                 {...filterFormFields.tradesFee}
                 callback={handleFilter}
                 filterName={'fees'}
+                min={filterValue.minFees}
+                max={filterValue.maxFees}
               />
             )}
           />
@@ -214,6 +251,8 @@ const TradesFilters = () => {
                 {...filterFormFields.tradesFeeInBaseCurrency}
                 callback={handleFilter}
                 filterName={'feesInBaseCurrency'}
+                min={filterValue.minFeesInBaseCurrency}
+                max={filterValue.maxFeesInBaseCurrency}
               />
             )}
           />

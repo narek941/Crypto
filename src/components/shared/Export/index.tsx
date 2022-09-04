@@ -1,18 +1,255 @@
-import { FC } from 'react';
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
+import { DateRange } from 'react-date-range';
+import { Controller } from 'react-hook-form';
+import { useRef, useState } from 'react';
+import moment from 'moment';
+import { isNull } from 'lodash';
 
 import { ExportIcon } from 'assets/icons';
+import { FormWrapper } from 'components/forms';
+import { useAppSelector, useForm, useOnClickOutside } from 'hooks';
+import { authSelectors } from 'store/authSlice';
+import { addDays } from 'utils/addDays';
+import { Menu } from 'components';
 
-import { IExport } from './types';
+import { MenuOption } from '../Menu/types';
+
 import styles from './Export.module.scss';
+import { exportSchemaKeys } from './fields';
+import { DateState, ExportFormShape, ExportType, IExport } from './types';
 
-const Export: FC<IExport> = ({ className, text = 'export', onClick }) => {
+const Export = ({ className, text = 'export', callback }: IExport): JSX.Element => {
+  const defaultValue: DateState = {
+    startDate: undefined,
+    endDate: undefined,
+    color: 'transparent',
+    key: 'selection',
+  };
+  const customRef = useRef(null);
+
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const [state, setState] = useState<DateState>(defaultValue);
+  const [lastChange, setLastChange] = useState<number>(2);
+  const { t } = useTranslation();
+  const { formMethods } = useForm<keyof ExportFormShape, ExportFormShape>({
+    schemaKeys: exportSchemaKeys,
+  });
+  const isDarkMode: boolean = useAppSelector(authSelectors.selectIsDarkMode);
+  const isMode: string = isDarkMode ? 'rgba(65, 58, 199, 0.15)' : '#e5e5e5';
+  let startDay: string = moment(state.startDate).format('LL');
+  let endDay: string = moment(state.endDate).format('LL');
+
   const exportClass: string = classNames(styles.export, className);
 
+  const periodOptions: MenuOption[] = [
+    {
+      id: 1,
+      label: 'Today',
+    },
+    {
+      id: 2,
+      label: 'Last 7 days',
+    },
+    {
+      id: 3,
+      label: 'Last month',
+    },
+    {
+      id: 4,
+      label: 'Last 12 months',
+    },
+    {
+      id: 5,
+      label: 'All time',
+    },
+  ];
+
+  const handleChange = (item: any) => {
+    const start = item.selection.startDate;
+    const end = item.selection.endDate;
+    if (state.endDate && state.startDate && !isNull(state.startDate)) {
+      if (moment(start).isBefore(state.startDate)) {
+        setState({ ...state, startDate: start });
+        formMethods.setValue('exportDate', state);
+        setLastChange(1);
+      }
+      if (moment(end).isAfter(state.endDate)) {
+        setState({ ...state, endDate: end });
+        setLastChange(2);
+        formMethods.setValue('exportDate', state);
+      }
+      if (moment(start).isBetween(state.startDate, state.endDate)) {
+        if (lastChange === 2) {
+          setState({ ...state, endDate: start });
+        } else {
+          setState({ ...state, startDate: start });
+        }
+        formMethods.setValue('exportDate', state);
+      }
+      if (moment(start).isSame(state.startDate, 'day') && moment(start).isSame(end, 'day')) {
+        setState({ ...state, endDate: start });
+        setLastChange(2);
+      }
+      if (moment(end).isSame(state.endDate, 'day') && moment(end).isSame(start, 'day')) {
+        setState({ ...state, startDate: end });
+        setLastChange(1);
+      }
+    } else {
+      setState({ ...item.selection, color: isMode, lastChange: 2 });
+      formMethods.setValue('exportDate', item.selection);
+    }
+    startDay = moment(state.startDate).format('LL');
+    endDay = moment(state.endDate).format('LL');
+  };
+
+  const handleOptions = (id: number) => {
+    switch (id) {
+      case 1:
+        setState({
+          ...state,
+          startDate: moment().toDate(),
+          endDate: moment().toDate(),
+        });
+        formMethods.setValue('exportDate', state);
+
+        break;
+      case 2:
+        setState({
+          ...state,
+          startDate: moment().subtract(7, 'days').toDate(),
+          endDate: moment().toDate(),
+        });
+        formMethods.setValue('exportDate', state);
+
+        break;
+      case 3:
+        setState({
+          ...state,
+          startDate: moment().subtract(1, 'months').toDate(),
+          endDate: moment().toDate(),
+        });
+        formMethods.setValue('exportDate', state);
+
+        break;
+      case 4:
+        setState({
+          ...state,
+          startDate: moment().subtract(1, 'year').toDate(),
+          endDate: moment().toDate(),
+        });
+        formMethods.setValue('exportDate', state);
+
+        break;
+      case 5:
+        setState({ ...state, startDate: moment().toDate(), endDate: moment().toDate() });
+        formMethods.setValue('exportDate', state);
+
+        break;
+      default:
+        break;
+    }
+  };
+
+  useOnClickOutside(customRef, () => setIsOpen(false));
+
   return (
-    <div className={exportClass} role='button' onClick={onClick}>
+    <div className={exportClass} role='button' onClick={() => setIsOpen(true)}>
       <ExportIcon />
-      <span>{text}</span>
+      <span className={styles.export__text}>{text}</span>
+      {isOpen && (
+        <FormWrapper {...{ formMethods }} onSubmit={() => {}}>
+          <div className={styles.export__popup} ref={customRef}>
+            <h2 className={styles.export__popup__title}>{t('export_data')}</h2>
+            <h3 className={styles.export__popup__subtitle}>{t('choose_date')}</h3>
+            <div className={styles.export__popup__calendar__inner}>
+              <div className={styles.export__popup__calendar__inner__input}>
+                <label
+                  className={styles.export__popup__calendar__inner__input__label}
+                  htmlFor='rangeFrom'
+                >
+                  {t('start_date')}
+                </label>
+                <input
+                  id='rangeFrom'
+                  type='day'
+                  value={startDay}
+                  {...formMethods.register('exportDateEnd')}
+                />
+              </div>
+              <div> {t('to')}</div>
+              <div className={styles.export__popup__calendar__inner__input}>
+                <label
+                  className={styles.export__popup__calendar__inner__input__label}
+                  htmlFor='rangeTo'
+                >
+                  {t('end_date')}
+                </label>
+                <input
+                  id='rangeTo'
+                  type='day'
+                  value={endDay}
+                  {...formMethods.register('exportDateStart')}
+                />
+              </div>
+              <Menu options={periodOptions} callback={handleOptions} />
+            </div>
+            <div className={styles.export__popup__calendar}>
+              <div className={styles.export__popup__calendar__picker}>
+                <Controller
+                  control={formMethods.control}
+                  {...formMethods.register('exportDate')}
+                  render={() => (
+                    <DateRange
+                      months={2}
+                      ranges={[state]}
+                      weekStartsOn={1}
+                      showPreview={false}
+                      direction='horizontal'
+                      onChange={handleChange}
+                      moveRangeOnFirstSelection={false}
+                      weekdayDisplayFormat='EEEEE'
+                      showMonthAndYearPickers={true}
+                      className={styles.calendar__inner}
+                      // maxDate={moment().toDate()}
+                    />
+                  )}
+                />
+              </div>
+            </div>
+            <div className={styles.export__popup__footer__text}>{t('choose_format')}</div>
+            <div className={styles.export__popup__footer__button__wrapper}>
+              <div
+                className={styles.export__popup__footer__button}
+                onClick={() =>
+                  callback({
+                    fromDate: moment(state.startDate).toISOString(),
+                    toDate: moment(state.endDate).toISOString(),
+                    type: ExportType.pdf,
+                  })
+                }
+              >
+                <ExportIcon />
+                <span className={styles.export__popup__footer__button__text}>CVC</span>
+              </div>
+              <div
+                className={styles.export__popup__footer__button}
+                onClick={() =>
+                  callback({
+                    fromDate: addDays(moment(state.startDate).toISOString(), 1),
+                    toDate: addDays(moment(state.endDate).toISOString(), 1),
+                    type: ExportType.cvc,
+                  })
+                }
+              >
+                <ExportIcon />
+                <span className={styles.export__popup__footer__button__text}>Pdf</span>
+              </div>
+            </div>
+          </div>
+        </FormWrapper>
+      )}
     </div>
   );
 };

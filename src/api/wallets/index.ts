@@ -26,3 +26,15 @@ export const walletRecordsRequest = (id: string, params: any) =>
   client.get(`/wallets/${id}/records`, {
     params,
   });
+
+export const accountOpenOrdersFilterValuesRequest = (id: number) =>
+  client.get(`wallets/${id}/orders/open/filter-values`);
+
+export const accountOrdersFilterValuesRequest = (id: number) =>
+  client.get(`wallets/${id}/orders/filter-values`);
+
+export const accountRecordFilterValuesRequest = (id: number) =>
+  client.get(`wallets/${id}/record/filter-values`);
+
+export const accountInflowFilterValuesRequest = (id: number) =>
+  client.get(`wallets/${id}/inflow-outflow/filter-values`);

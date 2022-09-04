@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { isNull } from 'lodash';
+import { useParams } from 'react-router-dom';
 
 import DateRangePicker from 'components/shared/DateRangePicker';
 import { CloseIcon } from 'assets/icons';
@@ -9,11 +10,11 @@ import { MultipleSelect, TableSearch } from 'components';
 import { useAppDispatch, useAppSelector, useForm } from 'hooks';
 import { accountsAlertsFilterClear, accountsAlertsFilterUpdate } from 'store/accountsSlice/thunks';
 import { createObject } from 'utils/createObject';
-import { accountsSelectors } from 'store/accountsSlice';
+import { accountsActions, accountsSelectors } from 'store/accountsSlice';
 import { filterObject } from 'utils/filterObject';
 
 import styles from './AnalyticsAlertsFilters.module.scss';
-import { FilterFormShape } from './types';
+import { FilterFormShape, IAccountAlertsFilterValue } from './types';
 import { filterFormFields, filterSchemaKeys } from './fields';
 
 const AnalyticsAlertsFilters = () => {
@@ -21,8 +22,12 @@ const AnalyticsAlertsFilters = () => {
   const [clearAll, setClearAll] = useState(false);
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
+  const { id } = useParams();
   const { filter } = useAppSelector(accountsSelectors.selectAccountAccountsAlerts);
-
+  const [filterValue, setFilterValue] = useState<IAccountAlertsFilterValue>({
+    minCreatedAt: null,
+    maxCreatedAt: null,
+  });
   const advancedClass = classNames(styles.item, {
     [styles.advanced__hide]: !isMore,
   });
@@ -44,7 +49,15 @@ const AnalyticsAlertsFilters = () => {
     setClearAll(!clearAll);
   };
 
+  const getFilterValue = async () => {
+    const { data } = await dispatch(
+      accountsActions.getAccountAlertsFilterValues(Number(id)),
+    ).unwrap();
+    setFilterValue(data);
+  };
+
   useEffect(() => {
+    getFilterValue();
     return () => {
       handleClear();
     };
@@ -71,6 +84,8 @@ const AnalyticsAlertsFilters = () => {
             callback={handleFilter}
             filterName={'createdAt'}
             clearAll={clearAll}
+            min={filterValue.minCreatedAt}
+            max={filterValue.maxCreatedAt}
           />
         </div>
 

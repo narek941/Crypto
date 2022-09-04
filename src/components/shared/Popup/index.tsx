@@ -18,6 +18,7 @@ const Popup = ({ open }: PopupProps) => {
   const isDarkMode = useSelector(authSelectors.selectIsDarkMode);
   const popUpClasses = classNames(styles.popup, { [styles.popup__able]: open });
   const isEnglish = useSelector(authSelectors.selectIsEnglish);
+  const username = useSelector(authSelectors.selectPersonalInfo)?.username;
 
   const handleChange = () => {
     dispatch(authActions.setTheme());
@@ -33,7 +34,7 @@ const Popup = ({ open }: PopupProps) => {
 
   return (
     <div className={popUpClasses} ref={ref}>
-      <div className={styles.popup__header}>{t('welcome')}</div>
+      <div className={styles.popup__header}>{username || ''}</div>
       <div className={styles.popup__switcher}>
         <span>{t('light')}</span>
         <ToggleSwitch checked={isDarkMode} onChange={handleChange} />

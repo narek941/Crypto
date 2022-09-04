@@ -85,7 +85,7 @@ const TableAccountBody = ({
             {formattedDate}
           </TableCell>
           <TableCell className={styles.table__body__row__ceil} align='left'>
-            {Number(statistics?.currentOpenProfitInPercent) + ' %'}
+            {Number(statistics?.currentOpenProfitInPercent)}
           </TableCell>
           <TableCell className={styles.table__body__row__ceil} align='left'>
             {Number(statistics?.currentOpenProfitInBaseCurrency)
@@ -97,7 +97,6 @@ const TableAccountBody = ({
             {Number(statistics?.earnedCapitalInPercent)
               ? Number(statistics?.earnedCapitalInPercent)
               : 0}
-            {' %'}
           </TableCell>
           <TableCell className={styles.table__body__row__ceil} align='left'>
             {Number(statistics?.currentOpenProfitInBaseCurrency)

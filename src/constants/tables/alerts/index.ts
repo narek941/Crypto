@@ -9,7 +9,7 @@ const alertsAccountAnalyticsTable: TableHeaderRow[] = [
   {
     id: 'type',
     value: 'type',
-    label: 'Alerts trigger',
+    label: 'Alerts Trigger',
   },
   {
     id: 'message',
@@ -37,7 +37,7 @@ const alertsMainTable: HeadCell[] = [
   {
     id: 'type',
     value: 'type',
-    label: 'Alerts trigger',
+    label: 'Alerts Trigger',
   },
   {
     id: 'message',

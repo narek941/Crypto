@@ -11,3 +11,8 @@ export type FilterFormShape = {
 export interface IFilterForm {
   onClick: SubmitHandler<FilterFormShape>;
 }
+
+export interface IAlertsFilterValue {
+  minCreatedAt: number | null;
+  maxCreatedAt: number | null;
+}

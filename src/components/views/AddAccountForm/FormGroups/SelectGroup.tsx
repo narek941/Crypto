@@ -62,6 +62,7 @@ const SelectGroup = ({
                   options={coinOptions}
                   withAction={false}
                   error={formMethods.formState.errors.allowedPairs?.message}
+                  withClear={false}
                 />
               )}
             />
@@ -74,6 +75,7 @@ const SelectGroup = ({
                   {...field}
                   options={coinOptions}
                   withAction={false}
+                  withClear={false}
                 />
               )}
             />

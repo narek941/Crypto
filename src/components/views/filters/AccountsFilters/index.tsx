@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { isNull } from 'lodash';
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 import { CloseIcon } from 'assets/icons';
 import { MultipleSelect } from 'components';
@@ -12,18 +13,19 @@ import { accountsFilterClear, accountsFilterUpdate } from 'store/accountsSlice/t
 import { createObject } from 'utils/createObject';
 import { statusOptions } from 'utils/filterHelper';
 import RangeSwipe from 'components/shared/Range';
-import { accountsSelectors } from 'store/accountsSlice';
+import { accountsActions, accountsSelectors } from 'store/accountsSlice';
 import { filterObject } from 'utils/filterObject';
 import TableSearch from 'components/shared/TableSearch';
 
 import styles from './AccountsFilters.module.scss';
-import { FilterFormShape } from './types';
+import { FilterFormShape, IAccountsFilterValue } from './types';
 import { filterFormFields, filterSchemaKeys } from './fields';
 
 const AccountsFilters = () => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const { filter } = useSelector(accountsSelectors.selectAccountAccountsList);
+  const { id } = useParams();
 
   const [isMore, setIsMore] = useState(false);
   const [clearAll, setClearAll] = useState(false);
@@ -40,6 +42,10 @@ const AccountsFilters = () => {
       accountOpenProfit: ['', ''],
       accountEarnedCapital: ['', ''],
     },
+  });
+  const [filterValue, setFilterValue] = useState<IAccountsFilterValue>({
+    minCurrentOpenProfitInBaseCurrency: null,
+    maxCurrentOpenProfitInBaseCurrency: null,
   });
 
   const handleToggle = () => setIsMore(!isMore);
@@ -66,7 +72,13 @@ const AccountsFilters = () => {
     }
   };
 
+  const getFilterValue = async () => {
+    const { data } = await dispatch(accountsActions.getAccountsFilterValues(Number(id))).unwrap();
+    setFilterValue(data);
+  };
+
   useEffect(() => {
+    getFilterValue();
     return () => {
       handleClear();
     };
@@ -162,6 +174,8 @@ const AccountsFilters = () => {
                 {...filterFormFields.accountOpenProfit}
                 callback={handleFilter}
                 filterName={'statistics.currentOpenProfitInBaseCurrency'}
+                min={filterValue.minCurrentOpenProfitInBaseCurrency}
+                max={filterValue.maxCurrentOpenProfitInBaseCurrency}
                 closed={!isMore}
               />
             )}

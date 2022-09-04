@@ -45,6 +45,7 @@ const BaseSetting = ({ formMethods }: any) => {
                 withAction={false}
                 error={formMethods.formState.errors.baseCurrency?.message}
                 options={coinOptions}
+                withClear={false}
               />
             )}
           />

@@ -15,3 +15,20 @@ export type FilterFormShape = {
 export interface IFilterForm {
   onClick: SubmitHandler<FilterFormShape>;
 }
+
+export interface IAccountTradesFilterValue {
+  minTradeTime: null | number;
+  maxTradeTime: null | number;
+  minPrice: null | number;
+  maxPrice: null | number;
+  minTotalPrice: null | number;
+  maxTotalPrice: null | number;
+  minTotalPriceInBaseCurrency: null | number;
+  maxTotalPriceInBaseCurrency: null | number;
+  minAmount: null | number;
+  maxAmount: null | number;
+  minFees: null | number;
+  maxFees: null | number;
+  minFeesInBaseCurrency: null | number;
+  maxFeesInBaseCurrency: null | number;
+}

@@ -11,3 +11,10 @@ export type InflowsFilterFormShape = {
 export interface IFilterForm {
   onClick: SubmitHandler<InflowsFilterFormShape>;
 }
+
+export interface IAccountInflowFilterValue {
+  minAmount: null | number;
+  maxAmount: null | number;
+  minAmountInBaseCurrency: null | number;
+  maxAmountInBaseCurrency: null | number;
+}

@@ -14,7 +14,7 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
     name: 'userType',
     type: 'select',
     id: 'filterForm.userType',
-    placeholder: 'Select Type',
+    placeholder: 'Select Account Type',
   },
   userStatus: {
     name: 'userStatus',

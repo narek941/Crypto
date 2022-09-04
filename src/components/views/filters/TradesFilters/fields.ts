@@ -23,7 +23,7 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
     name: 'tradesPair',
     type: 'DualSelect',
     id: 'filterForm.tradesPair',
-    placeholder: 'Select pairs',
+    placeholder: 'Select Currency Pair',
   },
 
   tradesPrice: {
@@ -36,7 +36,7 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
     name: 'tradesValue',
     type: 'number',
     id: 'filterForm.tradesValue',
-    placeholder: 'Select Value',
+    placeholder: 'Select Amount',
   },
 
   tradesTotalPrice: {
@@ -49,7 +49,7 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
     name: 'tradesValueInBaseCurrency',
     type: 'number',
     id: 'filterForm.tradesValueInBaseCurrency',
-    placeholder: 'Select Value, USDT',
+    placeholder: 'Select Total price, USDT',
   },
   tradesFee: {
     name: 'tradesFee',

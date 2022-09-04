@@ -2,6 +2,7 @@ import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js';
 import { Doughnut as DoughnutJs } from 'react-chartjs-2';
 import classNames from 'classnames';
 import { isUndefined } from 'lodash';
+import { useSearchParams } from 'react-router-dom';
 
 import { parseChartLabels } from 'utils/parseChartLabels';
 
@@ -18,6 +19,7 @@ const Doughnut = ({
   legendPositionBottom = false,
   radius = '80',
   colors,
+  navigateTo,
 }: any): JSX.Element => {
   const wrapperClass = classNames(className ? className : styles.wrapper);
   const innerClass = classNames(
@@ -56,6 +58,12 @@ const Doughnut = ({
     }
 
     return tooltipEl;
+  };
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const handleMoreBtn = () => {
+    setSearchParams({ tab: navigateTo.toString() });
   };
 
   const externalTooltipHandler = (context: any) => {
@@ -181,6 +189,11 @@ const Doughnut = ({
             ))}
         </div>
       </div>
+      {navigateTo && (
+        <div className={styles.more} onClick={() => handleMoreBtn()}>
+          More Details
+        </div>
+      )}
     </div>
   );
 };

@@ -29,7 +29,7 @@ const accountsTable: HeadCell[] = [
   {
     id: 'open_profit',
     value: 'statistics.currentOpenProfitInBaseCurrency',
-    label: 'Open Profit',
+    label: 'Open Profit, %',
   },
   {
     id: 'earned_capital',
@@ -39,7 +39,7 @@ const accountsTable: HeadCell[] = [
   {
     id: 'earned_capital_2',
     value: 'statistics.earnedCapitalInPercent',
-    label: 'Earned Capital',
+    label: 'Earned Capital, %',
   },
   {
     id: 'open_profit_2',

@@ -3,6 +3,7 @@ import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { isNull } from 'lodash';
+import { useParams } from 'react-router-dom';
 
 import { CloseIcon } from 'assets/icons';
 import RangeSwipe from 'components/shared/Range';
@@ -13,10 +14,10 @@ import DualSelect from 'components/shared/DualSelect';
 import DateRangePicker from 'components/shared/DateRangePicker';
 import { useAppDispatch, useAppSelector, useForm } from 'hooks';
 import { openOrdersFilterClear, openOrdersFilterUpdate } from 'store/walletsSlice/thunks';
-import { walletsSelectors } from 'store/walletsSlice';
+import { walletsActions, walletsSelectors } from 'store/walletsSlice';
 import { filterObject } from 'utils/filterObject';
 
-import { FilterFormShape } from './types';
+import { FilterFormShape, IOpenOrdersFilterValue } from './types';
 import styles from './OpenOrdersFilters.module.scss';
 import { filterFormFields, filterSchemaKeys } from './fields';
 
@@ -25,10 +26,21 @@ const OpenOrdersFilters = () => {
   const coins = useAppSelector(adminSelectors.selectCoins);
   const tradingPairs = useAppSelector(adminSelectors.selectTradingPairs);
   const { filter } = useAppSelector(walletsSelectors.selectOpenOrders);
+  const { id } = useParams();
 
   const { t } = useTranslation();
-
   const [isMore, setIsMore] = useState(false);
+  const [filterValue, setFilterValue] = useState<IOpenOrdersFilterValue>({
+    maxCreationTime: null,
+    maxRelativePercentageToAccount: null,
+    maxTradesTotalPriceSum: null,
+    maxValue: null,
+    minCreationTime: null,
+    minRelativePercentageToAccount: null,
+    minTradesTotalPriceSum: null,
+    minValue: null,
+  });
+
   const [clearAll, setClearAll] = useState(false);
   const { formMethods } = useForm<keyof FilterFormShape, FilterFormShape>({
     mode: 'onChange',
@@ -63,7 +75,13 @@ const OpenOrdersFilters = () => {
     setClearAll(!clearAll);
   };
 
+  const getFilterValue = async () => {
+    const { data } = await dispatch(walletsActions.getOpenOrdersFilterValues(Number(id))).unwrap();
+    setFilterValue(data);
+  };
+
   useEffect(() => {
+    getFilterValue();
     return () => {
       handleClear();
     };
@@ -115,6 +133,8 @@ const OpenOrdersFilters = () => {
             callback={handleFilter}
             filterName='creationTime'
             clearAll={clearAll}
+            max={filterValue.maxCreationTime}
+            min={filterValue.minCreationTime}
           />
         </div>
 
@@ -147,6 +167,8 @@ const OpenOrdersFilters = () => {
                 {...filterFormFields.selectValue}
                 callback={handleFilter}
                 filterName={'value'}
+                max={filterValue.maxValue}
+                min={filterValue.minValue}
               />
             )}
           />
@@ -174,6 +196,8 @@ const OpenOrdersFilters = () => {
                 callback={handleFilter}
                 filterName={'tradesTotalPriceSum'}
                 closed={!isMore}
+                max={filterValue.maxTradesTotalPriceSum}
+                min={filterValue.minTradesTotalPriceSum}
               />
             )}
           />
@@ -190,6 +214,8 @@ const OpenOrdersFilters = () => {
                 callback={handleFilter}
                 filterName={'relativePercentageToAccount'}
                 closed={!isMore}
+                max={filterValue.maxRelativePercentageToAccount}
+                min={filterValue.minRelativePercentageToAccount}
               />
             )}
           />
