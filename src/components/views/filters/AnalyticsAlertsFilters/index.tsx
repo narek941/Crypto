@@ -9,9 +9,8 @@ import { CloseIcon } from 'assets/icons';
 import { MultipleSelect, TableSearch } from 'components';
 import { useAppDispatch, useAppSelector, useForm } from 'hooks';
 import { accountsAlertsFilterClear, accountsAlertsFilterUpdate } from 'store/accountsSlice/thunks';
-import { createObject } from 'utils/createObject';
+import { createObject, filterObject } from 'utils';
 import { accountsActions, accountsSelectors } from 'store/accountsSlice';
-import { filterObject } from 'utils/filterObject';
 
 import styles from './AnalyticsAlertsFilters.module.scss';
 import { FilterFormShape, IAccountAlertsFilterValue } from './types';

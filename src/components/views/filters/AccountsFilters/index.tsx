@@ -10,11 +10,10 @@ import { CloseIcon } from 'assets/icons';
 import { MultipleSelect } from 'components';
 import { useAppDispatch, useForm } from 'hooks';
 import { accountsFilterClear, accountsFilterUpdate } from 'store/accountsSlice/thunks';
-import { createObject } from 'utils/createObject';
+import { createObject, filterObject } from 'utils';
 import { statusOptions } from 'utils/filterHelper';
 import RangeSwipe from 'components/shared/Range';
 import { accountsActions, accountsSelectors } from 'store/accountsSlice';
-import { filterObject } from 'utils/filterObject';
 import TableSearch from 'components/shared/TableSearch';
 
 import styles from './AccountsFilters.module.scss';
@@ -44,8 +43,8 @@ const AccountsFilters = () => {
     },
   });
   const [filterValue, setFilterValue] = useState<IAccountsFilterValue>({
-    minCurrentOpenProfitInBaseCurrency: null,
-    maxCurrentOpenProfitInBaseCurrency: null,
+    minCurrentOpenProfitInPercent: null,
+    maxCurrentOpenProfitInPercent: null,
   });
 
   const handleToggle = () => setIsMore(!isMore);
@@ -173,9 +172,9 @@ const AccountsFilters = () => {
                 {...field}
                 {...filterFormFields.accountOpenProfit}
                 callback={handleFilter}
-                filterName={'statistics.currentOpenProfitInBaseCurrency'}
-                min={filterValue.minCurrentOpenProfitInBaseCurrency}
-                max={filterValue.maxCurrentOpenProfitInBaseCurrency}
+                filterName={'statistics.currentOpenProfitInPercent'}
+                min={filterValue.minCurrentOpenProfitInPercent}
+                max={filterValue.maxCurrentOpenProfitInPercent}
                 closed={!isMore}
               />
             )}
@@ -190,7 +189,7 @@ const AccountsFilters = () => {
                 {...field}
                 {...filterFormFields.accountEarnedCapital}
                 callback={handleFilter}
-                filterName={'statistics.earnedCapitalInBaseCurrency'}
+                filterName={'statistics.earnedCapitalInPercent'}
                 closed={!isMore}
               />
             )}

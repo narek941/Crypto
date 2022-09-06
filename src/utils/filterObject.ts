@@ -1,4 +1,4 @@
-export const filterObject = (obj: Record<string, string>, str: string) => {
+const filterObject = (obj: Record<string, string>, str: string) => {
   const newObj = Object.keys(obj)
     .filter((key) => key !== str)
     .reduce((item: typeof obj, key) => {
@@ -7,3 +7,4 @@ export const filterObject = (obj: Record<string, string>, str: string) => {
     }, {});
   return newObj;
 };
+export default filterObject;

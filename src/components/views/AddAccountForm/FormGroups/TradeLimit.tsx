@@ -29,12 +29,14 @@ const TradeLimit = ({ formMethods }: any) => (
         {...addAccountFormFields.maxPosition}
         {...formMethods.register('maxPosition')}
         error={formMethods.formState.errors.maxPosition?.message}
+        type='number'
       />
 
       <Input
         {...addAccountFormFields.maxRisk}
         {...formMethods.register('maxRisk')}
         error={formMethods.formState.errors.maxRisk?.message}
+        type='number'
       />
     </>
   </FormGroup>

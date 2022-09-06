@@ -7,9 +7,8 @@ import DateRangePicker from 'components/shared/DateRangePicker';
 import { CloseIcon } from 'assets/icons';
 import { TableSearch } from 'components';
 import { useAppDispatch, useAppSelector, useForm } from 'hooks';
-import { createObject } from 'utils/createObject';
+import { createObject, filterObject } from 'utils';
 import { alertsFilterClear, alertsFilterUpdate } from 'store/alertsSlice/thunks';
-import { filterObject } from 'utils/filterObject';
 import { alertsActions, alertsSelectors } from 'store/alertsSlice';
 import MultipleSelect from 'components/shared/MultipleSelect';
 

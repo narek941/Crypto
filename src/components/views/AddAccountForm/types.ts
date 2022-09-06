@@ -2,14 +2,14 @@ import { SubmitHandler } from 'react-hook-form';
 
 export type AddAccountFormShape = {
   name: string;
-  baseCurrency: string;
+  baseCurrency: any;
   exchange: string;
   apiKey: string;
   apiSecret: string;
-  refreshInterval: number;
+  refreshInterval: string;
   maxDrawdown: string;
-  maxPosition: string;
-  maxRisk: string;
+  maxPosition: number;
+  maxRisk: number;
   allowedPairs: any[];
   alertsDestinations: any[];
   stopLossOrder: boolean;

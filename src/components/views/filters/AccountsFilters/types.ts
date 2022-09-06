@@ -16,6 +16,6 @@ export interface IFilterForm {
 }
 
 export interface IAccountsFilterValue {
-  minCurrentOpenProfitInBaseCurrency: number | null;
-  maxCurrentOpenProfitInBaseCurrency: number | null;
+  minCurrentOpenProfitInPercent: number | null | string;
+  maxCurrentOpenProfitInPercent: number | null | string;
 }

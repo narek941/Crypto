@@ -9,6 +9,7 @@ const Seo = ({
   withHeader = true,
   isBackBtn = false,
   withMail = false,
+  to = -1,
 }: ISeoProps) => {
   useDarkMode();
 
@@ -18,7 +19,7 @@ const Seo = ({
         <>
           <Sidebar />
           <div>
-            <Header text={text} isBackBtn={isBackBtn} withMail={withMail} />
+            <Header text={text} isBackBtn={isBackBtn} withMail={withMail} to={to} />
             <Container>{children}</Container>
           </div>
         </>

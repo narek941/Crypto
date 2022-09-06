@@ -39,6 +39,7 @@ const routes: RoutesProps[] = [
     isBackBtn: true,
     component: <AccountsAnalytics />,
     withMail: true,
+    to: Routes.Accounts,
   },
   {
     path: Routes.AddNewAccount,

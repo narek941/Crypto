@@ -1,12 +1,12 @@
 export interface HeadCell {
-  id: any;
+  id: string | number;
   label: string;
   value?: string;
   isSort?: boolean;
 }
 
 export type TableHeaderRow = {
-  id: any;
+  id: string | number;
   value?: string;
   label: string;
   withBaseCurrency?: boolean;

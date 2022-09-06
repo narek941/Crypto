@@ -1,4 +1,4 @@
-export const mergeObjects = (data: Record<string, string>[]) => {
+const mergeObjects = (data: Record<string, string>[]) => {
   const result = {};
 
   data.forEach((obj) => {
@@ -15,3 +15,4 @@ export const mergeObjects = (data: Record<string, string>[]) => {
   });
   return result as Record<string, string>;
 };
+export default mergeObjects;

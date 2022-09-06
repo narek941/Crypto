@@ -197,8 +197,8 @@ export const exportAccountTrades = createAsyncThunk(
   async (
     credentials: {
       filename: 'account-stats';
-      fromDate: Date;
-      toDate: Date;
+      fromDate: Date | string;
+      toDate: Date | string;
       id: string;
       type: ExportType;
     },

@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { isUndefined } from 'lodash';
 import { useSearchParams } from 'react-router-dom';
 
-import { parseChartLabels } from 'utils/parseChartLabels';
+import { parseChartLabels } from 'utils';
 
 import styles from './Doughnut.module.scss';
 

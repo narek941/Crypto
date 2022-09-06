@@ -169,18 +169,6 @@ export const getWalletRecords = createAsyncThunk(
   },
 );
 
-export const ordersFilterUpdate = createAction<Partial<ITableFilter>>('ordersFilter');
-export const inflowFilterUpdate = createAction<Partial<ITableFilter>>('inflowFilter');
-export const openOrdersFilterUpdate = createAction<Partial<ITableFilter>>('openOrdersFilter');
-export const orderTradesFilterUpdate = createAction<Partial<ITableFilter>>('orderTradesFilter');
-export const recordsFilterUpdate = createAction<Partial<ITableFilter>>('recordsFilter');
-
-export const ordersFilterClear = createAction<Partial<ITableFilter>>('ordersFilterClear');
-export const inflowFilterClear = createAction<Partial<ITableFilter>>('inflowFilterClear');
-export const openOrdersFilterClear = createAction<Partial<ITableFilter>>('openOrdersFilterClear');
-export const orderTradesFilterClear = createAction<Partial<ITableFilter>>('orderTradesFilterClear');
-export const recordsFilterClear = createAction<Partial<ITableFilter>>('recordsFilterClear');
-
 export const getOrdersFilterValues = createAsyncThunk(
   `${Slice.Accounts}/accounts/:id/orders/filter-values`,
   async (id: number, thunkAPI) => {
@@ -240,3 +228,15 @@ export const getOpenOrdersFilterValues = createAsyncThunk(
     }
   },
 );
+
+export const ordersFilterUpdate = createAction<Partial<ITableFilter>>('ordersFilter');
+export const inflowFilterUpdate = createAction<Partial<ITableFilter>>('inflowFilter');
+export const openOrdersFilterUpdate = createAction<Partial<ITableFilter>>('openOrdersFilter');
+export const orderTradesFilterUpdate = createAction<Partial<ITableFilter>>('orderTradesFilter');
+export const recordsFilterUpdate = createAction<Partial<ITableFilter>>('recordsFilter');
+
+export const ordersFilterClear = createAction<Partial<ITableFilter>>('ordersFilterClear');
+export const inflowFilterClear = createAction<Partial<ITableFilter>>('inflowFilterClear');
+export const openOrdersFilterClear = createAction<Partial<ITableFilter>>('openOrdersFilterClear');
+export const orderTradesFilterClear = createAction<Partial<ITableFilter>>('orderTradesFilterClear');
+export const recordsFilterClear = createAction<Partial<ITableFilter>>('recordsFilterClear');

@@ -6,10 +6,9 @@ import { isNull } from 'lodash';
 import { CloseIcon } from 'assets/icons';
 import { MultipleSelect, TableSearch } from 'components';
 import { useAppDispatch, useAppSelector, useForm } from 'hooks';
-import { createObject } from 'utils/createObject';
+import { createObject, filterObject } from 'utils';
 import { statusOptions, AccountTypeOptions } from 'utils/filterHelper';
 import { userFilterClear, usersFilterUpdate } from 'store/adminSlice/thunks';
-import { filterObject } from 'utils/filterObject';
 import { adminSelectors } from 'store/adminSlice';
 
 import styles from './UsersFilters.module.scss';
