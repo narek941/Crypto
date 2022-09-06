@@ -1,5 +1,6 @@
-export const addDays = function (str: any, days: any) {
+const addDays = function (str: string, days: number) {
   const myDate = new Date(str);
-  myDate.setDate(myDate.getDate() + parseInt(days));
+  myDate.setDate(myDate.getDate() + days);
   return myDate;
 };
+export default addDays;

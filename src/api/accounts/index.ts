@@ -2,6 +2,7 @@ import { AxiosRequestConfig } from 'axios';
 
 import { client } from 'api';
 import { ExportType } from 'components/shared/Export/types';
+import { IExportParams } from 'types/api';
 
 export const accountListRequest = (params: AxiosRequestConfig['params']) =>
   client.get('/accounts', { params });
@@ -17,7 +18,7 @@ export const accountTradesListRequest = (id: string, params: any) =>
     params,
   });
 
-export const accountTradesExportRequest = (id: string, type: ExportType, params: any) =>
+export const accountTradesExportRequest = (id: string, type: ExportType, params: IExportParams) =>
   client.get(`accounts/${id}/export/trades/${type}`, {
     params,
   });

@@ -8,12 +8,11 @@ import { useParams } from 'react-router-dom';
 import { CloseIcon } from 'assets/icons';
 import RangeSwipe from 'components/shared/Range';
 import { MultipleSelect, TableSearch } from 'components';
-import { createObject } from 'utils/createObject';
+import { createObject, filterObject } from 'utils';
 import { adminSelectors } from 'store/adminSlice';
 import { useAppDispatch, useAppSelector, useForm } from 'hooks';
 import { inflowFilterClear, inflowFilterUpdate } from 'store/walletsSlice/thunks';
 import { walletsActions, walletsSelectors } from 'store/walletsSlice';
-import { filterObject } from 'utils/filterObject';
 
 import styles from './InflowsFilters.module.scss';
 import { IAccountInflowFilterValue, InflowsFilterFormShape } from './types';

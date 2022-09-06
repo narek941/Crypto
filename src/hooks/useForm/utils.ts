@@ -37,20 +37,23 @@ export const composeFormSchema = <K extends FormFieldNames>(fields: K[]): AnyObj
 
     ///Add account
     apiKey: Yup.string().required('* Enter API key to finish adding account'),
-    maxRisk: Yup.string(),
+    maxRisk: Yup.number().max(100, 'Maximum position is 100').min(0, 'Minimum position is 0'),
     exchange: Yup.string().required('* Choose exchange platform to finish adding account'),
     rememberMe: Yup.bool(),
     apiSecret: Yup.string().required('* Enter API secret to finish adding account'),
-    maxDrawdown: Yup.string(),
-    maxPosition: Yup.string(),
+    maxDrawdown: Yup.string().required('* Enter Max drawdown to finish adding account'),
+    maxPosition: Yup.number().max(100, 'Maximum position is 100').min(0, 'Minimum position is 0'),
     allowedPairs: Yup.array().required('* Choose currencies to finish adding account'),
-    stopLossOrder: Yup.bool(),
+    stopLossOrder: Yup.bool().required('* Choose Stop loss order to finish adding account'),
     baseCurrency: Yup.string().required('* Choose base currency to finish adding account'),
     // startCapital: Yup.string().required('* Enter start capital to finish adding account'),
     refreshInterval: Yup.string().required('* Choose refresh interval to finish adding account'),
     wrongCurrencyAlert: Yup.bool(),
     alertsDestinations: Yup.array().required('* Enter destination address for account alert '),
-    name: Yup.string().required('* Enter account name to finish adding account'),
+    name: Yup.string()
+      .trim()
+      .required('* Enter account name to finish adding account')
+      .max(256, 'Name must not exceed 256 symbols'),
 
     //Orders filter
     selectFee: Yup.array(),

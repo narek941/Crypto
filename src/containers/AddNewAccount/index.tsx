@@ -16,9 +16,7 @@ const AddNewAccount: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { id: accountId } = useParams();
-
   const id = Number(accountId);
-
   const handleSubmit: SubmitHandler<AddAccountFormShape> = async (values) => {
     const body = parseBody.parseAccountBody(values);
     if (!id) {

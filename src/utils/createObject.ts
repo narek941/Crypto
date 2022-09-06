@@ -29,9 +29,10 @@ interface Obj {
   coin: string;
 }
 
-export const createObject = (key: string, value: any) => {
+const createObject = (key: string, value: any) => {
   const filter: any = {};
 
   filter[key as keyof Obj] = value === '' ? undefined : key === 'id' ? Number(value) : value;
   return filter;
 };
+export default createObject;

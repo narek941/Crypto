@@ -46,7 +46,7 @@ const SignInForm: React.FC = () => {
             {...signInFormFields.login_email}
             {...formMethods.register('login_email')}
             className={styles.signIn__form__group__input}
-            error={formMethods.formState.errors.login_email?.message || loginError}
+            error={formMethods.formState.errors.login_email?.message || (loginError && ' ')}
           />
           <Input
             haveRightIcon

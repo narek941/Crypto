@@ -5,4 +5,5 @@ export interface ISeoProps {
   withHeader?: boolean;
   withMail?: boolean;
   isBackBtn?: boolean;
+  to?: any;
 }

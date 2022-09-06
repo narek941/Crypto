@@ -3,6 +3,7 @@ export enum BrowserStorageKeys {
   Role = 'role',
   AccessToken = 'accessToken',
   Language = 'i18nextLng',
+  Scroll = 'scroll',
 }
 
 export type BrowserStorageOptions = {

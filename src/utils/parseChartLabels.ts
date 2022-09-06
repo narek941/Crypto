@@ -1,6 +1,6 @@
-import { mergeObjects } from 'utils/mergeObject';
+import { mergeObjects } from 'utils';
 
-export const parseChartLabels = (data: any, key: string, value: string) => {
+const parseChartLabels = (data: any, key: string, value: string) => {
   let others = 0;
   const label = [];
   const othersID: any[] = [];
@@ -24,3 +24,4 @@ export const parseChartLabels = (data: any, key: string, value: string) => {
     others: mergeObjects(othersID),
   };
 };
+export default parseChartLabels;

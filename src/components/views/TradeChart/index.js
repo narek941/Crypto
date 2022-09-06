@@ -22,7 +22,6 @@ const TradingViewChart = ({
   width,
   field2,
   baseCurrency,
-  useWeekly = false,
   className,
 }) => {
   // reference for DOM element to create with chart
@@ -201,29 +200,21 @@ const TradingViewChart = ({
           toolTip.style.display = 'none';
         } else {
           const nd = new Date(param.time.year, param.time.month, param.time.day);
-          // eslint-disable-next-line no-console
           const hoveredObject = data.filter(
             (item) =>
               moment(item.snapshotDate).toISOString().slice(0, 10) ==
               moment(nd).toISOString().slice(0, 10),
           );
-          const dateStr = useWeekly
-            ? moment(param.time.year + '.' + param.time.month + '.' + param.time.day)
-                .startOf('week')
-                .format('MMMM D, YYYY') +
-              '.' +
-              moment(param.time.year + '.' + param.time.month + '.' + param.time.day)
-                .endOf('week')
-                .format('MMMM D, YYYY')
-            : moment(param.time.year + '.' + param.time.month + '.' + param.time.day).format(
-                'DD.MM.YYYY HH:mm:ss',
-              );
+          const dateStr = moment(
+            param.time.year + '.' + param.time.month + '.' + param.time.day,
+          ).format('DD.MM.YYYY HH:mm:ss');
           var price = param.seriesPrices.get(series);
-          const secondField = hoveredObject.map((item) => item[field2]);
-          const secondFieldValue = field2
-            ? hoveredObject.map((item) => item.account.baseCurrency.name)
+          const secondField = hoveredObject.map((item) => item[field2])[0]
+            ? hoveredObject.map((item) => item[field2])[0]
             : '';
-
+          const secondFieldValue = field2
+            ? hoveredObject.map((item) => item.account.baseCurrency.name)[0]
+            : '';
           toolTip.innerHTML =
             `<div id={tooltip_wrapper}" style="background: rgba(46, 46, 46, 0.9);border-radius:4px; padding:12px; width:100%;height:100%; display:flex; flex-direction:column;gap:8px;" >` +
             `<div style="font-size: 12px; color:#ffffff">` +

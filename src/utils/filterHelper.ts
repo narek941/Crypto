@@ -1,4 +1,4 @@
-import { AlertType } from 'types/api/filters';
+import { AlertType } from 'types/api';
 
 export const sideOptions = [
   { label: 'BUY', value: 'BUY' },
@@ -23,7 +23,6 @@ export const typeOptions = [
 export const statusOptions = [
   { label: 'Active', value: 'ACTIVE' },
   { label: 'Blocked', value: 'BLOCKED' },
-  { label: 'Deleted', value: 'DELETED' },
 ];
 
 export const AccountTypeOptions = [

@@ -8,14 +8,13 @@ import { useParams } from 'react-router-dom';
 import { CloseIcon } from 'assets/icons';
 import RangeSwipe from 'components/shared/Range';
 import { MultipleSelect, TableSearch } from 'components';
-import { createObject } from 'utils/createObject';
+import { createObject, filterObject } from 'utils';
 import { adminSelectors } from 'store/adminSlice';
 import DualSelect from 'components/shared/DualSelect';
 import DateRangePicker from 'components/shared/DateRangePicker';
 import { useAppDispatch, useAppSelector, useForm } from 'hooks';
 import { openOrdersFilterClear, openOrdersFilterUpdate } from 'store/walletsSlice/thunks';
 import { walletsActions, walletsSelectors } from 'store/walletsSlice';
-import { filterObject } from 'utils/filterObject';
 
 import { FilterFormShape, IOpenOrdersFilterValue } from './types';
 import styles from './OpenOrdersFilters.module.scss';

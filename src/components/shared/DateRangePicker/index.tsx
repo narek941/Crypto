@@ -10,7 +10,7 @@ import { isNull } from 'lodash';
 import { useAppSelector, useOnClickOutside, useWindowSize } from 'hooks';
 import { CalendarIcon, CloseIcon } from 'assets/icons';
 import { authSelectors } from 'store/authSlice';
-import { addDays } from 'utils/addDays';
+import { addDays } from 'utils';
 import { useRect } from 'hooks/useRect';
 
 import styles from './DateRangePicker.module.scss';

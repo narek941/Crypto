@@ -10,7 +10,7 @@ export const errorConverter = (message: string): string => {
   }
 };
 
-export const parseAddUserError = (message: string): any => {
+export const parseAddUserError = (message: string): string | undefined | Record<string, string> => {
   if (message.includes('already exists')) {
     if (message.includes('email')) {
       return { email: '* User with this email already exists. Choose a different email' };

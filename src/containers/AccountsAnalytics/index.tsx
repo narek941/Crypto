@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import moment from 'moment';
 
-import { useWindowSize } from 'hooks';
+import { useBeforeLoad, useWindowSize } from 'hooks';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { wrapWithBaseCurrency } from 'utils';
 import { adminActions } from 'store/adminSlice';
@@ -10,6 +10,7 @@ import { accountsActions, accountsSelectors } from 'store/accountsSlice';
 import { Bricks, Chart, Doughnut, Export, AnalyticsTabs, Loader } from 'components';
 import { AccountModalChartColor } from 'constants/charts';
 import { ExportType } from 'components/shared/Export/types';
+import { BrowserStorageKeys, BrowserStorageService } from 'services';
 
 import styles from './AccountsAnalytics.module.scss';
 
@@ -46,15 +47,26 @@ const AccountsAnalytics = (): JSX.Element => {
     }
   };
 
+  const handleScroll = () => {
+    BrowserStorageService.set(BrowserStorageKeys.Scroll, window.scrollY.toString(), {
+      session: true,
+    });
+  };
+
+  useEffect(() => {
+    const scrollPosition = BrowserStorageService.get(BrowserStorageKeys.Scroll, {
+      session: true,
+    });
+    window.scrollTo(0, Number(scrollPosition));
+  });
+
   useEffect(() => {
     const getAccountsAnalytics = async () => {
       try {
         await dispatch(accountsActions.getAccountById(convertedId)).unwrap();
         await dispatch(accountsActions.getAccountCapitalChartData(convertedId)).unwrap();
         await dispatch(accountsActions.getAccountTradingPairsChartData(convertedId)).unwrap();
-
         setIsLoading(false);
-
         await dispatch(accountsActions.getAccountSummary(convertedId)).unwrap();
         await dispatch(adminActions.getCoins()).unwrap();
         await dispatch(adminActions.getTradingPairs()).unwrap();
@@ -72,6 +84,8 @@ const AccountsAnalytics = (): JSX.Element => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [convertedId, dispatch]);
+
+  useBeforeLoad(handleScroll);
 
   if (isLoading) {
     return <Loader />;

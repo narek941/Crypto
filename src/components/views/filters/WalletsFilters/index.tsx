@@ -5,11 +5,10 @@ import { useParams } from 'react-router-dom';
 
 import { CloseIcon } from 'assets/icons';
 import { MultipleSelect } from 'components';
-import { createObject } from 'utils/createObject';
+import { createObject, filterObject } from 'utils';
 import { adminSelectors } from 'store/adminSlice';
 import { walletsActions, walletsSelectors } from 'store/walletsSlice';
 import { useAppDispatch, useAppSelector, useForm } from 'hooks';
-import { filterObject } from 'utils/filterObject';
 import RangeSwipe from 'components/shared/Range';
 
 import styles from './WalletsFilters.module.scss';

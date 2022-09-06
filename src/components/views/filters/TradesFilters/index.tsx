@@ -8,13 +8,12 @@ import { useParams } from 'react-router-dom';
 import { CloseIcon } from 'assets/icons';
 import { MultipleSelect } from 'components';
 import { adminSelectors } from 'store/adminSlice';
-import { createObject } from 'utils/createObject';
+import { createObject, filterObject } from 'utils';
 import DualSelect from 'components/shared/DualSelect';
 import DateRangePicker from 'components/shared/DateRangePicker';
 import { useAppDispatch, useAppSelector, useForm } from 'hooks';
 import { accountsTradesFilterClear, accountsTradesFilterUpdate } from 'store/accountsSlice/thunks';
 import { accountsActions, accountsSelectors } from 'store/accountsSlice';
-import { filterObject } from 'utils/filterObject';
 import RangeSwipe from 'components/shared/Range';
 
 import styles from './TradesFilters.module.scss';
@@ -47,6 +46,7 @@ const TradesFilters = () => {
     minFeesInBaseCurrency: null,
     maxFeesInBaseCurrency: null,
   });
+
   const { formMethods } = useForm<keyof FilterFormShape, FilterFormShape>({
     mode: 'onChange',
     schemaKeys: filterSchemaKeys,

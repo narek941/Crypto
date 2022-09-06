@@ -14,13 +14,13 @@ export const walletFilterFormFields: FormField<keyof FilterFormShape> = {
     name: 'searchWalletValue',
     type: 'number',
     id: 'walletFilterForm.selectSide',
-    placeholder: 'Select Value',
+    placeholder: 'Select Amount',
   },
   searchWalletValueInBaseCurrency: {
     name: 'searchWalletValueInBaseCurrency',
     type: 'number',
     id: 'walletFilterForm.selectSide',
-    placeholder: 'Select Value, USDT',
+    placeholder: 'Select Amount, USDT',
   },
 };
 
