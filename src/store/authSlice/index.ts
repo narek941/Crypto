@@ -39,6 +39,7 @@ const authSlice = createSlice({
       state.personalInfo = action.payload.personalInfo;
       state.loading = false;
       state.error = null;
+      state.role = action.payload.personalInfo.role;
     });
 
     builder.addCase(authThunks.signIn.fulfilled, (state, action) => {

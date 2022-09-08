@@ -41,6 +41,7 @@
       color: var(--table-header-font) !important;
       position: relative;
       border-color: var(--table-border) !important;
+      padding: 9px !important;
 
       span {
         height: 16px;
@@ -53,6 +54,7 @@
         min-width: max-content;
         background-color: transparent;
         color: var(--table-header-font) !important;
+        padding: 0;
 
         &__up {
           position: absolute;
@@ -91,7 +93,7 @@
       &__ceil {
         height: 56px;
         color: var(--font);
-        padding: 12px !important;
+        padding: 9px !important;
         font-size: 13px !important;
         line-height: 16px !important;
         border-color: var(--table-border) !important;

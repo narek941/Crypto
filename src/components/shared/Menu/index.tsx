@@ -9,7 +9,7 @@ import { IMenu, MenuOption } from './types';
 
 const Menu = ({ options, callback }: IMenu): JSX.Element => {
   const [open, setOpen] = useState<boolean>(false);
-  const [selected, setSelected] = useState<number>(1);
+  const [selected, setSelected] = useState<number>(3);
   const ref = useRef<HTMLDivElement>(null);
   const dropClass: string = classNames(styles.wrapper__select__dropdown, {
     [styles.wrapper__select__dropdown__open]: open && options.length > 1,

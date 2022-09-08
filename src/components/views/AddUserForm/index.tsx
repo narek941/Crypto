@@ -14,6 +14,7 @@ import { AccountTypeOptions } from 'utils/filterHelper';
 import MultipleSelect from 'components/shared/MultipleSelect';
 import { usersSelectors } from 'store/usersSlice';
 import { accountsActions, accountsSelectors } from 'store/accountsSlice';
+import { RoleType } from 'types/api';
 
 import styles from './AddUserForm.module.scss';
 import { AddUserFormShape, IAddUser } from './types';
@@ -70,7 +71,7 @@ const AddUserForm = ({ onClick, isEditable = false }: IAddUser) => {
   }, [addUserFormDefaultValues, formMethods, isEditable]);
 
   const accountWatch = formMethods.watch();
-  const defaultMultipleValue = accountWatch.usersAccountType == 'VIEWER' && [];
+  const defaultMultipleValue = accountWatch.usersAccountType == RoleType.VIEWER && [];
 
   return (
     <>
@@ -117,7 +118,7 @@ const AddUserForm = ({ onClick, isEditable = false }: IAddUser) => {
                 />
               )}
             />
-            {accountWatch.usersAccountType == 'VIEWER' && accountsOptions && (
+            {accountWatch.usersAccountType == RoleType.VIEWER && accountsOptions && (
               <MultipleSelect
                 formMethods={formMethods}
                 {...addUserFormFields.usersAccountList}

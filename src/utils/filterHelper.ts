@@ -1,4 +1,4 @@
-import { AlertType } from 'types/api';
+import { AlertType, RoleType } from 'types/api';
 
 export const sideOptions = [
   { label: 'BUY', value: 'BUY' },
@@ -28,15 +28,15 @@ export const statusOptions = [
 export const AccountTypeOptions = [
   {
     label: 'Administrator',
-    value: 'ADMIN',
+    value: RoleType.ADMIN,
   },
   {
     label: 'Analyst',
-    value: 'ANALYST',
+    value: RoleType.ANALYST,
   },
   {
     label: 'Viewer',
-    value: 'VIEWER',
+    value: RoleType.VIEWER,
   },
 ];
 

@@ -2,12 +2,15 @@ import classNames from 'classnames';
 import { useState } from 'react';
 import { Tooltip } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 
 import { FilterIcon } from 'assets/icons';
 import { LinkButton } from 'components';
 import AccountsFilters from 'components/views/filters/AccountsFilters';
 import UsersFilters from 'components/views/filters/UsersFilters';
 import AlertsFilters from 'components/views/filters/AlertsFilters';
+import { RoleType } from 'types/api';
+import { authSelectors } from 'store/authSlice';
 
 import styles from './TableToolbar.module.scss';
 import { ITableToolbarProps } from './types';
@@ -16,6 +19,8 @@ const TableToolbar = ({ linkText, linkTo }: ITableToolbarProps): JSX.Element => 
   const { t } = useTranslation();
   const [filterVisible, setFilterVisible] = useState(false);
   const text = `+ ADD NEW ${linkText}`;
+  const role = useSelector(authSelectors.selectRole);
+
   const toolbarClasses = classNames(styles.toolbar, {
     [styles.toolbar_noLink]: !linkTo,
   });
@@ -36,7 +41,7 @@ const TableToolbar = ({ linkText, linkTo }: ITableToolbarProps): JSX.Element => 
       <div className={toolbarClasses}>
         {linkText && linkTo && (
           <div className={styles.toolbar__link}>
-            <LinkButton to={linkTo}>{text}</LinkButton>
+            {role === RoleType.ADMIN && <LinkButton to={linkTo}>{text}</LinkButton>}{' '}
           </div>
         )}
         <div className={styles.toolbar__filter}>

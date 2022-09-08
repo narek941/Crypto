@@ -45,13 +45,13 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
     name: 'accountOpenProfit',
     type: 'Search',
     id: 'filterForm.accountOpenProfit',
-    placeholder: 'Select Open Profit',
+    placeholder: 'Select Open Profit, %',
   },
   accountEarnedCapital: {
     name: 'accountEarnedCapital',
     type: 'Search',
     id: 'filterForm.accountEarnedCapital',
-    placeholder: 'Select Earned Capital',
+    placeholder: 'Select Earned Capital, %',
   },
 };
 

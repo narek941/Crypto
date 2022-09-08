@@ -2,6 +2,8 @@ import * as Yup from 'yup';
 import { AnyObjectSchema } from 'yup';
 import { SchemaLike } from 'yup/lib/types';
 
+import { RoleType } from 'types/api';
+
 import { FormFieldNames } from './types';
 
 export const composeFormSchema = <K extends FormFieldNames>(fields: K[]): AnyObjectSchema => {
@@ -29,7 +31,7 @@ export const composeFormSchema = <K extends FormFieldNames>(fields: K[]): AnyObj
     }),
     usersAccountType: Yup.string().required('* Choose account type to finish adding new user'),
     usersAccountList: Yup.array().when('usersAccountType', {
-      is: (value: string) => value === 'VIEWER',
+      is: (value: string) => value === RoleType.VIEWER,
       then: Yup.array().required('* Choose linked accounts'),
     }),
 
@@ -37,19 +39,27 @@ export const composeFormSchema = <K extends FormFieldNames>(fields: K[]): AnyObj
 
     ///Add account
     apiKey: Yup.string().required('* Enter API key to finish adding account'),
-    maxRisk: Yup.number().max(100, 'Maximum position is 100').min(0, 'Minimum position is 0'),
+    maxRisk: Yup.number()
+      .required('* Enter Maximum risk position to finish adding account')
+      .typeError('* Enter Maximum risk position to finish adding account')
+      .max(100, 'Maximum position is 100')
+      .min(0, 'Minimum position is 0'),
     exchange: Yup.string().required('* Choose exchange platform to finish adding account'),
     rememberMe: Yup.bool(),
     apiSecret: Yup.string().required('* Enter API secret to finish adding account'),
     maxDrawdown: Yup.string().required('* Enter Max drawdown to finish adding account'),
-    maxPosition: Yup.number().max(100, 'Maximum position is 100').min(0, 'Minimum position is 0'),
+    maxPosition: Yup.number()
+      .required('* Enter Maximum position size to finish adding account')
+      .typeError('* Enter Maximum position size to finish adding account')
+      .max(100, 'Maximum position is 100')
+      .min(0, 'Minimum position is 0'),
     allowedPairs: Yup.array().required('* Choose currencies to finish adding account'),
     stopLossOrder: Yup.bool().required('* Choose Stop loss order to finish adding account'),
     baseCurrency: Yup.string().required('* Choose base currency to finish adding account'),
     // startCapital: Yup.string().required('* Enter start capital to finish adding account'),
     refreshInterval: Yup.string().required('* Choose refresh interval to finish adding account'),
     wrongCurrencyAlert: Yup.bool(),
-    alertsDestinations: Yup.array().required('* Enter destination address for account alert '),
+    alertsDestinations: Yup.array().required('* Enter destination address for account alert'),
     name: Yup.string()
       .trim()
       .required('* Enter account name to finish adding account')

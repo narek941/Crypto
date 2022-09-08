@@ -2,90 +2,64 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { DateRange } from 'react-date-range';
 import { Controller } from 'react-hook-form';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import moment from 'moment';
 import { isNull } from 'lodash';
-import { useParams } from 'react-router-dom';
 
 import { ExportIcon } from 'assets/icons';
 import { FormWrapper } from 'components/forms';
-import { useAppDispatch, useAppSelector, useForm, useOnClickOutside } from 'hooks';
+import { useAppSelector, useForm, useOnClickOutside } from 'hooks';
 import { authSelectors } from 'store/authSlice';
 import { addDays } from 'utils';
 import { Menu } from 'components';
-import { IAccountTradesFilterValue } from 'components/views/filters/TradesFilters/types';
-import { accountsActions } from 'store/accountsSlice';
-
-import { MenuOption } from '../Menu/types';
+import periodOptions from 'constants/export';
 
 import styles from './Export.module.scss';
 import { exportSchemaKeys } from './fields';
 import { DateState, ExportFormShape, ExportType, IExport } from './types';
 
 const Export = ({ className, text = 'export', callback }: IExport): JSX.Element => {
+  const isDarkMode: boolean = useAppSelector(authSelectors.selectIsDarkMode);
+
+  const isMode: string = isDarkMode ? 'rgba(65, 58, 199, 0.15)' : '#e5e5e5';
+
   const defaultValue: DateState = {
-    startDate: undefined,
-    endDate: undefined,
-    color: 'transparent',
+    startDate: moment().subtract(1, 'months').toDate(),
+    endDate: moment().toDate(),
+    color: isMode,
     key: 'selection',
   };
   const customRef = useRef(null);
-  const dispatch = useAppDispatch();
-
+  // const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const { id } = useParams();
+  // const { id } = useParams();
 
-  const [filterValue, setFilterValue] = useState<IAccountTradesFilterValue>({
-    minTradeTime: null,
-    maxTradeTime: null,
-    minPrice: null,
-    maxPrice: null,
-    minTotalPrice: null,
-    maxTotalPrice: null,
-    minTotalPriceInBaseCurrency: null,
-    maxTotalPriceInBaseCurrency: null,
-    minAmount: null,
-    maxAmount: null,
-    minFees: null,
-    maxFees: null,
-    minFeesInBaseCurrency: null,
-    maxFeesInBaseCurrency: null,
-  });
+  // const [filterValue, setFilterValue] = useState<IAccountTradesFilterValue>({
+  //   minTradeTime: null,
+  //   maxTradeTime: null,
+  //   minPrice: null,
+  //   maxPrice: null,
+  //   minTotalPrice: null,
+  //   maxTotalPrice: null,
+  //   minTotalPriceInBaseCurrency: null,
+  //   maxTotalPriceInBaseCurrency: null,
+  //   minAmount: null,
+  //   maxAmount: null,
+  //   minFees: null,
+  //   maxFees: null,
+  //   minFeesInBaseCurrency: null,
+  //   maxFeesInBaseCurrency: null,
+  // });
   const [state, setState] = useState<DateState>(defaultValue);
   const [lastChange, setLastChange] = useState<number>(2);
   const { t } = useTranslation();
   const { formMethods } = useForm<keyof ExportFormShape, ExportFormShape>({
     schemaKeys: exportSchemaKeys,
   });
-  const isDarkMode: boolean = useAppSelector(authSelectors.selectIsDarkMode);
-  const isMode: string = isDarkMode ? 'rgba(65, 58, 199, 0.15)' : '#e5e5e5';
   let startDay: string = moment(state.startDate).format('LL');
   let endDay: string = moment(state.endDate).format('LL');
 
   const exportClass: string = classNames(styles.export, className);
-
-  const periodOptions: MenuOption[] = [
-    {
-      id: 1,
-      label: 'Today',
-    },
-    {
-      id: 2,
-      label: 'Last 7 days',
-    },
-    {
-      id: 3,
-      label: 'Last month',
-    },
-    {
-      id: 4,
-      label: 'Last 12 months',
-    },
-    {
-      id: 5,
-      label: 'All time',
-    },
-  ];
 
   const handleChange = (item: any) => {
     const start = item.selection.startDate;
@@ -163,28 +137,23 @@ const Export = ({ className, text = 'export', callback }: IExport): JSX.Element 
         formMethods.setValue('exportDate', state);
 
         break;
-      case 5:
-        setState({ ...state, startDate: moment().toDate(), endDate: moment().toDate() });
-        formMethods.setValue('exportDate', state);
-
-        break;
       default:
         break;
     }
   };
 
-  const getFilterValue = async () => {
-    const { data } = await dispatch(
-      accountsActions.getAccountTradesFilterValues(Number(id)),
-    ).unwrap();
-    setFilterValue(data);
-  };
+  // const getFilterValue = async () => {
+  //   const { data } = await dispatch(
+  //     accountsActions.getAccountTradesFilterValues(Number(id)),
+  //   ).unwrap();
+  //   setFilterValue(data);
+  // };
 
-  useEffect(() => {
-    getFilterValue();
+  // useEffect(() => {
+  //   getFilterValue();
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   useOnClickOutside(customRef, () => setIsOpen(false));
 
@@ -241,13 +210,13 @@ const Export = ({ className, text = 'export', callback }: IExport): JSX.Element 
                       weekStartsOn={1}
                       showPreview={false}
                       direction='horizontal'
+                      calendarFocus='backwards'
                       onChange={handleChange}
-                      moveRangeOnFirstSelection={false}
                       weekdayDisplayFormat='EEEEE'
                       showMonthAndYearPickers={true}
                       className={styles.calendar__inner}
-                      minDate={new Date(filterValue.minTradeTime)}
-                      maxDate={new Date(filterValue.maxTradeTime)}
+                      // minDate={new Date(filterValue.minTradeTime)}
+                      // maxDate={new Date(filterValue.maxTradeTime)}
                     />
                   )}
                 />

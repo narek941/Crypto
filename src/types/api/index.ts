@@ -27,6 +27,18 @@ export enum AlertType {
   RISK_POSITION = 'RISK_POSITION',
 }
 
+export enum RoleType {
+  ADMIN = 'ADMIN',
+  VIEWER = 'VIEWER',
+  ANALYST = 'ANALYST',
+}
+
+export enum StatusType {
+  BLOCKED = 'BLOCKED',
+  ACTIVE = 'ACTIVE',
+  DELETED = 'DELETED',
+}
+
 export interface IExportParams {
   filename: string;
   fromDate: string | Date;

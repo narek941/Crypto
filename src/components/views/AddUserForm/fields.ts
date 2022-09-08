@@ -31,7 +31,7 @@ export const addUserFormFields: FormField<keyof AddUserFormShape> = {
     type: 'password',
     label: 'Repeat Password',
     id: 'addUser.confirmPassword',
-    placeholder: 'Enter Password',
+    placeholder: 'Confirm Password',
   },
   usersAccountType: {
     name: 'usersAccountType',
