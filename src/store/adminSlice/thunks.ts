@@ -16,8 +16,15 @@ export const addNewAccount = createAsyncThunk(
       return {
         response: response.data,
       };
-    } catch {
-      return thunkAPI.rejectWithValue({ error: 'You can not add accounts' });
+    } catch (exception) {
+      const error = exception as AxiosError<{ message: any }>;
+      if (error.message === 'WRONG_KEYS') {
+        return thunkAPI.rejectWithValue({
+          error: { apiKey: '', apiSecret: error.response?.data.message[0] },
+        });
+      } else {
+        return thunkAPI.rejectWithValue({ error: error.response?.data.message[0] });
+      }
     }
   },
 );
@@ -31,8 +38,15 @@ export const updateAccount = createAsyncThunk(
       return {
         response: response.data,
       };
-    } catch {
-      return thunkAPI.rejectWithValue({ error: 'You can not add accounts' });
+    } catch (exception) {
+      const error = exception as AxiosError<{ message: any }>;
+      if (error.message === 'WRONG_KEYS') {
+        return thunkAPI.rejectWithValue({
+          error: { apiKey: '', apiSecret: error.response?.data.message[0] },
+        });
+      } else {
+        return thunkAPI.rejectWithValue({ error: error.response?.data.message[0] });
+      }
     }
   },
 );

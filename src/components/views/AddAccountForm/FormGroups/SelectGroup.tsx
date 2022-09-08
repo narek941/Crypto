@@ -90,6 +90,7 @@ const SelectGroup = ({
                   {...addAccountFormFields.alertsDestinations}
                   {...field}
                   withAction={false}
+                  withClear={false}
                   error={formMethods.formState.errors.alertsDestinations?.message}
                 />
               )}

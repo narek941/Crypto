@@ -25,7 +25,6 @@ const AddAccountForm = ({ onClick, isEditable = false }: IAddAccount) => {
             name,
             allowedPairs,
             alertsDestinations,
-            // startCapital: startCapitalInBaseCurrency,
             exchange: 'Binance',
             baseCurrency: baseCurrency?.id,
             apiKey: wallets && wallets[0]?.apiKey,

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import moment from 'moment';
 
 import { useBeforeLoad, useWindowSize } from 'hooks';
@@ -8,7 +8,7 @@ import { wrapWithBaseCurrency } from 'utils';
 import { adminActions } from 'store/adminSlice';
 import { accountsActions, accountsSelectors } from 'store/accountsSlice';
 import { Bricks, Chart, Doughnut, Export, AnalyticsTabs, Loader } from 'components';
-import { AccountModalChartColor } from 'constants/charts';
+import { AccountAnalyticsChartColor } from 'constants/charts';
 import { ExportType } from 'components/shared/Export/types';
 import { BrowserStorageKeys, BrowserStorageService } from 'services';
 
@@ -17,6 +17,7 @@ import styles from './AccountsAnalytics.module.scss';
 const AccountsAnalytics = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const { id } = useParams();
+  const [searchParams] = useSearchParams();
   const convertedId = Number(id);
   const windowSize = useWindowSize();
 
@@ -33,7 +34,6 @@ const AccountsAnalytics = (): JSX.Element => {
   // );
   const accountCapitalChartData = useAppSelector(accountsSelectors.selectAccountCapitalChartData);
   const canvasWidth = (windowSize.width - 290) / 2;
-  const accountAnalyticsChartColors = AccountModalChartColor();
 
   const handleExportSubmit = (credentials: any) => {
     if (credentials.type === ExportType.pdf) {
@@ -59,6 +59,14 @@ const AccountsAnalytics = (): JSX.Element => {
     });
     window.scrollTo(0, Number(scrollPosition));
   });
+
+  useEffect(() => {
+    const scrollPosition = BrowserStorageService.get(BrowserStorageKeys.Scroll, {
+      session: true,
+    });
+    window.scrollTo(0, Number(scrollPosition));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams.get('tab')]);
 
   useEffect(() => {
     const getAccountsAnalytics = async () => {
@@ -174,7 +182,7 @@ const AccountsAnalytics = (): JSX.Element => {
                   value={'relativePercentage'}
                   width={(windowSize.width - 240) / 2}
                   header={'Trading Pairs Chart'}
-                  colors={accountAnalyticsChartColors}
+                  colors={AccountAnalyticsChartColor}
                   baseCurrency={accountById?.baseCurrency?.name}
                   navigateTo={3}
                   tooltipFields={['totalBaseSum', 'baseCurrencyName', 'totalSum', 'toCurrencyName']}
@@ -191,7 +199,7 @@ const AccountsAnalytics = (): JSX.Element => {
                   value={'relativePercentage'}
                   width={(windowSize.width - 260) / 2}
                   header={'Account Assets Chart'}
-                  colors={accountAnalyticsChartColors}
+                  colors={AccountAnalyticsChartColor}
                   baseCurrency={accountById?.baseCurrency?.name}
                   navigateTo={1}
                   tooltipFields={['baseCurrencyValue', 'baseCurrencyName', 'value', 'assetCoin']}
