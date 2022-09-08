@@ -35,6 +35,9 @@ client.interceptors.response.use(
     if (error.response?.status === 401) {
       store.dispatch(authActions.signOut());
     }
+    if (error.response?.status === 403) {
+      store.dispatch(authActions.userInfoRequest({}));
+    }
 
     return Promise.reject(error);
   },

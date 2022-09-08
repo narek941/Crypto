@@ -57,6 +57,19 @@ export const userInfoRequest = createAsyncThunk<any, any, { rejectValue: any }>(
   async (data: any, thunkAPI) => {
     try {
       const response = await client.get('/users/me');
+      if (
+        response.data.role !==
+          BrowserStorageService.get(BrowserStorageKeys.Role, {
+            session: true,
+          }) ||
+        BrowserStorageService.get(BrowserStorageKeys.Role)
+      ) {
+        BrowserStorageService.remove(BrowserStorageKeys.Role);
+        BrowserStorageService.remove(BrowserStorageKeys.Role, {
+          session: true,
+        });
+        BrowserStorageService.set(BrowserStorageKeys.Role, response.data.role);
+      }
       return { personalInfo: response.data };
     } catch (error) {
       return thunkAPI.rejectWithValue({

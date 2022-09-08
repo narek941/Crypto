@@ -4,9 +4,10 @@ import { useSelector } from 'react-redux';
 
 import { Routes } from 'types';
 import { useAppDispatch, useAppSelector } from 'hooks';
-import { authSelectors } from 'store/authSlice';
+import { authActions, authSelectors } from 'store/authSlice';
 import { i18n } from 'i18';
 import { userInfoRequest } from 'store/authSlice/thunks';
+import { StatusType } from 'types/api';
 
 const ProtectedRoute = ({ children }: any) => {
   const dispatch = useAppDispatch();
@@ -23,6 +24,10 @@ const ProtectedRoute = ({ children }: any) => {
   }
   if (token && !personalInfo) {
     dispatch(userInfoRequest({}));
+  }
+  if (personalInfo?.status === StatusType.BLOCKED || personalInfo?.status === StatusType.DELETED) {
+    dispatch(authActions.signOut());
+    return <Navigate to={Routes.Login} replace />;
   }
 
   return children;

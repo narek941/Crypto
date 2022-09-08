@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { SubmitHandler } from 'react-hook-form';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import { Routes } from 'types';
 import { parseBody } from 'utils';
@@ -9,6 +10,8 @@ import { AddAccountForm } from 'components';
 import { adminActions } from 'store/adminSlice';
 import { accountsActions } from 'store/accountsSlice';
 import { AddAccountFormShape } from 'components/views/AddAccountForm/types';
+import { authSelectors } from 'store/authSlice';
+import { RoleType } from 'types/api';
 
 import styles from './AddNewAccount.module.scss';
 
@@ -17,6 +20,8 @@ const AddNewAccount: React.FC = () => {
   const dispatch = useAppDispatch();
   const { id: accountId } = useParams();
   const id = Number(accountId);
+  const role = useSelector(authSelectors.selectRole);
+
   const handleSubmit: SubmitHandler<AddAccountFormShape> = async (values) => {
     const body = parseBody.parseAccountBody(values);
     if (!id) {
@@ -43,6 +48,10 @@ const AddNewAccount: React.FC = () => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  if (role !== RoleType.ADMIN) {
+    return <Navigate to={Routes.Accounts} replace />;
+  }
 
   return (
     <div className={styles.container}>

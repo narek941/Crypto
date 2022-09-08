@@ -1,15 +1,20 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 
 import { Loader, Table } from 'components';
 import { Routes } from 'types/routes';
 import { useAppDispatch } from 'hooks';
 import { usersTable } from 'constants/index';
 import { adminActions, adminSelectors } from 'store/adminSlice';
+import { RoleType } from 'types/api';
+import { authSelectors } from 'store/authSlice';
 
 const Users = () => {
   const dispatch = useAppDispatch();
   const { list, usersFilter, totalCount } = useSelector(adminSelectors.selectAdmin);
+  const role = useSelector(authSelectors.selectRole);
+
   const [isLoading, setIsLoading] = useState(true);
 
   const { take, order, sort } = usersFilter;
@@ -25,6 +30,10 @@ const Users = () => {
     };
     getUsers();
   }, [dispatch, usersFilter]);
+
+  if (role !== RoleType.ADMIN) {
+    return <Navigate to={Routes.Dashboard} replace />;
+  }
 
   if (isLoading) {
     return <Loader />;

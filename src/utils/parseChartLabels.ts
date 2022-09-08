@@ -10,14 +10,14 @@ const parseChartLabels = (data: any, key: string, value: string) => {
       label.push({
         id: asset['id'],
         key: asset[key],
-        value: Number(asset[value]).toFixed(0),
+        value: Number(asset[value]).toFixed(2),
       });
     } else {
       others = others + Number(asset[value]);
       othersID.push(asset);
     }
   });
-  others > 0 && label.push({ key: 'Others', value: others.toFixed(0) });
+  others > 0 && label.push({ key: 'Others', value: others.toFixed(2) });
 
   return {
     label: label,
