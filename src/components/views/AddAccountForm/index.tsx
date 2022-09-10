@@ -13,6 +13,22 @@ import BaseSetting from './FormGroups/BaseSetting';
 import TradeSetting from './FormGroups/TradeSetting';
 import { AddAccountFormShape, IAddAccount } from './types';
 
+type AllowedPairsProps = {
+  createdAt: string;
+  deletedAt: string;
+  id: number;
+  tradingPair: {
+    createdAt: string;
+    deletedAt: string;
+    from: any;
+    id: number;
+    name: string;
+    to: any;
+    updatedAt: string;
+  };
+  updatedAt: string;
+};
+
 const AddAccountForm = ({ onClick, isEditable = false }: IAddAccount) => {
   const { name, allowedPairs, alertsDestinations, wallets, baseCurrency } = useSelector(
     accountsSelectors.selectAccountById,
@@ -23,9 +39,8 @@ const AddAccountForm = ({ onClick, isEditable = false }: IAddAccount) => {
       isEditable
         ? {
             name,
-            allowedPairs,
+            allowedPairs: allowedPairs?.map((item: AllowedPairsProps) => item?.tradingPair),
             alertsDestinations,
-            // startCapital: startCapitalInBaseCurrency,
             exchange: 'Binance',
             baseCurrency: baseCurrency?.id,
             apiKey: wallets && wallets[0]?.apiKey,
@@ -45,6 +60,7 @@ const AddAccountForm = ({ onClick, isEditable = false }: IAddAccount) => {
             maxRisk: 100,
             stopLossOrder: true,
             exchange: 'Binance',
+
             allowedPairs: [
               {
                 from: {

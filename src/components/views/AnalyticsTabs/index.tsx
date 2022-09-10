@@ -16,14 +16,15 @@ import {
 import { FilterIcon } from 'assets/icons';
 
 import styles from './AnalyticsTabs.module.scss';
+import { TabType } from './types';
 
 const AnalyticsTabs = (): JSX.Element => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [openFilter, setOpenFilter] = useState<boolean>(false);
   const { t } = useTranslation();
 
-  const handleTabUpdateChange = (id: number) => {
-    setSearchParams({ tab: id.toString() });
+  const handleTabUpdateChange = (id: string) => {
+    setSearchParams({ tab: id });
   };
   const handleFilter = () => setOpenFilter(!openFilter);
 
@@ -33,23 +34,22 @@ const AnalyticsTabs = (): JSX.Element => {
   }, [searchParams.get('tab')]);
 
   const renderTable = () => {
-    const position = window.pageYOffset;
-
     switch (searchParams.get('tab')) {
-      case '1':
+      case TabType.wallet:
         return <WalletsTable filterVisible={openFilter} />;
-      case '2':
+      case TabType.inflow:
         return <InflowsTable filterVisible={openFilter} />;
-      case '3':
+      case TabType.history:
         return <OrdersHistoryTable filterVisible={openFilter} />;
-      case '4':
+      case TabType.trades:
         return <TradesTable filterVisible={openFilter} />;
-      case '5':
+      case TabType.alerts:
         return <AnalyticsAlertTable filterVisible={openFilter} />;
+      case TabType.orders:
+        return <OrdersTable filterVisible={openFilter} />;
       default:
         return <OrdersTable filterVisible={openFilter} />;
     }
-    window.scrollTo(0, position);
   };
 
   return (
@@ -58,7 +58,7 @@ const AnalyticsTabs = (): JSX.Element => {
         <div className={styles.tabs}>
           {accountAnalyticsTabs.map(({ id, name }) => (
             <Tab
-              selectedTab={Number(searchParams.get('tab'))}
+              selectedTab={searchParams.get('tab') || TabType.orders}
               handleChange={handleTabUpdateChange}
               id={id}
               name={name}

@@ -18,6 +18,15 @@ const BrowserStorageService = {
 
     storage.removeItem(field);
   },
+  update: (field: BrowserStorageKeys, value: string): void => {
+    if (sessionStorage.getItem(field)) {
+      sessionStorage.removeItem(field);
+      sessionStorage.setItem(field, value);
+    } else {
+      localStorage.removeItem(field);
+      localStorage.setItem(field, value);
+    }
+  },
 };
 
 export default BrowserStorageService;

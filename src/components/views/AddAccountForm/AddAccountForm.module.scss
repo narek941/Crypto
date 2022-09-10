@@ -87,3 +87,12 @@
 .input {
   gap: 0 !important;
 }
+
+.errorMsg {
+  left: 0;
+  color: var(--danger);
+  bottom: 0;
+
+  // transform: translate(0, 100%);
+  @extend %text-14;
+}

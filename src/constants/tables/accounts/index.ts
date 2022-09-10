@@ -27,8 +27,8 @@ const accountsTable: HeadCell[] = [
     label: 'Time',
   },
   {
-    id: 'open_profit',
-    value: 'statistics.currentOpenProfitInBaseCurrency',
+    id: 'open_profit_in_percent',
+    value: 'statistics.currentOpenProfitInPercent',
     label: 'Open Profit, %',
   },
   {

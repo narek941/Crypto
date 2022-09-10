@@ -8,7 +8,7 @@ import { useOnClickOutside } from 'hooks';
 import { accountsActions, accountsSelectors } from 'store/accountsSlice';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { Doughnut } from 'components';
-import { AccountModalChartColor } from 'constants/charts';
+import { AccountAnalyticsChartColor } from 'constants/charts';
 
 import styles from './Modal.module.scss';
 import { IModalProps } from './types';
@@ -25,7 +25,6 @@ const Modal = ({ id, open, setOpen, modalList, baseCurrency }: IModalProps): JSX
   const modalClass = classNames(styles.wrapper, {
     [styles.wrapper__open]: open,
   });
-  const accountAnalyticsChartColors = AccountModalChartColor();
 
   const handleClickOutside = (): void => setOpen(false);
 
@@ -69,7 +68,7 @@ const Modal = ({ id, open, setOpen, modalList, baseCurrency }: IModalProps): JSX
                     value={'relativePercentage'}
                     data={accountTradingPairsChartData}
                     legendPositionBottom={true}
-                    colors={accountAnalyticsChartColors}
+                    colors={AccountAnalyticsChartColor}
                     baseCurrency={baseCurrency}
                     radius={40}
                     tooltipFields={[
@@ -98,7 +97,7 @@ const Modal = ({ id, open, setOpen, modalList, baseCurrency }: IModalProps): JSX
                     tooltipFields={['baseCurrencyValue', 'baseCurrencyName', 'value', 'assetCoin']}
                     wrapperClassName={styles.chart__wrapper}
                     radius={40}
-                    colors={accountAnalyticsChartColors}
+                    colors={AccountAnalyticsChartColor}
                   />
                 </div>
               </div>
