@@ -6,9 +6,45 @@ import { RoleType } from 'types/api';
 
 import { FormFieldNames } from './types';
 
+const formSchema = {
+  tradingPairs: Yup.array(),
+
+  from: Yup.object().shape({
+    id: Yup.string()
+      .required('* Choose currencies to finish adding account')
+      .test('test_value_is_selected', '', function (value) {
+        if (value && value === '-1') {
+          return this.createError({ message: `'* Choose currencies to finish adding account'` });
+        }
+        return true;
+      }),
+  }),
+  to: Yup.object().shape({
+    id: Yup.string(),
+  }),
+};
+
+const formDestinationsSchema = Yup.object().shape(
+  {
+    type: Yup.string().required('* Choose destination and enter destination for account alerts'),
+    phoneNumber: Yup.number().when('emailAddress', {
+      is: '',
+      then: Yup.number().required('* Enter destination address for account alert '),
+      otherwise: Yup.number(),
+    }),
+    emailAddress: Yup.string().when('phoneNumber', {
+      is: '',
+      then: Yup.string().required('* Enter destination address for account alert '),
+      otherwise: Yup.string(),
+    }),
+  },
+  [['emailAddress', 'phoneNumber']],
+);
+
 export const composeFormSchema = <K extends FormFieldNames>(fields: K[]): AnyObjectSchema => {
   const schemaMap: Record<FormFieldNames, SchemaLike> = {
     isEditable: Yup.boolean(),
+
     email: Yup.string()
       .email('* Enter email address to finish adding new user')
       .required('* Enter email address to finish adding new user'),
@@ -53,13 +89,15 @@ export const composeFormSchema = <K extends FormFieldNames>(fields: K[]): AnyObj
       .typeError('* Enter Maximum position size to finish adding account')
       .max(100, 'Maximum position is 100')
       .min(0, 'Minimum position is 0'),
-    allowedPairs: Yup.array().required('* Choose currencies to finish adding account'),
+    allowedPairs: Yup.array()
+      .of(Yup.object().shape(formSchema))
+      .required('* Choose currencies to finish adding account'),
     stopLossOrder: Yup.bool().required('* Choose Stop loss order to finish adding account'),
     baseCurrency: Yup.string().required('* Choose base currency to finish adding account'),
     // startCapital: Yup.string().required('* Enter start capital to finish adding account'),
     refreshInterval: Yup.string().required('* Choose refresh interval to finish adding account'),
     wrongCurrencyAlert: Yup.bool(),
-    alertsDestinations: Yup.array().required('* Enter destination address for account alert'),
+    alertsDestinations: Yup.array().of(formDestinationsSchema),
     name: Yup.string()
       .trim()
       .required('* Enter account name to finish adding account')

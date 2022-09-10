@@ -1,28 +1,30 @@
-type AccountAnalyticsTab = { id: number; name: string };
+import { TabType } from 'components/views/AnalyticsTabs/types';
+
+type AccountAnalyticsTab = { id: string; name: string };
 
 const accountAnalyticsTabs: AccountAnalyticsTab[] = [
   {
-    id: 0,
+    id: TabType.orders,
     name: 'Open orders',
   },
   {
-    id: 1,
+    id: TabType.wallet,
     name: 'Wallet',
   },
   {
-    id: 2,
+    id: TabType.inflow,
     name: 'Inflows & Outflows',
   },
   {
-    id: 3,
+    id: TabType.history,
     name: 'Orders History',
   },
   {
-    id: 4,
+    id: TabType.trades,
     name: 'Trades',
   },
   {
-    id: 5,
+    id: TabType.alerts,
     name: 'Alerts',
   },
 ];

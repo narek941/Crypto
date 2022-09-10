@@ -11,6 +11,7 @@ import { Bricks, Chart, Doughnut, Export, AnalyticsTabs, Loader } from 'componen
 import { AccountAnalyticsChartColor } from 'constants/charts';
 import { ExportType } from 'components/shared/Export/types';
 import { BrowserStorageKeys, BrowserStorageService } from 'services';
+import { TabType } from 'components/views/AnalyticsTabs/types';
 
 import styles from './AccountsAnalytics.module.scss';
 
@@ -184,7 +185,7 @@ const AccountsAnalytics = (): JSX.Element => {
                   header={'Trading Pairs Chart'}
                   colors={AccountAnalyticsChartColor}
                   baseCurrency={accountById?.baseCurrency?.name}
-                  navigateTo={3}
+                  navigateTo={TabType.history}
                   tooltipFields={['totalBaseSum', 'baseCurrencyName', 'totalSum', 'toCurrencyName']}
                 />
               )}
@@ -201,7 +202,7 @@ const AccountsAnalytics = (): JSX.Element => {
                   header={'Account Assets Chart'}
                   colors={AccountAnalyticsChartColor}
                   baseCurrency={accountById?.baseCurrency?.name}
-                  navigateTo={1}
+                  navigateTo={TabType.wallet}
                   tooltipFields={['baseCurrencyValue', 'baseCurrencyName', 'value', 'assetCoin']}
                 />
               )}

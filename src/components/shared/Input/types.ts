@@ -4,7 +4,7 @@ export interface IInputProps {
   value?: any;
   name?: string;
   label?: string;
-  error?: string;
+  error?: string | boolean;
   isSmall?: boolean;
   className?: string;
   disabled?: boolean;

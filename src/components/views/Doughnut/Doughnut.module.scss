@@ -76,9 +76,9 @@
   gap: 8px;
   position: relative;
 
-  &::-webkit-scrollbar {
-    display: none;
-  }
+  // &::-webkit-scrollbar {
+  //   display: none;
+  // }
 
   &::after {
     top: 0;

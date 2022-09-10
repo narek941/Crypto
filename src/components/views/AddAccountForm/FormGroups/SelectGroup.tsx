@@ -31,16 +31,41 @@ const SelectGroup = ({
   rightInputName,
 }: ISelectGroup) => {
   const coins = useAppSelector(adminSelectors.selectCoins);
+  // const tradingPairs = useAppSelector(adminSelectors.selectTradingPairs);
   const currentAlertDestination = formMethods.watch(`alertsDestinations[${index}]`);
+
+  const errorPair = formMethods.formState.errors?.allowedPairs;
+  const errorDestination = formMethods.formState.errors?.alertsDestinations;
+  // const currentPairTo = formMethods.watch(`allowedPairs[${index}].${rightInputName}.id`);
+  // const currentPairFrom = formMethods.watch(`allowedPairs[${index}].${leftInputName}.id`);
+
+  // const allowedPair =
+  //   tradingPairs &&
+  //   !isUndefined(currentPairFrom) &&
+  //   tradingPairs?.some(
+  //     (item: any) =>
+  //       item?.to?.id === Number(currentPairTo) && item?.from?.id == Number(currentPairFrom),
+  //   );
+
+  // useEffect(() => {
+  //   if (!allowedPair) {
+  //     formMethods.setError(`test`, {
+  //       type: 'custom',
+  //       message: '* Choose allowed pair to finish adding account',
+  //     });
+  //   } else {
+  //     formMethods.clearErrors('test');
+  //   }
+  // }, [allowedPair, formMethods]);
+
   const type = isString(currentAlertDestination?.type)
     ? currentAlertDestination?.type
     : currentAlertDestination?.type.value;
   const isEmailInput = type === 'EMAIL';
-  // const { t } = useTranslation();
 
   const coinOptions = useMemo(
     () =>
-      coins.map((coin) => ({
+      coins.map((coin: any) => ({
         label: coin.name,
         value: coin.id,
       })),
@@ -60,8 +85,9 @@ const SelectGroup = ({
                   {...addAccountFormFields.allowedPairs}
                   {...field}
                   options={coinOptions}
+                  className={styles.item}
                   withAction={false}
-                  error={formMethods.formState.errors.allowedPairs?.message}
+                  error={errorPair?.[`${index}`]?.[`${leftInputName}`]?.id?.message ? true : false}
                   withClear={false}
                 />
               )}
@@ -74,8 +100,15 @@ const SelectGroup = ({
                   {...addAccountFormFields.allowedPairs}
                   {...field}
                   options={coinOptions}
+                  className={styles.item}
                   withAction={false}
                   withClear={false}
+                  error={
+                    errorPair?.[`${index}`]?.[`${rightInputName}`]?.id?.message ||
+                    errorPair?.[`${index}`]?.[`${leftInputName}`]?.id?.message
+                      ? true
+                      : false
+                  }
                 />
               )}
             />
@@ -91,7 +124,13 @@ const SelectGroup = ({
                   {...field}
                   withAction={false}
                   withClear={false}
-                  error={formMethods.formState.errors.alertsDestinations?.message}
+                  className={styles.item}
+                  error={
+                    errorDestination?.[`${index}`]?.[`${leftInputName}`]?.message ||
+                    errorDestination?.[`${index}`]?.phoneNumber?.message
+                      ? true
+                      : false
+                  }
                 />
               )}
             />
@@ -107,9 +146,17 @@ const SelectGroup = ({
                   {...addAccountFormFields.alertsDestinations}
                   isSmall={true}
                   {...field}
+                  className={styles.item}
                   innerClassName={styles.input}
                   placeholder={!type ? '' : isEmailInput ? 'Enter Email' : 'Enter Mobile Number'}
                   type={isEmailInput ? 'email' : 'tel'}
+                  error={
+                    errorDestination?.[`${index}`]?.[`${leftInputName}`]?.message ||
+                    errorDestination?.[`${index}`]?.phoneNumber?.message ||
+                    errorDestination?.[`${index}`]?.[`${rightInputName}`]?.message
+                      ? true
+                      : false
+                  }
                 />
               )}
             />
@@ -119,6 +166,23 @@ const SelectGroup = ({
           <BinIcon onClick={() => removePair(id)} className={styles.bin} />
         </Tooltip>
       </div>
+      {formMethods.formState.errors && (
+        <div>
+          {secondInput === 'select' ? (
+            <div className={styles['errorMsg']}>
+              {errorPair?.[`${index}`]?.[`${leftInputName}`]?.id?.message ||
+                errorPair?.[`${index}`]?.[`${rightInputName}`]?.id?.message ||
+                formMethods.formState.errors?.test?.message}
+            </div>
+          ) : (
+            <div className={styles['errorMsg']}>
+              {errorDestination?.[`${index}`]?.[`${leftInputName}`]?.message ||
+                errorDestination?.[`${index}`]?.phoneNumber?.message ||
+                errorDestination?.[`${index}`]?.[`${rightInputName}`]?.message}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };

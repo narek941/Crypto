@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from 'uuid';
+/* eslint-disable no-console */
 import { useFieldArray } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
@@ -12,19 +12,16 @@ const TradeSetting = ({ formMethods }: any) => {
   const { t } = useTranslation();
 
   const initialPair = {
-    from: {
-      id: uuidv4(),
-    },
-    to: {
-      id: uuidv4(),
-    },
+    from: {},
+    to: {},
   };
-  const initialDestination = { id: uuidv4(), type: '', emailAddress: '', phoneNumber: '' };
+  const initialDestination = { type: '', emailAddress: '', phoneNumber: '' };
 
   const { fields, append, remove } = useFieldArray({
     control: formMethods.control,
     name: 'allowedPairs',
   });
+
   const {
     fields: alertsDestinationsFields,
     append: appendAlertsDestinations,

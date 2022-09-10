@@ -21,9 +21,6 @@
     border: 1px solid var(--table-border);
     border-radius: 8px;
     overflow-x: auto;
-    &::-webkit-scrollbar {
-      display: none;
-    }
   }
 
   &__header {

@@ -374,9 +374,9 @@
   max-width: max-content;
   white-space: nowrap;
 
-  &::-webkit-scrollbar {
-    display: none;
-  }
+  // &::-webkit-scrollbar {
+  //   display: none;
+  // }
 }
 
 .multipleSelect__indicator-separator {

@@ -1,5 +1,6 @@
 import React, { ForwardedRef, useState, useRef, useEffect } from 'react';
 import classNames from 'classnames';
+import { isString } from 'lodash';
 
 import { CloseIcon, DropDownIcon } from 'assets/icons';
 import { useOnClickOutside } from 'hooks';
@@ -59,6 +60,7 @@ const Select = React.forwardRef(
     const headerClass: string = classNames(styles.header, {
       [styles.header__open]: isOpen && sortedOption.length > 1,
       [styles.select__placeholder]: !currentOption?.label,
+      [styles.header__error]: !!error,
     });
 
     const inputClass: string = classNames(styles.header__input, {
@@ -124,63 +126,65 @@ const Select = React.forwardRef(
     useOnClickOutside(selectRef, handleSubmit);
 
     return (
-      <div className={selectClass}>
-        {label && (
-          <label htmlFor={name} className={styles.label}>
-            {label}
-          </label>
-        )}
-        <div ref={selectRef} className={styles.wrapper} id={id} {...props}>
-          <div role='button' onClick={openDropdown} className={headerClass}>
-            <input
-              ref={ref}
-              name={name}
-              className={inputClass}
-              onChange={handleSearch}
-              placeholder={placeholder}
-              autoComplete='none'
-              readOnly={sortedOption.length <= 1}
-              defaultValue={props.defaultValue}
-              value={value ? currentOption?.label : ''}
-            />
-            <div>
-              {withClear && (
-                <div className={styles.select__clear} onClick={handleClear}>
-                  {currentOption && callback && <CloseIcon />}
+      <>
+        <div className={selectClass}>
+          {label && (
+            <label htmlFor={name} className={styles.label}>
+              {label}
+            </label>
+          )}
+          <div ref={selectRef} className={styles.wrapper} id={id} {...props}>
+            <div role='button' onClick={openDropdown} className={headerClass}>
+              <input
+                ref={ref}
+                name={name}
+                className={inputClass}
+                onChange={handleSearch}
+                placeholder={placeholder}
+                autoComplete='none'
+                readOnly={sortedOption.length <= 1}
+                defaultValue={props.defaultValue}
+                value={value ? currentOption?.label : ''}
+              />
+              <div>
+                {withClear && (
+                  <div className={styles.select__clear} onClick={handleClear}>
+                    {currentOption && callback && <CloseIcon />}
+                  </div>
+                )}
+                <DropDownIcon role='button' className={dropClass} />
+              </div>
+            </div>
+            <div className={optionClass}>
+              <div className={styles.select__option__select_container}>
+                {filteredOption.map((item, index) => (
+                  <div
+                    key={index}
+                    role='button'
+                    onClick={() => handleSelect(item.value)}
+                    className={classNames(styles.select__option__item, {
+                      [styles.select__option__item__selected]: item === value,
+                    })}
+                  >
+                    {item.label}
+                  </div>
+                ))}
+              </div>
+              {withAction && (
+                <div className={styles.select__option__action}>
+                  <button className={styles.select__option__action__cancel} onClick={handleCancel}>
+                    Cancel
+                  </button>
+                  <button className={styles.select__option__action__select} onClick={handleSubmit}>
+                    Select
+                  </button>
                 </div>
               )}
-              <DropDownIcon role='button' className={dropClass} />
             </div>
-          </div>
-          <div className={optionClass}>
-            <div className={styles.select__option__select_container}>
-              {filteredOption.map((item, index) => (
-                <div
-                  key={index}
-                  role='button'
-                  onClick={() => handleSelect(item.value)}
-                  className={classNames(styles.select__option__item, {
-                    [styles.select__option__item__selected]: item === value,
-                  })}
-                >
-                  {item.label}
-                </div>
-              ))}
-            </div>
-            {withAction && (
-              <div className={styles.select__option__action}>
-                <button className={styles.select__option__action__cancel} onClick={handleCancel}>
-                  Cancel
-                </button>
-                <button className={styles.select__option__action__select} onClick={handleSubmit}>
-                  Select
-                </button>
-              </div>
-            )}
           </div>
         </div>
-        {error && <div className={styles['select-errorMsg']}>{error}</div>}
-      </div>
+        {isString(error) && <div className={styles['select-errorMsg']}>{error}</div>}
+      </>
     );
   },
 );
