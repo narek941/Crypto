@@ -27,10 +27,10 @@ const formSchema = {
 const formDestinationsSchema = Yup.object().shape(
   {
     type: Yup.string().required('* Choose destination and enter destination for account alerts'),
-    phoneNumber: Yup.number().when('emailAddress', {
+    phoneNumber: Yup.string().when('emailAddress', {
       is: '',
-      then: Yup.number().required('* Enter destination address for account alert '),
-      otherwise: Yup.number(),
+      then: Yup.string().required('* Enter destination address for account alert '),
+      otherwise: Yup.string(),
     }),
     emailAddress: Yup.string().when('phoneNumber', {
       is: '',
