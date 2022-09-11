@@ -5,9 +5,9 @@ import { useSelector } from 'react-redux';
 
 import { Routes } from 'types';
 import { parseBody } from 'utils';
-import { useAppDispatch } from 'hooks';
+import { useAppDispatch, useAppSelector } from 'hooks';
 import { AddAccountForm } from 'components';
-import { adminActions } from 'store/adminSlice';
+import { adminActions, adminSelectors } from 'store/adminSlice';
 import { accountsActions } from 'store/accountsSlice';
 import { AddAccountFormShape } from 'components/views/AddAccountForm/types';
 import { authSelectors } from 'store/authSlice';
@@ -21,9 +21,10 @@ const AddNewAccount: React.FC = () => {
   const { id: accountId } = useParams();
   const id = Number(accountId);
   const role = useSelector(authSelectors.selectRole);
+  const tradingPairs = useAppSelector(adminSelectors.selectTradingPairs);
 
   const handleSubmit: SubmitHandler<AddAccountFormShape> = async (values) => {
-    const body = parseBody.parseAccountBody(values);
+    const body = parseBody.parseAccountBody(values, tradingPairs);
     if (!id) {
       await dispatch(adminActions.addNewAccount(body)).unwrap();
     } else {
@@ -37,6 +38,7 @@ const AddNewAccount: React.FC = () => {
 
   useEffect(() => {
     dispatch(adminActions.getCoins());
+    dispatch(adminActions.getTradingPairs());
 
     if (id) {
       dispatch(accountsActions.getAccountById(id));

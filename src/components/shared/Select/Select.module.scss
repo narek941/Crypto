@@ -142,6 +142,11 @@
   min-width: 93px;
   @extend %flex-center;
 
+  &__error {
+    border: 1px solid var(--danger);
+    margin-bottom: 4px;
+  }
+
   &:hover {
     border: 1px solid var(--select-border);
   }

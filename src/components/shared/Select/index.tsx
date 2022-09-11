@@ -121,6 +121,7 @@ const Select = React.forwardRef(
       if (closed && filterName) {
         handleClear();
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [closed]);
 
     useOnClickOutside(selectRef, handleSubmit);

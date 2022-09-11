@@ -1,12 +1,14 @@
-const parseAccountBody = (body: any): any => ({
-  testnet: true,
+import { isUndefined } from 'lodash';
+
+const parseAccountBody = (body: any, tradingPairs: any): any => ({
+  testnet: false,
   status: 'ACTIVE',
   name: body.name.trim(),
   // startCapitalInBaseCurrency: body.startCapital,
   baseCurrency: {
     id: body.baseCurrency,
   },
-  allowedCurrencies: body?.allowedCurrencies,
+  allowedCurrencies: filterAllowedCurrency(body?.allowedPairs, tradingPairs).allowedCurrencies,
   wallets: [
     {
       platform: {
@@ -16,7 +18,7 @@ const parseAccountBody = (body: any): any => ({
       apiSecret: body.apiSecret,
       refreshInterval: body.refreshInterval,
       alertTriggers: {
-        maxDrawDown: body.maxDrawdown,
+        maxDrawDown: Number(body.maxDrawdown),
         maxPositionSize: body.maxPosition,
         maxRiskPosition: body.maxRisk,
         longTradeAllowed: true,
@@ -25,37 +27,31 @@ const parseAccountBody = (body: any): any => ({
       },
     },
   ],
-  alertsDestinations: body.alertsDestinations,
-  allowedPairs: body?.allowedPairs,
+  alertsDestinations: body.alertsDestinations.map((item: any) => item?.phoneNumber.trim()),
+  allowedPairs: filterAllowedCurrency(body?.allowedPairs, tradingPairs).allowedPairs,
 });
 
-// const filterAllowedCurrency = (data: any, tradingPairs: any) => {
-//   const allowedPairs: any[] = [];
-//   const allowedCurrencies: any[] = [];
-//   // eslint-disable-next-line no-console
-//   console.log(data);
-//   data?.map((item: any) => {
-//     // eslint-disable-next-line no-console
-//     console.log(item, 'item');
-//     if (isUndefined(item.to.id) && !isUndefined(item.from.id)) {
-//       allowedCurrencies.push({
-//         currency: {
-//           id: item?.to?.id,
-//         },
-//       });
-//     } else if (!isUndefined(item.to.id) && !isUndefined(item.from.id)) {
-//       allowedPairs.push({
-//         tradingPair: {
-//           id: tradingPairs.find(
-//             (prop: any) => prop?.to?.id === item.to.id && item?.from?.id == prop?.from?.id,
-//           )?.id,
-//         },
-//       });
-//     }
-//   });
+const filterAllowedCurrency = (data: any, tradingPairs: any) => {
+  const allowedPairs: any[] = [];
+  const allowedCurrencies: any[] = [];
 
-//   return { allowedPairs, allowedCurrencies };
-// };
+  data?.map((item: any) => {
+    if (isUndefined(item.to.id)) {
+      allowedCurrencies.push({
+        currency: {
+          id: item?.from?.id,
+        },
+      });
+    } else if (!isUndefined(item.to.id) && !isUndefined(item.from.id)) {
+      const pair = tradingPairs.find(
+        ({ to, from }: any) => to?.id === Number(item.to.id) && from?.id === Number(item?.from?.id),
+      );
+      allowedPairs.push({ tradingPair: { id: pair.id } });
+    }
+  });
+
+  return { allowedPairs, allowedCurrencies };
+};
 
 const parseBody = {
   parseAccountBody,

@@ -12,6 +12,8 @@ const formSchema = {
   from: Yup.object().shape({
     id: Yup.string()
       .required('* Choose currencies to finish adding account')
+      .typeError('* Choose currencies to finish adding account')
+
       .test('test_value_is_selected', '', function (value) {
         if (value && value === '-1') {
           return this.createError({ message: `'* Choose currencies to finish adding account'` });
@@ -20,17 +22,19 @@ const formSchema = {
       }),
   }),
   to: Yup.object().shape({
-    id: Yup.string(),
+    id: Yup.string().typeError('* Choose currencies to finish adding account'),
   }),
 };
 
 const formDestinationsSchema = Yup.object().shape(
   {
     type: Yup.string().required('* Choose destination and enter destination for account alerts'),
-    phoneNumber: Yup.string().when('emailAddress', {
+    phoneNumber: Yup.number().when('emailAddress', {
       is: '',
-      then: Yup.string().required('* Enter destination address for account alert '),
-      otherwise: Yup.string(),
+      then: Yup.number()
+        .required('* Enter destination address for account alert ')
+        .typeError('* Enter destination address for account alert '),
+      otherwise: Yup.number(),
     }),
     emailAddress: Yup.string().when('phoneNumber', {
       is: '',
