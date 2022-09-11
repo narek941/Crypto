@@ -33,13 +33,14 @@ const AddAccountForm = ({ onClick, isEditable = false }: IAddAccount) => {
   const { name, allowedPairs, alertsDestinations, wallets, baseCurrency } = useSelector(
     accountsSelectors.selectAccountById,
   );
-
+  const accountTradingPairs = allowedPairs?.map((item: AllowedPairsProps) => item?.tradingPair);
   const addAccountFormDefaultValues = useMemo(
     () =>
       isEditable
         ? {
             name,
-            allowedPairs: allowedPairs?.map((item: AllowedPairsProps) => item?.tradingPair),
+            allowedPairs: accountTradingPairs,
+
             alertsDestinations,
             exchange: 'Binance',
             baseCurrency: baseCurrency?.id,
