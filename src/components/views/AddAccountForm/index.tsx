@@ -30,16 +30,27 @@ type AllowedPairsProps = {
 };
 
 const AddAccountForm = ({ onClick, isEditable = false }: IAddAccount) => {
-  const { name, allowedPairs, alertsDestinations, wallets, baseCurrency } = useSelector(
-    accountsSelectors.selectAccountById,
-  );
+  const { name, allowedPairs, alertsDestinations, wallets, baseCurrency, allowedCurrencies } =
+    useSelector(accountsSelectors.selectAccountById);
   const accountTradingPairs = allowedPairs?.map((item: AllowedPairsProps) => item?.tradingPair);
+  const accountCurrencies = allowedCurrencies?.map((item: any) => {
+    return {
+      from: {
+        id: item?.currency?.id,
+      },
+    };
+  });
+
+  const currencyData = accountCurrencies
+    ? [...accountTradingPairs, ...accountCurrencies]
+    : accountTradingPairs;
+
   const addAccountFormDefaultValues = useMemo(
     () =>
       isEditable
         ? {
             name,
-            allowedPairs: accountTradingPairs,
+            allowedPairs: currencyData && currencyData,
 
             alertsDestinations,
             exchange: 'Binance',
