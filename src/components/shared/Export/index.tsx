@@ -161,9 +161,11 @@ const Export = ({ className, text = 'export', callback }: IExport): JSX.Element 
   useOnClickOutside(customRef, () => setIsOpen(false));
 
   return (
-    <div className={exportClass} role='button' onClick={() => setIsOpen(true)}>
-      <ExportIcon />
-      <span className={styles.export__text}>{text}</span>
+    <div className={exportClass}>
+      <div role='button' onClick={() => setIsOpen(true)} className={styles.export__item}>
+        <ExportIcon />
+        <span className={styles.export__text}>{text}</span>
+      </div>
       {isOpen && (
         <FormWrapper {...{ formMethods }} onSubmit={() => {}}>
           <div className={styles.export__popup} ref={customRef}>
@@ -184,7 +186,7 @@ const Export = ({ className, text = 'export', callback }: IExport): JSX.Element 
                   {...formMethods.register('exportDateEnd')}
                 />
               </div>
-              <div> {t('to')}</div>
+              <div className={styles.export__popup__calendar__middle}> {t('to')}</div>
               <div className={styles.export__popup__calendar__inner__input}>
                 <label
                   className={styles.export__popup__calendar__inner__input__label}
@@ -213,16 +215,13 @@ const Export = ({ className, text = 'export', callback }: IExport): JSX.Element 
                       weekStartsOn={1}
                       showPreview={false}
                       direction='horizontal'
-                      calendarFocus='backwards'
+                      // calendarFocus='backwards'
                       onChange={handleChange}
                       weekdayDisplayFormat='EEEEE'
                       showMonthAndYearPickers={true}
                       className={styles.calendar__inner}
                       minDate={new Date(filterValue.minTradeTime)}
                       maxDate={new Date()}
-                      showDateDisplay={true}
-                      // moveRangeOnFirstSelection={true}
-                      // retainEndDateOnFirstSelection={true}
                     />
                   )}
                 />

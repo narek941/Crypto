@@ -1,9 +1,13 @@
 .export {
-  gap: 6px;
-  cursor: pointer;
   position: relative;
   justify-content: end;
   @extend %flex-align;
+
+  &__item {
+    cursor: pointer;
+    gap: 6px;
+    @extend %flex-align;
+  }
 
   &__text {
     color: var(--export-text);
@@ -44,6 +48,10 @@
       background-color: transparent;
       filter: drop-shadow(var(--option-shadow));
       position: relative;
+
+      &__middle {
+        text-transform: lowercase;
+      }
 
       &__inner {
         @extend %flex-align-start;

@@ -16,10 +16,6 @@
   @extend %modal-shadow;
   visibility: hidden;
 
-  // &::-webkit-scrollbar {
-  //   display: none;
-  // }
-
   &__open {
     visibility: visible;
   }
