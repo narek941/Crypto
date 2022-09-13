@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, ForwardedRef } from 'react';
 import Slider from '@mui/material/Slider';
 import classNames from 'classnames';
 
@@ -9,7 +9,7 @@ import Input from '../Input';
 
 import styles from './Range.module.scss';
 
-const RangeSwipe = React.forwardRef<any, any>(
+const RangeSwipe = React.forwardRef(
   (
     {
       name,
@@ -22,9 +22,10 @@ const RangeSwipe = React.forwardRef<any, any>(
       closed,
       min,
       max,
+      isPercent = false,
       ...rest
     }: any,
-    ref,
+    ref: ForwardedRef<HTMLInputElement>,
   ) => {
     const value = propsValue || [];
     const customRef = useRef(null);
@@ -84,7 +85,7 @@ const RangeSwipe = React.forwardRef<any, any>(
     const handleClear = (event?: React.FormEvent<HTMLElement>) => {
       event?.stopPropagation();
       onChange(['', '']);
-      callback(filterName, null);
+      callback && callback(filterName, null);
     };
 
     useEffect(() => {
@@ -138,7 +139,7 @@ const RangeSwipe = React.forwardRef<any, any>(
                 ref={ref}
                 min={Number(min) || 0}
                 max={Number(max) || 100000}
-                step={100}
+                step={isPercent ? 0.01 : 0.0001}
                 name={name}
                 autoComplete='off'
               />

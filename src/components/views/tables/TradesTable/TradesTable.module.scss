@@ -12,6 +12,7 @@
       line-height: 16px;
       padding: 14.5px 16px !important;
       border-color: var(--collapse-table-border) !important;
+
       &__sort {
         display: flex;
         position: relative;
@@ -77,6 +78,7 @@
   padding: var(--table-padding);
   border-collapse: collapse;
   border-style: hidden;
+  overflow-x: auto;
 }
 
 .open {

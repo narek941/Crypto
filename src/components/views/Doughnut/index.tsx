@@ -21,11 +21,16 @@ const Doughnut = ({
   colors,
   navigateTo,
 }: any): JSX.Element => {
+  const formattedData = parseChartLabels(data, field, value);
+
   const wrapperClass = classNames(className ? className : styles.wrapper);
   const innerClass = classNames(
     legendPositionBottom ? styles.legend__inner : styles.legendBig__inner,
   );
-  const legendClass = classNames(legendPositionBottom ? styles.legend : styles.legendBig);
+  const legendClass = classNames(legendPositionBottom ? styles.legend : styles.legendBig, {
+    [styles.legendBig__column]:
+      formattedData.label && formattedData.label.length >= 7 && !legendPositionBottom,
+  });
   const legendItemClass = classNames(
     legendPositionBottom ? styles.legend__item : styles.legendBig__item,
   );
@@ -36,8 +41,6 @@ const Doughnut = ({
     legendPositionBottom ? styles.legend__item__text : styles.legendBig__item__text,
   );
   const chartClass = classNames(legendPositionBottom ? styles.chart : styles.chartBig);
-
-  const formattedData = parseChartLabels(data, field, value);
 
   const getOrCreateTooltip = (chart: any) => {
     let tooltipEl = chart.canvas.parentNode.querySelector('div');

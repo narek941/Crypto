@@ -16,6 +16,20 @@ export interface IFilterForm {
 }
 
 export interface IAccountsFilterValue {
-  minCurrentOpenProfitInPercent: number | null | string;
-  maxCurrentOpenProfitInPercent: number | null | string;
+  maxCurrentCapitalInBaseCurrency: number | null | string;
+  maxCurrentOpenProfitInBaseCurrency: number | null | string;
+  maxEarnedCapitalInBaseCurrency: number | null | string;
+  maxEarnedCapitalInPercent: number | null | string;
+  maxNumberDailyTransactions: number | null | string;
+  maxProductivityInPercent: number | null | string;
+  maxRefreshDate: number | null | string;
+  maxStatsStartCapitalInBaseCurrency: number | null | string;
+  minCurrentCapitalInBaseCurrency: number | null | string;
+  minCurrentOpenProfitInBaseCurrency: number | null | string;
+  minEarnedCapitalInBaseCurrency: number | null | string;
+  minEarnedCapitalInPercent: number | null | string;
+  minNumberDailyTransactions: number | null | string;
+  minProductivityInPercent: number | null | string;
+  minRefreshDate: number | null | string;
+  minStatsStartCapitalInBaseCurrency: number | null | string;
 }

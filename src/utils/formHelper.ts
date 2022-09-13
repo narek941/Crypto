@@ -11,6 +11,12 @@ export const alertList = [
   { value: 'TELEGRAM', label: 'Telegram' },
 ];
 
+export const enum alertType {
+  EMAIL = 'EMAIL',
+  SMS = 'SMS',
+  TELEGRAM = 'TELEGRAM',
+}
+
 export const refreshIntervalList = [
   { value: '3m', label: '3m' },
   { value: '5m', label: '5m' },

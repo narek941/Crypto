@@ -146,6 +146,7 @@ const TradesFilters = () => {
             secondOptions={coinOptions}
             callback={handleFilter}
             filterName={'pair'}
+            singleFilterName='currencyId'
           />
         </div>
 

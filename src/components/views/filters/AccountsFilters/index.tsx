@@ -43,8 +43,22 @@ const AccountsFilters = () => {
     },
   });
   const [filterValue, setFilterValue] = useState<IAccountsFilterValue>({
-    minCurrentOpenProfitInPercent: null,
-    maxCurrentOpenProfitInPercent: null,
+    minRefreshDate: null,
+    maxRefreshDate: null,
+    minProductivityInPercent: null,
+    maxProductivityInPercent: null,
+    minEarnedCapitalInPercent: null,
+    maxEarnedCapitalInPercent: null,
+    minNumberDailyTransactions: null,
+    maxNumberDailyTransactions: null,
+    minEarnedCapitalInBaseCurrency: null,
+    maxEarnedCapitalInBaseCurrency: null,
+    minCurrentCapitalInBaseCurrency: null,
+    maxCurrentCapitalInBaseCurrency: null,
+    maxCurrentOpenProfitInBaseCurrency: null,
+    maxStatsStartCapitalInBaseCurrency: null,
+    minCurrentOpenProfitInBaseCurrency: null,
+    minStatsStartCapitalInBaseCurrency: null,
   });
 
   const handleToggle = () => setIsMore(!isMore);
@@ -118,6 +132,8 @@ const AccountsFilters = () => {
                 {...filterFormFields.accountAVGTrades}
                 callback={handleFilter}
                 filterName={'statistics.numberDailyTransactions'}
+                min={filterValue.minNumberDailyTransactions}
+                max={filterValue.maxNumberDailyTransactions}
               />
             )}
           />
@@ -144,6 +160,8 @@ const AccountsFilters = () => {
                 callback={handleFilter}
                 filterName={'statistics.startCapitalInBaseCurrency'}
                 closed={!isMore}
+                min={filterValue.minStatsStartCapitalInBaseCurrency}
+                max={filterValue.maxStatsStartCapitalInBaseCurrency}
               />
             )}
           />
@@ -159,6 +177,8 @@ const AccountsFilters = () => {
                 callback={handleFilter}
                 filterName={'statistics.currentCapitalInBaseCurrency'}
                 closed={!isMore}
+                min={filterValue.minCurrentCapitalInBaseCurrency}
+                max={filterValue.maxCurrentCapitalInBaseCurrency}
               />
             )}
           />
@@ -173,8 +193,9 @@ const AccountsFilters = () => {
                 {...filterFormFields.accountOpenProfit}
                 callback={handleFilter}
                 filterName={'statistics.currentOpenProfitInPercent'}
-                min={filterValue.minCurrentOpenProfitInPercent}
-                max={filterValue.maxCurrentOpenProfitInPercent}
+                min={filterValue.minProductivityInPercent}
+                max={filterValue.maxProductivityInPercent}
+                isPercent={true}
                 closed={!isMore}
               />
             )}
@@ -190,6 +211,9 @@ const AccountsFilters = () => {
                 {...filterFormFields.accountEarnedCapital}
                 callback={handleFilter}
                 filterName={'statistics.earnedCapitalInPercent'}
+                min={filterValue.minEarnedCapitalInPercent}
+                max={filterValue.maxEarnedCapitalInPercent}
+                isPercent={true}
                 closed={!isMore}
               />
             )}

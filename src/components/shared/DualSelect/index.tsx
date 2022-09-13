@@ -11,7 +11,17 @@ import styles from './DualSelect.module.scss';
 
 const DualSelect = React.forwardRef<any, any>(
   (
-    { formMethods, name, placeholder, firstOptions, secondOptions, callback, filterName, closed },
+    {
+      formMethods,
+      name,
+      placeholder,
+      firstOptions,
+      secondOptions,
+      callback,
+      filterName,
+      closed,
+      singleFilterName,
+    },
     ref: any,
   ) => {
     const sortedFirstOptions = firstOptions.sort((a: any, b: any) => {
@@ -40,8 +50,12 @@ const DualSelect = React.forwardRef<any, any>(
     };
 
     const handleSubmit = () => {
-      if (callback && filterName && selectPairStart && selectPairEnd && isOpenDropdown) {
-        callback(filterName, [selectPairStart, selectPairEnd]);
+      if (callback && filterName && selectPairStart && isOpenDropdown) {
+        if (selectPairEnd) {
+          callback(filterName, [selectPairStart, selectPairEnd]);
+        } else {
+          callback(singleFilterName, selectPairStart);
+        }
       }
       handleClose();
     };
@@ -51,6 +65,7 @@ const DualSelect = React.forwardRef<any, any>(
       formMethods.resetField(`${name}Start`);
       formMethods.resetField(`${name}End`);
       callback(filterName, null);
+      singleFilterName && callback(singleFilterName, null);
     };
 
     useEffect(() => {

@@ -30,14 +30,14 @@ const OpenOrdersFilters = () => {
   const { t } = useTranslation();
   const [isMore, setIsMore] = useState(false);
   const [filterValue, setFilterValue] = useState<IOpenOrdersFilterValue>({
-    maxCreationTime: null,
-    maxRelativePercentageToAccount: null,
-    maxTradesTotalPriceSum: null,
     maxValue: null,
-    minCreationTime: null,
-    minRelativePercentageToAccount: null,
-    minTradesTotalPriceSum: null,
     minValue: null,
+    maxCreationTime: null,
+    minCreationTime: null,
+    minTradesTotalPriceSum: null,
+    maxTradesTotalPriceSum: null,
+    maxRelativePercentageToAccount: null,
+    minRelativePercentageToAccount: null,
   });
 
   const [clearAll, setClearAll] = useState(false);
@@ -144,7 +144,8 @@ const OpenOrdersFilters = () => {
             firstOptions={coinOptions}
             secondOptions={coinOptions}
             callback={handleFilter}
-            filterName={'pair'}
+            filterName='pair'
+            singleFilterName='currencyId'
           />
         </div>
         <div className={(styles.item, styles.multipleSelect)}>

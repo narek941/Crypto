@@ -2,17 +2,20 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { DateRange } from 'react-date-range';
 import { Controller } from 'react-hook-form';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import moment from 'moment';
 import { isNull } from 'lodash';
+import { useParams } from 'react-router-dom';
 
 import { ExportIcon } from 'assets/icons';
 import { FormWrapper } from 'components/forms';
-import { useAppSelector, useForm, useOnClickOutside } from 'hooks';
+import { useAppDispatch, useAppSelector, useForm, useOnClickOutside } from 'hooks';
 import { authSelectors } from 'store/authSlice';
 import { addDays } from 'utils';
 import { Menu } from 'components';
 import periodOptions from 'constants/export';
+import { IAccountTradesFilterValue } from 'components/views/filters/TradesFilters/types';
+import { accountsActions } from 'store/accountsSlice';
 
 import styles from './Export.module.scss';
 import { exportSchemaKeys } from './fields';
@@ -30,26 +33,26 @@ const Export = ({ className, text = 'export', callback }: IExport): JSX.Element 
     key: 'selection',
   };
   const customRef = useRef(null);
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  // const { id } = useParams();
+  const { id } = useParams();
 
-  // const [filterValue, setFilterValue] = useState<IAccountTradesFilterValue>({
-  //   minTradeTime: null,
-  //   maxTradeTime: null,
-  //   minPrice: null,
-  //   maxPrice: null,
-  //   minTotalPrice: null,
-  //   maxTotalPrice: null,
-  //   minTotalPriceInBaseCurrency: null,
-  //   maxTotalPriceInBaseCurrency: null,
-  //   minAmount: null,
-  //   maxAmount: null,
-  //   minFees: null,
-  //   maxFees: null,
-  //   minFeesInBaseCurrency: null,
-  //   maxFeesInBaseCurrency: null,
-  // });
+  const [filterValue, setFilterValue] = useState<IAccountTradesFilterValue>({
+    minTradeTime: null,
+    maxTradeTime: null,
+    minPrice: null,
+    maxPrice: null,
+    minTotalPrice: null,
+    maxTotalPrice: null,
+    minTotalPriceInBaseCurrency: null,
+    maxTotalPriceInBaseCurrency: null,
+    minAmount: null,
+    maxAmount: null,
+    minFees: null,
+    maxFees: null,
+    minFeesInBaseCurrency: null,
+    maxFeesInBaseCurrency: null,
+  });
   const [state, setState] = useState<DateState>(defaultValue);
   const [lastChange, setLastChange] = useState<number>(2);
   const { t } = useTranslation();
@@ -142,25 +145,27 @@ const Export = ({ className, text = 'export', callback }: IExport): JSX.Element 
     }
   };
 
-  // const getFilterValue = async () => {
-  //   const { data } = await dispatch(
-  //     accountsActions.getAccountTradesFilterValues(Number(id)),
-  //   ).unwrap();
-  //   setFilterValue(data);
-  // };
+  const getFilterValue = async () => {
+    const { data } = await dispatch(
+      accountsActions.getAccountTradesFilterValues(Number(id)),
+    ).unwrap();
+    setFilterValue(data);
+  };
 
-  // useEffect(() => {
-  //   getFilterValue();
+  useEffect(() => {
+    getFilterValue();
 
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useOnClickOutside(customRef, () => setIsOpen(false));
 
   return (
-    <div className={exportClass} role='button' onClick={() => setIsOpen(true)}>
-      <ExportIcon />
-      <span className={styles.export__text}>{text}</span>
+    <div className={exportClass}>
+      <div role='button' onClick={() => setIsOpen(true)} className={styles.export__item}>
+        <ExportIcon />
+        <span className={styles.export__text}>{text}</span>
+      </div>
       {isOpen && (
         <FormWrapper {...{ formMethods }} onSubmit={() => {}}>
           <div className={styles.export__popup} ref={customRef}>
@@ -181,7 +186,7 @@ const Export = ({ className, text = 'export', callback }: IExport): JSX.Element 
                   {...formMethods.register('exportDateEnd')}
                 />
               </div>
-              <div> {t('to')}</div>
+              <div className={styles.export__popup__calendar__middle}> {t('to')}</div>
               <div className={styles.export__popup__calendar__inner__input}>
                 <label
                   className={styles.export__popup__calendar__inner__input__label}
@@ -210,13 +215,13 @@ const Export = ({ className, text = 'export', callback }: IExport): JSX.Element 
                       weekStartsOn={1}
                       showPreview={false}
                       direction='horizontal'
-                      calendarFocus='backwards'
+                      // calendarFocus='backwards'
                       onChange={handleChange}
                       weekdayDisplayFormat='EEEEE'
                       showMonthAndYearPickers={true}
                       className={styles.calendar__inner}
-                      // minDate={new Date(filterValue.minTradeTime)}
-                      // maxDate={new Date(filterValue.maxTradeTime)}
+                      minDate={new Date(filterValue.minTradeTime)}
+                      maxDate={new Date()}
                     />
                   )}
                 />

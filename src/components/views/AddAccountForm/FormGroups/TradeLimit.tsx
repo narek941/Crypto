@@ -20,6 +20,7 @@ const TradeLimit = ({ formMethods }: any) => (
             {...field}
             withAction={false}
             withClear={false}
+            numeric={true}
             error={formMethods.formState.errors.maxDrawdown?.message}
           />
         )}

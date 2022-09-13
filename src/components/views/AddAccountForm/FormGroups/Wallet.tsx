@@ -50,6 +50,7 @@ const AddAccountForm = ({ formMethods }: any) => {
               withAction={false}
               error={formMethods.formState.errors.refreshInterval?.message}
               withClear={false}
+              numeric={true}
             />
           )}
         />

@@ -79,6 +79,7 @@
   padding: var(--table-padding);
   border-collapse: collapse;
   border-style: hidden;
+  overflow-x: auto;
 }
 
 .open {

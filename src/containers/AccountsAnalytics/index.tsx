@@ -94,7 +94,7 @@ const AccountsAnalytics = (): JSX.Element => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [convertedId, dispatch]);
 
-  useBeforeLoad(handleScroll);
+  useBeforeLoad(handleScroll());
 
   if (isLoading) {
     return <Loader />;

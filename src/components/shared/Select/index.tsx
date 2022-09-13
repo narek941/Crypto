@@ -27,15 +27,18 @@ const Select = React.forwardRef(
       withAction = true,
       withClear = true,
       closed,
+      numeric = false,
       ...props
     }: ISelect,
     ref: ForwardedRef<HTMLInputElement>,
   ): JSX.Element => {
     const selectRef = useRef(null);
     const [isOpen, setIsOpen] = useState(false);
-    const sortedOption = options.sort((a: any, b: any) => {
-      return a.label.localeCompare(b.label);
-    });
+    const sortedOption = numeric
+      ? options
+      : options.sort((a: any, b: any) => {
+          return a.label.localeCompare(b.label);
+        });
     const [filteredOption, setFilteredOption] = useState(sortedOption);
 
     const currentOption = sortedOption.find((option) => option.value === value);

@@ -27,6 +27,7 @@
           right: -15px;
           top: 3px;
           background-color: transparent;
+
           svg path {
             fill: var(--table-svg);
           }
@@ -37,6 +38,7 @@
         }
       }
     }
+
     &__row {
       display: table-header-group;
       border-bottom: 1px solid var(--collapse-table-border);
@@ -77,6 +79,7 @@
   padding: var(--table-padding);
   border-collapse: collapse;
   border-style: hidden;
+  overflow-x: auto;
 }
 
 .open {
