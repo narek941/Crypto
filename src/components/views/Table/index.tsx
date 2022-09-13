@@ -204,7 +204,7 @@ const Table = ({
   return (
     <>
       <div className={styles.wrapper}>
-        <TableToolbar linkText={linkText} linkTo={linkTo} />
+        <TableToolbar linkText={linkText} linkTo={linkTo} action={action} />
         <div className={styles.inner}>
           <div className={styles.table__wrapper}>
             <table className={styles.table}>

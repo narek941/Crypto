@@ -12,10 +12,30 @@
     cursor: pointer;
     margin-right: 30px;
     @extend %flex-center;
+    align-items: baseline;
+    gap: 8px;
   }
 }
 .wrapper {
   @extend %flex-column;
   gap: 30px;
   margin-bottom: 32px;
+
+  &__account {
+    margin: 0;
+  }
+}
+
+.tabs {
+  gap: 32px;
+  font-size: 16px;
+  line-height: 20px;
+  color: var(--cancel);
+  justify-content: start;
+  @extend %flex-align;
+  @extend %text-16-bold;
+
+  &__wrapper {
+    @extend %flex-between;
+  }
 }

@@ -1,6 +1,7 @@
 .tab {
   padding-bottom: 24px;
   cursor: pointer;
+  @extend %flex-align;
   color: var(--tab-not-selected);
 
   &__selected {

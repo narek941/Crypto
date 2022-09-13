@@ -23,7 +23,7 @@ const Alerts = () => {
       }
     };
     getAlerts();
-  }, [filter, filter.filter]);
+  }, [dispatch, filter, filter.filter]);
 
   if (isLoading) {
     return <Loader />;
