@@ -3,6 +3,7 @@ import { AnyObjectSchema } from 'yup';
 import { SchemaLike } from 'yup/lib/types';
 
 import { RoleType } from 'types/api';
+import { alertType } from 'utils/formHelper';
 
 import { FormFieldNames } from './types';
 
@@ -29,17 +30,19 @@ const formSchema = {
 const formDestinationsSchema = Yup.object().shape(
   {
     type: Yup.string().required('* Choose destination and enter destination for account alerts'),
-    phoneNumber: Yup.number().when('emailAddress', {
-      is: '',
+    phoneNumber: Yup.number().when('type', {
+      is: alertType.SMS || alertType.TELEGRAM,
       then: Yup.number()
         .required('* Enter destination address for account alert ')
         .typeError('* Enter destination address for account alert '),
-      otherwise: Yup.number(),
+      otherwise: Yup.number()
+        .nullable(true)
+        .transform((_, val) => (val === Number(val) ? val : null)),
     }),
-    emailAddress: Yup.string().when('phoneNumber', {
-      is: '',
+    emailAddress: Yup.string().when('type', {
+      is: alertType.EMAIL,
       then: Yup.string().required('* Enter destination address for account alert '),
-      otherwise: Yup.string(),
+      otherwise: Yup.string().nullable(),
     }),
   },
   [['emailAddress', 'phoneNumber']],

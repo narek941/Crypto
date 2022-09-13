@@ -33,7 +33,7 @@ const AddUserForm = ({ onClick, isEditable = false }: IAddUser) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const { username, email, role } = useSelector(adminSelectors.selectUserById);
+  const { username, email, role, allowedAccounts } = useSelector(adminSelectors.selectUserById);
 
   const addUserFormDefaultValues = useMemo(
     () =>
@@ -43,11 +43,12 @@ const AddUserForm = ({ onClick, isEditable = false }: IAddUser) => {
             name: username,
             email: email,
             usersAccountType: AccountTypeOptions.find((option) => option.value === role)?.value,
+            usersAccountList: allowedAccounts.map((item: any) => item?.account?.id),
           }
         : {
             isEditable: false,
           },
-    [email, isEditable, role, username],
+    [allowedAccounts, email, isEditable, role, username],
   );
 
   const { formMethods, handleSubmit } = useForm<keyof AddUserFormShape, AddUserFormShape>({

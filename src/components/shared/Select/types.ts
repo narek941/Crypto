@@ -23,5 +23,6 @@ export interface ISelect {
   withAction?: boolean;
   closed?: boolean;
   withClear?: boolean;
+  numeric: boolean;
   [prop: string]: any;
 }

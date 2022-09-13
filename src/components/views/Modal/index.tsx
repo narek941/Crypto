@@ -29,6 +29,9 @@ const Modal = ({ id, open, setOpen, modalList, baseCurrency }: IModalProps): JSX
   const handleClickOutside = (): void => setOpen(false);
 
   useOnClickOutside(ref, handleClickOutside);
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, []);
 
   useEffect(() => {
     dispatch(accountsActions.getAccountAssetsChartData(Number(id)));

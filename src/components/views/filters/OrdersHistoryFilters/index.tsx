@@ -132,6 +132,7 @@ const OrdersHistoryFilters = () => {
             secondOptions={coinOptions}
             callback={handleFilter}
             filterName={'pair'}
+            singleFilterName='currencyId'
           />
         </div>
 

@@ -74,6 +74,7 @@
   border: 1px solid var(--collapse-table-border);
   border-collapse: collapse;
   border-style: hidden;
+  overflow-x: auto;
 
   // &::-webkit-scrollbar {
   //   display: none;
