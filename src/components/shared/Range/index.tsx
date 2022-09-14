@@ -16,22 +16,22 @@ const RangeSwipe = React.forwardRef(
       placeholder = 'search',
       Icon,
       onChange,
+      min = 0,
+      max = 100000,
       value: propsValue,
       callback,
       filterName,
       closed,
-      min,
-      max,
       isPercent = false,
       ...rest
     }: any,
     ref: ForwardedRef<HTMLInputElement>,
   ) => {
-    const value = propsValue || [];
+    const value = propsValue;
     const customRef = useRef(null);
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const [firstInput, setFirstInput] = useState<any>(0);
-    const [secondInput, setSecondInput] = useState<any>(0);
+    const [firstInput, setFirstInput] = useState<any>(Number(min));
+    const [secondInput, setSecondInput] = useState<any>(Number(max));
 
     const headerClass = classNames(styles.header, { [styles.header__open]: isOpen });
     const modalClass = classNames(styles.modal, { [styles.modal__open]: isOpen });
@@ -56,15 +56,25 @@ const RangeSwipe = React.forwardRef(
 
     const handleFirstBlur = () => {
       if (!isNaN(firstInput)) {
-        onChange([firstInput, value[1]]);
-        setFirstInput(NaN);
+        if (Number(firstInput) > Number(min)) {
+          onChange([firstInput, value[1]]);
+          setFirstInput(NaN);
+        } else {
+          onChange([Number(min), value[1]]);
+          setFirstInput(NaN);
+        }
       }
     };
 
     const handleSecondBlur = () => {
       if (!isNaN(secondInput)) {
-        onChange([value[0], secondInput]);
-        setSecondInput(NaN);
+        if (Number(secondInput) < Number(max)) {
+          onChange([value[0], secondInput]);
+          setSecondInput(NaN);
+        } else {
+          onChange([value[0], Number(max)]);
+          setSecondInput(NaN);
+        }
       }
     };
 
@@ -87,12 +97,17 @@ const RangeSwipe = React.forwardRef(
       onChange(['', '']);
       callback && callback(filterName, null);
     };
+    useEffect(() => {
+      setFirstInput(Number(min));
+      setSecondInput(Number(max));
+    }, [min, max]);
 
     useEffect(() => {
       if (closed && callback) {
         handleClear();
       }
     }, [closed]);
+
     useOnClickOutside(customRef, handleSubmit);
 
     return (
@@ -137,8 +152,8 @@ const RangeSwipe = React.forwardRef(
                 {...rest}
                 id={name}
                 ref={ref}
-                min={Number(min) || 0}
-                max={Number(max) || 100000}
+                min={Number(min)}
+                max={Number(max)}
                 step={isPercent ? 0.01 : 0.0001}
                 name={name}
                 autoComplete='off'

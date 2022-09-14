@@ -20,10 +20,6 @@
     max-height: 211px;
     overflow-y: 'scroll';
 
-    &::-webkit-scrollbar {
-      display: none;
-    }
-
     &::-webkit-scrollbar-thumb {
       background-color: var(--scroll) !important;
 

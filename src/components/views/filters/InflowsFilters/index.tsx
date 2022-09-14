@@ -3,7 +3,6 @@ import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { isNull } from 'lodash';
-import { useParams } from 'react-router-dom';
 
 import { CloseIcon } from 'assets/icons';
 import RangeSwipe from 'components/shared/Range';
@@ -18,11 +17,10 @@ import styles from './InflowsFilters.module.scss';
 import { IAccountInflowFilterValue, InflowsFilterFormShape } from './types';
 import { inflowFilterFormFields, inflowFilterSchemaKeys } from './fields';
 
-const InflowsFilters = () => {
+const InflowsFilters = ({ id }: any) => {
   const dispatch = useAppDispatch();
   const coins = useAppSelector(adminSelectors.selectCoins);
   const { filter } = useAppSelector(walletsSelectors.selectInflow);
-  const { id } = useParams();
 
   const [isMore, setIsMore] = useState(false);
   const [clearAll, setClearAll] = useState(false);

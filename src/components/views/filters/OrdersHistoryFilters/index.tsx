@@ -3,7 +3,6 @@ import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { isNull } from 'lodash';
-import { useParams } from 'react-router-dom';
 
 import { CloseIcon } from 'assets/icons';
 import { MultipleSelect, TableSearch } from 'components';
@@ -20,12 +19,11 @@ import styles from './OrdersHistoryFilters.module.scss';
 import { FilterFormShape, IAccountOrdersFilterValue } from './types';
 import { filterFormFields, filterSchemaKeys } from './fields';
 
-const OrdersHistoryFilters = () => {
+const OrdersHistoryFilters = ({ id }: any) => {
   const dispatch = useAppDispatch();
   const coins = useAppSelector(adminSelectors.selectCoins);
   const tradingPairs = useAppSelector(adminSelectors.selectTradingPairs);
   const { filter } = useAppSelector(walletsSelectors.selectOrders);
-  const { id } = useParams();
 
   const { t } = useTranslation();
 
@@ -65,7 +63,6 @@ const OrdersHistoryFilters = () => {
       const newKey = key === 'pair' ? 'coinsPairId' : key;
 
       const obj = filterObject(filter.filter, newKey as string);
-
       dispatch(ordersFilterClear(obj));
     } else {
       if (key === 'pair') {
