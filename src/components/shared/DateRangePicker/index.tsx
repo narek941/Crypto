@@ -17,10 +17,7 @@ import styles from './DateRangePicker.module.scss';
 import { IDateRangePicker } from './types';
 
 const DateRangePicker = React.forwardRef<IDateRangePicker, any>(
-  (
-    { placeholder, formMethods, name, callback, filterName, clearAll, closed, min, max },
-    ref: any,
-  ) => {
+  ({ placeholder, formMethods, name, callback, filterName, clearAll, closed }, ref: any) => {
     const defaultValue = {
       startDate: undefined,
       endDate: undefined,
@@ -52,8 +49,6 @@ const DateRangePicker = React.forwardRef<IDateRangePicker, any>(
 
     const pos = useRect(customRef);
     const width = useWindowSize().width;
-    const minDate = isNull(min) ? undefined : new Date(min);
-    const maxDate = isNull(max) ? undefined : new Date(max);
 
     useEffect(() => {
       if (width) {
@@ -63,6 +58,7 @@ const DateRangePicker = React.forwardRef<IDateRangePicker, any>(
           setIsElementPositionRight(true);
         }
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [width]);
 
     const handleChange = (item: any) => {
@@ -161,8 +157,6 @@ const DateRangePicker = React.forwardRef<IDateRangePicker, any>(
                 showMonthAndYearPickers={true}
                 direction='horizontal'
                 onChange={handleChange}
-                minDate={minDate}
-                maxDate={maxDate}
                 moveRangeOnFirstSelection={false}
                 weekdayDisplayFormat='EEEEE'
                 className={styles.calendar__inner}

@@ -57,7 +57,7 @@ const InflowsTable = ({ filterVisible }: any) => {
   return (
     <>
       <div className={styles.wrapper}>
-        {filterVisible && <InflowsFilters />}
+        {filterVisible && <InflowsFilters id={walletId} />}
         <ScrollWrapper>
           <Table className={styles.inner}>
             <TableHead className={styles.container__header}>

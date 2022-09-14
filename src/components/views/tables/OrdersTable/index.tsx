@@ -56,7 +56,7 @@ const OrdersTable = ({ filterVisible }: any) => {
   return (
     <>
       <div className={styles.wrapper}>
-        {filterVisible && <OpenOrdersFilters />}
+        {filterVisible && <OpenOrdersFilters id={walletId} />}
         <ScrollWrapper>
           <Table aria-label='collapsible table' className={styles.inner}>
             <TableHead className={styles.container__header}>
