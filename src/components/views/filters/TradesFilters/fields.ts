@@ -9,6 +9,7 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
     name: 'selectTradesDate',
     id: 'filterForm.tradesDate',
     placeholder: 'Select Time',
+    tooltip: 'transaction_date_and_time',
   },
 
   tradesSide: {
@@ -17,6 +18,7 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
     id: 'filterForm.tradesSide',
     placeholder: 'Select Side',
     options: sideOptions,
+    tooltip: 'side',
   },
 
   tradesPair: {
@@ -24,6 +26,7 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
     type: 'DualSelect',
     id: 'filterForm.tradesPair',
     placeholder: 'Select Currency Pair',
+    tooltip: 'coin_pair_name',
   },
 
   tradesPrice: {
@@ -37,6 +40,7 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
     type: 'number',
     id: 'filterForm.tradesValue',
     placeholder: 'Select Amount',
+    tooltip: 'value',
   },
 
   tradesTotalPrice: {
@@ -44,24 +48,28 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
     type: 'number',
     id: 'filterForm.tradesTotalPrice',
     placeholder: 'Select Total Price',
+    tooltip: 'price_per_coin_in_base_currency',
   },
   tradesValueInBaseCurrency: {
     name: 'tradesValueInBaseCurrency',
     type: 'number',
     id: 'filterForm.tradesValueInBaseCurrency',
     placeholder: 'Select Total price, USDT',
+    tooltip: 'value_in_base_currency',
   },
   tradesFee: {
     name: 'tradesFee',
     type: 'number',
     id: 'filterForm.tradesFee',
     placeholder: 'Select Fees',
+    tooltip: 'fees',
   },
   tradesFeeInBaseCurrency: {
     name: 'tradesFeeInBaseCurrency',
     type: 'number',
     id: 'filterForm.tradesFeeInBaseCurrency',
     placeholder: 'Select Fees, USDT',
+    tooltip: 'fees_in_base_currency',
   },
 };
 

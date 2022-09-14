@@ -14,6 +14,7 @@ export type FormField<T extends FormFieldNames> = {
     options?: Option[];
     checked?: boolean;
     Icon?: any;
+    tooltip?: string;
   };
 };
 

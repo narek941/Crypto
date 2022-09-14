@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 import moment from 'moment';
 import { isNull } from 'lodash';
 import { useParams } from 'react-router-dom';
+import { Tooltip } from '@mui/material';
 
 import { ExportIcon } from 'assets/icons';
 import { FormWrapper } from 'components/forms';
@@ -163,7 +164,9 @@ const Export = ({ className, text = 'export', callback }: IExport): JSX.Element 
   return (
     <div className={exportClass}>
       <div role='button' onClick={() => setIsOpen(true)} className={styles.export__item}>
-        <ExportIcon />
+        <Tooltip followCursor={true} placement='bottom' title={t('export_tooltip')}>
+          <ExportIcon />
+        </Tooltip>
         <span className={styles.export__text}>{text}</span>
       </div>
       {isOpen && (

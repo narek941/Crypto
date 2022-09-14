@@ -14,6 +14,9 @@
     @extend %flex-center;
     align-items: baseline;
     gap: 8px;
+    svg path {
+      fill: var(--filter-svg);
+    }
   }
 }
 .wrapper {

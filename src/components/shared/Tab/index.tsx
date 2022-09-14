@@ -8,7 +8,7 @@ const Tab = ({ selectedTab, handleChange, name, id, Icon }: ITab): JSX.Element =
 
   return (
     <span role='button' onClick={() => handleChange(id)} className={tabClass}>
-      <Icon />
+      {Icon && <Icon />}
       {name}
     </span>
   );

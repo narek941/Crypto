@@ -7,6 +7,7 @@ import { useAppDispatch } from 'hooks';
 import { accountsTable } from 'constants/index';
 import { accountsActions } from 'store/accountsSlice';
 import { accountsSelectors } from 'store/accountsSlice';
+import { ActionType } from 'components/views/Table/TableToolbar/types';
 
 const Accounts = () => {
   const dispatch = useAppDispatch();
@@ -38,7 +39,7 @@ const Accounts = () => {
       sort={sort}
       order={order}
       type='primary'
-      action='accounts'
+      action={ActionType.ACCOUNTS}
       linkText='account'
       totalCount={totalCount}
       headCells={accountsTable}

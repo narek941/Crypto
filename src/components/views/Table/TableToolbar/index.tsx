@@ -12,11 +12,10 @@ import UsersFilters from 'components/views/filters/UsersFilters';
 import AlertsFilters from 'components/views/filters/AlertsFilters';
 import { RoleType } from 'types/api';
 import { authSelectors } from 'store/authSlice';
-import { AccountTabType } from 'components/views/AnalyticsTabs/types';
 import accountsTab from 'constants/tabs/accounts';
 
 import styles from './TableToolbar.module.scss';
-import { ITableToolbarProps } from './types';
+import { AccountTabType, ActionType, ITableToolbarProps } from './types';
 
 const TableToolbar = ({ linkText, linkTo, action }: ITableToolbarProps): JSX.Element => {
   const { t } = useTranslation();
@@ -28,7 +27,7 @@ const TableToolbar = ({ linkText, linkTo, action }: ITableToolbarProps): JSX.Ele
     [styles.toolbar_noLink]: !linkTo,
   });
   const wrapperClasses = classNames(styles.wrapper, {
-    [styles.wrapper__account]: (action = 'accounts'),
+    [styles.wrapper__account]: action === ActionType.ACCOUNTS,
   });
   const handleFilter = () => setFilterVisible(!filterVisible);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -43,46 +42,54 @@ const TableToolbar = ({ linkText, linkTo, action }: ITableToolbarProps): JSX.Ele
   }, [searchParams.get('tab')]);
 
   const renderFilter = () => {
-    if (action === 'accounts') {
+    if (action === ActionType.ACCOUNTS) {
       return <AccountsFilters />;
-    } else if (action === 'users') {
+    } else if (action === ActionType.USERS) {
       return <UsersFilters />;
     } else {
       return <AlertsFilters />;
     }
   };
 
+  const renderTab = () => {
+    if (action === ActionType.ACCOUNTS) {
+      return (
+        <div className={styles.tabs__wrapper}>
+          <div className={styles.tabs}>
+            {accountsTab.map(({ id, name, Icon }) => (
+              <Tab
+                selectedTab={searchParams.get('tab') || AccountTabType.spot}
+                handleChange={handleTabUpdateChange}
+                id={id}
+                name={name}
+                key={id}
+                Icon={Icon}
+              />
+            ))}
+          </div>
+        </div>
+      );
+    } else if (action === ActionType.USERS || action === ActionType.ALERTS) {
+      return (
+        <>
+          {action && linkTo && (
+            <div className={styles.toolbar__link}>
+              {role === RoleType.ADMIN && <LinkButton to={linkTo}>{text}</LinkButton>}
+            </div>
+          )}
+        </>
+      );
+    }
+  };
+
   return (
     <div className={wrapperClasses}>
       <div className={toolbarClasses}>
-        {action !== 'accounts' ? (
-          <>
-            {action && linkTo && (
-              <div className={styles.toolbar__link}>
-                {role === RoleType.ADMIN && <LinkButton to={linkTo}>{text}</LinkButton>}
-              </div>
-            )}
-          </>
-        ) : (
-          <div className={styles.tabs__wrapper}>
-            <div className={styles.tabs}>
-              {accountsTab.map(({ id, name, Icon }) => (
-                <Tab
-                  selectedTab={searchParams.get('tab') || AccountTabType.spot}
-                  handleChange={handleTabUpdateChange}
-                  id={id}
-                  name={name}
-                  key={id}
-                  Icon={Icon}
-                />
-              ))}
-            </div>
-          </div>
-        )}
+        {renderTab()}
         <div className={styles.toolbar__filter}>
-          {role === RoleType.ADMIN && linkTo && action === 'accounts' && (
+          {role === RoleType.ADMIN && linkTo && action === ActionType.ACCOUNTS && (
             <Link to={linkTo}>
-              <AddAccountIcon />
+              <AddAccountIcon className={styles.addAccount} />
             </Link>
           )}
 

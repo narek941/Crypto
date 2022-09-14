@@ -10,8 +10,3 @@ export enum TabType {
   alerts = 'alerts',
   orders = 'orders',
 }
-
-export enum AccountTabType {
-  spot = 'spot',
-  futures = 'futures',
-}

@@ -21,6 +21,7 @@ import TableUsersBody from './TableBody/TableUsersBody';
 import TableAlertsBody from './TableBody/TableAlertsBody';
 import TableAccountBody from './TableBody/TableAccountsBody';
 import { ITableProps, SelectedAccount } from './types';
+import { ActionType, OrderType } from './TableToolbar/types';
 
 const Table = ({
   take,
@@ -51,38 +52,39 @@ const Table = ({
   const accountFilter = useAppSelector(accountsSelectors?.selectAccountAccountsList).filter;
 
   const pageFromRedux =
-    action === 'users'
+    action === ActionType.USERS
       ? usersFilter.skip / usersFilter.take
-      : action === 'accounts'
+      : action === ActionType.ACCOUNTS
       ? accountFilter.skip / accountFilter.take
       : alertsFilter.skip / alertsFilter.take;
-  const orderSort = (elem: any): 'DESC' | 'ASC' => (elem.order === 'DESC' ? 'ASC' : 'DESC');
+  const orderSort = (elem: any): OrderType.DESC | OrderType.ASC =>
+    elem.order === OrderType.DESC ? OrderType.ASC : OrderType.DESC;
 
   const handleRequestSort = (_event: MouseEvent<unknown>, sort: any): void => {
-    if (action === 'users') {
-      let newOrder = 'DESC';
+    if (action === ActionType.USERS) {
+      let newOrder = OrderType.DESC;
       if (sort === usersFilter.sort) {
         newOrder = orderSort(usersFilter);
       } else {
-        newOrder = 'DESC';
+        newOrder = OrderType.DESC;
       }
-      dispatch(usersFilterUpdate({ sort, order: newOrder as 'DESC' | 'ASC' }));
-    } else if (action === 'accounts') {
-      let newOrder = 'DESC';
+      dispatch(usersFilterUpdate({ sort, order: newOrder as OrderType.DESC | OrderType.ASC }));
+    } else if (action === ActionType.ACCOUNTS) {
+      let newOrder = OrderType.DESC;
       if (sort === accountFilter.sort) {
         newOrder = orderSort(accountFilter);
       } else {
-        newOrder = 'DESC';
+        newOrder = OrderType.DESC;
       }
-      dispatch(accountsFilterUpdate({ sort, order: newOrder as 'DESC' | 'ASC' }));
+      dispatch(accountsFilterUpdate({ sort, order: newOrder as OrderType.DESC | OrderType.ASC }));
     } else {
-      let newOrder = 'DESC';
+      let newOrder = OrderType.DESC;
       if (sort === alertsFilter.sort) {
         newOrder = orderSort(alertsFilter);
       } else {
-        newOrder = 'DESC';
+        newOrder = OrderType.DESC;
       }
-      dispatch(alertsFilterUpdate({ sort, order: newOrder as 'DESC' | 'ASC' }));
+      dispatch(alertsFilterUpdate({ sort, order: newOrder as OrderType.DESC | OrderType.ASC }));
     }
   };
 
@@ -90,15 +92,15 @@ const Table = ({
     const filterSkip = { skip: Number(newPage) * take };
 
     switch (action) {
-      case 'users': {
+      case ActionType.USERS: {
         dispatch(usersFilterUpdate(filterSkip));
         break;
       }
-      case 'accounts': {
+      case ActionType.ACCOUNTS: {
         dispatch(accountsFilterUpdate(filterSkip));
         break;
       }
-      case 'alerts': {
+      case ActionType.ALERTS: {
         dispatch(alertsActions.alertsFilterUpdate(filterSkip));
         break;
       }
@@ -113,15 +115,15 @@ const Table = ({
       const filterPerPage = { take: parseInt(event.target.value), skip: 0 };
 
       switch (action) {
-        case 'users': {
+        case ActionType.USERS: {
           dispatch(usersFilterUpdate(filterPerPage));
           break;
         }
-        case 'accounts': {
+        case ActionType.ACCOUNTS: {
           dispatch(accountsFilterUpdate(filterPerPage));
           break;
         }
-        case 'alerts': {
+        case ActionType.ALERTS: {
           dispatch(alertsActions.alertsFilterUpdate(filterPerPage));
           break;
         }
@@ -143,7 +145,7 @@ const Table = ({
 
   const handleBlock = useCallback(
     async (id: number) => {
-      if (action === 'users') {
+      if (action === ActionType.USERS) {
         await dispatch(adminActions.blockUser(id)).unwrap();
       } else {
         await dispatch(adminActions.blockAccount(id)).unwrap();
@@ -154,7 +156,7 @@ const Table = ({
 
   const handleUnblock = useCallback(
     async (id: number) => {
-      if (action === 'users') {
+      if (action === ActionType.USERS) {
         await dispatch(adminActions.unblockUser(id)).unwrap();
       } else {
         await dispatch(adminActions.unblockAccount(id)).unwrap();
@@ -165,7 +167,7 @@ const Table = ({
 
   const handleDelete = useCallback(
     async (id: number) => {
-      if (action === 'users') {
+      if (action === ActionType.USERS) {
         await dispatch(adminActions.deleteUser(id)).unwrap();
       } else {
         await dispatch(adminActions.deleteAccount(id)).unwrap();
@@ -186,13 +188,13 @@ const Table = ({
     };
 
     switch (action) {
-      case 'users': {
+      case ActionType.USERS: {
         return <TableUsersBody {...commonProps} />;
       }
-      case 'accounts': {
+      case ActionType.ACCOUNTS: {
         return <TableAccountBody {...commonProps} handleChartAction={handleChartAction} />;
       }
-      case 'alerts': {
+      case ActionType.ALERTS: {
         return <TableAlertsBody rows={rows} />;
       }
 
