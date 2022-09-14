@@ -76,7 +76,7 @@ const WalletsTable = ({ filterVisible }: any) => {
         </Table>
         {filterVisible && (
           <div className={styles.filter}>
-            <WalletsFilters />
+            <WalletsFilters id={walletId} />
           </div>
         )}
         <Typography className={styles.wrapper__title}>Assets</Typography>

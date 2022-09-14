@@ -3,7 +3,6 @@ import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { isNull } from 'lodash';
-import { useParams } from 'react-router-dom';
 
 import { CloseIcon } from 'assets/icons';
 import RangeSwipe from 'components/shared/Range';
@@ -20,12 +19,11 @@ import { FilterFormShape, IOpenOrdersFilterValue } from './types';
 import styles from './OpenOrdersFilters.module.scss';
 import { filterFormFields, filterSchemaKeys } from './fields';
 
-const OpenOrdersFilters = () => {
+const OpenOrdersFilters = ({ id }: any) => {
   const dispatch = useAppDispatch();
   const coins = useAppSelector(adminSelectors.selectCoins);
   const tradingPairs = useAppSelector(adminSelectors.selectTradingPairs);
   const { filter } = useAppSelector(walletsSelectors.selectOpenOrders);
-  const { id } = useParams();
 
   const { t } = useTranslation();
   const [isMore, setIsMore] = useState(false);

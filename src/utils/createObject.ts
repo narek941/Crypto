@@ -27,6 +27,8 @@ interface Obj {
   fees: string;
   feesInBaseCurrency: string;
   coin: string;
+  currencyId: string;
+  coinsPairId: string;
 }
 
 const createObject = (key: string, value: any) => {

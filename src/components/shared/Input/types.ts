@@ -19,4 +19,5 @@ export interface IInputProps {
   onChange?: any;
   onFocus?: any;
   onBlur?: any;
+  defaultValue?: any;
 }

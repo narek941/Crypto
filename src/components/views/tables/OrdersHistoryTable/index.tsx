@@ -56,7 +56,7 @@ const OrdersHistoryTable = ({ filterVisible }: any) => {
   return (
     <>
       <div className={styles.wrapper}>
-        {filterVisible && <OrdersHistoryFilters />}
+        {filterVisible && <OrdersHistoryFilters id={walletId} />}
         <ScrollWrapper>
           <Table className={styles.inner}>
             <TableHead className={styles.container__header}>

@@ -25,6 +25,7 @@ const Input = React.forwardRef<any, IInputProps>(
       placeholder,
       type = 'text',
       className = '',
+      defaultValue,
       innerClassName = '',
       haveRightIcon = false,
       label,
@@ -80,6 +81,7 @@ const Input = React.forwardRef<any, IInputProps>(
               id={name}
               ref={ref}
               name={name}
+              defaultValue={defaultValue}
               autoComplete='off'
               disabled={disabled}
               className={inputClasses}

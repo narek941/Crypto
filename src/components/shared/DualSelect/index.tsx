@@ -62,10 +62,13 @@ const DualSelect = React.forwardRef<any, any>(
 
     const handleClear = (event?: React.FormEvent<SVGSVGElement>) => {
       event?.stopPropagation();
+      if (selectPairEnd) {
+        callback(filterName, null);
+      } else {
+        callback(singleFilterName, null);
+      }
       formMethods.resetField(`${name}Start`);
       formMethods.resetField(`${name}End`);
-      callback(filterName, null);
-      singleFilterName && callback(singleFilterName, null);
     };
 
     useEffect(() => {

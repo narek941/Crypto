@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Controller } from 'react-hook-form';
 import { isNull } from 'lodash';
-import { useParams } from 'react-router-dom';
 
 import { CloseIcon } from 'assets/icons';
 import { MultipleSelect } from 'components';
@@ -15,9 +14,8 @@ import styles from './WalletsFilters.module.scss';
 import { FilterFormShape, IAccountRecordsFilterValue } from './types';
 import { filterSchemaKeys, walletFilterFormFields } from './fields';
 
-const WalletsFilters = () => {
+const WalletsFilters = ({ id }: any) => {
   const dispatch = useAppDispatch();
-  const { id } = useParams();
   const { filter } = useAppSelector(walletsSelectors.selectRecords);
   const coins = useAppSelector(adminSelectors.selectCoins);
   const [clearAll, setClearAll] = useState(false);

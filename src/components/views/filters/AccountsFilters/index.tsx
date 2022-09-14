@@ -28,20 +28,7 @@ const AccountsFilters = () => {
 
   const [isMore, setIsMore] = useState(false);
   const [clearAll, setClearAll] = useState(false);
-  const { formMethods } = useForm<keyof FilterFormShape, FilterFormShape>({
-    mode: 'onChange',
-    schemaKeys: filterSchemaKeys,
-    defaultValues: {
-      accountName: '',
-      accountStatus: '',
-      accountAVGTrades: ['', ''],
-      accountId: '',
-      accountSeed: ['', ''],
-      accountCurrentCapital: ['', ''],
-      accountOpenProfit: ['', ''],
-      accountEarnedCapital: ['', ''],
-    },
-  });
+
   const [filterValue, setFilterValue] = useState<IAccountsFilterValue>({
     minRefreshDate: null,
     maxRefreshDate: null,
@@ -97,6 +84,21 @@ const AccountsFilters = () => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const { formMethods } = useForm<keyof FilterFormShape, FilterFormShape>({
+    mode: 'onChange',
+    schemaKeys: filterSchemaKeys,
+    defaultValues: {
+      accountName: '',
+      accountStatus: '',
+      accountAVGTrades: ['', ''],
+      accountId: '',
+      accountSeed: ['', ''],
+      accountCurrentCapital: ['', ''],
+      accountOpenProfit: ['', ''],
+      accountEarnedCapital: ['', ''],
+    },
+  });
 
   return (
     <div className={styles.container}>
