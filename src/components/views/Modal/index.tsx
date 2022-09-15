@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 
 import { Routes } from 'types';
-import { CloseModalIcon } from 'assets/icons';
+import { BinanceFutureIcon, BinanceSpotIcon, CloseModalIcon } from 'assets/icons';
 import { useOnClickOutside } from 'hooks';
 import { accountsActions, accountsSelectors } from 'store/accountsSlice';
 import { useAppDispatch, useAppSelector } from 'hooks';
@@ -13,7 +13,14 @@ import { AccountAnalyticsChartColor } from 'constants/charts';
 import styles from './Modal.module.scss';
 import { IModalProps } from './types';
 
-const Modal = ({ id, open, setOpen, modalList, baseCurrency }: IModalProps): JSX.Element => {
+const Modal = ({
+  id,
+  open,
+  setOpen,
+  modalList,
+  baseCurrency,
+  accountName,
+}: IModalProps): JSX.Element => {
   const ref = useRef(null);
   const dispatch = useAppDispatch();
   const accountAssetsChartData = useAppSelector(accountsSelectors.selectAccountAssetChartData);
@@ -25,6 +32,7 @@ const Modal = ({ id, open, setOpen, modalList, baseCurrency }: IModalProps): JSX
   const modalClass = classNames(styles.wrapper, {
     [styles.wrapper__open]: open,
   });
+  const accountByID = useAppSelector(accountsSelectors.selectAccountById);
 
   const handleClickOutside = (): void => setOpen(false);
 
@@ -46,10 +54,44 @@ const Modal = ({ id, open, setOpen, modalList, baseCurrency }: IModalProps): JSX
     </div>
   ));
 
+  const platform = accountByID?.wallets?.[0]?.platform?.id;
+
+  const renderPlatform = (platform: any) => {
+    switch (platform) {
+      case 2:
+        return (
+          <>
+            <BinanceFutureIcon className={styles.item__header__text__subtitle__platform__icon} />
+            <span>Binance Futures</span>
+          </>
+        );
+
+      case 1:
+        return (
+          <>
+            <BinanceSpotIcon className={styles.item__header__text__subtitle__platform__icon} />
+            <span>Binance Spot</span>
+          </>
+        );
+
+      default:
+        <></>;
+    }
+  };
+
   return (
     <div ref={ref} className={modalClass}>
       <div className={headerClass}>
-        <p className={styles.item__header__text}>Account overview</p>
+        <div className={styles.item__header__text}>
+          <p className={styles.item__header__text__title}>Account overview</p>
+          <div className={styles.item__header__text__subtitle}>
+            <p>{accountName}</p>
+            <p className={styles.item__header__text__subtitle__platform}>
+              {renderPlatform(platform)}
+            </p>
+          </div>
+        </div>
+
         <div className={styles.item__header__icon}>
           <CloseModalIcon onClick={handleClickOutside} />
         </div>

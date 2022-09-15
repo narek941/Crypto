@@ -106,6 +106,7 @@ const RangeSwipe = React.forwardRef(
       if (closed && callback) {
         handleClear();
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [closed]);
 
     useOnClickOutside(customRef, handleSubmit);

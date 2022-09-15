@@ -4,7 +4,7 @@ import moment from 'moment';
 import { EmptyData } from 'components';
 import { wrapWithBaseCurrency } from 'utils';
 import { useAppSelector, useAppDispatch } from 'hooks';
-import { accountsSelectors } from 'store/accountsSlice';
+import { accountsActions, accountsSelectors } from 'store/accountsSlice';
 import { usersFilterUpdate } from 'store/adminSlice/thunks';
 import { alertsFilterUpdate } from 'store/alertsSlice/thunks';
 import { adminActions, adminSelectors } from 'store/adminSlice';
@@ -43,6 +43,7 @@ const Table = ({
     statistics: null,
     startCapitalInBaseCurrency: null,
     baseCurrency: undefined,
+    name: '',
   });
 
   const toggleAlertOpen = useCallback(() => setOpen(!open), [open]);
@@ -135,6 +136,8 @@ const Table = ({
   };
 
   const handleChartAction = (accountData: any) => {
+    dispatch(accountsActions.getAccountById(accountData.id));
+
     setSelectedAccountData(accountData);
     setOpenChart(true);
   };
@@ -201,6 +204,7 @@ const Table = ({
       default:
         return null;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [action, handleBlock, handleDelete, handleUnblock, open, rows, toggleAlertOpen]);
 
   return (
@@ -232,6 +236,8 @@ const Table = ({
         </div>
       </div>
       <Modal
+        accountName={selectedAccountData?.name}
+        exchangePlatform='Binance Futures'
         open={openChart}
         id={selectedAccountData.id}
         setOpen={setOpenChart}

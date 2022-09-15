@@ -41,6 +41,7 @@ const AddAccountForm = ({ onClick, isEditable = false }: IAddAccount) => {
     };
   });
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const currencyData = accountCurrencies
     ? [...accountTradingPairs, ...accountCurrencies]
     : accountTradingPairs;
@@ -51,7 +52,6 @@ const AddAccountForm = ({ onClick, isEditable = false }: IAddAccount) => {
         ? {
             name,
             allowedPairs: currencyData && currencyData,
-
             alertsDestinations,
             exchange: 'Binance',
             baseCurrency: baseCurrency?.id,
@@ -85,6 +85,7 @@ const AddAccountForm = ({ onClick, isEditable = false }: IAddAccount) => {
             ],
             alertsDestinations: [{ type: '', emailAddress: '', phoneNumber: '' }],
           },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [alertsDestinations, allowedPairs, baseCurrency, isEditable, name, wallets],
   );
   const { formMethods, handleSubmit } = useForm<keyof AddAccountFormShape, AddAccountFormShape>({

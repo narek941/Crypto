@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
-import { ArrowLeftIcon, AvatarIcon } from 'assets/icons';
+import { ArrowLeftIcon, AvatarIcon, BinanceFutureIcon, BinanceSpotIcon } from 'assets/icons';
 import { useOnClickOutside } from 'hooks';
 import { Popup } from 'components';
 import { accountsSelectors } from 'store/accountsSlice';
@@ -30,9 +30,30 @@ const Header = ({
 
   useOnClickOutside(ref, handleClickOutside);
 
-  // const email = accountByID?.alertsDestinations?.find(
-  //   (item: any) => item.type === 'EMAIL',
-  // )?.emailAddress;
+  const platform = accountByID?.wallets?.[0]?.platform?.id;
+
+  const renderPlatform = (platform: any) => {
+    switch (platform) {
+      case 2:
+        return (
+          <>
+            <BinanceFutureIcon className={styles.header__item__text__footer__platform__icon} />
+            <span>Binance Futures</span>
+          </>
+        );
+
+      case 1:
+        return (
+          <>
+            <BinanceSpotIcon className={styles.header__item__text__footer__platform__icon} />
+            <span>Binance Spot</span>
+          </>
+        );
+
+      default:
+        <></>;
+    }
+  };
 
   return (
     <header className={styles.header}>
@@ -46,7 +67,9 @@ const Header = ({
               {withMail && accountByID && (
                 <div className={styles.header__item__text__footer}>
                   <span>{accountByID.name}</span>
-                  {/* {email && <span>{hideLetters(email)}</span>} */}
+                  <div className={styles.header__item__text__footer__platform}>
+                    {platform && renderPlatform(platform)}
+                  </div>
                 </div>
               )}
             </div>
