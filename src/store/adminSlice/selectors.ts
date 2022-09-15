@@ -15,6 +15,7 @@ export const selectTwoFactorAdminEnabled = createSelector(
 );
 export const selectList = createSelector(selectAdmin, (admin) => admin.list);
 export const selectCoins = createSelector(selectAdmin, (admin) => admin.coins);
+export const selectExchange = createSelector(selectAdmin, (admin) => admin.exchange);
 export const selectTradingPairs = createSelector(selectAdmin, (admin) => admin.tradingPairs);
 export const selectTotalCount = createSelector(selectAdmin, (admin) => admin.totalCount);
 export const selectAdminAccessToken = createSelector(selectAdmin, (admin) => admin.accessToken);

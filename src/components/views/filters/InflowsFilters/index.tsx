@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
@@ -12,6 +12,7 @@ import { adminSelectors } from 'store/adminSlice';
 import { useAppDispatch, useAppSelector, useForm } from 'hooks';
 import { inflowFilterClear, inflowFilterUpdate } from 'store/walletsSlice/thunks';
 import { walletsActions, walletsSelectors } from 'store/walletsSlice';
+import { createOptions } from 'utils/createOptions';
 
 import styles from './InflowsFilters.module.scss';
 import { IAccountInflowFilterValue, InflowsFilterFormShape } from './types';
@@ -70,14 +71,7 @@ const InflowsFilters = ({ id }: any) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const coinOptions = useMemo(
-    () =>
-      coins.map((coin) => ({
-        label: coin.name,
-        value: coin.id,
-      })),
-    [coins],
-  );
+  const coinOptions = createOptions(coins);
 
   const handleFilter = (key: string, value: any) => {
     if (isNull(value)) {

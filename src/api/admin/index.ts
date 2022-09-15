@@ -12,6 +12,8 @@ export const blockUserRequest = (id: number) => client.put(`/admin/users/${id}/b
 
 export const unblockUserRequest = (id: number) => client.put(`/admin/users/${id}/unblock`);
 
+export const getExchangeListRequest = () => client.get('/admin/exchange');
+
 export const updateUsernameRequest = (id: number, username: string) => {
   return client.put(`/admin/users/${id}/username`, {
     username,

@@ -13,6 +13,7 @@
       grid-row: 1 / span 2;
     }
   }
+
   &__chart {
     display: grid;
     grid-gap: 24px;
@@ -43,6 +44,7 @@
   @extend %text-16-bold;
   margin: 10px 0;
 }
+
 .chart__wrapper {
   position: relative;
 }

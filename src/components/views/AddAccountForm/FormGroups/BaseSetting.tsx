@@ -1,11 +1,11 @@
 import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useMemo } from 'react';
 
 import { Input, Select } from 'components';
 import FormGroup from 'components/forms/FormGroup';
 import { useAppSelector } from 'hooks';
 import { adminSelectors } from 'store/adminSlice';
+import { createOptions } from 'utils/createOptions';
 
 import { AddAccountFormShape } from '../types';
 import { addAccountFormFields } from '../fields';
@@ -13,15 +13,7 @@ import styles from '../AddAccountForm.module.scss';
 
 const BaseSetting = ({ formMethods }: any) => {
   const coins = useAppSelector(adminSelectors.selectCoins);
-
-  const coinOptions = useMemo(
-    () =>
-      coins.map((coin) => ({
-        label: coin.name,
-        value: coin.id,
-      })),
-    [coins],
-  );
+  const coinOptions = createOptions(coins);
 
   const { t } = useTranslation();
   return (

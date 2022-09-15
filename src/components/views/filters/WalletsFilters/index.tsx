@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Controller } from 'react-hook-form';
 import { isNull } from 'lodash';
 
@@ -9,6 +9,7 @@ import { adminSelectors } from 'store/adminSlice';
 import { walletsActions, walletsSelectors } from 'store/walletsSlice';
 import { useAppDispatch, useAppSelector, useForm } from 'hooks';
 import RangeSwipe from 'components/shared/Range';
+import { createOptions } from 'utils/createOptions';
 
 import styles from './WalletsFilters.module.scss';
 import { FilterFormShape, IAccountRecordsFilterValue } from './types';
@@ -64,14 +65,7 @@ const WalletsFilters = ({ id }: any) => {
     }
   };
 
-  const coinOptions = useMemo(
-    () =>
-      coins.map((coin) => ({
-        label: coin.name,
-        value: coin.id,
-      })),
-    [coins],
-  );
+  const coinOptions = createOptions(coins);
 
   return (
     <div className={styles.container}>

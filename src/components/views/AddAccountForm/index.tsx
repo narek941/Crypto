@@ -51,11 +51,11 @@ const AddAccountForm = ({ onClick, isEditable = false }: IAddAccount) => {
       isEditable
         ? {
             name,
-            allowedPairs: currencyData && currencyData,
             alertsDestinations,
-            exchange: 'Binance',
             baseCurrency: baseCurrency?.id,
             apiKey: wallets && wallets[0]?.apiKey,
+            allowedPairs: currencyData && currencyData,
+            exchange: wallets && wallets[0].platform.id,
             apiSecret: wallets && wallets[0]?.apiSecret,
             refreshInterval: wallets && wallets[0]?.refreshInterval,
             maxDrawdown: wallets && wallets[0].alertTriggers.maxDrawDown,
@@ -71,7 +71,7 @@ const AddAccountForm = ({ onClick, isEditable = false }: IAddAccount) => {
             maxPosition: 20,
             maxRisk: 100,
             stopLossOrder: true,
-            exchange: 'Binance',
+            exchange: 1,
 
             allowedPairs: [
               {

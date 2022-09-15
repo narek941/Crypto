@@ -33,7 +33,6 @@ export const addAccountFormFields: FormField<keyof AddAccountFormShape> = {
     label: 'Exchange',
     id: 'addAccount.exchange',
     placeholder: 'Binance',
-    options: [{ label: 'Binance', value: 'Binance' }],
   },
   apiKey: {
     type: 'text',

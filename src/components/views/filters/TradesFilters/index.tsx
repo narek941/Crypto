@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
@@ -15,6 +15,7 @@ import { useAppDispatch, useAppSelector, useForm } from 'hooks';
 import { accountsTradesFilterClear, accountsTradesFilterUpdate } from 'store/accountsSlice/thunks';
 import { accountsActions, accountsSelectors } from 'store/accountsSlice';
 import RangeSwipe from 'components/shared/Range';
+import { createOptions } from 'utils/createOptions';
 
 import styles from './TradesFilters.module.scss';
 import { FilterFormShape, IAccountTradesFilterValue } from './types';
@@ -115,14 +116,7 @@ const TradesFilters = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const coinOptions = useMemo(
-    () =>
-      coins.map((coin) => ({
-        label: coin.name,
-        value: coin.id,
-      })),
-    [coins],
-  );
+  const coinOptions = createOptions(coins);
 
   return (
     <div className={styles.container}>

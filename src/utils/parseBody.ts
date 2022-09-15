@@ -1,7 +1,7 @@
 import { isUndefined } from 'lodash';
 
 const parseAccountBody = (body: any, tradingPairs: any): any => ({
-  testnet: true,
+  testnet: false,
   status: 'ACTIVE',
   name: body.name.trim(),
   // startCapitalInBaseCurrency: body.startCapital,
@@ -12,7 +12,7 @@ const parseAccountBody = (body: any, tradingPairs: any): any => ({
   wallets: [
     {
       platform: {
-        id: 1,
+        id: body.exchange,
       },
       apiKey: body.apiKey,
       apiSecret: body.apiSecret,

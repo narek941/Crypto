@@ -17,7 +17,7 @@ const Select = React.forwardRef(
       className,
       color = 'default',
       placeholder,
-      options,
+      options = [],
       onChange,
       onBlur,
       value,
@@ -36,12 +36,12 @@ const Select = React.forwardRef(
     const [isOpen, setIsOpen] = useState(false);
     const sortedOption = numeric
       ? options
-      : options.sort((a: any, b: any) => {
+      : options?.sort((a: any, b: any) => {
           return a.label.localeCompare(b.label);
         });
     const [filteredOption, setFilteredOption] = useState(sortedOption);
 
-    const currentOption = sortedOption.find((option) => option.value === value);
+    const currentOption = sortedOption?.find((option) => option.value === value);
 
     const getSelectClassName = (color: ColorType): string => {
       const selectClass: string = classNames(styles['select-wrapper'], className, {
