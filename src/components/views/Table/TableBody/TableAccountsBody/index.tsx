@@ -36,6 +36,7 @@ const TableAccountBody = ({
     statistics: any,
     startCapitalInBaseCurrency: any,
     baseCurrency: any,
+    name: any,
   ) =>
     handleChartAction &&
     handleChartAction({
@@ -43,6 +44,7 @@ const TableAccountBody = ({
       statistics,
       startCapitalInBaseCurrency,
       baseCurrency,
+      name,
     });
 
   const renderRows = rows.map(
@@ -61,7 +63,9 @@ const TableAccountBody = ({
           className={styles.table__body__row}
           tabIndex={id}
           key={index}
-          onClick={() => handleClick(id, statistics, startCapitalInBaseCurrency, baseCurrency.name)}
+          onClick={() =>
+            handleClick(id, statistics, startCapitalInBaseCurrency, baseCurrency.name, name)
+          }
         >
           <TableCell className={styles.table__body__row__ceil} align='left'>
             {id}

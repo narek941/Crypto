@@ -5,6 +5,7 @@ import { Loader, Table } from 'components';
 import { useAppDispatch } from 'hooks';
 import { alertsTable } from 'constants/index';
 import { alertsActions, alertsSelectors } from 'store/alertsSlice';
+import { ActionType } from 'components/views/Table/TableToolbar/types';
 
 const Alerts = () => {
   const dispatch = useAppDispatch();
@@ -23,7 +24,7 @@ const Alerts = () => {
       }
     };
     getAlerts();
-  }, [filter, filter.filter]);
+  }, [dispatch, filter, filter.filter]);
 
   if (isLoading) {
     return <Loader />;
@@ -36,7 +37,7 @@ const Alerts = () => {
       sort={sort}
       order={order}
       type='primary'
-      action='alerts'
+      action={ActionType.ALERTS}
       totalCount={totalCount}
       headCells={alertsTable.mainTable}
     />

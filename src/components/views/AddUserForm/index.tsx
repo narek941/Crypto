@@ -42,8 +42,8 @@ const AddUserForm = ({ onClick, isEditable = false }: IAddUser) => {
             isEditable: true,
             name: username,
             email: email,
-            usersAccountType: AccountTypeOptions?.find((option) => option.value === role)?.value,
-            usersAccountList: allowedAccounts?.map((item: any) => item?.account?.id),
+            usersAccountType: AccountTypeOptions.find((option) => option.value === role)?.value,
+            usersAccountList: allowedAccounts.map((item: any) => item?.account?.id),
           }
         : {
             isEditable: false,

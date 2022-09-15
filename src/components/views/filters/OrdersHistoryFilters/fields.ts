@@ -10,12 +10,14 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
     type: 'DualSelect',
     id: 'filterForm.historyPair',
     placeholder: 'Select Pair',
+    tooltip: 'coin_pair_name',
   },
 
   historyUpdateTime: {
     name: 'selectHistoryUpdateTime',
     id: 'filterForm.historyUpdateTime',
     placeholder: 'Select Last Operation Time',
+    tooltip: 'last_operation_time',
   },
 
   historySide: {
@@ -24,6 +26,7 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
     id: 'filterForm.historySide',
     placeholder: 'Select Side',
     options: sideOptions,
+    tooltip: 'side',
   },
   historyType: {
     name: 'historyType',
@@ -31,6 +34,7 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
     id: 'filterForm.historyType',
     placeholder: 'Select Type',
     options: ordersTypeOptions,
+    tooltip: 'type',
   },
 
   historyValue: {
@@ -38,6 +42,7 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
     type: 'number',
     id: 'filterForm.historyValue',
     placeholder: 'Select Value',
+    tooltip: 'value',
   },
 
   historyID: {
@@ -45,6 +50,7 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
     type: 'Search',
     id: 'filterForm.historyID',
     placeholder: 'Enter ID',
+    tooltip: 'id',
   },
 
   historyValueInBaseCurrency: {
@@ -52,6 +58,7 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
     type: 'number',
     id: 'filterForm.historyValueInBaseCurrency',
     placeholder: 'Select Value, USDT',
+    tooltip: 'value_in_base_currency',
   },
 
   searchHistoryStop: {

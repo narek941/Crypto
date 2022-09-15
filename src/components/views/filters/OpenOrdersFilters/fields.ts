@@ -10,12 +10,14 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
     name: 'selectCreationDate',
     id: 'filterForm.creationDate',
     placeholder: 'Select Created At',
+    tooltip: 'creation_date_and_time',
   },
 
   updatedTime: {
     name: 'selectUpdatedTime',
     id: 'filterForm.updatedTime',
     placeholder: 'Select Updated',
+    tooltip: 'creation_date_and_time',
   },
 
   selectPair: {
@@ -23,6 +25,7 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
     type: 'DualSelect',
     id: 'filterForm.selectPair',
     placeholder: 'Select Pair',
+    tooltip: 'coin_pair_name',
   },
 
   selectSide: {
@@ -31,6 +34,7 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
     id: 'filterForm.selectSide',
     placeholder: 'Select Side',
     options: sideOptions,
+    tooltip: 'side',
   },
   selectValue: {
     name: 'selectValue',
@@ -43,6 +47,7 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
     type: 'Search',
     id: 'filterForm.searchID',
     placeholder: 'Enter ID',
+    tooltip: 'id',
   },
 
   creationTime: {
@@ -61,12 +66,14 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
     type: 'select',
     id: 'filterForm.searchReceived',
     placeholder: 'Select Received',
+    tooltip: 'received',
   },
   searchReceivedInBaseCurrency: {
     name: 'searchReceivedInBaseCurrency',
     type: 'Search',
     id: 'filterForm.searchReceivedInBaseCurrency',
     placeholder: 'Select Received, USDT',
+    tooltip: 'received_in_base_currency',
   },
   selectFee: {
     name: 'selectFee',
@@ -74,6 +81,7 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
     id: 'filterForm.selectFee',
     placeholder: 'Select Fee',
     Icon: HandIcon,
+    tooltip: 'fees',
   },
   selectFeeInBaseCurrency: {
     name: 'selectFeeInBaseCurrency',
@@ -81,12 +89,14 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
     id: 'filterForm.selectFeeInBaseCurrency',
     placeholder: 'Select Fee, USDT',
     Icon: HandIcon,
+    tooltip: 'fees_in_base_currency',
   },
   selectShare: {
     name: 'selectShare',
     type: 'select',
     id: 'filterForm.selectShare',
     placeholder: 'Select Share',
+    tooltip: 'share',
   },
 
   selectPairEnd: {

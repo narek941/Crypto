@@ -30,7 +30,7 @@ const AddNewUser = () => {
       name: values.name.trim(),
       role: values.usersAccountType,
       deviceToken: uuidv4(),
-      allowedAccountIds: values?.usersAccountList || [],
+      allowedAccountIds: values.usersAccountList || [],
     } as any;
 
     if (!id) {

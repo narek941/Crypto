@@ -1,11 +1,20 @@
 .tab {
   padding-bottom: 24px;
   cursor: pointer;
+  @extend %flex-align;
   color: var(--tab-not-selected);
+
+  svg path {
+    fill: var(--tab-not-selected);
+  }
 
   &__selected {
     position: relative;
     color: var(--tab-selected);
+
+    svg path {
+      fill: var(--tab-selected);
+    }
 
     &:first-child {
       &::after {

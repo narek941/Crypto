@@ -4,4 +4,6 @@ export interface IModalProps {
   modalList: any[];
   id: number | null;
   baseCurrency?: string;
+  accountName: string;
+  exchangePlatform: string;
 }

@@ -9,6 +9,7 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
     name: 'selectAlertCreationDate',
     id: 'filterForm.alertCreationDate',
     placeholder: 'Select Alert Time',
+    tooltip: 'alert_time',
   },
 
   alertType: {
@@ -17,6 +18,7 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
     id: 'filterForm.alertType',
     placeholder: 'Select Alerts Trigger',
     options: AlertsTypeOptions,
+    tooltip: 'alert_type',
   },
 
   alertID: {
@@ -24,12 +26,14 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
     type: 'Search',
     id: 'filterForm.alertID',
     placeholder: 'Enter ID',
+    tooltip: 'id',
   },
   alertMessage: {
     name: 'alertMessage',
     type: 'Search',
     id: 'filterForm.alertMessage',
     placeholder: 'Enter Message',
+    tooltip: 'alert_message',
   },
 };
 

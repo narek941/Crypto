@@ -8,6 +8,7 @@ export const walletFilterFormFields: FormField<keyof FilterFormShape> = {
     type: 'select',
     id: 'walletFilterForm.selectWalletAsset',
     placeholder: 'Select Asset',
+    tooltip: 'asset',
   },
 
   searchWalletValue: {
@@ -15,12 +16,14 @@ export const walletFilterFormFields: FormField<keyof FilterFormShape> = {
     type: 'number',
     id: 'walletFilterForm.selectSide',
     placeholder: 'Select Amount',
+    tooltip: 'value',
   },
   searchWalletValueInBaseCurrency: {
     name: 'searchWalletValueInBaseCurrency',
     type: 'number',
     id: 'walletFilterForm.selectSide',
     placeholder: 'Select Amount, USDT',
+    tooltip: 'value_in_base_currency',
   },
 };
 

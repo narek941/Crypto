@@ -1,6 +1,8 @@
 import { HeadCell } from 'types';
 import { Routes } from 'types/routes';
 
+import { ActionType } from './TableToolbar/types';
+
 export interface Data {
   id: string;
   name: string;
@@ -27,7 +29,7 @@ export interface ITableProps {
   headCells: HeadCell[];
   type: TypeType;
   sort?: string;
-  action: 'users' | 'accounts' | 'alerts';
+  action: ActionType.USERS | ActionType.ACCOUNTS | ActionType.ALERTS;
   linkText?: 'user' | 'account';
   linkTo?: Routes;
   users?: boolean;
@@ -57,4 +59,5 @@ export type SelectedAccount = {
   statistics: any | null;
   startCapitalInBaseCurrency: any | null;
   baseCurrency?: string;
+  name: string;
 };

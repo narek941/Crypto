@@ -9,6 +9,7 @@ import { usersTable } from 'constants/index';
 import { adminActions, adminSelectors } from 'store/adminSlice';
 import { RoleType } from 'types/api';
 import { authSelectors } from 'store/authSlice';
+import { ActionType } from 'components/views/Table/TableToolbar/types';
 
 const Users = () => {
   const dispatch = useAppDispatch();
@@ -45,7 +46,7 @@ const Users = () => {
       rows={list}
       sort={sort}
       order={order}
-      action='users'
+      action={ActionType.USERS}
       linkText='user'
       type='secondary'
       headCells={usersTable}

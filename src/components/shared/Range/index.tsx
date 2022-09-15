@@ -106,6 +106,7 @@ const RangeSwipe = React.forwardRef(
       if (closed && callback) {
         handleClear();
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [closed]);
 
     useOnClickOutside(customRef, handleSubmit);
@@ -129,7 +130,7 @@ const RangeSwipe = React.forwardRef(
                 name={'firstInput'}
                 type='number'
                 className={styles.input}
-                placeholder={'min'}
+                placeholder={min}
                 onChange={handleFirstChange}
                 onBlur={handleFirstBlur}
               />
@@ -139,7 +140,7 @@ const RangeSwipe = React.forwardRef(
                 name={'secondInput'}
                 type='number'
                 className={styles.input}
-                placeholder={'max'}
+                placeholder={max}
                 onChange={handleSecondChange}
                 onBlur={handleSecondBlur}
               />

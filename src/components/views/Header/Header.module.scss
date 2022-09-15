@@ -37,6 +37,17 @@
         gap: 4px;
         @extend %header-11;
         color: var(--placeholder-select);
+
+        &__platform {
+          gap: 3px;
+          @extend %flex-align;
+
+          &__icon {
+            width: 14px;
+            height: 14px;
+            fill: var(--svg);
+          }
+        }
       }
     }
   }
