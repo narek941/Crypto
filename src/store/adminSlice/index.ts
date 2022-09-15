@@ -16,6 +16,10 @@ const internalInitialState: AdminSliceState = {
   coins: [],
   tradingPairs: [],
   totalCount: 0,
+  exchange: {
+    list: [],
+    totalCount: 0,
+  },
   accessToken:
     BrowserStorageService.get(BrowserStorageKeys.AccessToken) ||
     BrowserStorageService.get(BrowserStorageKeys.AccessToken, { session: true }) ||
@@ -82,6 +86,14 @@ const adminSlice = createSlice({
 
     builder.addCase(adminThunks.getCoins.fulfilled, (state, action) => {
       state.coins = action.payload.coins;
+      state.error = null;
+      state.loading = false;
+    });
+
+    builder.addCase(adminThunks.getExchangeList.fulfilled, (state, action) => {
+      state.exchange.list = action.payload.list;
+      state.exchange.totalCount = action.payload.totalCount;
+
       state.error = null;
       state.loading = false;
     });

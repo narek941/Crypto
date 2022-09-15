@@ -310,6 +310,18 @@ export const getTradingPairs = createAsyncThunk(
     }
   },
 );
+export const getExchangeList = createAsyncThunk(`${Slice.Admin}/exchange`, async (_, thunkAPI) => {
+  try {
+    const response = await adminApi.getExchangeListRequest();
+
+    return {
+      list: response.data.list,
+      totalCount: response.data.totalCount,
+    };
+  } catch {
+    return thunkAPI.rejectWithValue({ error: '* Incorrect' });
+  }
+});
 
 export const removeUserById = createAction('removeUserByID');
 export const userFilterClear = createAction<Partial<ITableFilter>>('userFilterClear');

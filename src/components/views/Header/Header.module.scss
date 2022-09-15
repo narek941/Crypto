@@ -48,7 +48,9 @@
           &__icon {
             width: 14px;
             height: 14px;
-            fill: var(--svg);
+            path {
+              fill: var(--svg);
+            }
           }
         }
       }

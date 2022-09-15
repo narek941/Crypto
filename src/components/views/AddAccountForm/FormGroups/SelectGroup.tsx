@@ -1,5 +1,4 @@
 import { Controller } from 'react-hook-form';
-import { useMemo } from 'react';
 import { isString } from 'lodash';
 import { Tooltip } from '@mui/material';
 
@@ -7,6 +6,7 @@ import { BinIcon } from 'assets/icons';
 import { useAppSelector } from 'hooks';
 import { Input, Select } from 'components';
 import { adminSelectors } from 'store/adminSlice';
+import { createOptions } from 'utils/createOptions';
 
 import { addAccountFormFields } from '../fields';
 import styles from '../AddAccountForm.module.scss';
@@ -63,14 +63,7 @@ const SelectGroup = ({
     : currentAlertDestination?.type.value;
   const isEmailInput = type === 'EMAIL';
 
-  const coinOptions = useMemo(
-    () =>
-      coins.map((coin: any) => ({
-        label: coin.name,
-        value: coin.id,
-      })),
-    [coins],
-  );
+  const coinOptions = createOptions(coins);
 
   return (
     <div>

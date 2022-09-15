@@ -39,7 +39,7 @@ const AddNewAccount: React.FC = () => {
   useEffect(() => {
     dispatch(adminActions.getCoins());
     dispatch(adminActions.getTradingPairs());
-
+    dispatch(adminActions.getExchangeList());
     if (id) {
       dispatch(accountsActions.getAccountById(id));
 

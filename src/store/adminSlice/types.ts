@@ -1,5 +1,13 @@
 import { IFilter, ITableFilter } from 'types/api';
 
+export interface IExchangeResponse {
+  id: number;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: null | string;
+  name: string;
+}
+
 export type AdminSliceState = {
   accessToken: string;
   loading: boolean;
@@ -13,6 +21,10 @@ export type AdminSliceState = {
   usersFilter: ITableFilter;
   accountsFilter: IFilter;
   userById: any;
+  exchange: {
+    list: IExchangeResponse[] | [];
+    totalCount: number;
+  };
 };
 
 export type UpdateAccessTokenAction = {

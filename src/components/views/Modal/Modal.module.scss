@@ -3,18 +3,16 @@
   right: 0;
   width: 100%;
   color: var(--font);
-  border: 1px solid var(--header-border);
   z-index: 4;
   display: block;
   position: fixed;
   max-width: 288px;
-  overflow-y: scroll;
-  max-height: 90vh;
   border-radius: 4px;
+  visibility: hidden;
+  border: 1px solid var(--header-border);
   background-color: var(--sidebar-background);
   @extend %flex-column;
   @extend %modal-shadow;
-  visibility: hidden;
 
   &__open {
     visibility: visible;
@@ -29,6 +27,9 @@
 
 .inner {
   @extend %modal-shadow;
+  max-height: 90vh;
+
+  overflow-y: scroll;
 }
 
 .item {
@@ -116,6 +117,7 @@
           background-color: red;
           border-radius: 50%;
         }
+
         &:nth-child(odd) {
           justify-content: end;
         }

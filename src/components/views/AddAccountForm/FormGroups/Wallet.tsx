@@ -3,6 +3,9 @@ import { useTranslation } from 'react-i18next';
 
 import { Input, Select } from 'components';
 import FormGroup from 'components/forms/FormGroup';
+import { useAppSelector } from 'hooks';
+import { adminSelectors } from 'store/adminSlice';
+import { createOptions } from 'utils/createOptions';
 
 import { addAccountFormFields } from '../fields';
 import { AddAccountFormShape } from '../types';
@@ -10,6 +13,8 @@ import styles from '../AddAccountForm.module.scss';
 
 const AddAccountForm = ({ formMethods }: any) => {
   const { t } = useTranslation();
+  const { list } = useAppSelector(adminSelectors.selectExchange);
+  const exchangeOptions = createOptions(list);
 
   return (
     <FormGroup className={styles.form__section}>
@@ -26,6 +31,7 @@ const AddAccountForm = ({ formMethods }: any) => {
               withAction={false}
               error={formMethods.formState.errors.exchange?.message}
               withClear={false}
+              option={exchangeOptions}
             />
           )}
         />
