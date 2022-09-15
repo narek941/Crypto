@@ -37,9 +37,12 @@
         gap: 4px;
         @extend %header-11;
         color: var(--placeholder-select);
+        width: 100%;
+        white-space: nowrap;
 
         &__platform {
           gap: 3px;
+          width: 100%;
           @extend %flex-align;
 
           &__icon {
