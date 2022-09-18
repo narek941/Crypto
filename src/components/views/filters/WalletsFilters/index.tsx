@@ -72,7 +72,6 @@ const WalletsFilters = ({ id }: any) => {
       <div className={styles.wrapper}>
         <div className={(styles.item, styles.multipleSelect)}>
           <MultipleSelect
-            formMethods={formMethods}
             {...walletFilterFormFields.selectWalletAsset}
             callback={handleFilter}
             filterName={'coinId'}

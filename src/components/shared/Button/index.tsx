@@ -20,6 +20,7 @@ const Button = ({
     [styles.btn__primary]: color === 'primary',
     [styles.btn__secondary]: color === 'secondary',
   });
+
   const handleClick = (e: SyntheticEvent<HTMLButtonElement>) => onClick && onClick(e);
 
   return (

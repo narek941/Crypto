@@ -1,13 +1,15 @@
-export interface IRange {
-  name?: string;
-  placeholder?: string;
-  Icon?: any;
-  onChange: (prop: string | string[]) => void;
+export interface IRangeSwipe {
   value: any;
-  callback?: (key?: string, value?: any) => void;
-  filterName?: string;
+  name?: string;
+  tooltip: string;
   closed?: boolean;
-  min?: string | number | null;
-  max?: string | number | null;
+  [rest: string]: any;
+  filterName?: string;
   isPercent?: boolean;
+  placeholder?: string;
+  min?: string | number;
+  max?: string | number;
+  onChange: (prop: string | string[]) => void;
+  callback?: (key?: string, value?: any) => void;
+  Icon?: React.FC<React.SVGProps<SVGSVGElement>>;
 }

@@ -2,9 +2,11 @@ import React, { useMemo, useState, useCallback } from 'react';
 import classNames from 'classnames';
 import { Tooltip } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import CurrencyFormat from 'react-currency-format';
 
 import { EyeOpenIcon } from 'assets/icons';
 import { EyeCloseIcon } from 'assets/icons';
+import { phoneFormat } from 'constants/Regexp';
 
 import Typography from '../Typography';
 
@@ -76,21 +78,36 @@ const Input = React.forwardRef<any, IInputProps>(
             {label}
           </label>
           <div className={styles.input}>
-            <input
-              {...rest}
-              id={name}
-              ref={ref}
-              name={name}
-              defaultValue={defaultValue}
-              autoComplete='off'
-              disabled={disabled}
-              className={inputClasses}
-              placeholder={placeholder}
-              onChange={onChange}
-              onFocus={onFocus}
-              onBlur={onBlur}
-              type={isToggledIcon ? 'text' : type}
-            />
+            {type === 'tel' ? (
+              <CurrencyFormat
+                {...rest}
+                className={inputClasses}
+                format={phoneFormat}
+                id={name}
+                ref={ref}
+                name={name}
+                placeholder={placeholder}
+                onChange={onChange}
+                onFocus={onFocus}
+                onBlur={onBlur}
+              />
+            ) : (
+              <input
+                {...rest}
+                id={name}
+                ref={ref}
+                name={name}
+                defaultValue={defaultValue}
+                autoComplete='off'
+                disabled={disabled}
+                className={inputClasses}
+                placeholder={placeholder}
+                onChange={onChange}
+                onFocus={onFocus}
+                onBlur={onBlur}
+                type={isToggledIcon ? 'text' : type}
+              />
+            )}
             {haveRightIcon && (
               <Tooltip
                 followCursor={true}

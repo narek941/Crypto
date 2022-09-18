@@ -6,6 +6,7 @@ import { AlertProps } from './types';
 
 const Alert = ({ open, handleClose, handleAction, id, type }: AlertProps) => {
   const [actionIsDone, setActionIsDone] = useState<boolean>(false);
+
   const popUpClasses = classNames(styles.wrapper, { [styles.wrapper__open]: open });
 
   const renderText = () => {

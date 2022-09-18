@@ -1,4 +1,3 @@
-import React, { FC } from 'react';
 import classNames from 'classnames';
 import { useLocation, useParams } from 'react-router-dom';
 
@@ -9,9 +8,10 @@ import { IContainer } from './types';
 
 const MainTablePaths = [Routes.Accounts, Routes.Users, Routes.Alerts];
 
-const Container: FC<IContainer> = ({ children, className }) => {
-  const { pathname } = useLocation();
+const Container = ({ children, className }: IContainer): JSX.Element => {
   const params = useParams();
+  const { pathname } = useLocation();
+
   const containerClass: string = classNames(
     styles.container,
     {

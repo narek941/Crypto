@@ -99,7 +99,6 @@ export const addAccountFormFields: FormField<keyof AddAccountFormShape> = {
     placeholder: 'Choose currency',
   },
   alertsDestinations: {
-    type: 'select',
     name: 'alertsDestinations',
     id: 'addAccount.alertsDestinations',
     placeholder: 'Choose destination',

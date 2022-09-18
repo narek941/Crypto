@@ -2,44 +2,64 @@ import SelectMultiple, {
   ClearIndicatorProps,
   components,
   DropdownIndicatorProps,
-  MenuListProps,
   MenuProps,
   NoticeProps,
 } from 'react-select';
 import { Controller } from 'react-hook-form';
 import { useState } from 'react';
+import { Tooltip } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 import { CloseIcon, DropDownIcon } from 'assets/icons';
+import { IOptionList } from 'types';
 
 import Checkbox from '../Checkbox';
 
 import styles from './MultipleSelect.module.scss';
+import { IMultipleSelect } from './types';
 
 const MultipleSelect = ({
-  label,
   name,
-  options,
-  formMethods,
-  placeholder,
-  filterName,
-  callback,
+  label,
   error,
+  tooltip,
+  callback,
+  filterName,
+  placeholder,
+  formMethods,
+  options = [],
+  withAction = false,
   defaultValues,
-}: any) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const sortedOption = options.sort((a: any, b: any) => {
+}: IMultipleSelect) => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const sortedOption = options.sort((a: IOptionList, b: IOptionList) => {
     return a.label.localeCompare(b.label);
   });
-  const handleClose = () => {
+
+  const handleClose = (value: any) => {
     if (isOpen) {
-      formMethods.resetField(name);
-      setIsOpen(false);
+      handleSelect(value);
     } else setIsOpen(false);
+  };
+
+  const handleSelect = (props: any) => {
+    if (callback && filterName) {
+      let value = '';
+      sortedOption
+        .filter((option: any) => props?.includes(option.value))
+        .map((item: any) => {
+          value = `${item.value}${value && '||' + value}`;
+        });
+
+      callback(filterName, value);
+    }
+    setIsOpen(false);
   };
 
   const handleToggle = (bool: boolean) => {
     setIsOpen(bool);
   };
+
   return (
     <div>
       <label>{label}</label>
@@ -55,7 +75,7 @@ const MultipleSelect = ({
               defaultValue={defaultValues}
               menuIsOpen={isOpen}
               onMenuOpen={() => setIsOpen(true)}
-              onMenuClose={() => handleClose()}
+              onMenuClose={() => handleClose(value)}
               hideSelectedOptions={false}
               placeholder={<div className={styles.placeholder}>{placeholder}</div>}
               closeMenuOnSelect={false}
@@ -65,7 +85,7 @@ const MultipleSelect = ({
               onBlur={onBlur}
               // eslint-disable-next-line @typescript-eslint/ban-ts-comment
               // @ts-ignore
-              customProps={{ filterName, callback, handleToggle }}
+              customProps={{ filterName, callback, handleToggle, tooltip, withAction }}
               value={sortedOption.filter((option: any) => value?.includes(option.value))}
               components={{
                 ClearIndicator,
@@ -75,6 +95,7 @@ const MultipleSelect = ({
                 MenuList,
                 Option,
                 NoOptionsMessage,
+                SelectContainer,
               }}
             />
           );
@@ -96,7 +117,7 @@ const handleClear = (props: any) => {
   }
 };
 
-const handleSelect = ({ selectProps, getValue }: any) => {
+const handleSelectForAction = ({ selectProps, getValue }: any) => {
   if (selectProps?.customProps?.callback) {
     let value = '';
     getValue().map((item: any) => {
@@ -154,7 +175,7 @@ const Menu = (props: MenuProps<any>) => (
   </components.Menu>
 );
 
-const MenuList = (props: MenuListProps<any>) => {
+const MenuList = (props: any) => {
   return (
     <>
       <components.MenuList className={styles.item} {...props}>
@@ -167,14 +188,20 @@ const MenuList = (props: MenuListProps<any>) => {
             {props.getValue().length !== props.options.length ? 'Select All' : 'Deselect All'}
           </div>
         </div>
-        <div className={styles.action__inner}>
-          <div className={styles.action__cancel} onClick={() => handleCancel(props)}>
-            Cancel
+        {props.selectProps?.customProps?.withAction && (
+          <div className={styles.action__inner}>
+            <div className={styles.action__cancel} onClick={() => handleCancel(props)}>
+              Cancel
+            </div>
+            <div
+              className={styles.action__select}
+              role='button'
+              onClick={() => handleSelectForAction(props)}
+            >
+              Apply
+            </div>
           </div>
-          <div className={styles.action__select} role='button' onClick={() => handleSelect(props)}>
-            Apply
-          </div>
-        </div>
+        )}
       </div>
     </>
   );
@@ -199,6 +226,22 @@ const NoOptionsMessage = (props: NoticeProps) => {
     <div className={styles.item}>
       <div className={styles.item_noItem} {...props} />
     </div>
+  );
+};
+
+const SelectContainer = ({ children, ...props }: any) => {
+  const { t } = useTranslation();
+
+  return (
+    <Tooltip
+      followCursor={true}
+      placement='bottom'
+      title={t(props.selectProps?.customProps?.tooltip)}
+    >
+      <div>
+        <components.SelectContainer {...props}>{children}</components.SelectContainer>
+      </div>
+    </Tooltip>
   );
 };
 

@@ -1,25 +1,25 @@
 .popup {
   min-width: 280px;
-  color: var(--alert-font);
-  padding: 19px 15px;
   border-radius: 4px;
+  padding: 19px 15px;
   flex-direction: column;
+  color: var(--alert-font);
   backdrop-filter: blur(4px);
   background-color: var(--popup-background);
   border: 1px solid var(--table-border);
-
   @extend %text-11-bold;
 
   &__header {
     margin: 0 auto;
     padding: 0 13px;
   }
+
   &__action {
-    @extend %text-14-bold;
-    margin-top: 43px;
-    display: flex;
     gap: 15px;
+    display: flex;
+    margin-top: 43px;
     justify-content: end;
+    @extend %text-14-bold;
 
     &__cancel {
       cursor: pointer;
@@ -35,21 +35,22 @@
 
     &__continue {
       cursor: pointer;
-      text-transform: uppercase;
       color: var(--select-btn);
+      text-transform: uppercase;
     }
   }
 }
+
 .wrapper {
-  width: 100vw;
-  height: 100vh;
   top: 0;
   left: 0;
-  position: fixed;
-  justify-content: center;
-  align-items: center;
+  width: 100vw;
   display: none;
+  height: 100vh;
   z-index: 1000;
+  position: fixed;
+  align-items: center;
+  justify-content: center;
   background: rgba(0, 0, 0, 0.2);
 
   &__open {

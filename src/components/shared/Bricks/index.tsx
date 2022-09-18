@@ -1,10 +1,9 @@
-import { FC } from 'react';
 import classNames from 'classnames';
 
 import { IBricks } from './types';
 import styles from './Bricks.module.scss';
 
-const Bricks: FC<IBricks> = ({ className, header, value, moreText }) => {
+const Bricks = ({ className, header, value, moreText }: IBricks): JSX.Element => {
   const bricksClass: string = classNames(styles.bricks, className);
 
   return (

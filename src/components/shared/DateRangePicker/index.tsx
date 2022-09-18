@@ -6,6 +6,8 @@ import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import moment from 'moment';
 import { isNull } from 'lodash';
+import { Tooltip } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 import { useAppSelector, useOnClickOutside, useWindowSize } from 'hooks';
 import { CalendarIcon, CloseIcon } from 'assets/icons';
@@ -17,13 +19,17 @@ import styles from './DateRangePicker.module.scss';
 import { IDateRangePicker } from './types';
 
 const DateRangePicker = React.forwardRef<IDateRangePicker, any>(
-  ({ placeholder, formMethods, name, callback, filterName, clearAll, closed }, ref: any) => {
+  (
+    { placeholder, formMethods, name, callback, filterName, clearAll, closed, tooltip },
+    ref: any,
+  ) => {
     const defaultValue = {
       startDate: undefined,
       endDate: undefined,
       color: 'transparent',
       key: 'selection',
     };
+    const { t } = useTranslation();
     const customRef = useRef<HTMLDivElement>(null);
     const [openCalendar, setOpenCalendar] = useState<boolean>(false);
     const [lastChange, setLastChange] = useState<number>(2);
@@ -137,7 +143,9 @@ const DateRangePicker = React.forwardRef<IDateRangePicker, any>(
     return (
       <div className={styles.calendar} ref={customRef}>
         <div className={styles.calendar__header} role='button' onClick={toggleCalendar}>
-          <span className={headerTextClass}>{text}</span>
+          <Tooltip followCursor={true} placement='bottom' title={t(tooltip)}>
+            <span className={headerTextClass}>{text}</span>
+          </Tooltip>
           {state.startDate && <CloseIcon onClick={handleClear} />}
           <CalendarIcon />
         </div>
@@ -164,14 +172,14 @@ const DateRangePicker = React.forwardRef<IDateRangePicker, any>(
             )}
           />
 
-          <div className={styles.calendar__action}>
-            {/* <p className={styles.calendar__action__cancel} onClick={handleCloseCalendar}>
+          {/* <div className={styles.calendar__action}>
+            <p className={styles.calendar__action__cancel} onClick={handleCloseCalendar}>
               cancel
-            </p> */}
+            </p>
             <p className={styles.calendar__action__select} onClick={handleSubmit}>
               apply
             </p>
-          </div>
+          </div> */}
         </div>
       </div>
     );

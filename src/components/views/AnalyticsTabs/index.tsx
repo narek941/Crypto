@@ -13,23 +13,52 @@ import {
   OrdersHistoryTable,
   AnalyticsAlertTable,
 } from 'components';
-import { FilterIcon } from 'assets/icons';
+import { BinanceFutureIcon, BinanceSpotIcon, FilterIcon } from 'assets/icons';
+
+import { AccountTabType } from '../Table/TableToolbar/types';
 
 import styles from './AnalyticsTabs.module.scss';
 import { TabType } from './types';
 
 const AnalyticsTabs = (): JSX.Element => {
+  const exchangeTab = [
+    {
+      id: AccountTabType.spot,
+      Icon: BinanceSpotIcon,
+    },
+    {
+      id: AccountTabType.futures,
+      Icon: BinanceFutureIcon,
+    },
+  ];
+  const [showExchangeTab, setShowExchangeTab] = useState<boolean>(false);
+
   const [searchParams, setSearchParams] = useSearchParams();
   const [openFilter, setOpenFilter] = useState<boolean>(false);
   const { t } = useTranslation();
 
   const handleTabUpdateChange = (id: string) => {
-    setSearchParams({ tab: id });
+    const exchange = searchParams.get('exchange') || '';
+
+    setSearchParams({ tab: id, exchange });
   };
+
+  const handleExchangeTabUpdateChange = (id: string) => {
+    const tab = searchParams.get('tab') || '';
+
+    setSearchParams({ tab, exchange: id });
+  };
+
   const handleFilter = () => setOpenFilter(!openFilter);
 
   useEffect(() => {
     setOpenFilter(false);
+
+    const exchangeIsNeeded =
+      searchParams.get('tab') === TabType.history ||
+      searchParams.get('tab') === TabType.orders ||
+      searchParams.get('tab') === TabType.trades;
+    setShowExchangeTab(exchangeIsNeeded);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams.get('tab')]);
 
@@ -67,6 +96,20 @@ const AnalyticsTabs = (): JSX.Element => {
           ))}
         </div>
         <div className={styles.toolbar__filter}>
+          {showExchangeTab && (
+            <div className={styles.toolbar__exchange}>
+              {exchangeTab.map(({ id, Icon }) => (
+                <Tab
+                  selectedTab={searchParams.get('exchange') || AccountTabType.spot}
+                  handleChange={handleExchangeTabUpdateChange}
+                  id={id}
+                  key={id}
+                  Icon={Icon}
+                  withBorder={false}
+                />
+              ))}
+            </div>
+          )}
           <Tooltip followCursor={true} placement='bottom' title={t('filters')}>
             <FilterIcon onClick={handleFilter} />
           </Tooltip>

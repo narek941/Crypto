@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import { createChart } from 'lightweight-charts';
 import moment from 'moment';
 import { usePrevious } from 'react-use';
+import { isNull } from 'lodash';
 
 import { useAppSelector } from 'hooks';
 import { authSelectors } from 'store/authSlice';
@@ -24,9 +25,7 @@ const TradingViewChart = ({
   baseCurrency,
   className,
 }) => {
-  // reference for DOM element to create with chart
   const ref = useRef();
-
   const [chartCreated, setChartCreated] = useState(false);
   const dataPrev = usePrevious(data);
 
@@ -34,8 +33,7 @@ const TradingViewChart = ({
     () =>
       data?.map((entry) => {
         return {
-          id: entry.id,
-          time: moment(entry[timeField]).format('YYYY-MM-DD'),
+          time: !isNull(entry[timeField]) && moment.utc(entry[timeField]).format('YYYY-MM-DD'),
           value: parseFloat(entry[field]),
         };
       }),
@@ -200,16 +198,19 @@ const TradingViewChart = ({
           toolTip.style.display = 'none';
         } else {
           const hoveredObject = data.filter((item) =>
-            moment(new Date(item.snapshotDate)).isSame(
-              new Date(moment(param.time.year + '.' + param.time.month + '.' + param.time.day)),
-              'day',
-            ),
+            moment
+              .utc(new Date(item.snapshotDate))
+              .isSame(
+                new Date(
+                  moment.utc(param.time.year + '.' + param.time.month + '.' + param.time.day),
+                ),
+                'day',
+              ),
           );
-          // eslint-disable-next-line no-console
-          console.log(hoveredObject);
-          const dateStr = moment(
-            param.time.year + '.' + param.time.month + '.' + param.time.day,
-          ).format('DD.MM.YYYY HH:mm:ss');
+
+          const dateStr = moment
+            .utc(param.time.year + '.' + param.time.month + '.' + param.time.day)
+            .format('DD.MM.YYYY');
           var price = param.seriesPrices.get(series);
           const secondField = hoveredObject.map((item) => item[field2])
             ? hoveredObject.map((item) => item[field2])

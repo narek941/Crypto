@@ -10,16 +10,7 @@ import { createOptions } from 'utils/createOptions';
 
 import { addAccountFormFields } from '../fields';
 import styles from '../AddAccountForm.module.scss';
-
-export interface ISelectGroup {
-  removePair: (id: string) => void;
-  id: string;
-  secondInput?: 'select' | 'input';
-  formMethods: any;
-  leftInputName?: string;
-  rightInputName?: string;
-  index?: number;
-}
+import { ISelectGroup } from '../types';
 
 const SelectGroup = ({
   removePair,
@@ -36,32 +27,12 @@ const SelectGroup = ({
 
   const errorPair = formMethods.formState.errors?.allowedPairs;
   const errorDestination = formMethods.formState.errors?.alertsDestinations;
-  // const currentPairTo = formMethods.watch(`allowedPairs[${index}].${rightInputName}.id`);
-  // const currentPairFrom = formMethods.watch(`allowedPairs[${index}].${leftInputName}.id`);
-
-  // const allowedPair =
-  //   tradingPairs &&
-  //   !isUndefined(currentPairFrom) &&
-  //   tradingPairs?.some(
-  //     (item: any) =>
-  //       item?.to?.id === Number(currentPairTo) && item?.from?.id == Number(currentPairFrom),
-  //   );
-
-  // useEffect(() => {
-  //   if (!allowedPair) {
-  //     formMethods.setError(`test`, {
-  //       type: 'custom',
-  //       message: '* Choose allowed pair to finish adding account',
-  //     });
-  //   } else {
-  //     formMethods.clearErrors('test');
-  //   }
-  // }, [allowedPair, formMethods]);
-
   const type = isString(currentAlertDestination?.type)
     ? currentAlertDestination?.type
     : currentAlertDestination?.type.value;
   const isEmailInput = type === 'EMAIL';
+
+  const isOneOfValue = type === 'EMAIL' || type === 'SMS' || type === 'TELEGRAM';
 
   const coinOptions = createOptions(coins);
 
@@ -136,13 +107,15 @@ const SelectGroup = ({
               }
               render={({ field }) => (
                 <Input
-                  {...addAccountFormFields.alertsDestinations}
-                  isSmall={true}
                   {...field}
+                  isSmall={true}
                   className={styles.item}
                   innerClassName={styles.input}
-                  placeholder={!type ? '' : isEmailInput ? 'Enter Email' : 'Enter Mobile Number'}
                   type={isEmailInput ? 'email' : 'tel'}
+                  {...addAccountFormFields.alertsDestinations}
+                  placeholder={
+                    !isOneOfValue ? '' : isEmailInput ? 'Enter Email' : 'Enter Mobile Number'
+                  }
                   error={
                     errorDestination?.[`${index}`]?.[`${leftInputName}`]?.message ||
                     errorDestination?.[`${index}`]?.phoneNumber?.message ||

@@ -43,7 +43,7 @@ const AddUserForm = ({ onClick, isEditable = false }: IAddUser) => {
             name: username,
             email: email,
             usersAccountType: AccountTypeOptions.find((option) => option.value === role)?.value,
-            usersAccountList: allowedAccounts.map((item: any) => item?.account?.id),
+            usersAccountList: allowedAccounts?.map((item: any) => item?.account?.id),
           }
         : {
             isEditable: false,
@@ -121,10 +121,11 @@ const AddUserForm = ({ onClick, isEditable = false }: IAddUser) => {
             />
             {accountWatch.usersAccountType == RoleType.VIEWER && accountsOptions && (
               <MultipleSelect
+                withAction={true}
                 formMethods={formMethods}
-                {...addUserFormFields.usersAccountList}
                 options={accountsOptions}
                 defaultValues={defaultMultipleValue}
+                {...addUserFormFields.usersAccountList}
                 error={formMethods.formState.errors.usersAccountList?.message}
               />
             )}

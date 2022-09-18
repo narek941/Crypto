@@ -1,31 +1,35 @@
-import React, { useEffect, useState } from 'react';
+import React, { ForwardedRef, useEffect, useState } from 'react';
 import classNames from 'classnames';
+import { Tooltip } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 import { CloseIcon, SearchIcon } from 'assets/icons';
 import { useDebounce } from 'hooks';
 
 import styles from './TableSearch.module.scss';
+import { ITableSearch } from './types';
 
 const TableSearch = React.forwardRef<any, any>(
   (
     {
       name,
-      className = '',
+      type,
+      closed,
       onFocus,
-      placeholder = 'search',
+      tooltip,
       callback,
+      clearAll,
       filterName,
       debouncedTime = 700,
-      clearAll,
-      closed,
-      type,
+      placeholder = 'search',
+      className = '',
       ...rest
-    },
-    ref,
-  ) => {
+    }: ITableSearch,
+    ref: ForwardedRef<HTMLInputElement>,
+  ): JSX.Element => {
+    const { t } = useTranslation();
     const inputClass = classNames(styles.search__input, className);
-    const [state, setState] = useState('');
-
+    const [state, setState] = useState<string>('');
     const debouncedValue = useDebounce<string>(state, debouncedTime);
 
     const handleChange = (e: any) => {
@@ -43,12 +47,14 @@ const TableSearch = React.forwardRef<any, any>(
       callback(filterName, null);
     };
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => handleClear(), [clearAll]);
 
     useEffect(() => {
       if (closed) {
         handleClear();
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [closed]);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -57,7 +63,9 @@ const TableSearch = React.forwardRef<any, any>(
     return (
       <div className={styles.search}>
         <div className={styles.search__icon}>
-          <div>{state && <CloseIcon onClick={handleClear} />}</div>
+          <Tooltip followCursor={true} placement='bottom' title={t(tooltip)}>
+            <div>{state && <CloseIcon onClick={handleClear} />}</div>
+          </Tooltip>
           <div>
             <SearchIcon />
           </div>
@@ -66,14 +74,14 @@ const TableSearch = React.forwardRef<any, any>(
           <input
             {...rest}
             id={name}
-            className={inputClass}
-            placeholder={placeholder}
             ref={ref}
             type={type}
-            autoComplete='off'
-            onChange={handleChange}
-            onFocus={onFocus}
             value={state}
+            onFocus={onFocus}
+            autoComplete='off'
+            className={inputClass}
+            onChange={handleChange}
+            placeholder={placeholder}
           />
         </div>
       </div>

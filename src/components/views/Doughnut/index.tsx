@@ -12,14 +12,14 @@ const Doughnut = ({
   data,
   field,
   value,
-  header,
-  tooltipFields = [],
-  className,
-  baseCurrency,
-  legendPositionBottom = false,
-  radius = '80',
   colors,
+  header,
+  className,
   navigateTo,
+  baseCurrency,
+  radius = '80',
+  tooltipFields = [],
+  legendPositionBottom = false,
 }: any): JSX.Element => {
   const formattedData = parseChartLabels(data, field, value);
 

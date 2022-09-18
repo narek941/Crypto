@@ -41,9 +41,17 @@
     @extend %flex-between;
   }
 }
-.toolbar__filter {
-  display: flex;
-  align-items: flex-start;
-  cursor: pointer;
-  margin-bottom: 24px;
+
+.toolbar {
+  &__filter {
+    display: flex;
+    align-items: flex-start;
+    cursor: pointer;
+    margin-bottom: 24px;
+  }
+  &__exchange {
+    gap: 20px;
+    margin-right: 20px;
+    @extend %flex-align;
+  }
 }

@@ -3,7 +3,11 @@ import { FunctionComponent, SVGProps } from 'react';
 import { BinanceFutureIcon, BinanceSpotIcon } from 'assets/icons';
 import { AccountTabType } from 'components/views/Table/TableToolbar/types';
 
-type AccountsTab = { id: string; name: string; Icon: FunctionComponent<SVGProps<SVGSVGElement>> };
+export type AccountsTab = {
+  id: string;
+  name: string;
+  Icon: FunctionComponent<SVGProps<SVGSVGElement>>;
+};
 
 const accountsTab: AccountsTab[] = [
   {

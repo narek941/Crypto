@@ -21,15 +21,7 @@ import { FilterFormShape, IAccountsFilterValue } from './types';
 import { filterFormFields, filterSchemaKeys } from './fields';
 
 const AccountsFilters = () => {
-  const dispatch = useAppDispatch();
-  const { t } = useTranslation();
-  const { filter } = useSelector(accountsSelectors.selectAccountAccountsList);
-  const { id } = useParams();
-
-  const [isMore, setIsMore] = useState(false);
-  const [clearAll, setClearAll] = useState(false);
-
-  const [filterValue, setFilterValue] = useState<IAccountsFilterValue>({
+  const defaultFilterLimits = {
     minRefreshDate: null,
     maxRefreshDate: null,
     minProductivityInPercent: null,
@@ -38,6 +30,8 @@ const AccountsFilters = () => {
     maxEarnedCapitalInPercent: null,
     minNumberDailyTransactions: null,
     maxNumberDailyTransactions: null,
+    minCurrentOpenProfitInPercent: null,
+    maxCurrentOpenProfitInPercent: null,
     minEarnedCapitalInBaseCurrency: null,
     maxEarnedCapitalInBaseCurrency: null,
     minCurrentCapitalInBaseCurrency: null,
@@ -46,12 +40,35 @@ const AccountsFilters = () => {
     maxStatsStartCapitalInBaseCurrency: null,
     minCurrentOpenProfitInBaseCurrency: null,
     minStatsStartCapitalInBaseCurrency: null,
-  });
+  };
+
+  const defaultFilterValue = {
+    accountName: '',
+    accountStatus: '',
+    accountAVGTrades: ['', ''],
+    accountId: '',
+    accountSeed: ['', ''],
+    accountCurrentCapital: ['', ''],
+    accountOpenProfit: ['', ''],
+    accountEarnedCapital: ['', ''],
+  };
+
+  const dispatch = useAppDispatch();
+  const { t } = useTranslation();
+  const { filter } = useSelector(accountsSelectors.selectAccountAccountsList);
+  const { id } = useParams();
+
+  const [isMore, setIsMore] = useState(false);
+  const [clearAll, setClearAll] = useState(false);
+
+  const [filterValue, setFilterValue] = useState<IAccountsFilterValue>(defaultFilterLimits);
 
   const handleToggle = () => setIsMore(!isMore);
+
   const advancedClass = classNames(styles.item, {
     [styles.advanced__hide]: !isMore,
   });
+
   const handleClear = () => {
     formMethods.reset({});
     dispatch(accountsFilterClear({}));
@@ -61,7 +78,6 @@ const AccountsFilters = () => {
   const handleFilter = (key: string, value: any) => {
     if (isNull(value)) {
       const obj = filterObject(filter.filter, key);
-
       dispatch(accountsFilterClear(obj));
     } else {
       if (key === 'name') {
@@ -88,16 +104,7 @@ const AccountsFilters = () => {
   const { formMethods } = useForm<keyof FilterFormShape, FilterFormShape>({
     mode: 'onChange',
     schemaKeys: filterSchemaKeys,
-    defaultValues: {
-      accountName: '',
-      accountStatus: '',
-      accountAVGTrades: ['', ''],
-      accountId: '',
-      accountSeed: ['', ''],
-      accountCurrentCapital: ['', ''],
-      accountOpenProfit: ['', ''],
-      accountEarnedCapital: ['', ''],
-    },
+    defaultValues: defaultFilterValue,
   });
 
   return (
@@ -108,8 +115,8 @@ const AccountsFilters = () => {
             {...filterFormFields.accountName}
             {...formMethods.register('accountName')}
             className={styles.search}
-            callback={handleFilter}
             filterName={'name'}
+            callback={handleFilter}
             clearAll={clearAll}
           />
         </div>
@@ -195,8 +202,8 @@ const AccountsFilters = () => {
                 {...filterFormFields.accountOpenProfit}
                 callback={handleFilter}
                 filterName={'statistics.currentOpenProfitInPercent'}
-                min={filterValue.minProductivityInPercent}
-                max={filterValue.maxProductivityInPercent}
+                min={filterValue.minCurrentOpenProfitInPercent}
+                max={filterValue.maxCurrentOpenProfitInPercent}
                 isPercent={true}
                 closed={!isMore}
               />

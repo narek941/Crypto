@@ -1,20 +1,14 @@
-import { ReactNode } from 'react';
+import { IOptionList } from 'types';
 
-type ErrorType = any | null;
-
-export type ColorType = 'default' | 'primary';
-
-export type Option = {
-  label: string;
-  value: string;
-};
-
-export interface ISelect {
-  id: string;
-  className?: string;
-  text?: ReactNode | string | null | undefined;
-  error: ErrorType;
-  defaultChecked?: boolean;
-  color?: ColorType;
-  [prop: string]: any;
+export interface IDualSelect {
+  formMethods?: any;
+  name?: string;
+  placeholder?: string;
+  firstOptions: IOptionList[];
+  secondOptions: IOptionList[];
+  callback: (key: string, value: any) => void;
+  filterName?: string;
+  closed?: boolean;
+  singleFilterName?: string;
+  tooltip?: any;
 }

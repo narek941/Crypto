@@ -4,8 +4,8 @@
   @extend %flex-align;
 
   &__item {
-    cursor: pointer;
     gap: 6px;
+    cursor: pointer;
     @extend %flex-align;
   }
 

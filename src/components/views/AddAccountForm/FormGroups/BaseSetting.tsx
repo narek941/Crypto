@@ -14,8 +14,8 @@ import styles from '../AddAccountForm.module.scss';
 const BaseSetting = ({ formMethods }: any) => {
   const coins = useAppSelector(adminSelectors.selectCoins);
   const coinOptions = createOptions(coins);
-
   const { t } = useTranslation();
+
   return (
     <FormGroup className={styles.form__section}>
       <>
