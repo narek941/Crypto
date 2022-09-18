@@ -2,7 +2,7 @@ import { RefObject, useEffect } from 'react';
 
 import { AnyEvent } from './types';
 
-const useOnClickOutside = <T extends HTMLElement | null = HTMLElement>(
+const useOnClickOutside = <T extends HTMLElement | null = HTMLElement | any>(
   ref: RefObject<T>,
   handler: (event: AnyEvent) => void,
   useDataDropdownAttr?: boolean,

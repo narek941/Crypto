@@ -21,17 +21,17 @@ const Checkbox = React.forwardRef(
     };
 
     const checkboxClassName: string = getCheckboxClassName(color);
-
     const checkboxClass: string = classNames(checkboxClassName);
+
     return (
       <div className={checkboxClass}>
         <input
-          type='checkbox'
           id={id}
-          name={name}
           ref={ref}
-          defaultChecked={defaultChecked}
           {...props}
+          name={name}
+          type='checkbox'
+          defaultChecked={defaultChecked}
         />
         <CheckIcon className={styles.icon} />
         <label htmlFor={id} className={styles['checkbox-label']}>

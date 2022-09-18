@@ -83,6 +83,7 @@ const routes: RoutesProps[] = [
     path: Routes.Error,
     text: 'error_header',
     withHeader: false,
+    isProtected: false,
     component: <Error />,
   },
 ];

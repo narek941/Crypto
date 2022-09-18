@@ -11,23 +11,7 @@ import TradeLimit from './FormGroups/TradeLimit';
 import FormAction from './FormGroups/FormAction';
 import BaseSetting from './FormGroups/BaseSetting';
 import TradeSetting from './FormGroups/TradeSetting';
-import { AddAccountFormShape, IAddAccount } from './types';
-
-type AllowedPairsProps = {
-  createdAt: string;
-  deletedAt: string;
-  id: number;
-  tradingPair: {
-    createdAt: string;
-    deletedAt: string;
-    from: any;
-    id: number;
-    name: string;
-    to: any;
-    updatedAt: string;
-  };
-  updatedAt: string;
-};
+import { AddAccountFormShape, AllowedPairsProps, IAddAccount } from './types';
 
 const AddAccountForm = ({ onClick, isEditable = false }: IAddAccount) => {
   const { name, allowedPairs, alertsDestinations, wallets, baseCurrency, allowedCurrencies } =

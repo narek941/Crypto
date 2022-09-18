@@ -8,6 +8,10 @@
     fill: var(--tab-not-selected);
   }
 
+  &__border {
+    padding-bottom: 0;
+  }
+
   &__selected {
     position: relative;
     color: var(--tab-selected);
@@ -20,6 +24,10 @@
       &::after {
         width: calc(100% - 6px);
       }
+    }
+
+    &__border::after {
+      display: none;
     }
 
     &::after {

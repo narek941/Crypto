@@ -49,7 +49,7 @@
   "id":"ID",
   "received":"Received",
   "received_in_base_currency":"Received, {{baseCurrency}} ",
-
+  "page_not_found":"Page you are looking for not found...",
   "share":"Share",
   "asset":"Asset",
   "value":"Value",

@@ -15,6 +15,7 @@ const TradeSetting = ({ formMethods }: any) => {
     from: {},
     to: {},
   };
+
   const initialDestination = { type: '', emailAddress: '', phoneNumber: '' };
 
   const { fields, append, remove } = useFieldArray({
@@ -51,6 +52,7 @@ const TradeSetting = ({ formMethods }: any) => {
       formMethods={formMethods}
     />
   ));
+
   const renderPairs = fields.map(({ id }, index) => (
     <SelectGroup
       key={id}

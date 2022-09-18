@@ -1,0 +1,67 @@
+.wrapper {
+  width: 100%;
+  height: 100vh;
+  padding: 40px 0 40px 40px;
+  background-color: var(--error-background);
+}
+
+.error {
+  position: relative;
+  @extend %flex-center;
+
+  &__inner {
+    @extend %flex-column;
+
+    &__second {
+      width: 100%;
+      @extend %flex-center;
+    }
+  }
+
+  &__item {
+    min-width: 100%;
+    align-items: end;
+    flex-direction: column;
+    color: var(--error-page);
+    @extend %flex-center;
+
+    &__title {
+      width: 100%;
+      max-width: 240px;
+      text-align: start;
+      @extend %title-96;
+    }
+
+    &__subTitle {
+      margin-top: 8px;
+      max-width: 240px;
+      text-align: start;
+      @extend %filter-16;
+    }
+
+    &__form {
+      margin-top: 48px;
+
+      &__group {
+        gap: 16px;
+        @extend %flex-column;
+
+        &__button {
+          @extend %flex-end;
+        }
+      }
+    }
+  }
+}
+
+.copyright {
+  text-align: center;
+}
+
+.header {
+  cursor: pointer;
+
+  svg path {
+    fill: var(--icon-primary);
+  }
+}

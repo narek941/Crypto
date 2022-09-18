@@ -23,10 +23,12 @@ const AnalyticsAlertsFilters = () => {
   const { t } = useTranslation();
   const { id } = useParams();
   const { filter } = useAppSelector(accountsSelectors.selectAccountAccountsAlerts);
+
   const [filterValue, setFilterValue] = useState<IAccountAlertsFilterValue>({
     minCreatedAt: null,
     maxCreatedAt: null,
   });
+
   const advancedClass = classNames(styles.item, {
     [styles.advanced__hide]: !isMore,
   });

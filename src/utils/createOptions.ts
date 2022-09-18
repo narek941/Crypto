@@ -1,11 +1,8 @@
 import { useMemo } from 'react';
 
-interface IOptionData {
-  id: number;
-  name: string;
-}
+import { IOptionData, IOptionList } from 'types';
 
-export const createOptions = (data: IOptionData[]): any => {
+export const createOptions = (data: IOptionData[]): IOptionList[] => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const options = useMemo(
     () =>

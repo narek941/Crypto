@@ -28,45 +28,45 @@ export const statusOptions = [
 export const AccountTypeOptions = [
   {
     label: 'Administrator',
-    value: RoleType.ADMIN,
+    value: RoleType.ADMIN as string,
   },
   {
     label: 'Analyst',
-    value: RoleType.ANALYST,
+    value: RoleType.ANALYST as string,
   },
   {
     label: 'Viewer',
-    value: RoleType.VIEWER,
+    value: RoleType.VIEWER as string,
   },
 ];
 
 export const AlertsTypeOptions = [
   {
     label: 'Trade Fulfilled',
-    value: AlertType.TRADE_FULFILLED,
+    value: AlertType.TRADE_FULFILLED as string,
   },
   {
     label: 'Stop Order Placed',
-    value: AlertType.STOP_ORDER_PLACED,
+    value: AlertType.STOP_ORDER_PLACED as string,
   },
   {
     label: 'Stop Order Not Placed',
-    value: AlertType.STOP_ORDER_NOT_PLACED,
+    value: AlertType.STOP_ORDER_NOT_PLACED as string,
   },
   {
     label: 'Maximum Drawdown Exceeded',
-    value: AlertType.MAXIMUM_DRAWDOWN_EXCEEDED,
+    value: AlertType.MAXIMUM_DRAWDOWN_EXCEEDED as string,
   },
   {
     label: 'Wrong Currency',
-    value: AlertType.WRONG_CURRENCY,
+    value: AlertType.WRONG_CURRENCY as string,
   },
   {
     label: 'Maximum Position Exceeded',
-    value: AlertType.MAXIMUM_POSITION_EXCEEDED,
+    value: AlertType.MAXIMUM_POSITION_EXCEEDED as string,
   },
   {
     label: 'Risk Position',
-    value: AlertType.RISK_POSITION,
+    value: AlertType.RISK_POSITION as string,
   },
 ];

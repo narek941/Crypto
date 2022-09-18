@@ -4,6 +4,7 @@ import { SchemaLike } from 'yup/lib/types';
 
 import { RoleType } from 'types/api';
 import { alertType } from 'utils/formHelper';
+import { passwordRegExp } from 'constants/Regexp';
 
 import { FormFieldNames } from './types';
 
@@ -30,15 +31,15 @@ const formSchema = {
 const formDestinationsSchema = Yup.object().shape(
   {
     type: Yup.string().required('* Choose destination and enter destination for account alerts'),
-    phoneNumber: Yup.number().when('type', {
-      is: alertType.SMS || alertType.TELEGRAM,
-      then: Yup.number()
+    phoneNumber: Yup.string().when('type', {
+      is: alertType.TELEGRAM || alertType.SMS,
+      then: Yup.string()
         .required('* Enter destination address for account alert ')
         .typeError('* Enter destination address for account alert '),
-      otherwise: Yup.number()
-        .nullable(true)
-        .transform((_, val) => (val === Number(val) ? val : null)),
+      otherwise: Yup.string().nullable(true),
+      // .transform((_, val) => (val === Number(val) ? val : null)),
     }),
+
     emailAddress: Yup.string().when('type', {
       is: alertType.EMAIL,
       then: Yup.string().required('* Enter destination address for account alert '),
@@ -57,12 +58,12 @@ export const composeFormSchema = <K extends FormFieldNames>(fields: K[]): AnyObj
       .required('* Enter email address to finish adding new user'),
     password: Yup.string().when('isEditable', {
       is: (isEditable: boolean) => isEditable === true,
-      then: Yup.string().matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/, {
+      then: Yup.string().matches(passwordRegExp, {
         excludeEmptyString: true,
         message: '* This password is too weak',
       }),
       otherwise: Yup.string()
-        .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/, '* This password is too weak')
+        .matches(passwordRegExp, '* This password is too weak')
         .required('* Enter password to finish adding new user'),
     }),
     confirmPassword: Yup.string().when('isEditable', {

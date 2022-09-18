@@ -1,6 +1,8 @@
 import React, { ForwardedRef, useState, useRef, useEffect } from 'react';
 import classNames from 'classnames';
 import { isString } from 'lodash';
+import { Tooltip } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 import { CloseIcon, DropDownIcon } from 'assets/icons';
 import { useOnClickOutside } from 'hooks';
@@ -24,14 +26,16 @@ const Select = React.forwardRef(
       label,
       callback,
       filterName,
-      withAction = true,
+      withAction = false,
       withClear = true,
       closed,
       numeric = false,
+      tooltip,
       ...props
     }: ISelect,
     ref: ForwardedRef<HTMLInputElement>,
   ): JSX.Element => {
+    const { t } = useTranslation();
     const selectRef = useRef(null);
     const [isOpen, setIsOpen] = useState(false);
     const sortedOption = numeric
@@ -139,17 +143,19 @@ const Select = React.forwardRef(
           )}
           <div ref={selectRef} className={styles.wrapper} id={id} {...props}>
             <div role='button' onClick={openDropdown} className={headerClass}>
-              <input
-                ref={ref}
-                name={name}
-                className={inputClass}
-                onChange={handleSearch}
-                placeholder={placeholder}
-                autoComplete='none'
-                readOnly={sortedOption.length <= 1}
-                defaultValue={props.defaultValue}
-                value={value ? currentOption?.label : ''}
-              />
+              <Tooltip followCursor={true} placement='bottom' title={t(tooltip)}>
+                <input
+                  ref={ref}
+                  name={name}
+                  className={inputClass}
+                  onChange={handleSearch}
+                  placeholder={placeholder}
+                  autoComplete='none'
+                  readOnly={sortedOption.length <= 1}
+                  defaultValue={props.defaultValue}
+                  value={value ? currentOption?.label : ''}
+                />
+              </Tooltip>
               <div>
                 {withClear && (
                   <div className={styles.select__clear} onClick={handleClear}>

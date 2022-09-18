@@ -1,6 +1,9 @@
 import React, { useState, useRef, useEffect, ForwardedRef } from 'react';
 import Slider from '@mui/material/Slider';
 import classNames from 'classnames';
+import { Tooltip } from '@mui/material';
+import { useTranslation } from 'react-i18next';
+import { isNull } from 'lodash';
 
 import { useOnClickOutside } from 'hooks';
 import { CloseIcon, RangeIcon } from 'assets/icons';
@@ -8,25 +11,28 @@ import { CloseIcon, RangeIcon } from 'assets/icons';
 import Input from '../Input';
 
 import styles from './Range.module.scss';
+import { IRangeSwipe } from './types';
 
 const RangeSwipe = React.forwardRef(
   (
     {
       name,
-      placeholder = 'search',
       Icon,
-      onChange,
+      closed,
       min = 0,
-      max = 100000,
-      value: propsValue,
+      tooltip,
+      onChange,
       callback,
       filterName,
-      closed,
+      max = 100000,
       isPercent = false,
+      value: propsValue,
+      placeholder = 'search',
       ...rest
-    }: any,
+    }: IRangeSwipe,
     ref: ForwardedRef<HTMLInputElement>,
-  ) => {
+  ): JSX.Element => {
+    const { t } = useTranslation();
     const value = propsValue;
     const customRef = useRef(null);
     const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -97,6 +103,7 @@ const RangeSwipe = React.forwardRef(
       onChange(['', '']);
       callback && callback(filterName, null);
     };
+
     useEffect(() => {
       setFirstInput(Number(min));
       setSecondInput(Number(max));
@@ -113,9 +120,11 @@ const RangeSwipe = React.forwardRef(
 
     return (
       <div role='button' onClick={toggleDrop} className={headerClass}>
-        <p className={textClass}>
-          {value[0] === '' && value[1] === '' ? placeholder : `${value[0]} / ${value[1]}`}
-        </p>
+        <Tooltip followCursor={true} placement='bottom' title={t(tooltip)}>
+          <p className={textClass}>
+            {value[0] === '' && value[1] === '' ? placeholder : `${value[0]} / ${value[1]}`}
+          </p>
+        </Tooltip>
         <div className={styles.icon__wrapper}>
           <div className={styles.icon} onClick={handleClear}>
             {(value[0] === '' && value[1] === '') || <CloseIcon />}
@@ -130,45 +139,44 @@ const RangeSwipe = React.forwardRef(
                 name={'firstInput'}
                 type='number'
                 className={styles.input}
-                placeholder={min}
+                placeholder={isNull(min) ? '' : min.toString()}
                 onChange={handleFirstChange}
                 onBlur={handleFirstBlur}
               />
               <span>-</span>
               <Input
-                value={!isNaN(secondInput) ? secondInput : value[1]}
-                name={'secondInput'}
                 type='number'
+                name={'secondInput'}
                 className={styles.input}
-                placeholder={max}
-                onChange={handleSecondChange}
                 onBlur={handleSecondBlur}
+                onChange={handleSecondChange}
+                placeholder={isNull(max) ? '' : max.toString()}
+                value={!isNaN(secondInput) ? secondInput : value[1]}
               />
             </div>
             <div className={styles.slider}>
               <Slider
                 value={value}
-                onChange={handleRangeChange}
-                aria-labelledby='input-slider'
                 {...rest}
                 id={name}
                 ref={ref}
-                min={Number(min)}
-                max={Number(max)}
-                step={isPercent ? 0.01 : 0.0001}
                 name={name}
-                autoComplete='off'
+                max={Number(max)}
+                min={Number(min)}
+                onChange={handleRangeChange}
+                aria-labelledby='input-slider'
+                step={isPercent ? 0.01 : 0.0001}
               />
             </div>
           </div>
-          <div className={styles.action}>
+          {/* <div className={styles.action}>
             <div className={styles.action__cancel} role='button' onClick={handleClose}>
               cancel
             </div>
             <div className={styles.action__select} role='button' onClick={handleSubmit}>
               select
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     );

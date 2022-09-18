@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { SubmitHandler } from 'react-hook-form';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { isEqual } from 'lodash';
 import { useSelector } from 'react-redux';
 
@@ -12,6 +12,8 @@ import { usersActions } from 'store/usersSlice';
 import { adminActions, adminSelectors } from 'store/adminSlice';
 import { AddUserFormShape } from 'components/views/AddUserForm/types';
 import { accountsActions } from 'store/accountsSlice';
+import { RoleType } from 'types/api';
+import { authSelectors } from 'store/authSlice';
 
 import styles from './AddNewUser.module.scss';
 
@@ -19,6 +21,8 @@ const AddNewUser = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch() as AppDispatch;
   const { id: userId } = useParams();
+  const authRole = useSelector(authSelectors.selectRole);
+
   const id = Number(userId);
   const { username, role, email, password, allowedAccountIds } = useSelector(
     adminSelectors.selectUserById,
@@ -89,6 +93,10 @@ const AddNewUser = () => {
     dispatch(accountsActions.getAllAccounts());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  if (authRole !== RoleType.ADMIN) {
+    return <Navigate to={Routes.Dashboard} replace />;
+  }
 
   return (
     <div className={styles.container}>

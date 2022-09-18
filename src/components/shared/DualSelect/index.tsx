@@ -1,33 +1,36 @@
 import React, { useState, useRef, useEffect } from 'react';
 import classNames from 'classnames';
 import { Controller } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import { Tooltip } from '@mui/material';
 
 import { useOnClickOutside } from 'hooks';
 import { CloseIcon, DropDownIcon } from 'assets/icons';
+import { IOptionList } from 'types';
 
 import Select from '../Select';
 
 import styles from './DualSelect.module.scss';
+import { IDualSelect } from './types';
 
-const DualSelect = React.forwardRef<any, any>(
-  (
-    {
-      formMethods,
-      name,
-      placeholder,
-      firstOptions,
-      secondOptions,
-      callback,
-      filterName,
-      closed,
-      singleFilterName,
-    },
-    ref: any,
-  ) => {
-    const sortedFirstOptions = firstOptions.sort((a: any, b: any) => {
+const DualSelect = React.forwardRef(
+  ({
+    name,
+    closed,
+    tooltip = null,
+    callback,
+    filterName,
+    formMethods,
+    placeholder,
+    firstOptions,
+    secondOptions,
+    singleFilterName,
+  }: IDualSelect): JSX.Element => {
+    const { t } = useTranslation();
+    const sortedFirstOptions = firstOptions.sort((a: IOptionList, b: IOptionList) => {
       return a.label.localeCompare(b.label);
     });
-    const sortedSecondOptions = secondOptions.sort((a: any, b: any) => {
+    const sortedSecondOptions = secondOptions.sort((a: IOptionList, b: IOptionList) => {
       return a.label.localeCompare(b.label);
     });
     const customWrapperRef = useRef(null);
@@ -50,11 +53,11 @@ const DualSelect = React.forwardRef<any, any>(
     };
 
     const handleSubmit = () => {
-      if (callback && filterName && selectPairStart && isOpenDropdown) {
+      if (filterName && selectPairStart && isOpenDropdown) {
         if (selectPairEnd) {
           callback(filterName, [selectPairStart, selectPairEnd]);
         } else {
-          callback(singleFilterName, selectPairStart);
+          singleFilterName && callback(singleFilterName, selectPairStart);
         }
       }
       handleClose();
@@ -63,9 +66,9 @@ const DualSelect = React.forwardRef<any, any>(
     const handleClear = (event?: React.FormEvent<SVGSVGElement>) => {
       event?.stopPropagation();
       if (selectPairEnd) {
-        callback(filterName, null);
+        filterName && callback(filterName, null);
       } else {
-        callback(singleFilterName, null);
+        singleFilterName && callback(singleFilterName, null);
       }
       formMethods.resetField(`${name}Start`);
       formMethods.resetField(`${name}End`);
@@ -83,13 +86,23 @@ const DualSelect = React.forwardRef<any, any>(
     return (
       <div className={headerClass}>
         <div role='button' onClick={toggleDrop} className={styles.header__inner}>
-          <p className={textClass}>
-            {selectPairStart || selectPairEnd
-              ? `${firstOptions.find((item: any) => item.value === selectPairStart)?.label || ''} ${
-                  secondOptions.find((item: any) => item.value === selectPairEnd)?.label ? '/' : ''
-                } ${secondOptions.find((item: any) => item.value === selectPairEnd)?.label || ''}`
-              : placeholder}
-          </p>
+          <Tooltip followCursor={true} placement='bottom' title={t(tooltip)}>
+            <p className={textClass}>
+              {selectPairStart || selectPairEnd
+                ? `${
+                    firstOptions.find((item: IOptionList) => item.value === selectPairStart)
+                      ?.label || ''
+                  } ${
+                    secondOptions.find((item: IOptionList) => item.value === selectPairEnd)?.label
+                      ? '/'
+                      : ''
+                  } ${
+                    secondOptions.find((item: IOptionList) => item.value === selectPairEnd)
+                      ?.label || ''
+                  }`
+                : placeholder}
+            </p>
+          </Tooltip>
           <div>{(selectPairStart || selectPairEnd) && <CloseIcon onClick={handleClear} />}</div>
           <div>
             <DropDownIcon />
@@ -106,12 +119,11 @@ const DualSelect = React.forwardRef<any, any>(
                   {...formMethods.register(`${name}Start`)}
                   render={({ field }) => (
                     <Select
-                      options={sortedFirstOptions}
                       {...field}
-                      defaultValue={'BTC'}
-                      ref={ref}
-                      withAction={false}
                       withClear={false}
+                      withAction={false}
+                      defaultValue={'BTC'}
+                      options={sortedFirstOptions}
                     />
                   )}
                 ></Controller>
@@ -123,26 +135,25 @@ const DualSelect = React.forwardRef<any, any>(
                   {...formMethods.register(`${name}End`)}
                   render={({ field }) => (
                     <Select
-                      options={sortedSecondOptions}
                       {...field}
-                      defaultValue={'BTC'}
-                      ref={ref}
-                      withAction={false}
                       withClear={false}
+                      withAction={false}
+                      defaultValue={'BTC'}
+                      options={sortedSecondOptions}
                     />
                   )}
                 ></Controller>
               </div>
             </div>
           </div>
-          <div className={styles.action}>
+          {/* <div className={styles.action}>
             <div className={styles.action__cancel} role='button' onClick={handleClose}>
               Cancel
             </div>
             <div className={styles.action__select} role='button' onClick={handleSubmit}>
               Select
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     );

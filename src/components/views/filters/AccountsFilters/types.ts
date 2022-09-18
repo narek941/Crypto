@@ -32,4 +32,6 @@ export interface IAccountsFilterValue {
   minProductivityInPercent: number | null | string;
   minRefreshDate: number | null | string;
   minStatsStartCapitalInBaseCurrency: number | null | string;
+  minCurrentOpenProfitInPercent: number | null | string;
+  maxCurrentOpenProfitInPercent: number | null | string;
 }

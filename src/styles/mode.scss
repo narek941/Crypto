@@ -98,6 +98,8 @@
   --chart-tooltip: rgba(46, 46, 46, 0.7);
   --scroll: #d9d9d9;
   --filter-svg: #9a99a6;
+  --error-page: #2c2d59;
+  --error-background: #ffffff;
 }
 
 [data-theme='dark'] {
@@ -120,12 +122,12 @@
   --input-color: #ffffff;
   --secondary-checkbox: #505051;
   --loader-background: rgba(0, 0, 0, 0.9);
-
   --input-background: rgba(56, 56, 56, 0.2);
   --input-background-secondary: rgba(152, 172, 171, 0.25);
   --input-active: rgba(56, 56, 56, 0.22);
   --input-border: #413ac7;
   --link-color: #ffffff;
+  --error-page: #eaeafc;
   --link-border: #413ac7;
   --select-border: #413ac7;
   --select-font: #ffffff;
@@ -202,4 +204,5 @@
   --chart-tooltip: rgba(46, 46, 46, 0.7);
   --scroll: #404046;
   --filter-svg: #ffffff;
+  --error-background: #000000;
 }
