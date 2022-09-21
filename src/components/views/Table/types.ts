@@ -60,4 +60,5 @@ export type SelectedAccount = {
   startCapitalInBaseCurrency: any | null;
   baseCurrency?: string;
   name: string;
+  syncStatus: string;
 };

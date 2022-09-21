@@ -27,7 +27,14 @@ const internalInitialState: WalletsSliceState = {
   inflow: {
     list: [],
     totalCount: 0,
-    filter: { skip: 0, take: 10, sort: 'insertTime', order: 'ASC', search: '', filter: {} },
+    filter: {
+      skip: 0,
+      take: 10,
+      sort: 'insertTime',
+      order: 'ASC',
+      search: '',
+      filter: { api: 'FAPI' },
+    },
   },
   records: {
     list: [],

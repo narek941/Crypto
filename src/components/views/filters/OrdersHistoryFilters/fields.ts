@@ -6,10 +6,10 @@ import { FilterFormShape } from './types';
 
 export const filterFormFields: FormField<keyof FilterFormShape> = {
   historyPair: {
-    name: 'historyPair',
+    name: 'Symbol',
     type: 'DualSelect',
     id: 'filterForm.historyPair',
-    placeholder: 'Select Pair',
+    placeholder: 'Select Symbol',
     tooltip: 'coin_pair_name',
   },
 

@@ -17,6 +17,13 @@ export interface ITableFilter extends IFilter {
   filter: any;
 }
 
+export interface IPlatform {
+  platform: any;
+}
+
+export interface IPlatformApi {
+  api: any;
+}
 export enum AlertType {
   TRADE_FULFILLED = 'TRADE_FULFILLED',
   STOP_ORDER_PLACED = 'STOP_ORDER_PLACED',

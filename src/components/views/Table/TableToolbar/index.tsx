@@ -3,26 +3,30 @@ import { useEffect, useState } from 'react';
 import { Tooltip } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Link, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { AddAccountIcon, FilterIcon } from 'assets/icons';
-import { LinkButton, Tab } from 'components';
+import { Alert, LinkButton, Tab } from 'components';
 import AccountsFilters from 'components/views/filters/AccountsFilters';
 import UsersFilters from 'components/views/filters/UsersFilters';
 import AlertsFilters from 'components/views/filters/AlertsFilters';
 import { RoleType } from 'types/api';
 import { authSelectors } from 'store/authSlice';
 import accountsTab from 'constants/tabs/accounts';
+import { accountsActions } from 'store/accountsSlice';
+import { useAppDispatch } from 'hooks';
+import { adminActions } from 'store/adminSlice';
 
 import styles from './TableToolbar.module.scss';
 import { AccountTabType, ActionType, ITableToolbarProps } from './types';
 
 const TableToolbar = ({ linkText, linkTo, action }: ITableToolbarProps): JSX.Element => {
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const [filterVisible, setFilterVisible] = useState(false);
   const text = `+ ADD NEW ${linkText}`;
   const role = useSelector(authSelectors.selectRole);
-
+  const dispatch = useAppDispatch();
   const toolbarClasses = classNames(styles.toolbar, {
     [styles.toolbar_noLink]: !linkTo,
   });
@@ -31,6 +35,20 @@ const TableToolbar = ({ linkText, linkTo, action }: ITableToolbarProps): JSX.Ele
   });
   const handleFilter = () => setFilterVisible(!filterVisible);
   const [searchParams, setSearchParams] = useSearchParams();
+  const [isSyncing, setIsSyncing] = useState<boolean>(false);
+
+  const handleCloseAlert = () => setIsSyncing(false);
+
+  const handleCreateAccount = async (to: any) => {
+    const { isSynced } = await dispatch(adminActions.getSyncStatus()).unwrap();
+    // eslint-disable-next-line no-console
+    console.log(isSynced);
+    if (!isSynced) {
+      navigate(to);
+    } else {
+      setIsSyncing(true);
+    }
+  };
 
   const handleTabUpdateChange = (id: string) => {
     setSearchParams({ tab: id });
@@ -38,6 +56,9 @@ const TableToolbar = ({ linkText, linkTo, action }: ITableToolbarProps): JSX.Ele
 
   useEffect(() => {
     setFilterVisible(false);
+    const platformId = searchParams.get('tab') === AccountTabType.futures ? '2' : '1';
+    dispatch(accountsActions.platformUpdate({ platform: platformId }));
+    dispatch(accountsActions.accountsFilterUpdate({ filter: { platformId } }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams.get('tab')]);
 
@@ -88,9 +109,9 @@ const TableToolbar = ({ linkText, linkTo, action }: ITableToolbarProps): JSX.Ele
         {renderTab()}
         <div className={styles.toolbar__filter}>
           {role === RoleType.ADMIN && linkTo && action === ActionType.ACCOUNTS && (
-            <Link to={linkTo}>
+            <div role='button' onClick={() => handleCreateAccount(linkTo)}>
               <AddAccountIcon className={styles.addAccount} />
-            </Link>
+            </div>
           )}
 
           <Tooltip followCursor={true} placement='bottom' title={t('filters')}>
@@ -99,6 +120,12 @@ const TableToolbar = ({ linkText, linkTo, action }: ITableToolbarProps): JSX.Ele
         </div>
       </div>
       {filterVisible && renderFilter()}
+      <Alert
+        open={isSyncing}
+        handleClose={handleCloseAlert}
+        type={'SYNCING_ADD'}
+        isActionIsDone={true}
+      />
     </div>
   );
 };

@@ -3,8 +3,9 @@ export interface AlertProps {
   ref?: any;
   open: boolean;
   className?: string;
-  type: 'DELETE' | 'BLOCK' | 'UNBLOCK';
+  type: 'DELETE' | 'BLOCK' | 'UNBLOCK' | 'SYNCING' | 'SYNCING_ADD';
   handleClose: (e: SyntheticEvent) => void;
-  handleAction: (id: number) => Promise<void>;
-  id: number | null;
+  handleAction?: (id: number) => Promise<void>;
+  id?: number | null;
+  isActionIsDone?: boolean;
 }

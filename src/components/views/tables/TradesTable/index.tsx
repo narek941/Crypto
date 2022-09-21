@@ -25,6 +25,7 @@ import styles from './TradesTable.module.scss';
 
 const TradesTable = ({ filterVisible }: any) => {
   const accountById = useSelector(accountsSelectors.selectAccountById);
+  const api = useSelector(accountsSelectors.selectAccountByIdPlatformType);
   const { filter, list, totalCount } = useSelector(accountsSelectors.selectAccountAccountsTrades);
   const { id } = useParams<ParamsWithId>();
 
@@ -55,7 +56,7 @@ const TradesTable = ({ filterVisible }: any) => {
     if (id) {
       dispatch(accountsActions.getAccountTradesList({ ...filter, id }));
     }
-  }, [id, filter, dispatch]);
+  }, [id, filter, dispatch, api]);
 
   return (
     <>

@@ -33,6 +33,7 @@ const Input = React.forwardRef<any, IInputProps>(
       label,
       isSmall,
       onChange,
+      value,
       onFocus,
       onBlur,
       ...rest
@@ -84,12 +85,14 @@ const Input = React.forwardRef<any, IInputProps>(
                 className={inputClasses}
                 format={phoneFormat}
                 id={name}
+                defaultValue={defaultValue}
                 ref={ref}
                 name={name}
                 placeholder={placeholder}
                 onChange={onChange}
                 onFocus={onFocus}
                 onBlur={onBlur}
+                value={value || ''}
               />
             ) : (
               <input
@@ -105,6 +108,7 @@ const Input = React.forwardRef<any, IInputProps>(
                 onChange={onChange}
                 onFocus={onFocus}
                 onBlur={onBlur}
+                value={value}
                 type={isToggledIcon ? 'text' : type}
               />
             )}

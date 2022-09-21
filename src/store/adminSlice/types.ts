@@ -21,6 +21,7 @@ export type AdminSliceState = {
   usersFilter: ITableFilter;
   accountsFilter: IFilter;
   userById: any;
+  isSynced: boolean;
   exchange: {
     list: IExchangeResponse[] | [];
     totalCount: number;

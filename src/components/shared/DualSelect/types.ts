@@ -1,4 +1,4 @@
-import { IOptionList } from 'types';
+import { IOptionList } from 'types/global';
 
 export interface IDualSelect {
   formMethods?: any;

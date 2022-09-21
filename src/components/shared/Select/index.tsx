@@ -24,6 +24,7 @@ const Select = React.forwardRef(
       onBlur,
       value,
       label,
+      transformLabel = false,
       callback,
       filterName,
       withAction = false,
@@ -38,11 +39,20 @@ const Select = React.forwardRef(
     const { t } = useTranslation();
     const selectRef = useRef(null);
     const [isOpen, setIsOpen] = useState(false);
+
+    const transformedOption = transformLabel
+      ? options?.map((item: any) => ({
+          value: item?.value,
+          label: item?.label.replace('_', ' ').toLowerCase(),
+        }))
+      : options;
+
     const sortedOption = numeric
-      ? options
-      : options?.sort((a: any, b: any) => {
+      ? transformedOption
+      : transformedOption?.sort((a: any, b: any) => {
           return a.label.localeCompare(b.label);
         });
+
     const [filteredOption, setFilteredOption] = useState(sortedOption);
 
     const currentOption = sortedOption?.find((option) => option.value === value);
@@ -56,16 +66,16 @@ const Select = React.forwardRef(
     };
 
     const dropClass: string = classNames(styles.select__dropdown, {
-      [styles.select__dropdown__open]: isOpen && sortedOption.length > 1,
-      [styles.select__dropdown__disable]: sortedOption.length <= 1,
+      [styles.select__dropdown__open]: isOpen && sortedOption.length >= 1,
+      [styles.select__dropdown__disable]: sortedOption.length < 1,
     });
 
     const optionClass: string = classNames(styles.select__option, {
-      [styles.select__option__open]: isOpen && sortedOption.length > 1,
+      [styles.select__option__open]: isOpen && sortedOption.length >= 1,
     });
 
     const headerClass: string = classNames(styles.header, {
-      [styles.header__open]: isOpen && sortedOption.length > 1,
+      [styles.header__open]: isOpen && sortedOption.length >= 1,
       [styles.select__placeholder]: !currentOption?.label,
       [styles.header__error]: !!error,
     });
@@ -151,7 +161,7 @@ const Select = React.forwardRef(
                   onChange={handleSearch}
                   placeholder={placeholder}
                   autoComplete='none'
-                  readOnly={sortedOption.length <= 1}
+                  readOnly={sortedOption.length < 1}
                   defaultValue={props.defaultValue}
                   value={value ? currentOption?.label : ''}
                 />

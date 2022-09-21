@@ -1,11 +1,11 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import FileSaver from 'file-saver';
 
-import { Slice } from 'types';
+import { RootState, Slice } from 'types';
 import { accountsApi } from 'api';
 import { ExportType } from 'components/shared/Export/types';
 
-import { ITableFilter } from './../../types/api/index';
+import { ITableFilter, IPlatform, IPlatformApi } from './../../types/api/index';
 import { exportThunkType } from './types';
 
 export const getAccountList = createAsyncThunk(
@@ -22,7 +22,13 @@ export const getAccountList = createAsyncThunk(
     thunkAPI,
   ) => {
     try {
-      const response = await accountsApi.accountListRequest(credentials);
+      const response = await accountsApi.accountListRequest({
+        ...credentials,
+        filter: {
+          ...credentials.filter,
+          platformId: (thunkAPI.getState() as RootState).accounts.accountByIdPlatform,
+        },
+      });
 
       return {
         list: response.data.list,
@@ -74,13 +80,20 @@ export const getAccountTradesList = createAsyncThunk(
       order: string;
       search: string;
       id: string;
+      filter: any;
     },
     thunkAPI,
   ) => {
     const { id, ...restCredentials } = credentials;
 
     try {
-      const response = await accountsApi.accountTradesListRequest(id, restCredentials);
+      const response = await accountsApi.accountTradesListRequest(id, {
+        ...restCredentials,
+        filter: {
+          ...credentials.filter,
+          api: (thunkAPI.getState() as RootState).accounts.accountByIdPlatformType,
+        },
+      });
 
       return {
         list: response.data.list,
@@ -286,5 +299,9 @@ export const accountsTradesFilterClear = createAction<Partial<ITableFilter>>(
 export const accountsAlertsFilterClear = createAction<Partial<ITableFilter>>(
   'accountsAlertsFilterClear',
 );
+
+export const platformUpdate = createAction<Partial<IPlatform>>('accountsPlatform');
+
+export const platformApiTypeUpdate = createAction<Partial<IPlatformApi>>('accountsPlatformApi');
 
 export const removeAccountById = createAction('removeAccountByID');

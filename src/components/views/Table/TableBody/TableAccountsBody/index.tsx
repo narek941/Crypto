@@ -30,6 +30,13 @@ const TableAccountBody = ({
   );
 
   const [delID, setID] = useState<number | null>(null);
+  const [openIsNotSynced, setOpenIsNotSynced] = useState<boolean>(false);
+
+  const handleCloseSynced = () => setOpenIsNotSynced(false);
+  const handleOpenSynced = (e: any) => {
+    e.stopPropagation();
+    setOpenIsNotSynced(true);
+  };
 
   const handleClick = (
     id: any,
@@ -37,19 +44,31 @@ const TableAccountBody = ({
     startCapitalInBaseCurrency: any,
     baseCurrency: any,
     name: any,
+    syncStatus: string,
   ) =>
-    handleChartAction &&
-    handleChartAction({
-      id,
-      statistics,
-      startCapitalInBaseCurrency,
-      baseCurrency,
-      name,
-    });
+    handleChartAction && syncStatus === 'SYNCED'
+      ? handleChartAction({
+          id,
+          statistics,
+          startCapitalInBaseCurrency,
+          baseCurrency,
+          name,
+          syncStatus,
+        })
+      : setOpenIsNotSynced(true);
 
   const renderRows = rows.map(
     (
-      { id, startCapitalInBaseCurrency, name, createdAt, status, statistics, baseCurrency }: any,
+      {
+        id,
+        startCapitalInBaseCurrency,
+        name,
+        createdAt,
+        status,
+        statistics,
+        baseCurrency,
+        syncStatus,
+      }: any,
       index,
     ) => {
       const formattedDate = moment(createdAt).format('DD.MM.YYYY HH:mm:ss');
@@ -64,7 +83,14 @@ const TableAccountBody = ({
           tabIndex={id}
           key={index}
           onClick={() =>
-            handleClick(id, statistics, startCapitalInBaseCurrency, baseCurrency.name, name)
+            handleClick(
+              id,
+              statistics,
+              startCapitalInBaseCurrency,
+              baseCurrency.name,
+              name,
+              syncStatus,
+            )
           }
         >
           <TableCell className={styles.table__body__row__ceil} align='left'>
@@ -118,21 +144,35 @@ const TableAccountBody = ({
           <TableCell className={actionCellClassnames} align='left'>
             {handleChartAction && (
               <div className={styles.table__body__row__ceil__actions__chart}>
-                <Link to={`${Routes.Accounts}/analytics/${id}`}>
-                  <ChartIcon />
-                </Link>
+                {syncStatus === 'SYNCED' ? (
+                  <Link to={`${Routes.Accounts}/analytics/${id}`}>
+                    <ChartIcon />
+                  </Link>
+                ) : (
+                  <div onClick={(e) => handleOpenSynced(e)}>
+                    <ChartIcon />
+                  </div>
+                )}
                 <span className={tooltipClasses}>Account analytics</span>
               </div>
             )}
-
-            <Link
-              to={`${Routes.EditAccount}/${id}`}
-              className={styles.table__body__row__ceil__actions__setting}
-            >
-              <SettingIcon />
-              <span className={tooltipClasses}>Account settings</span>
-            </Link>
-
+            {syncStatus === 'SYNCED' ? (
+              <Link
+                to={`${Routes.EditAccount}/${id}`}
+                className={styles.table__body__row__ceil__actions__setting}
+              >
+                <SettingIcon />
+                <span className={tooltipClasses}>Account settings</span>
+              </Link>
+            ) : (
+              <div
+                onClick={(e) => handleOpenSynced(e)}
+                className={styles.table__body__row__ceil__actions__setting}
+              >
+                <SettingIcon />
+                <span className={tooltipClasses}>Account settings</span>
+              </div>
+            )}
             <BlockAction
               id={id}
               status={status}
@@ -146,9 +186,13 @@ const TableAccountBody = ({
               <div
                 className={styles.table__body__row__ceil__actions__bin}
                 onClick={(e) => {
-                  e.stopPropagation();
-                  setID(id);
-                  toggleAlertOpen && toggleAlertOpen();
+                  if (syncStatus === 'SYNCED') {
+                    e.stopPropagation();
+                    setID(id);
+                    toggleAlertOpen && toggleAlertOpen();
+                  } else {
+                    handleOpenSynced(e);
+                  }
                 }}
               >
                 <BinIcon />
@@ -171,6 +215,12 @@ const TableAccountBody = ({
         handleAction={handleDelete}
         type={'DELETE'}
         id={delID}
+      />
+      <Alert
+        open={openIsNotSynced}
+        handleClose={handleCloseSynced}
+        type={'SYNCING'}
+        isActionIsDone={true}
       />
     </tbody>
   );
