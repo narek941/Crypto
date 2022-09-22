@@ -9,6 +9,8 @@ export const selectAdmin = (state: RootState): AdminSliceState => state.admin;
 export const selectRole = createSelector(selectAdmin, (admin) => admin.role);
 export const selectAdminError = createSelector(selectAdmin, (admin) => admin.error);
 export const selectAdminLoading = createSelector(selectAdmin, (admin) => admin.loading);
+export const selectSynced = createSelector(selectAdmin, (admin) => admin.isSynced);
+
 export const selectTwoFactorAdminEnabled = createSelector(
   selectAdmin,
   (admin) => admin.twoFactorAdminEnabled,

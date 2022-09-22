@@ -10,6 +10,8 @@ import { useAppDispatch, useAppSelector } from 'hooks';
 import { Doughnut } from 'components';
 import { AccountAnalyticsChartColor } from 'constants/charts';
 
+import { AccountTabType } from '../Table/TableToolbar/types';
+
 import styles from './Modal.module.scss';
 import { IModalProps } from './types';
 
@@ -20,6 +22,8 @@ const Modal = ({
   modalList,
   baseCurrency,
   accountName,
+  exchangePlatform,
+  syncStatus,
 }: IModalProps): JSX.Element => {
   const ref = useRef(null);
   const dispatch = useAppDispatch();
@@ -32,7 +36,6 @@ const Modal = ({
   const modalClass = classNames(styles.wrapper, {
     [styles.wrapper__open]: open,
   });
-  const accountByID = useAppSelector(accountsSelectors.selectAccountById);
 
   const handleClickOutside = (): void => setOpen(false);
 
@@ -54,11 +57,9 @@ const Modal = ({
     </div>
   ));
 
-  const platform = accountByID?.wallets?.[0]?.platform?.id;
-
   const renderPlatform = (platform: any) => {
     switch (platform) {
-      case 2:
+      case AccountTabType.futures:
         return (
           <>
             <BinanceFutureIcon className={styles.item__header__text__subtitle__platform__icon} />
@@ -66,7 +67,7 @@ const Modal = ({
           </>
         );
 
-      case 1:
+      case AccountTabType.spot:
         return (
           <>
             <BinanceSpotIcon className={styles.item__header__text__subtitle__platform__icon} />
@@ -87,7 +88,7 @@ const Modal = ({
           <div className={styles.item__header__text__subtitle}>
             <p>{accountName}</p>
             <p className={styles.item__header__text__subtitle__platform}>
-              {renderPlatform(platform)}
+              {renderPlatform(exchangePlatform)}
             </p>
           </div>
         </div>
@@ -146,9 +147,13 @@ const Modal = ({
             </div>
           )}
         </div>
-        <Link className={linkClass} to={`${Routes.Accounts}/analytics/${id}`}>
-          more details
-        </Link>
+        {syncStatus === 'SYNCED' ? (
+          <Link className={linkClass} to={`${Routes.Accounts}/analytics/${id}`}>
+            more details
+          </Link>
+        ) : (
+          <div className={linkClass}> more details</div>
+        )}
       </div>
     </div>
   );

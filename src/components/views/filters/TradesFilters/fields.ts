@@ -25,7 +25,7 @@ export const filterFormFields: FormField<keyof FilterFormShape> = {
     name: 'tradesPair',
     type: 'DualSelect',
     id: 'filterForm.tradesPair',
-    placeholder: 'Select Currency Pair',
+    placeholder: 'Select Symbol',
     tooltip: 'coin_pair_name',
   },
 

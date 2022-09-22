@@ -14,7 +14,7 @@ const openOrdersTable: TableHeaderRow[] = [
   {
     id: 'pair',
     value: 'coinsPair.name',
-    label: 'Pair',
+    label: 'Symbol',
   },
   {
     id: 'Side',

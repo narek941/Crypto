@@ -9,7 +9,7 @@ const ordersHistoryTable: TableHeaderRow[] = [
   {
     id: 2,
     value: 'coinsPair.name',
-    label: 'Pair',
+    label: 'Symbol',
   },
   {
     id: 3,

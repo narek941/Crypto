@@ -1,11 +1,12 @@
 import { RowsType } from '../../types';
 
 type ChartActionData = {
+  name: any;
   id: number;
   statistics: any;
-  startCapitalInBaseCurrency: any;
   baseCurrency: any;
-  name: any;
+  syncStatus: string;
+  startCapitalInBaseCurrency: any;
 };
 
 export interface ITableAccountBodyProps {

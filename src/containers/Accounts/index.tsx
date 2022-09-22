@@ -13,18 +13,19 @@ const Accounts = () => {
   const dispatch = useAppDispatch();
   const { list, totalCount, filter } = useSelector(accountsSelectors.selectAccountAccountsList);
   const { take, order, sort } = filter;
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const getAccounts = async () => {
       try {
-        await dispatch(accountsActions.getAccountList(filter)).unwrap();
-        setIsLoading(false);
+        // setIsLoading(true);
+        await dispatch(accountsActions.getAccountList(filter));
       } catch {
+        setIsLoading(false);
+      } finally {
         setIsLoading(false);
       }
     };
-
     getAccounts();
   }, [dispatch, filter, filter.filter]);
 

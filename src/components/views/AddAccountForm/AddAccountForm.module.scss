@@ -96,3 +96,8 @@
   // transform: translate(0, 100%);
   @extend %text-14;
 }
+
+.exchange {
+  text-transform: lowercase;
+  text-transform: capitalize;
+}

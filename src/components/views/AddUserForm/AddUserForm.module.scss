@@ -5,40 +5,41 @@
     margin-top: 32px;
 
     &__group {
-      @extend %flex-column;
       gap: 14px;
       width: 100%;
       margin: 0 auto;
       max-width: 420px;
+      margin-bottom: 220px;
+      @extend %flex-column;
 
       &__header {
-        @extend %text-20;
-        margin-bottom: 32px;
         color: var(--font);
+        margin-bottom: 32px;
+        @extend %text-20;
       }
       &__button {
-        @extend %flex-end;
         gap: 24px;
         text-transform: capitalize;
+        @extend %flex-end;
       }
       &__edit {
-        @extend %flex-end;
         gap: 24px;
         margin-top: 16px;
         text-transform: capitalize;
+        @extend %flex-end;
 
         &__cancel {
           padding: 0;
           color: var(--cancel);
-          @extend %text-14-bold;
           text-transform: capitalize;
+          @extend %text-14-bold;
         }
         &__save {
-          color: #004f33;
-          border: none;
           padding: 0;
-          background-color: transparent;
+          border: none;
+          color: #004f33;
           max-width: fit-content;
+          background-color: transparent;
           @extend %text-14-bold;
         }
       }

@@ -8,7 +8,7 @@ const tradesTable: TableHeaderRow[] = [
   },
   {
     id: 2,
-    label: 'Currency pair',
+    label: 'Symbol',
     value: 'coinsPair.name',
   },
   {

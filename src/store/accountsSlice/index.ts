@@ -12,6 +12,8 @@ const internalInitialState: AccountsSliceState = {
   coins: [],
   allAccountsList: [],
   accountById: {},
+  accountByIdPlatform: '1',
+  accountByIdPlatformType: 'SPOT',
   accountAssetChart: [],
   accountTradingPairsChart: [],
   accountCapitalChart: [],
@@ -31,7 +33,14 @@ const internalInitialState: AccountsSliceState = {
   trades: {
     totalCount: 0,
     list: [],
-    filter: { skip: 0, take: 10, sort: 'tradeTime', order: 'DESC', search: '', filter: {} },
+    filter: {
+      skip: 0,
+      take: 10,
+      sort: 'tradeTime',
+      order: 'DESC',
+      search: '',
+      filter: {},
+    },
   },
   alerts: {
     totalCount: 0,
@@ -132,12 +141,14 @@ const accountsSlice = createSlice({
       state.accountsList.filter = { ...filter, ...action.payload };
       state.accountsList.filter.filter = { ...filter.filter, ...action.payload.filter };
     });
+
     builder.addCase(accountsThunks.accountsTradesFilterUpdate, (state, action) => {
       state.trades.filter.skip = 0;
       const filter = state.trades.filter;
       state.trades.filter = { ...filter, ...action.payload };
       state.trades.filter.filter = { ...filter.filter, ...action.payload.filter };
     });
+
     builder.addCase(accountsThunks.accountsAlertsFilterUpdate, (state, action) => {
       state.alerts.filter.skip = 0;
       const filter = state.alerts.filter;
@@ -155,6 +166,17 @@ const accountsSlice = createSlice({
     builder.addCase(accountsThunks.accountsFilterClear, (state, action) => {
       state.accountsList.filter.skip = 0;
       state.accountsList.filter.filter = action.payload;
+    });
+    builder.addCase(accountsThunks.platformUpdate, (state, action) => {
+      state.accountByIdPlatform = action.payload?.platform;
+      if (action.payload?.platform === '2') {
+        state.accountByIdPlatformType = 'DAPI';
+      } else {
+        state.accountByIdPlatformType = 'SPOT';
+      }
+    });
+    builder.addCase(accountsThunks.platformApiTypeUpdate, (state, action) => {
+      state.accountByIdPlatformType = action.payload?.api;
     });
 
     builder.addMatcher(

@@ -22,6 +22,7 @@ const AddNewAccount: React.FC = () => {
   const id = Number(accountId);
   const role = useSelector(authSelectors.selectRole);
   const tradingPairs = useAppSelector(adminSelectors.selectTradingPairs);
+  const isSynced = useAppSelector(adminSelectors.selectSynced);
 
   const handleSubmit: SubmitHandler<AddAccountFormShape> = async (values) => {
     const body = parseBody.parseAccountBody(values, tradingPairs);
@@ -51,7 +52,7 @@ const AddNewAccount: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (role !== RoleType.ADMIN) {
+  if (role !== RoleType.ADMIN || !isSynced) {
     return <Navigate to={Routes.Accounts} replace />;
   }
 

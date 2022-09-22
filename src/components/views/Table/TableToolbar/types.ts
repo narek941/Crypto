@@ -12,6 +12,16 @@ export enum AccountTabType {
   futures = 'futures',
 }
 
+export enum FutureTabType {
+  DAPI = 'DAPI',
+  FAPI = 'FAPI',
+}
+
+export enum FutureType {
+  USDT = 'USDT-M',
+  COIN = 'COIN-M',
+}
+
 export enum ActionType {
   USERS = 'users',
   ACCOUNTS = 'accounts',

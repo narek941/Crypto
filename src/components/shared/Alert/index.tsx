@@ -4,8 +4,15 @@ import classNames from 'classnames';
 import styles from './Alert.module.scss';
 import { AlertProps } from './types';
 
-const Alert = ({ open, handleClose, handleAction, id, type }: AlertProps) => {
-  const [actionIsDone, setActionIsDone] = useState<boolean>(false);
+const Alert = ({
+  open,
+  handleClose,
+  handleAction,
+  id,
+  type,
+  isActionIsDone = false,
+}: AlertProps) => {
+  const [actionIsDone, setActionIsDone] = useState<boolean>(isActionIsDone);
 
   const popUpClasses = classNames(styles.wrapper, { [styles.wrapper__open]: open });
 
@@ -21,7 +28,14 @@ const Alert = ({ open, handleClose, handleAction, id, type }: AlertProps) => {
           question: 'Are you sure you want to block this user?',
           answer: `You successfully unblocked account!`,
         };
-
+      case 'SYNCING':
+        return {
+          answer: `Synchronization of account is not finished yet...`,
+        };
+      case 'SYNCING_ADD':
+        return {
+          answer: `You can’t add new account because synchronization of account is not finished yet...`,
+        };
       default:
         return {
           question: 'Are you sure you want to unblock this user?',
@@ -31,7 +45,7 @@ const Alert = ({ open, handleClose, handleAction, id, type }: AlertProps) => {
   };
 
   const handleDeleteClick = async () => {
-    if (id) {
+    if (id && handleAction) {
       await handleAction(id);
       setActionIsDone(true);
     }
@@ -39,14 +53,14 @@ const Alert = ({ open, handleClose, handleAction, id, type }: AlertProps) => {
 
   const handleContinueClick = (e: SyntheticEvent) => {
     handleClose(e);
-    setActionIsDone(false);
+    !isActionIsDone && setActionIsDone(false);
   };
 
   return (
     <div className={popUpClasses}>
       <div className={styles.popup}>
         <p className={styles.popup__header}>
-          {!actionIsDone ? renderText().question : renderText().answer}
+          {!actionIsDone && !isActionIsDone ? renderText().question : renderText().answer}
         </p>
         <div className={styles.popup__action}>
           {!actionIsDone ? (

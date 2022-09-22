@@ -3,4 +3,4 @@ export const phoneRegExp =
 
 export const passwordRegExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 
-export const phoneFormat = '+#### ### ## ##';
+export const phoneFormat = '+##### ### ## ##';

@@ -11,6 +11,7 @@ const internalInitialState: AdminSliceState = {
   role: '',
   error: null,
   loading: false,
+  isSynced: false,
   twoFactorAdminEnabled: false,
   list: [],
   coins: [],
@@ -102,6 +103,10 @@ const adminSlice = createSlice({
       state.tradingPairs = action.payload.tradingPairs;
       state.error = null;
       state.loading = false;
+    });
+
+    builder.addCase(adminThunks.getSyncStatus.fulfilled, (state, action) => {
+      state.isSynced = action.payload.isSynced;
     });
 
     builder.addCase(adminThunks.userFilterClear, (state, action) => {

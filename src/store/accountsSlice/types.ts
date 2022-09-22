@@ -12,6 +12,8 @@ export type AccountsSliceState = {
   accountTradingPairsChart: any[];
   accountCapitalChart: any[];
   accountPerformanceChart: any[];
+  accountByIdPlatform: any;
+  accountByIdPlatformType: any;
   accountsList: {
     totalCount: number;
     list: any[];

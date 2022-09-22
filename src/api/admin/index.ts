@@ -56,3 +56,5 @@ export const getUserByIdRequest = (id: number) => client.get(`/admin/users/${id}
 export const getCoinsRequest = () => client.get('/admin/exchange/1/supported-cryptocurrencies');
 
 export const getTradingPairsRequest = () => client.get('/admin/exchange/1/allowed-trading-pairs');
+
+export const getSyncStatusRequest = () => client.get('/admin/accounts/is-accounts-sync');

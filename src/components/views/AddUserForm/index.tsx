@@ -121,7 +121,6 @@ const AddUserForm = ({ onClick, isEditable = false }: IAddUser) => {
             />
             {accountWatch.usersAccountType == RoleType.VIEWER && accountsOptions && (
               <MultipleSelect
-                withAction={true}
                 formMethods={formMethods}
                 options={accountsOptions}
                 defaultValues={defaultMultipleValue}

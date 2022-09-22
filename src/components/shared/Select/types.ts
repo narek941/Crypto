@@ -21,6 +21,7 @@ export interface ISelect {
   multiple?: boolean;
   filterName?: string;
   withAction?: boolean;
+  transformLabel: boolean;
   closed?: boolean;
   withClear?: boolean;
   numeric: boolean;

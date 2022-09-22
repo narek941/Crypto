@@ -22,9 +22,11 @@ const ProtectedRoute = ({ children }: any) => {
   if (!token) {
     return <Navigate to={Routes.Login} replace />;
   }
+
   if (token && !personalInfo) {
     dispatch(userInfoRequest({}));
   }
+
   if (personalInfo?.status === StatusType.BLOCKED || personalInfo?.status === StatusType.DELETED) {
     dispatch(authActions.signOut());
     return <Navigate to={Routes.Login} replace />;

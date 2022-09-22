@@ -16,9 +16,9 @@ import '../../../i18';
 
 const SignInForm: React.FC = () => {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
 
   const loginError = useAppSelector(authSelectors.selectAuthError) as string;
-  const dispatch = useAppDispatch();
 
   const { formMethods, handleSubmit } = useForm<keyof SignInFormShape, SignInFormShape>({
     schemaKeys: signInSchemaKeys,

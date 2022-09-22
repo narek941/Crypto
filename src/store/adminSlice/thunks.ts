@@ -323,6 +323,21 @@ export const getExchangeList = createAsyncThunk(`${Slice.Admin}/exchange`, async
   }
 });
 
+export const getSyncStatus = createAsyncThunk(
+  `${Slice.Admin}/accounts/is-accounts-sync`,
+  async (_, thunkAPI) => {
+    try {
+      const response = await adminApi.getSyncStatusRequest();
+      // eslint-disable-next-line no-console
+      return {
+        isSynced: response.data,
+      };
+    } catch {
+      return thunkAPI.rejectWithValue({ error: '* Incorrect' });
+    }
+  },
+);
+
 export const removeUserById = createAction('removeUserByID');
 export const userFilterClear = createAction<Partial<ITableFilter>>('userFilterClear');
 export const usersFilterUpdate = createAction<Partial<ITableFilter>>('usersFilter');

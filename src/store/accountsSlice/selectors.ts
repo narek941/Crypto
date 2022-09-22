@@ -13,6 +13,14 @@ export const selectAllAccountList = createSelector(
 );
 
 export const selectAccountById = createSelector(selectAccounts, (accounts) => accounts.accountById);
+export const selectAccountByIdPlatform = createSelector(
+  selectAccounts,
+  (accounts) => accounts.accountByIdPlatform,
+);
+export const selectAccountByIdPlatformType = createSelector(
+  selectAccounts,
+  (accounts) => accounts.accountByIdPlatformType,
+);
 export const selectAccountLoading = createSelector(selectAccounts, (accounts) => accounts.loading);
 export const selectAccountCoins = createSelector(selectAccounts, (accounts) => accounts.coins);
 export const selectAccountAssetChartData = createSelector(

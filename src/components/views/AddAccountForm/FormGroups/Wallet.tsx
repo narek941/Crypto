@@ -31,7 +31,8 @@ const AddAccountForm = ({ formMethods }: any) => {
               withAction={false}
               error={formMethods.formState.errors.exchange?.message}
               withClear={false}
-              option={exchangeOptions}
+              options={exchangeOptions}
+              transformLabel={true}
             />
           )}
         />

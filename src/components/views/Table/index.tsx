@@ -1,5 +1,6 @@
 import React, { MouseEvent, useCallback, useMemo, useState } from 'react';
 import moment from 'moment';
+import { useSearchParams } from 'react-router-dom';
 
 import { EmptyData } from 'components';
 import { wrapWithBaseCurrency } from 'utils';
@@ -38,12 +39,15 @@ const Table = ({
   const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
   const [openChart, setOpenChart] = useState(false);
+  const [searchParams] = useSearchParams();
+
   const [selectedAccountData, setSelectedAccountData] = useState<SelectedAccount>({
     id: null,
     statistics: null,
     startCapitalInBaseCurrency: null,
     baseCurrency: undefined,
     name: '',
+    syncStatus: '',
   });
 
   const toggleAlertOpen = useCallback(() => setOpen(!open), [open]);
@@ -237,10 +241,11 @@ const Table = ({
       </div>
       <Modal
         accountName={selectedAccountData?.name}
-        exchangePlatform='Binance Futures'
+        exchangePlatform={searchParams.get('tab') || 'spot'}
         open={openChart}
         id={selectedAccountData.id}
         setOpen={setOpenChart}
+        syncStatus={selectedAccountData.syncStatus}
         baseCurrency={selectedAccountData?.baseCurrency}
         modalList={[
           {
