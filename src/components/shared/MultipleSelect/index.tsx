@@ -110,11 +110,16 @@ const handleCancel = (props: any) => {
   props.clearValue();
 };
 
-const handleClear = (props: any) => {
-  props.clearValue();
+const handleClear = (props: any, e: any) => {
+  e.stopPropagation();
+  e.preventDefault();
+
   if (props.selectProps?.customProps?.callback) {
     props.selectProps?.customProps?.callback(props.selectProps?.customProps?.filterName, null);
   }
+  // eslint-disable-next-line no-console
+  console.log(props, e, e.isPropagationStopped, 'aa');
+  props.clearValue();
 };
 
 const handleSelectForAction = ({ selectProps, getValue }: any) => {
@@ -138,18 +143,17 @@ const handleSelectAll = (props: any) => {
 };
 
 const ClearIndicator = (props: ClearIndicatorProps<any, true>) => (
-  <div className={styles.clear} onClick={() => handleClear(props)}>
+  <div className={styles.clear} onClick={(e) => handleClear(props, e)}>
     <CloseIcon />
   </div>
 );
 
-const DropdownIndicator = (props: DropdownIndicatorProps<any, true>) => {
-  return (
-    <div className={styles.icon} {...props}>
-      <DropDownIcon />
-    </div>
-  );
-};
+const DropdownIndicator = (props: DropdownIndicatorProps<any, true>) => (
+  <div className={styles.icon} {...props}>
+    <DropDownIcon />
+  </div>
+);
+
 const MultiValueRemove = (props: any) => {
   const handleItemClick = () => {
     if (props.selectProps?.customProps?.callback) {
