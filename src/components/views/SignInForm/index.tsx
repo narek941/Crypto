@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { useTranslation } from 'react-i18next';
 import { SubmitHandler } from 'react-hook-form';
 
-import { Button, Checkbox, Input } from 'components';
+import { Button, Input } from 'components';
 import { FormWrapper, FormGroup } from 'components/forms';
 import { authActions, authSelectors } from 'store/authSlice';
 import { useAppDispatch, useAppSelector, useForm } from 'hooks';
@@ -24,15 +24,11 @@ const SignInForm: React.FC = () => {
     schemaKeys: signInSchemaKeys,
   });
 
-  const handleSignIn: SubmitHandler<SignInFormShape> = async ({
-    login_email,
-    login_password,
-    login_rememberMe,
-  }) => {
+  const handleSignIn: SubmitHandler<SignInFormShape> = async ({ login_email, login_password }) => {
     const formValues = {
       email: login_email,
       password: login_password,
-      rememberMe: login_rememberMe,
+      rememberMe: true,
       deviceToken: uuidv4(),
     };
     dispatch(authActions.signIn(formValues));
@@ -55,7 +51,7 @@ const SignInForm: React.FC = () => {
             className={styles.signIn__form__group__input}
             error={formMethods.formState.errors.login_password?.message || loginError}
           />
-
+          {/* 
           <Checkbox
             error={null}
             color='primary'
@@ -63,10 +59,10 @@ const SignInForm: React.FC = () => {
             {...signInFormFields.login_rememberMe}
             {...formMethods.register('login_rememberMe')}
             className={styles.signIn__form__group__checkbox}
-          />
+          /> */}
           <div className={styles.signIn__form__group__button}>
             <Button type='submit' color='primary' size='s'>
-              Login
+              {t('login')}
             </Button>
           </div>
         </>

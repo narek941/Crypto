@@ -20,7 +20,19 @@ import { IDateRangePicker } from './types';
 
 const DateRangePicker = React.forwardRef<IDateRangePicker, any>(
   (
-    { placeholder, formMethods, name, callback, filterName, clearAll, closed, tooltip },
+    {
+      placeholder,
+      formMethods,
+      name,
+      callback,
+      filterName,
+      clearAll,
+      closed,
+      tooltip,
+      label,
+      labelClassName,
+      months = 2,
+    },
     ref: any,
   ) => {
     const defaultValue = {
@@ -45,6 +57,8 @@ const DateRangePicker = React.forwardRef<IDateRangePicker, any>(
     const headerTextClass = classNames({
       [styles.calendar__header__placeholder]: !state.startDate,
     });
+
+    const labelClasses = classNames(styles.calendar__label, labelClassName);
 
     const calendarWrapperClass = classNames(styles.calendar__wrapper, {
       [styles.calendar__wrapper__open]: !isElementPositionRight && openCalendar,
@@ -142,6 +156,9 @@ const DateRangePicker = React.forwardRef<IDateRangePicker, any>(
 
     return (
       <div className={styles.calendar} ref={customRef}>
+        <label htmlFor={name} className={labelClasses}>
+          {label}
+        </label>
         <div className={styles.calendar__header} role='button' onClick={toggleCalendar}>
           <Tooltip followCursor={true} placement='bottom' title={t(tooltip)}>
             <span className={headerTextClass}>{text}</span>
@@ -157,7 +174,7 @@ const DateRangePicker = React.forwardRef<IDateRangePicker, any>(
             render={() => (
               <DateRange
                 ref={ref}
-                months={2}
+                months={months}
                 ranges={[state]}
                 weekStartsOn={1}
                 showPreview={false}

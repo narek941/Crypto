@@ -41,8 +41,7 @@ const TableToolbar = ({ linkText, linkTo, action }: ITableToolbarProps): JSX.Ele
 
   const handleCreateAccount = async (to: any) => {
     const { isSynced } = await dispatch(adminActions.getSyncStatus()).unwrap();
-    // eslint-disable-next-line no-console
-    console.log(isSynced);
+
     if (!isSynced) {
       navigate(to);
     } else {
@@ -56,9 +55,10 @@ const TableToolbar = ({ linkText, linkTo, action }: ITableToolbarProps): JSX.Ele
 
   useEffect(() => {
     setFilterVisible(false);
-    const platformId = searchParams.get('tab') === AccountTabType.futures ? '2' : '1';
+    const platformId =
+      accountsTab?.find((item: any) => searchParams?.get('tab') === item?.id)?.platformId || 1;
     dispatch(accountsActions.platformUpdate({ platform: platformId }));
-    dispatch(accountsActions.accountsFilterUpdate({ filter: { platformId } }));
+    // dispatch(accountsActions.accountsFilterUpdate({ filter: { platformId } }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams.get('tab')]);
 
@@ -79,7 +79,7 @@ const TableToolbar = ({ linkText, linkTo, action }: ITableToolbarProps): JSX.Ele
           <div className={styles.tabs}>
             {accountsTab.map(({ id, name, Icon }) => (
               <Tab
-                selectedTab={searchParams.get('tab') || AccountTabType.spot}
+                selectedTab={searchParams.get('tab') || AccountTabType.BINANCE}
                 handleChange={handleTabUpdateChange}
                 id={id}
                 name={name}

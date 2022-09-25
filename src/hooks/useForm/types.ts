@@ -91,6 +91,11 @@ export type FormFieldNames =
   | 'userEmail'
   | 'confirmPassword'
   | 'alertName'
+  | 'transactionType'
+  | 'coinName'
+  | 'amount'
+  | 'time'
+  | 'fees'
   | 'usersAccountType';
 
 export type FieldShapeLookup<K extends FormFieldNames> = {

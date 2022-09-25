@@ -7,7 +7,7 @@ export const createOptions = (data: IOptionData[]): IOptionList[] => {
   const options = useMemo(
     () =>
       data.map((item) => ({
-        label: item.name,
+        label: item.name.replace('_', ' '),
         value: item.id,
       })),
     [data],

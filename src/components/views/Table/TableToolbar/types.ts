@@ -8,8 +8,9 @@ export interface ITableToolbarProps {
 }
 
 export enum AccountTabType {
-  spot = 'spot',
-  futures = 'futures',
+  BINANCE = 'BINANCE',
+  BINANCE_FUTURES_USDTM = 'BINANCE_FUTURES_USDTM',
+  BINANCE_FUTURES_COINM = 'BINANCE_FUTURES_COINM',
 }
 
 export enum FutureTabType {

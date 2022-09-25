@@ -2,9 +2,12 @@ import React, { HTMLInputTypeAttribute } from 'react';
 
 export interface IInputProps {
   value?: any;
+  onBlur?: any;
   name?: string;
+  onFocus?: any;
+  onChange?: any;
   label?: string;
-  error?: string | boolean;
+  defaultValue?: any;
   isSmall?: boolean;
   className?: string;
   disabled?: boolean;
@@ -12,12 +15,9 @@ export interface IInputProps {
   haveRightIcon?: boolean;
   innerClassName?: string;
   labelClassName?: string;
+  error?: string | boolean;
   isDisabledError?: boolean;
   type?: HTMLInputTypeAttribute;
   RightIcon?: React.FC<React.SVGProps<SVGSVGElement>>;
   RightToggledIcon?: React.FC<React.SVGProps<SVGSVGElement>>;
-  onChange?: any;
-  onFocus?: any;
-  onBlur?: any;
-  defaultValue?: any;
 }

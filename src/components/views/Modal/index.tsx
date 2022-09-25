@@ -3,7 +3,12 @@ import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 
 import { Routes } from 'types';
-import { BinanceFutureIcon, BinanceSpotIcon, CloseModalIcon } from 'assets/icons';
+import {
+  BinanceFutureCoinIcon,
+  BinanceFutureIcon,
+  BinanceSpotIcon,
+  CloseModalIcon,
+} from 'assets/icons';
 import { useOnClickOutside } from 'hooks';
 import { accountsActions, accountsSelectors } from 'store/accountsSlice';
 import { useAppDispatch, useAppSelector } from 'hooks';
@@ -59,19 +64,28 @@ const Modal = ({
 
   const renderPlatform = (platform: any) => {
     switch (platform) {
-      case AccountTabType.futures:
+      case AccountTabType.BINANCE_FUTURES_USDTM:
         return (
           <>
             <BinanceFutureIcon className={styles.item__header__text__subtitle__platform__icon} />
-            <span>Binance Futures</span>
+            <span>USDT-M</span>
           </>
         );
 
-      case AccountTabType.spot:
+      case AccountTabType.BINANCE:
         return (
           <>
             <BinanceSpotIcon className={styles.item__header__text__subtitle__platform__icon} />
             <span>Binance Spot</span>
+          </>
+        );
+      case AccountTabType.BINANCE_FUTURES_COINM:
+        return (
+          <>
+            <BinanceFutureCoinIcon
+              className={styles.item__header__text__subtitle__platform__icon}
+            />
+            <span>COIN-M</span>
           </>
         );
 

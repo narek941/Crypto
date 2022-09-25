@@ -34,6 +34,15 @@
       @extend %header-18;
     }
 
+    &__name {
+      margin-top: 24px;
+      max-width: 250px;
+
+      &__title {
+        @extend %header-18;
+      }
+    }
+
     &__subtitle {
       @extend %text-16-bold;
       margin-top: 16px;
@@ -102,6 +111,7 @@
       &__button {
         gap: 4px;
         @extend %flex-align;
+        cursor: pointer;
 
         &__wrapper {
           gap: 24px;
@@ -112,11 +122,26 @@
         &__text {
           color: var(--input-border);
           text-transform: uppercase;
-        }
 
-        svg path {
-          fill: var(--input-border);
+          &__disable {
+            color: white;
+          }
         }
+        &__icon {
+          path {
+            fill: var(--input-border);
+          }
+
+          &__disable {
+            path {
+              fill: white;
+            }
+          }
+        }
+      }
+
+      &__download {
+        @extend %flex-end;
       }
     }
   }
