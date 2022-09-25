@@ -20,22 +20,23 @@ const Input = React.forwardRef<any, IInputProps>(
     {
       name,
       error,
+      label,
+      value,
+      onBlur,
+      isSmall,
+      onFocus,
+      onChange,
       disabled,
-      isDisabledError = false,
-      RightIcon = EyeOpenIcon,
-      RightToggledIcon = EyeCloseIcon,
       placeholder,
       type = 'text',
       className = '',
       defaultValue,
+      labelClassName,
       innerClassName = '',
       haveRightIcon = false,
-      label,
-      isSmall,
-      onChange,
-      value,
-      onFocus,
-      onBlur,
+      isDisabledError = false,
+      RightIcon = EyeOpenIcon,
+      RightToggledIcon = EyeCloseIcon,
       ...rest
     },
     ref,
@@ -50,6 +51,7 @@ const Input = React.forwardRef<any, IInputProps>(
       [styles.container__small]: isSmall,
     });
 
+    const labelClasses = classNames(styles.container__inner__label, labelClassName);
     const inputInnerClasses = classNames(styles.container__inner, {
       [innerClassName]: innerClassName,
       [styles.container__inner__error]: !!error,
@@ -75,7 +77,7 @@ const Input = React.forwardRef<any, IInputProps>(
     return (
       <>
         <div className={inputInnerClasses}>
-          <label htmlFor={name} className={styles.container__inner__label}>
+          <label htmlFor={name} className={labelClasses}>
             {label}
           </label>
           <div className={styles.input}>

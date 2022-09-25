@@ -12,7 +12,7 @@ export type ExportFormShape = {
 
 export enum ExportType {
   pdf = 'pdf',
-  cvc = 'csv',
+  cvc = 'cvc',
 }
 
 export interface DateState {

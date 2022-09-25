@@ -38,13 +38,9 @@ const AccountsAnalytics = (): JSX.Element => {
 
   const handleExportSubmit = (credentials: any) => {
     if (credentials.type === ExportType.pdf) {
-      dispatch(
-        accountsActions.exportAccountTrades({ id, filename: 'account-stats', ...credentials }),
-      ).unwrap();
+      dispatch(accountsActions.exportAccountTrades({ id, ...credentials })).unwrap();
     } else {
-      dispatch(
-        accountsActions.exportAccountTrades({ id, filename: 'account-stats', ...credentials }),
-      ).unwrap();
+      dispatch(accountsActions.exportAccountTrades({ id, ...credentials })).unwrap();
     }
   };
 

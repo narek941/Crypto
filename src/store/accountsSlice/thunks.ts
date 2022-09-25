@@ -209,7 +209,7 @@ export const exportAccountTrades = createAsyncThunk(
   `${Slice.Accounts}/accounts/id/export/trades/`,
   async (
     credentials: {
-      filename: 'account-stats';
+      filename: string;
       fromDate: Date | string;
       toDate: Date | string;
       id: string;
@@ -224,10 +224,10 @@ export const exportAccountTrades = createAsyncThunk(
 
       if (type === ExportType.pdf) {
         const blob = new Blob([response.data], { type: exportThunkType.pdf });
-        FileSaver.saveAs(blob, 'filename');
+        FileSaver.saveAs(blob, restCredentials?.filename);
       } else {
         const csvData = new Blob([response.data], { type: exportThunkType.csv });
-        FileSaver.saveAs(csvData, 'filename');
+        FileSaver.saveAs(csvData, restCredentials?.filename);
       }
       return;
     } catch {

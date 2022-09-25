@@ -1,0 +1,44 @@
+.signIn {
+  position: relative;
+  overflow-y: auto;
+  &__form {
+    &__group {
+      gap: 14px;
+      margin: 0 auto;
+      min-width: 100%;
+
+      @extend %flex-column;
+
+      &__header {
+        color: var(--font);
+        margin-bottom: 18px;
+        @extend %text-20;
+      }
+
+      &__edit {
+        gap: 17px;
+        margin-top: 16px;
+        text-transform: capitalize;
+        @extend %flex-end;
+
+        &__cancel {
+          padding: 0;
+          border: none;
+          max-width: fit-content;
+          background-color: transparent;
+          @extend %text-14-bold;
+          color: var(--cancel);
+        }
+
+        &__save {
+          padding: 0;
+          border: none;
+          max-width: fit-content;
+          background-color: transparent;
+          @extend %text-14-bold;
+          color: var(--select-btn);
+        }
+      }
+    }
+  }
+}

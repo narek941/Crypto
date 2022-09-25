@@ -55,3 +55,26 @@
     @extend %flex-align;
   }
 }
+
+.portal {
+  min-width: 100vw;
+  min-height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  @extend %flex-center;
+
+  &__inner {
+    background-color: var(--background);
+    padding: 14px 24px 19px;
+    @extend %flex-center;
+    border: 1px solid var(--header-border);
+    backdrop-filter: blur(2px);
+    border-radius: 4px;
+    max-width: 400px;
+  }
+}
+
+.add_inflow {
+  margin-right: 19px;
+}

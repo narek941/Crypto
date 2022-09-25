@@ -12,6 +12,8 @@ import { ActionType } from 'components/views/Table/TableToolbar/types';
 const Accounts = () => {
   const dispatch = useAppDispatch();
   const { list, totalCount, filter } = useSelector(accountsSelectors.selectAccountAccountsList);
+  const currentPlatform = useSelector(accountsSelectors.selectAccountByIdPlatform);
+
   const { take, order, sort } = filter;
   const [isLoading, setIsLoading] = useState(false);
 
@@ -27,7 +29,7 @@ const Accounts = () => {
       }
     };
     getAccounts();
-  }, [dispatch, filter, filter.filter]);
+  }, [dispatch, filter, filter.filter, currentPlatform]);
 
   if (isLoading) {
     return <Loader />;

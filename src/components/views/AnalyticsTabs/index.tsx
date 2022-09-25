@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Paper, TableContainer, Tooltip } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import usePortal from 'react-useportal';
 
 import { accountAnalyticsTabs } from 'constants/index';
 import {
@@ -14,32 +14,22 @@ import {
   OrdersHistoryTable,
   AnalyticsAlertTable,
 } from 'components';
-import { BinanceFutureIcon, BinanceSpotIcon, FilterIcon } from 'assets/icons';
-import { accountsActions, accountsSelectors } from 'store/accountsSlice';
+import { AddInflowIcon, FilterIcon } from 'assets/icons';
+import { accountsActions } from 'store/accountsSlice';
 import { useAppDispatch } from 'hooks';
 
-import { FutureTabType } from '../Table/TableToolbar/types';
+import AddInflowForm from '../AddInflowForm';
 
 import styles from './AnalyticsTabs.module.scss';
 import { TabType } from './types';
 
 const AnalyticsTabs = (): JSX.Element => {
-  const exchangeTab = [
-    {
-      id: FutureTabType.DAPI,
-      Icon: BinanceSpotIcon,
-    },
-    {
-      id: FutureTabType.FAPI,
-      Icon: BinanceFutureIcon,
-    },
-  ];
-  const [showExchangeTab, setShowExchangeTab] = useState<boolean>(false);
+  const { openPortal, closePortal, isOpen, Portal } = usePortal();
+
   const dispatch = useAppDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
   const [openFilter, setOpenFilter] = useState<boolean>(false);
   const { t } = useTranslation();
-  const { platform } = useSelector(accountsSelectors.selectAccountByIdPlatform);
 
   const handleTabUpdateChange = (id: string) => {
     const type = searchParams.get('type') || '';
@@ -47,24 +37,20 @@ const AnalyticsTabs = (): JSX.Element => {
     setSearchParams({ tab: id, type });
   };
 
-  const handleExchangeTabUpdateChange = (id: string) => {
-    const tab = searchParams.get('tab') || '';
+  const handleFilter = () => setOpenFilter(!openFilter);
 
-    setSearchParams({ tab, type: id });
+  const handleAddInflow = (e: any) => {
+    isOpen ? closePortal(e) : openPortal(e);
   };
 
-  const handleFilter = () => setOpenFilter(!openFilter);
+  const handleInflowSubmit = (body: any) => {
+    // eslint-disable-next-line no-console
+    console.log(body);
+  };
 
   useEffect(() => {
     setOpenFilter(false);
 
-    const exchangeIsNeeded =
-      searchParams.get('tab') === TabType.history ||
-      searchParams.get('tab') === TabType.orders ||
-      searchParams.get('tab') === TabType.inflow ||
-      searchParams.get('tab') === TabType.trades;
-
-    setShowExchangeTab(platform === '2' && exchangeIsNeeded);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams.get('tab')]);
 
@@ -93,41 +79,41 @@ const AnalyticsTabs = (): JSX.Element => {
   };
 
   return (
-    <TableContainer component={Paper} className={styles.table}>
-      <div className={styles.tabs__wrapper}>
-        <div className={styles.tabs}>
-          {accountAnalyticsTabs.map(({ id, name }) => (
-            <Tab
-              selectedTab={searchParams.get('tab') || TabType.orders}
-              handleChange={handleTabUpdateChange}
-              id={id}
-              name={name}
-              key={id}
-            />
-          ))}
+    <>
+      <TableContainer component={Paper} className={styles.table}>
+        <div className={styles.tabs__wrapper}>
+          <div className={styles.tabs}>
+            {accountAnalyticsTabs.map(({ id, name }) => (
+              <Tab
+                selectedTab={searchParams.get('tab') || TabType.orders}
+                handleChange={handleTabUpdateChange}
+                id={id}
+                name={name}
+                key={id}
+              />
+            ))}
+          </div>
+          <div className={styles.toolbar__filter}>
+            {searchParams.get('tab') === TabType.inflow && (
+              <AddInflowIcon onClick={(e) => handleAddInflow(e)} className={styles.add_inflow} />
+            )}
+            <Tooltip followCursor={true} placement='bottom' title={t('filters')}>
+              <FilterIcon onClick={handleFilter} />
+            </Tooltip>
+          </div>
         </div>
-        <div className={styles.toolbar__filter}>
-          {showExchangeTab && (
-            <div className={styles.toolbar__exchange}>
-              {exchangeTab.map(({ id, Icon }) => (
-                <Tab
-                  selectedTab={searchParams.get('type') || FutureTabType.FAPI}
-                  handleChange={handleExchangeTabUpdateChange}
-                  id={id}
-                  key={id}
-                  Icon={Icon}
-                  withBorder={false}
-                />
-              ))}
+        {renderTable()}
+      </TableContainer>
+      {isOpen && (
+        <Portal>
+          <div className={styles.portal}>
+            <div className={styles.portal__inner}>
+              <AddInflowForm onClick={handleInflowSubmit} handleClose={closePortal} />
             </div>
-          )}
-          <Tooltip followCursor={true} placement='bottom' title={t('filters')}>
-            <FilterIcon onClick={handleFilter} />
-          </Tooltip>
-        </div>
-      </div>
-      {renderTable()}
-    </TableContainer>
+          </div>
+        </Portal>
+      )}
+    </>
   );
 };
 

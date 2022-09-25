@@ -1,6 +1,11 @@
 .calendar {
   position: relative;
 
+  &__label {
+    color: var(--font);
+    @extend %text-14;
+  }
+
   &__header {
     gap: 12px;
     cursor: pointer;

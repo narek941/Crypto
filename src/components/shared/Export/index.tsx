@@ -12,11 +12,11 @@ import { ExportIcon } from 'assets/icons';
 import { FormWrapper } from 'components/forms';
 import { useAppDispatch, useAppSelector, useForm, useOnClickOutside } from 'hooks';
 import { authSelectors } from 'store/authSlice';
-import { addDays } from 'utils';
-import { Menu } from 'components';
+import { Button, Input, Menu } from 'components';
 import periodOptions from 'constants/export';
 import { IAccountTradesFilterValue } from 'components/views/filters/TradesFilters/types';
 import { accountsActions } from 'store/accountsSlice';
+import exportVariantList from 'constants/export/exportVariantList';
 
 import styles from './Export.module.scss';
 import { exportSchemaKeys } from './fields';
@@ -55,6 +55,10 @@ const Export = ({ className, text = 'export', callback }: IExport): JSX.Element 
     maxFeesInBaseCurrency: null,
   });
   const [state, setState] = useState<DateState>(defaultValue);
+  const [name, setName] = useState<string>('');
+
+  const [format, setFormat] = useState<string>(ExportType.pdf);
+
   const [lastChange, setLastChange] = useState<number>(2);
   const { t } = useTranslation();
   const { formMethods } = useForm<keyof ExportFormShape, ExportFormShape>({
@@ -101,6 +105,10 @@ const Export = ({ className, text = 'export', callback }: IExport): JSX.Element 
     }
     startDay = moment(state.startDate).format('LL');
     endDay = moment(state.endDate).format('LL');
+  };
+
+  const handleInputChange = (e: any) => {
+    setName(e.target.value);
   };
 
   const handleOptions = (id: number) => {
@@ -173,6 +181,15 @@ const Export = ({ className, text = 'export', callback }: IExport): JSX.Element 
         <FormWrapper {...{ formMethods }} onSubmit={() => {}}>
           <div className={styles.export__popup} ref={customRef}>
             <h2 className={styles.export__popup__title}>{t('export_data')}</h2>
+            <div className={styles.export__popup__name}>
+              <Input
+                value={name}
+                onChange={handleInputChange}
+                label={t('enter_name')}
+                className={styles.export__popup__name__input}
+                labelClassName={styles.export__popup__name__title}
+              />
+            </div>
             <h3 className={styles.export__popup__subtitle}>{t('choose_date')}</h3>
             <div className={styles.export__popup__calendar__inner}>
               <div className={styles.export__popup__calendar__inner__input}>
@@ -232,32 +249,43 @@ const Export = ({ className, text = 'export', callback }: IExport): JSX.Element 
             </div>
             <div className={styles.export__popup__footer__text}>{t('choose_format')}</div>
             <div className={styles.export__popup__footer__button__wrapper}>
-              <div
-                className={styles.export__popup__footer__button}
+              {exportVariantList.map(({ id, type, label }) => (
+                <div
+                  key={id}
+                  className={styles.export__popup__footer__button}
+                  onClick={() => setFormat(type)}
+                >
+                  <ExportIcon
+                    className={classNames(styles.export__popup__footer__button__icon, {
+                      [styles.export__popup__footer__button__icon__disable]: format !== type,
+                    })}
+                  />
+                  <span
+                    className={classNames(styles.export__popup__footer__button__text, {
+                      [styles.export__popup__footer__button__text__disable]: format !== type,
+                    })}
+                  >
+                    {label}
+                  </span>
+                </div>
+              ))}
+            </div>
+            <div className={styles.export__popup__footer__download}>
+              <Button
                 onClick={() =>
                   callback({
-                    fromDate: moment(state.startDate).toISOString(),
-                    toDate: moment(state.endDate).toISOString(),
-                    type: ExportType.pdf,
+                    fromDate: moment.utc(state.startDate).toISOString(),
+                    toDate: moment.utc(state.endDate).toISOString(),
+                    type: format,
+                    filename: name,
                   })
                 }
+                disabled={name === ''}
+                color='secondary'
+                size='s'
               >
-                <ExportIcon />
-                <span className={styles.export__popup__footer__button__text}>CVC</span>
-              </div>
-              <div
-                className={styles.export__popup__footer__button}
-                onClick={() =>
-                  callback({
-                    fromDate: addDays(moment(state.startDate).toISOString(), 1),
-                    toDate: addDays(moment(state.endDate).toISOString(), 1),
-                    type: ExportType.cvc,
-                  })
-                }
-              >
-                <ExportIcon />
-                <span className={styles.export__popup__footer__button__text}>Pdf</span>
-              </div>
+                {t('download')}
+              </Button>
             </div>
           </div>
         </FormWrapper>
