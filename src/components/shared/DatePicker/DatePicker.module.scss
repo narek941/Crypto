@@ -17,6 +17,7 @@
     width: 100%;
     border: 1px solid transparent;
     background: var(--input-background);
+    min-width: 295px;
     @extend %flex-between;
 
     span {
@@ -42,24 +43,32 @@
 
   &__inner {
     padding: 16px;
-    color: var(--font);
-    background-color: var(--background);
+    color: var(--font) !important;
+    background-color: var(--background) !important;
+    border: 1px solid var(--header-border) !important;
+    border-radius: 4px;
+    filter: drop-shadow(var(--option-shadow));
   }
 
   &__wrapper {
     top: 0;
     display: none;
     z-index: 10000;
-    min-width: 100%;
+    width: 100%;
+    max-width: 406px;
     min-height: 100%;
     border-radius: 4px;
     position: absolute;
     white-space: nowrap;
     background-color: var(--background);
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 
     &__open {
       display: block;
+    }
+  }
+  &__arrow {
+    path {
+      fill: var(--font);
     }
   }
 }

@@ -63,11 +63,17 @@
   left: 0;
   top: 0;
   @extend %flex-center;
+  background-color: #08080806;
+
+  z-index: 1000000;
+  align-items: baseline;
 
   &__inner {
+    margin-top: 90px;
     background-color: var(--background);
     padding: 14px 24px 19px;
     @extend %flex-center;
+
     border: 1px solid var(--header-border);
     backdrop-filter: blur(2px);
     border-radius: 4px;
@@ -77,4 +83,7 @@
 
 .add_inflow {
   margin-right: 19px;
+  path {
+    fill: var(--font);
+  }
 }

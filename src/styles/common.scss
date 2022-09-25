@@ -417,3 +417,48 @@
 .MuiTableContainer-root {
   overflow-x: unset !important;
 }
+
+.react-calendar__navigation button {
+  color: var(--font);
+  min-width: 44px;
+  background: none;
+  font-size: 16px;
+  margin-top: 8px;
+}
+.react-calendar__navigation button:enabled:hover,
+.react-calendar__navigation button:enabled:focus {
+  background-color: unset;
+}
+.react-calendar__tile {
+  color: var(--font) !important;
+  width: 32px !important;
+  height: 32px !important;
+  padding: 0 !important;
+}
+
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus {
+  background-color: #6200ee !important;
+  border-radius: 50%;
+  color: var(--font);
+}
+
+.react-calendar__tile--active {
+  background-color: #6200ee !important;
+  border-radius: 50%;
+  color: var(--font);
+}
+.react-calendar__tile--now {
+  // color: var(--background);
+  background-color: transparent !important;
+
+  border-radius: 0 !important;
+  border: 1px solid #6200ee !important;
+}
+
+.react-calendar__month-view__days__day--weekend {
+  color: unset !important;
+}
+.react-calendar__month-view__days__day--neighboringMonth {
+  display: none !important;
+}

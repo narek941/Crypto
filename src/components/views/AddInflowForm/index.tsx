@@ -70,7 +70,18 @@ const AddInflowForm = ({ onClick, handleClose }: IAddInflow) => {
               {...formMethods.register('fees')}
             />
             <div className={styles.item}>
-              <DatePicker formMethods={formMethods} {...addInflowFormFields.time} months={1} />
+              <Controller
+                control={formMethods.control}
+                name={addInflowFormFields.time.name as any}
+                render={(field: any) => (
+                  <DatePicker
+                    field={field}
+                    formMethods={formMethods}
+                    {...addInflowFormFields.time}
+                    months={1}
+                  />
+                )}
+              />
             </div>
 
             <div className={styles.signIn__form__group__edit}>

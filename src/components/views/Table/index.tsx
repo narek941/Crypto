@@ -22,7 +22,7 @@ import TableUsersBody from './TableBody/TableUsersBody';
 import TableAlertsBody from './TableBody/TableAlertsBody';
 import TableAccountBody from './TableBody/TableAccountsBody';
 import { ITableProps, SelectedAccount } from './types';
-import { ActionType, OrderType } from './TableToolbar/types';
+import { AccountTabType, ActionType, OrderType } from './TableToolbar/types';
 
 const Table = ({
   take,
@@ -241,7 +241,7 @@ const Table = ({
       </div>
       <Modal
         accountName={selectedAccountData?.name}
-        exchangePlatform={searchParams.get('tab') || 'spot'}
+        exchangePlatform={searchParams.get('tab') || AccountTabType.BINANCE}
         open={openChart}
         id={selectedAccountData.id}
         setOpen={setOpenChart}
