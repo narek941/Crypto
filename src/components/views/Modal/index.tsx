@@ -161,7 +161,7 @@ const Modal = ({
             </div>
           )}
         </div>
-        {syncStatus === 'SYNCED' ? (
+        {syncStatus !== 'IMPORTING' ? (
           <Link className={linkClass} to={`${Routes.Accounts}/analytics/${id}`}>
             more details
           </Link>

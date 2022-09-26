@@ -46,7 +46,7 @@ const TableAccountBody = ({
     name: any,
     syncStatus: string,
   ) =>
-    handleChartAction && syncStatus === 'SYNCED'
+    handleChartAction && syncStatus !== 'IMPORTING'
       ? handleChartAction({
           id,
           statistics,
@@ -144,7 +144,7 @@ const TableAccountBody = ({
           <TableCell className={actionCellClassnames} align='left'>
             {handleChartAction && (
               <div className={styles.table__body__row__ceil__actions__chart}>
-                {syncStatus === 'SYNCED' ? (
+                {syncStatus !== 'IMPORTING' ? (
                   <Link to={`${Routes.Accounts}/analytics/${id}`}>
                     <ChartIcon />
                   </Link>
@@ -156,7 +156,7 @@ const TableAccountBody = ({
                 <span className={tooltipClasses}>Account analytics</span>
               </div>
             )}
-            {syncStatus === 'SYNCED' ? (
+            {syncStatus !== 'IMPORTING' ? (
               <Link
                 to={`${Routes.EditAccount}/${id}`}
                 className={styles.table__body__row__ceil__actions__setting}
@@ -186,7 +186,7 @@ const TableAccountBody = ({
               <div
                 className={styles.table__body__row__ceil__actions__bin}
                 onClick={(e) => {
-                  if (syncStatus === 'SYNCED') {
+                  if (syncStatus !== 'IMPORTING') {
                     e.stopPropagation();
                     setID(id);
                     toggleAlertOpen && toggleAlertOpen();
