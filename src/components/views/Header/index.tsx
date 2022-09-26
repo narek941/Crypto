@@ -3,7 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
-import { ArrowLeftIcon, AvatarIcon, BinanceFutureIcon, BinanceSpotIcon } from 'assets/icons';
+import {
+  ArrowLeftIcon,
+  AvatarIcon,
+  BinanceFutureCoinIcon,
+  BinanceFutureIcon,
+  BinanceSpotIcon,
+} from 'assets/icons';
 import { useOnClickOutside } from 'hooks';
 import { Popup } from 'components';
 import { accountsSelectors } from 'store/accountsSlice';
@@ -38,7 +44,7 @@ const Header = ({
         return (
           <>
             <BinanceFutureIcon className={styles.header__item__text__footer__platform__icon} />
-            <span>Binance Futures</span>
+            <span>Binance USDT-M</span>
           </>
         );
 
@@ -47,6 +53,13 @@ const Header = ({
           <>
             <BinanceSpotIcon className={styles.header__item__text__footer__platform__icon} />
             <span>Binance Spot</span>
+          </>
+        );
+      case 3:
+        return (
+          <>
+            <BinanceFutureCoinIcon className={styles.header__item__text__footer__platform__icon} />
+            <span>Binance Coin-M</span>
           </>
         );
 

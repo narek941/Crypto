@@ -33,6 +33,8 @@ export { ReactComponent as CloseModalIcon } from './close_modal.svg';
 export { ReactComponent as SkipToLastIcon } from './skip_to_last.svg';
 export { ReactComponent as BinanceSpotIcon } from './binance-spot.svg';
 export { ReactComponent as ArrowLeftIcon } from './arrow_left_big.svg';
+export { ReactComponent as ArrowLeft } from './Back.svg';
+
 export { ReactComponent as ChevronLeftIcon } from './chevron_left.svg';
 export { ReactComponent as SkipToFirstIcon } from './skip_to_first.svg';
 export { ReactComponent as AccountBlockIcon } from './account-lock.svg';
