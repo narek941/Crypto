@@ -21,3 +21,15 @@ export const parseAddUserError = (message: string): string | undefined | Record<
     }
   }
 };
+
+export const parsePlatformName = (message: string): string => {
+  if (message == 'Binance') {
+    return 'Binance';
+  } else if (message == 'BINANCE_FUTURES_USDTM') {
+    return 'Binance USDT-M';
+  } else if (message == 'BINANCE_FUTURES_COINM') {
+    return 'Binance COIN-M';
+  } else {
+    return message;
+  }
+};

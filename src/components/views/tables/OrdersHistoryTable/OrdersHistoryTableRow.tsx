@@ -10,7 +10,7 @@ const OrdersHistoryTableRow = ({ row }: any): JSX.Element => (
       {row?.originalId}
     </TableCell>
     <TableCell align='left' className={styles.ceil}>
-      {row?.coinsPair?.name}
+      {row?.symbol}
     </TableCell>
     <TableCell align='left' className={styles.ceil}>
       {row?.side}

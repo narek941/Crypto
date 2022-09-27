@@ -118,7 +118,7 @@ const TableAccountBody = ({
             {Number(statistics?.currentOpenProfitInPercent)}
           </TableCell>
           <TableCell className={styles.table__body__row__ceil} align='left'>
-            {Number(statistics?.currentOpenProfitInBaseCurrency)
+            {Number(statistics?.earnedCapitalInBaseCurrency)
               ? Number(statistics?.earnedCapitalInBaseCurrency).toFixed(8)
               : 0}{' '}
             {baseCurrency.name}

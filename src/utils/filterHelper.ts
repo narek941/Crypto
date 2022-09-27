@@ -13,6 +13,10 @@ export const ordersTypeOptions = [
   { label: 'Take profit', value: 'TAKE_PROFIT' },
   { label: 'Take profit limit', value: 'TAKE_PROFIT_LIMIT' },
   { label: 'Limit maker', value: 'LIMIT_MAKER' },
+  { label: 'Stop', value: 'STOP' },
+  { label: 'Stop market', value: 'STOP_MARKET' },
+  { label: 'Take profit market', value: 'TAKE_PROFIT_MARKET' },
+  { label: 'Trailing stop market', value: 'TRAILING_STOP_MARKET' },
 ];
 
 export const typeOptions = [

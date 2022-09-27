@@ -22,6 +22,7 @@ const AddNewAccount: React.FC = () => {
   const id = Number(accountId);
   const role = useSelector(authSelectors.selectRole);
   const tradingPairs = useAppSelector(adminSelectors.selectTradingPairs);
+  const { totalCount } = useAppSelector(adminSelectors.selectExchange);
 
   const handleSubmit: SubmitHandler<AddAccountFormShape> = async (values) => {
     const body = parseBody.parseAccountBody(values, tradingPairs);
@@ -39,7 +40,7 @@ const AddNewAccount: React.FC = () => {
   useEffect(() => {
     dispatch(adminActions.getCoins());
     dispatch(adminActions.getTradingPairs());
-    dispatch(adminActions.getExchangeList());
+    !totalCount && dispatch(adminActions.getExchangeList());
     if (id) {
       dispatch(accountsActions.getAccountById(id));
 
