@@ -27,7 +27,9 @@ import { TabType } from './types';
 
 const AnalyticsTabs = (): JSX.Element => {
   const { openPortal, closePortal, isOpen, Portal } = usePortal();
-  const platformId = useAppSelector(accountsSelectors.selectAccountByIdPlatform);
+  const accountByID = useAppSelector(accountsSelectors.selectAccountById);
+
+  const platformId = accountByID?.wallets?.[0]?.id;
   const dispatch = useAppDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
   const [openFilter, setOpenFilter] = useState<boolean>(false);
