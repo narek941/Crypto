@@ -15,8 +15,10 @@ import {
   AnalyticsAlertTable,
 } from 'components';
 import { AddInflowIcon, FilterIcon } from 'assets/icons';
-import { accountsActions } from 'store/accountsSlice';
-import { useAppDispatch } from 'hooks';
+import { accountsActions, accountsSelectors } from 'store/accountsSlice';
+import { useAppDispatch, useAppSelector } from 'hooks';
+import { parseBody } from 'utils';
+import { walletsActions } from 'store/walletsSlice';
 
 import AddInflowForm from '../AddInflowForm';
 
@@ -25,7 +27,7 @@ import { TabType } from './types';
 
 const AnalyticsTabs = (): JSX.Element => {
   const { openPortal, closePortal, isOpen, Portal } = usePortal();
-
+  const platformId = useAppSelector(accountsSelectors.selectAccountByIdPlatform);
   const dispatch = useAppDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
   const [openFilter, setOpenFilter] = useState<boolean>(false);
@@ -44,8 +46,9 @@ const AnalyticsTabs = (): JSX.Element => {
   };
 
   const handleInflowSubmit = (body: any) => {
-    // eslint-disable-next-line no-console
-    console.log(body);
+    const credentials = parseBody.parseInflowBody(body, platformId);
+    dispatch(walletsActions.createManualInflow({ walletId: platformId, ...credentials }));
+    closePortal();
   };
 
   useEffect(() => {

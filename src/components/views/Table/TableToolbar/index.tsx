@@ -56,7 +56,7 @@ const TableToolbar = ({ linkText, linkTo, action }: ITableToolbarProps): JSX.Ele
   useEffect(() => {
     setFilterVisible(false);
     const platformId =
-      accountsTab?.find((item: any) => searchParams?.get('tab') === item?.id)?.platformId || 1;
+      accountsTab?.find((item: any) => searchParams?.get('tab') == item?.id)?.platformId || 1;
     dispatch(accountsActions.platformUpdate({ platform: platformId }));
     // dispatch(accountsActions.accountsFilterUpdate({ filter: { platformId } }));
     // eslint-disable-next-line react-hooks/exhaustive-deps

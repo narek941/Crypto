@@ -8,6 +8,7 @@ import { accountsTable } from 'constants/index';
 import { accountsActions } from 'store/accountsSlice';
 import { accountsSelectors } from 'store/accountsSlice';
 import { ActionType } from 'components/views/Table/TableToolbar/types';
+import { adminActions } from 'store/adminSlice';
 
 const Accounts = () => {
   const dispatch = useAppDispatch();
@@ -16,6 +17,7 @@ const Accounts = () => {
 
   const { take, order, sort } = filter;
   const [isLoading, setIsLoading] = useState(false);
+  dispatch(adminActions.getExchangeList());
 
   useEffect(() => {
     const getAccounts = async () => {

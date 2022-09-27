@@ -29,6 +29,9 @@ const InflowsTableRow = ({ row }: any) => (
         'DD.MM.YYYY HH:mm:ss',
       )}
     </TableCell>
+    <TableCell align='left' className={styles.ceil}>
+      {row.isManual && <div className={styles.dots} />}
+    </TableCell>
   </TableRow>
 );
 

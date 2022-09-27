@@ -32,7 +32,7 @@ const Users = () => {
     getUsers();
   }, [dispatch, usersFilter]);
 
-  if (role !== RoleType.ADMIN) {
+  if (role && role !== RoleType.ADMIN) {
     return <Navigate to={Routes.Dashboard} replace />;
   }
 

@@ -33,7 +33,7 @@ const internalInitialState: WalletsSliceState = {
       sort: 'insertTime',
       order: 'ASC',
       search: '',
-      filter: { api: 'FAPI' },
+      filter: {},
     },
   },
   records: {
