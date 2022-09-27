@@ -57,11 +57,11 @@ const filterAllowedCurrency = (data: any, tradingPairs: any) => {
   return { allowedPairs, allowedCurrencies };
 };
 
-const parseInflowBody = (body: any, api: '1' | '2' | '3') => ({
+const parseInflowBody = (body: any, api: '4' | '2' | '3') => ({
   coin: {
     id: Number(body?.coinName),
   },
-  api: platformType[api || '2'],
+  api: platformType[api || '4'],
   type: body?.transactionType,
   transactionFee: Number(body?.fees),
   amount: Number(body?.amount),

@@ -51,7 +51,7 @@ const AddNewAccount: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (role !== RoleType.ADMIN) {
+  if (role && role !== RoleType.ADMIN) {
     return <Navigate to={Routes.Accounts} replace />;
   }
 

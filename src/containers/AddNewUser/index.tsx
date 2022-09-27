@@ -94,7 +94,7 @@ const AddNewUser = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (authRole !== RoleType.ADMIN) {
+  if (authRole && authRole !== RoleType.ADMIN) {
     return <Navigate to={Routes.Dashboard} replace />;
   }
 

@@ -238,9 +238,8 @@ export const createManualInflow = createAsyncThunk(
       const response = await walletsApi.createManualInflowRequest(walletId, restCredentials);
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      const { filter } = thunkAPI.getState().inflow;
-
-      await thunkAPI.dispatch(getWalletInflow(filter)).unwrap();
+      const { filter } = thunkAPI.getState().wallets.inflow;
+      await thunkAPI.dispatch(getWalletInflow({ walletId, ...filter })).unwrap();
 
       return response;
     } catch {
