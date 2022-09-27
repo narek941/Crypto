@@ -20,6 +20,8 @@ export const typeOptions = [
   { label: 'Outflow', value: 'WITHDRAWAL' },
 ];
 
+export const platformType = { '1': 'SPOT', '2': 'FAPI', '3': 'DAPI' };
+
 export const statusOptions = [
   { label: 'Active', value: 'ACTIVE' },
   { label: 'Blocked', value: 'BLOCKED' },

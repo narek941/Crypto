@@ -38,3 +38,12 @@ export const accountRecordFilterValuesRequest = (id: number) =>
 
 export const accountInflowFilterValuesRequest = (id: number) =>
   client.get(`wallets/${id}/inflow-outflow/filter-values`);
+
+export const createManualInflowRequest = (id: number, restCredentials: any) =>
+  client.post(`wallets/${id}/inflow-outflow`, restCredentials);
+
+export const updateManualInflowRequest = (id: number, walletId: number, restCredentials: any) =>
+  client.put(`wallets/${walletId}/inflow-outflow/${id}`, { ...restCredentials });
+
+export const deleteManualInflowRequest = (id: number, walletId: number) =>
+  client.del(`wallets/${walletId}/inflow-outflow/${id}`);

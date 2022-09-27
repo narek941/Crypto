@@ -1,4 +1,7 @@
 import { isUndefined } from 'lodash';
+import moment from 'moment';
+
+import { platformType } from './filterHelper';
 
 const parseAccountBody = (body: any, tradingPairs: any): any => ({
   testnet: false,
@@ -54,8 +57,20 @@ const filterAllowedCurrency = (data: any, tradingPairs: any) => {
   return { allowedPairs, allowedCurrencies };
 };
 
+const parseInflowBody = (body: any, api: '1' | '2' | '3') => ({
+  coin: {
+    id: Number(body?.coinName),
+  },
+  api: platformType[api || '2'],
+  type: body?.transactionType,
+  transactionFee: Number(body?.fees),
+  amount: Number(body?.amount),
+  createdAt: moment(body?.time).toISOString(),
+});
+
 const parseBody = {
   parseAccountBody,
+  parseInflowBody,
 };
 
 export default parseBody;

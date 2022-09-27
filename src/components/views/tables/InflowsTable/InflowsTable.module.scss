@@ -47,7 +47,7 @@
   &__body {
     &__row {
       border-bottom: 1px solid var(--collapse-table-border);
-
+      position: relative;
       td {
         background-color: var(--collapse-table-background) !important;
       }
@@ -131,4 +131,14 @@
   path {
     fill: var(--icon-selected) !important;
   }
+}
+
+.dots {
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  background-color: #9a99a6;
+  right: 23px;
+  top: calc(50% - 6px);
+  border-radius: 50%;
 }

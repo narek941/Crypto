@@ -229,6 +229,66 @@ export const getOpenOrdersFilterValues = createAsyncThunk(
   },
 );
 
+export const createManualInflow = createAsyncThunk(
+  `${Slice.Wallets}/:walletId/inflow-outflow`,
+  async (credentials: any, thunkAPI) => {
+    try {
+      const { walletId, ...restCredentials } = credentials;
+
+      const response = await walletsApi.createManualInflowRequest(walletId, restCredentials);
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      const { filter } = thunkAPI.getState().inflow;
+
+      await thunkAPI.dispatch(getWalletInflow(filter)).unwrap();
+
+      return response;
+    } catch {
+      return thunkAPI.rejectWithValue({ error: '* Incorrect' });
+    }
+  },
+);
+
+export const updateManualInflow = createAsyncThunk(
+  `${Slice.Wallets}/:walletId/inflow-outflow:id`,
+  async (credentials: any, thunkAPI) => {
+    try {
+      const { walletId, id, ...restCredentials } = credentials;
+
+      const response = await walletsApi.updateManualInflowRequest(id, walletId, restCredentials);
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      const { filter } = thunkAPI.getState().inflow;
+
+      await thunkAPI.dispatch(getWalletInflow(filter)).unwrap();
+
+      return response;
+    } catch {
+      return thunkAPI.rejectWithValue({ error: '* Incorrect' });
+    }
+  },
+);
+
+export const deleteManualInflow = createAsyncThunk(
+  `${Slice.Wallets}/:walletId/inflow-outflow:id`,
+  async (credentials: any, thunkAPI) => {
+    try {
+      const { walletId, id } = credentials;
+
+      const response = await walletsApi.deleteManualInflowRequest(id, walletId);
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      const { filter } = thunkAPI.getState().inflow;
+
+      await thunkAPI.dispatch(getWalletInflow(filter)).unwrap();
+
+      return response;
+    } catch {
+      return thunkAPI.rejectWithValue({ error: '* Incorrect' });
+    }
+  },
+);
+
 export const ordersFilterUpdate = createAction<Partial<ITableFilter>>('ordersFilter');
 export const inflowFilterUpdate = createAction<Partial<ITableFilter>>('inflowFilter');
 export const openOrdersFilterUpdate = createAction<Partial<ITableFilter>>('openOrdersFilter');
