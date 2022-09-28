@@ -53,6 +53,8 @@
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
+    "build:dev": "env-cmd -f .env yarn build",
+    "build:prod": "env-cmd -f .env.prod yarn build",
     "test": "react-app-rewired test",
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx,json}'",
     "lint:fix": "eslint --fix 'src/**/*.{js,jsx,ts,tsx,json}'",

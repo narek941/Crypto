@@ -18,7 +18,7 @@ pipeline {
          commit_hash = sh(script: 'git rev-parse --short=6 HEAD', returnStdout: true).trim()
         }
        container('docker') {
-         sh "docker build --network=host -t ${ECR_REPO}:${commit_hash} ."
+         sh "docker build --network=host -t ${ECR_REPO}:${commit_hash} --build-arg ENV=$ENV ."
        }
     }
     }
