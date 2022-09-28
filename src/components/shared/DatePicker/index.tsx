@@ -14,12 +14,12 @@ import { useRect } from 'hooks/useRect';
 import styles from './DatePicker.module.scss';
 
 const DatePicker = React.forwardRef<any, any>(
-  ({ placeholder, formMethods, name, label, labelClassName, tooltip }, ref: any) => {
+  ({ placeholder, formMethods, name, label, field, labelClassName, tooltip }, ref: any) => {
     const { t } = useTranslation();
     const customRef = useRef<HTMLDivElement>(null);
     const [openCalendar, setOpenCalendar] = useState<boolean>(false);
     const [isElementPositionRight, setIsElementPositionRight] = useState<boolean>(false);
-    const [value, setValue] = useState();
+    const [value, setValue] = useState(field?.field?.value && new Date(field.field.value));
 
     const day = !value ? placeholder : moment(value).format('LL');
 
@@ -28,7 +28,6 @@ const DatePicker = React.forwardRef<any, any>(
     const headerTextClass = classNames({
       [styles.calendar__header__placeholder]: !value,
     });
-    // eslint-disable-next-line no-console
     const labelClasses = classNames(styles.calendar__label, labelClassName);
 
     const calendarWrapperClass = classNames(styles.calendar__wrapper, {
@@ -54,6 +53,8 @@ const DatePicker = React.forwardRef<any, any>(
 
     const handleChange = (data: any) => {
       setValue(data);
+      // eslint-disable-next-line no-console
+      console.log(data, 'sss');
       formMethods.setValue(name, data.toString());
     };
     const handleCloseCalendar = () => setOpenCalendar(false);

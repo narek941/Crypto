@@ -15,7 +15,7 @@ export interface IInputProps {
   haveRightIcon?: boolean;
   innerClassName?: string;
   labelClassName?: string;
-  error?: string | boolean;
+  error?: string | boolean | any;
   isDisabledError?: boolean;
   type?: HTMLInputTypeAttribute;
   RightIcon?: React.FC<React.SVGProps<SVGSVGElement>>;

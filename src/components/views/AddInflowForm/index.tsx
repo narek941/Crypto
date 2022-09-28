@@ -1,5 +1,6 @@
 import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { useMemo } from 'react';
 
 import { useAppDispatch, useAppSelector, useForm } from 'hooks';
 import { Button, Input, Select } from 'components';
@@ -8,19 +9,48 @@ import FormWrapper from 'components/forms/FormWrapper';
 import DatePicker from 'components/shared/DatePicker';
 import { adminActions, adminSelectors } from 'store/adminSlice';
 import { createOptions } from 'utils/createOptions';
+import { walletsSelectors } from 'store/walletsSlice';
 
 import styles from './AddUserForm.module.scss';
 import { AddInflowFormShape, IAddInflow } from './types';
 import { addInflowFormFields, addInflowSchemaKeys } from './fields';
 
-const AddInflowForm = ({ onClick, handleClose }: IAddInflow) => {
+const AddInflowForm = ({ onClick, handleClose, id }: IAddInflow) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const coins = useAppSelector(adminSelectors.selectCoins);
   const coinsOptions = createOptions(coins);
+  const { list } = useAppSelector(walletsSelectors.selectInflow);
+  const currentInflow = list?.find((item) => id === item?.id);
   !coins.length && dispatch(adminActions.getCoins());
+
+  const addInflowFormDefaultValues = useMemo(
+    () =>
+      id
+        ? {
+            transactionType: currentInflow?.type,
+            coinName: currentInflow?.coin?.id,
+            amount: currentInflow?.amount,
+            fees: currentInflow?.transactionFee,
+            time: currentInflow?.createdAt && new Date(currentInflow?.createdAt),
+            api: currentInflow?.api,
+            id: currentInflow?.id,
+          }
+        : {
+            transactionType: -1,
+            coinName: -1,
+            amount: '',
+            fees: '',
+            time: '',
+          },
+    [currentInflow, id],
+  );
+
+  const headerText = id ? 'Edit information' : 'Add information';
+
   const { formMethods, handleSubmit } = useForm<keyof AddInflowFormShape, AddInflowFormShape>({
     schemaKeys: addInflowSchemaKeys,
+    defaultValues: addInflowFormDefaultValues,
   });
 
   return (
@@ -28,7 +58,7 @@ const AddInflowForm = ({ onClick, handleClose }: IAddInflow) => {
       <FormWrapper {...{ formMethods }} onSubmit={handleSubmit(onClick)}>
         <FormGroup className={styles.signIn__form__group}>
           <>
-            <p className={styles.signIn__form__group__header}>Add information </p>
+            <p className={styles.signIn__form__group__header}>{headerText}</p>
 
             <Controller
               control={formMethods.control}

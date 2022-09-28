@@ -42,6 +42,18 @@ export const addInflowFormFields: FormField<keyof AddInflowFormShape> = {
     label: 'Time',
     placeholder: 'Select transaction date and time',
   },
+  id: {
+    name: 'time',
+    id: 'addInflow.time',
+    label: 'Time',
+    placeholder: 'Select transaction date and time',
+  },
+  api: {
+    name: 'time',
+    id: 'addInflow.time',
+    label: 'Time',
+    placeholder: 'Select transaction date and time',
+  },
 };
 
 export const addInflowSchemaKeys = Object.keys(addInflowFormFields) as (keyof AddInflowFormShape)[];

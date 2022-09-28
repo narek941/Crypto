@@ -209,6 +209,8 @@ export const composeFormSchema = <K extends FormFieldNames>(fields: K[]): AnyObj
     amount: Yup.string(),
     time: Yup.string(),
     fees: Yup.string(),
+    id: Yup.string(),
+    api: Yup.string(),
   };
 
   const schema = fields.reduce(

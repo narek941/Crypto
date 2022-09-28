@@ -10,6 +10,7 @@ const Alert = ({
   handleAction,
   id,
   type,
+  text,
   isActionIsDone = false,
 }: AlertProps) => {
   const [actionIsDone, setActionIsDone] = useState<boolean>(isActionIsDone);
@@ -22,6 +23,11 @@ const Alert = ({
         return {
           question: 'Are you sure you want to delete this user?',
           answer: `You successfully deleted account!`,
+        };
+      case 'DELETE_INFLOW':
+        return {
+          question: `Are you sure you want to delete this record?`,
+          answer: `You successfully deleted record!`,
         };
       case 'BLOCK':
         return {
@@ -73,7 +79,7 @@ const Alert = ({
                 onClick={handleDeleteClick}
                 className={styles.popup__action__confirm}
               >
-                {type}
+                {text || type}
               </div>
             </>
           ) : (

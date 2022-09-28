@@ -8,7 +8,7 @@ import { parseBody } from 'utils';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { AddAccountForm } from 'components';
 import { adminActions, adminSelectors } from 'store/adminSlice';
-import { accountsActions } from 'store/accountsSlice';
+import { accountsActions, accountsSelectors } from 'store/accountsSlice';
 import { AddAccountFormShape } from 'components/views/AddAccountForm/types';
 import { authSelectors } from 'store/authSlice';
 import { RoleType } from 'types/api';
@@ -23,6 +23,8 @@ const AddNewAccount: React.FC = () => {
   const role = useSelector(authSelectors.selectRole);
   const tradingPairs = useAppSelector(adminSelectors.selectTradingPairs);
   const { totalCount } = useAppSelector(adminSelectors.selectExchange);
+
+  const walletId = useSelector(accountsSelectors.selectAccountByIdPlatform);
 
   const handleSubmit: SubmitHandler<AddAccountFormShape> = async (values) => {
     const body = parseBody.parseAccountBody(values, tradingPairs);
@@ -39,7 +41,7 @@ const AddNewAccount: React.FC = () => {
 
   useEffect(() => {
     dispatch(adminActions.getCoins());
-    dispatch(adminActions.getTradingPairs());
+    dispatch(adminActions.getTradingPairs(walletId));
     !totalCount && dispatch(adminActions.getExchangeList());
     if (id) {
       dispatch(accountsActions.getAccountById(id));

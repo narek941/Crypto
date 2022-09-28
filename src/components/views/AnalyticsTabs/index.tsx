@@ -29,10 +29,12 @@ const AnalyticsTabs = (): JSX.Element => {
   const { openPortal, closePortal, isOpen, Portal } = usePortal();
   const accountByID = useAppSelector(accountsSelectors.selectAccountById);
 
-  const platformId = accountByID?.wallets?.[0]?.id;
+  const walletId = accountByID?.wallets?.[0]?.id;
   const dispatch = useAppDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
   const [openFilter, setOpenFilter] = useState<boolean>(false);
+  const [recordId, setRecordId] = useState<number | undefined>();
+
   const { t } = useTranslation();
 
   const handleTabUpdateChange = (id: string) => {
@@ -43,13 +45,22 @@ const AnalyticsTabs = (): JSX.Element => {
 
   const handleFilter = () => setOpenFilter(!openFilter);
 
-  const handleAddInflow = (e: any) => {
+  const handleAddInflow = (e: any, id?: any) => {
+    setRecordId(id);
     isOpen ? closePortal(e) : openPortal(e);
   };
 
   const handleInflowSubmit = (body: any) => {
-    const credentials = parseBody.parseInflowBody(body, platformId);
-    dispatch(walletsActions.createManualInflow({ walletId: platformId, ...credentials }));
+    const credentials = parseBody.parseInflowBody(body, walletId);
+    recordId
+      ? dispatch(
+          walletsActions.updateManualInflow({
+            recordId: recordId,
+            walletId: walletId,
+            ...credentials,
+          }),
+        )
+      : dispatch(walletsActions.createManualInflow({ walletId: walletId, ...credentials }));
     closePortal();
   };
 
@@ -69,7 +80,7 @@ const AnalyticsTabs = (): JSX.Element => {
       case TabType.wallet:
         return <WalletsTable filterVisible={openFilter} />;
       case TabType.inflow:
-        return <InflowsTable filterVisible={openFilter} />;
+        return <InflowsTable filterVisible={openFilter} handleAddInflow={handleAddInflow} />;
       case TabType.history:
         return <OrdersHistoryTable filterVisible={openFilter} />;
       case TabType.trades:
@@ -100,7 +111,10 @@ const AnalyticsTabs = (): JSX.Element => {
           </div>
           <div className={styles.toolbar__filter}>
             {searchParams.get('tab') === TabType.inflow && (
-              <AddInflowIcon onClick={(e) => handleAddInflow(e)} className={styles.add_inflow} />
+              <AddInflowIcon
+                onClick={(e) => handleAddInflow(e, null)}
+                className={styles.add_inflow}
+              />
             )}
             <Tooltip followCursor={true} placement='bottom' title={t('filters')}>
               <FilterIcon onClick={handleFilter} />
@@ -113,7 +127,7 @@ const AnalyticsTabs = (): JSX.Element => {
         <Portal>
           <div className={styles.portal}>
             <div className={styles.portal__inner}>
-              <AddInflowForm onClick={handleInflowSubmit} handleClose={closePortal} />
+              <AddInflowForm onClick={handleInflowSubmit} handleClose={closePortal} id={recordId} />
             </div>
           </div>
         </Portal>

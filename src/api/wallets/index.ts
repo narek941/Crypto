@@ -42,8 +42,11 @@ export const accountInflowFilterValuesRequest = (id: number) =>
 export const createManualInflowRequest = (id: number, restCredentials: any) =>
   client.post(`wallets/${id}/inflow-outflow`, restCredentials);
 
-export const updateManualInflowRequest = (id: number, walletId: number, restCredentials: any) =>
-  client.put(`wallets/${walletId}/inflow-outflow/${id}`, { ...restCredentials });
+export const updateManualInflowRequest = (
+  recordId: number,
+  walletId: number,
+  restCredentials: any,
+) => client.put(`wallets/${walletId}/inflow-outflow/${recordId}`, { ...restCredentials });
 
 export const deleteManualInflowRequest = (id: number, walletId: number) =>
-  client.del(`wallets/${walletId}/inflow-outflow/${id}`);
+  client.delete(`wallets/${walletId}/inflow-outflow/${id}`);

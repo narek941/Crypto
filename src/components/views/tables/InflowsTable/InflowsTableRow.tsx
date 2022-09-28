@@ -10,7 +10,7 @@ import { RoleType } from 'types/api';
 
 import styles from './InflowsTable.module.scss';
 
-const InflowsTableRow = ({ row }: any) => {
+const InflowsTableRow = ({ row, toggleAlertOpen, setID, handleAddInflow }: any) => {
   const authRole = useSelector(authSelectors.selectRole);
   return (
     <TableRow className={styles.container__body__row}>
@@ -44,12 +44,21 @@ const InflowsTableRow = ({ row }: any) => {
               <>
                 <div className={styles.ceil__actions__setting}>
                   <Tooltip followCursor={true} placement='bottom' title={'Edit'}>
-                    <EditIcon />
+                    <EditIcon
+                      onClick={(e) => {
+                        handleAddInflow(e, row.id);
+                      }}
+                    />
                   </Tooltip>
                 </div>
                 <div className={styles.ceil__actions__bin}>
                   <Tooltip followCursor={true} placement='bottom' title={'Delete'}>
-                    <BinIcon />
+                    <BinIcon
+                      onClick={() => {
+                        setID(row.id);
+                        toggleAlertOpen && toggleAlertOpen();
+                      }}
+                    />
                   </Tooltip>
                 </div>
               </>

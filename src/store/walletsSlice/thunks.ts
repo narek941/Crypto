@@ -252,14 +252,17 @@ export const updateManualInflow = createAsyncThunk(
   `${Slice.Wallets}/:walletId/inflow-outflow:id`,
   async (credentials: any, thunkAPI) => {
     try {
-      const { walletId, id, ...restCredentials } = credentials;
+      const { walletId, recordId, ...restCredentials } = credentials;
 
-      const response = await walletsApi.updateManualInflowRequest(id, walletId, restCredentials);
+      const response = await walletsApi.updateManualInflowRequest(
+        recordId,
+        walletId,
+        restCredentials,
+      );
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      const { filter } = thunkAPI.getState().inflow;
-
-      await thunkAPI.dispatch(getWalletInflow(filter)).unwrap();
+      const { filter } = thunkAPI.getState().wallets.inflow;
+      await thunkAPI.dispatch(getWalletInflow({ walletId, ...filter })).unwrap();
 
       return response;
     } catch {
@@ -269,7 +272,7 @@ export const updateManualInflow = createAsyncThunk(
 );
 
 export const deleteManualInflow = createAsyncThunk(
-  `${Slice.Wallets}/:walletId/inflow-outflow:id`,
+  `${Slice.Wallets}/:walletId/inflow-outflow:id/delete`,
   async (credentials: any, thunkAPI) => {
     try {
       const { walletId, id } = credentials;
@@ -277,9 +280,8 @@ export const deleteManualInflow = createAsyncThunk(
       const response = await walletsApi.deleteManualInflowRequest(id, walletId);
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      const { filter } = thunkAPI.getState().inflow;
-
-      await thunkAPI.dispatch(getWalletInflow(filter)).unwrap();
+      const { filter } = thunkAPI.getState().wallets.inflow;
+      await thunkAPI.dispatch(getWalletInflow({ walletId, ...filter })).unwrap();
 
       return response;
     } catch {

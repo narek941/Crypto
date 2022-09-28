@@ -1,4 +1,4 @@
-import { useEffect, MouseEvent } from 'react';
+import { useEffect, MouseEvent, useState, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import Table from '@mui/material/Table';
 import TableRow from '@mui/material/TableRow';
@@ -9,7 +9,7 @@ import classNames from 'classnames';
 
 import { useAppDispatch } from 'hooks';
 import { wrapWithBaseCurrency } from 'utils';
-import { EmptyData, Pagination, ScrollWrapper } from 'components';
+import { Alert, EmptyData, Pagination, ScrollWrapper } from 'components';
 import { inflowOutflowTable } from 'constants/index';
 import { accountsSelectors } from 'store/accountsSlice';
 import { inflowFilterUpdate } from 'store/walletsSlice/thunks';
@@ -20,10 +20,12 @@ import { VectorIcon } from 'assets/icons';
 import InflowsTableRow from './InflowsTableRow';
 import styles from './InflowsTable.module.scss';
 
-const InflowsTable = ({ filterVisible }: any) => {
+const InflowsTable = ({ filterVisible, handleAddInflow }: any) => {
   const accountById = useSelector(accountsSelectors.selectAccountById);
   const { filter, list, totalCount } = useSelector(walletsSelectors.selectInflow);
   const walletId = accountById?.wallets?.length && accountById.wallets[0]?.id;
+  const [open, setOpen] = useState(false);
+  const [delID, setID] = useState<number | null>(null);
 
   const dispatch = useAppDispatch();
 
@@ -31,6 +33,7 @@ const InflowsTable = ({ filterVisible }: any) => {
     dispatch(inflowFilterUpdate({ skip: Number(newPage) * filter.take }));
   };
   const orderSort = (elem: any): 'DESC' | 'ASC' => (elem.order === 'DESC' ? 'ASC' : 'DESC');
+  const toggleAlertOpen = useCallback(() => setOpen(!open), [open]);
 
   const handleRequestSort = (_event: MouseEvent<unknown>, sort: any): void => {
     let newOrder = 'DESC';
@@ -47,6 +50,18 @@ const InflowsTable = ({ filterVisible }: any) => {
       dispatch(inflowFilterUpdate({ take: parseInt(event.target.value), skip: 0 }));
     }
   };
+
+  const handleCloseAlert = () => {
+    setOpen(false);
+  };
+
+  const handleDelete = useCallback(
+    async (id: number) => {
+      await dispatch(walletsActions.deleteManualInflow({ walletId, id })).unwrap();
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [dispatch],
+  );
 
   useEffect(() => {
     if (walletId) {
@@ -92,7 +107,13 @@ const InflowsTable = ({ filterVisible }: any) => {
             {!!totalCount && (
               <TableBody>
                 {list?.map((row) => (
-                  <InflowsTableRow row={row} key={row.id} />
+                  <InflowsTableRow
+                    row={row}
+                    key={row.id}
+                    toggleAlertOpen={toggleAlertOpen}
+                    setID={setID}
+                    handleAddInflow={handleAddInflow}
+                  />
                 ))}
               </TableBody>
             )}
@@ -108,6 +129,16 @@ const InflowsTable = ({ filterVisible }: any) => {
         rowsPerPage={filter?.take}
         totalCount={totalCount}
       />
+      <tbody className={styles.table__body}>
+        <Alert
+          id={delID}
+          open={open}
+          handleAction={handleDelete}
+          type='DELETE_INFLOW'
+          text='Delete'
+          handleClose={() => handleCloseAlert && handleCloseAlert()}
+        />
+      </tbody>
     </>
   );
 };
