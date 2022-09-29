@@ -35,7 +35,7 @@ const AccountsAnalytics = (): JSX.Element => {
   //   accountsSelectors.selectAccountPerformanceChartData,
   // );
   const accountCapitalChartData = useAppSelector(accountsSelectors.selectAccountCapitalChartData);
-  const canvasWidth = (windowSize.width - 290) / 2;
+  const canvasWidth = 580 || (windowSize.width - 290) / 2;
 
   const handleExportSubmit = (credentials: any) => {
     if (credentials.type === ExportType.pdf) {
@@ -146,63 +146,70 @@ const AccountsAnalytics = (): JSX.Element => {
             header={wrapWithBaseCurrency('Earned capital', accountById?.baseCurrency?.name)}
           />
         </div>
-        <div className={styles.analytics__chart}>
-          <Chart
-            data={accountCapitalChartData}
-            title='Account Capital Chart'
-            subTitle={accountById?.baseCurrency?.name}
-            timeField='snapshotDate'
-            field='currentCapitalInBaseCurrency'
-            width={canvasWidth}
-            type='AREA'
-            baseCurrency={accountById?.baseCurrency?.name}
-          />
-          <Chart
-            // data={accountPerformanceChartData}
-            data={accountCapitalChartData}
-            title='P&L Share Chart'
-            subTitle='%'
-            timeField='snapshotDate'
-            field='earnedCapitalInPercent'
-            width={canvasWidth}
-            type='AREA'
-            baseCurrency='%'
-            field2='earnedCapitalInBaseCurrency'
-          />
-        </div>
-        <div className={styles.analytics__chart}>
-          <div className={styles.analytics__chart__inner}>
-            <div className={styles.analytics__chart__item}>
-              {accountById?.baseCurrency?.coin && (
-                <Doughnut
-                  data={accountTradingPairsChartData}
-                  field={'pairName'}
-                  value={'relativePercentage'}
-                  width={(windowSize.width - 240) / 2}
-                  header={'Trading Pairs Chart'}
-                  colors={AccountAnalyticsChartColor}
-                  baseCurrency={accountById?.baseCurrency?.name}
-                  navigateTo={TabType.history}
-                  tooltipFields={['totalBaseSum', 'baseCurrencyName', 'totalSum', 'toCurrencyName']}
-                />
-              )}
-            </div>
+        <div className={styles.analytics__inner}>
+          <div className={styles.analytics__chart}>
+            <Chart
+              data={accountCapitalChartData}
+              title='Account Capital Chart'
+              subTitle={accountById?.baseCurrency?.name}
+              timeField='snapshotDate'
+              field='currentCapitalInBaseCurrency'
+              width={canvasWidth}
+              type='AREA'
+              baseCurrency={accountById?.baseCurrency?.name}
+            />
+            <Chart
+              // data={accountPerformanceChartData}
+              data={accountCapitalChartData}
+              title='P&L Share Chart'
+              subTitle='%'
+              timeField='snapshotDate'
+              field='earnedCapitalInPercent'
+              width={canvasWidth}
+              type='AREA'
+              baseCurrency='%'
+              field2='earnedCapitalInBaseCurrency'
+            />
           </div>
-          <div className={styles.analytics__chart__inner}>
-            <div className={styles.analytics__chart__item}>
-              {accountById?.baseCurrency?.coin && (
-                <Doughnut
-                  data={accountAssetsChartData}
-                  field={'assetCoin'}
-                  value={'relativePercentage'}
-                  width={(windowSize.width - 260) / 2}
-                  header={'Account Assets Chart'}
-                  colors={AccountAnalyticsChartColor}
-                  baseCurrency={accountById?.baseCurrency?.name}
-                  navigateTo={TabType.wallet}
-                  tooltipFields={['baseCurrencyValue', 'baseCurrencyName', 'value', 'assetCoin']}
-                />
-              )}
+          <div className={styles.analytics__chart}>
+            <div className={styles.analytics__chart__inner}>
+              <div className={styles.analytics__chart__item}>
+                {accountById?.baseCurrency?.coin && (
+                  <Doughnut
+                    data={accountTradingPairsChartData}
+                    field={'pairName'}
+                    value={'relativePercentage'}
+                    width={580 || (windowSize.width - 240) / 2}
+                    header={'Trading Pairs Chart'}
+                    colors={AccountAnalyticsChartColor}
+                    baseCurrency={accountById?.baseCurrency?.name}
+                    navigateTo={TabType.history}
+                    tooltipFields={[
+                      'totalBaseSum',
+                      'baseCurrencyName',
+                      'totalSum',
+                      'toCurrencyName',
+                    ]}
+                  />
+                )}
+              </div>
+            </div>
+            <div className={styles.analytics__chart__inner}>
+              <div className={styles.analytics__chart__item}>
+                {accountById?.baseCurrency?.coin && (
+                  <Doughnut
+                    data={accountAssetsChartData}
+                    field={'assetCoin'}
+                    value={'relativePercentage'}
+                    width={580 || (windowSize.width - 260) / 2}
+                    header={'Account Assets Chart'}
+                    colors={AccountAnalyticsChartColor}
+                    baseCurrency={accountById?.baseCurrency?.name}
+                    navigateTo={TabType.wallet}
+                    tooltipFields={['baseCurrencyValue', 'baseCurrencyName', 'value', 'assetCoin']}
+                  />
+                )}
+              </div>
             </div>
           </div>
         </div>
