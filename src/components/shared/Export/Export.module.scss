@@ -124,7 +124,7 @@
           text-transform: uppercase;
 
           &__disable {
-            color: white;
+            color: var(--filter-svg);
           }
         }
         &__icon {
@@ -134,7 +134,7 @@
 
           &__disable {
             path {
-              fill: white;
+              fill: var(--filter-svg);
             }
           }
         }

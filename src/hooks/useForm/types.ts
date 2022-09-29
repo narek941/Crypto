@@ -2,7 +2,9 @@ import { UseFormHandleSubmit } from 'react-hook-form/dist/types/form';
 import { UseFormProps as UseReactHookFormProps, UseFormReturn } from 'react-hook-form';
 
 export type FormFieldNames =
+  | 'id'
   | 'name'
+  | 'api'
   | 'email'
   | 'apiKey'
   | 'maxRisk'

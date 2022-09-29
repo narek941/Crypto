@@ -26,6 +26,7 @@ const AccountsAnalytics = (): JSX.Element => {
 
   const accountById = useAppSelector(accountsSelectors.selectAccountById);
   const accountAssetsChartData = useAppSelector(accountsSelectors.selectAccountAssetChartData);
+  const walletId = useAppSelector(accountsSelectors.selectAccountByIdPlatform);
 
   const accountTradingPairsChartData = useAppSelector(
     accountsSelectors.selectAccountTradingPairsChartData,
@@ -74,7 +75,7 @@ const AccountsAnalytics = (): JSX.Element => {
         setIsLoading(false);
         await dispatch(accountsActions.getAccountSummary(convertedId)).unwrap();
         await dispatch(adminActions.getCoins()).unwrap();
-        await dispatch(adminActions.getTradingPairs()).unwrap();
+        await dispatch(adminActions.getTradingPairs(walletId)).unwrap();
         // await dispatch(accountsActions.getAccountPerformanceChartData(convertedId)).unwrap();
         await dispatch(accountsActions.getAccountAssetsChartData(convertedId)).unwrap();
       } catch {

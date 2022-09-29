@@ -86,4 +86,8 @@
   path {
     fill: var(--font);
   }
+  &__display {
+    display: none;
+    pointer-events: none;
+  }
 }

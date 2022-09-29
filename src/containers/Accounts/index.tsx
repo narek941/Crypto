@@ -3,21 +3,25 @@ import { useSelector } from 'react-redux';
 
 import { Routes } from 'types';
 import { Loader, Table } from 'components';
-import { useAppDispatch } from 'hooks';
+import { useAppDispatch, useAppSelector } from 'hooks';
 import { accountsTable } from 'constants/index';
 import { accountsActions } from 'store/accountsSlice';
 import { accountsSelectors } from 'store/accountsSlice';
 import { ActionType } from 'components/views/Table/TableToolbar/types';
-import { adminActions } from 'store/adminSlice';
+import { adminActions, adminSelectors } from 'store/adminSlice';
 
 const Accounts = () => {
   const dispatch = useAppDispatch();
   const { list, totalCount, filter } = useSelector(accountsSelectors.selectAccountAccountsList);
   const currentPlatform = useSelector(accountsSelectors.selectAccountByIdPlatform);
+  const exchangeTotalCount = useAppSelector(adminSelectors.selectExchange)?.totalCount;
 
   const { take, order, sort } = filter;
   const [isLoading, setIsLoading] = useState(false);
-  dispatch(adminActions.getExchangeList());
+
+  useEffect(() => {
+    !exchangeTotalCount && dispatch(adminActions.getExchangeList());
+  }, [dispatch, exchangeTotalCount]);
 
   useEffect(() => {
     const getAccounts = async () => {

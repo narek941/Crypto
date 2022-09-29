@@ -298,9 +298,9 @@ export const getCoins = createAsyncThunk(`${Slice.Admin}/coins`, async (_, thunk
 
 export const getTradingPairs = createAsyncThunk(
   `${Slice.Admin}/trading-pairs`,
-  async (_, thunkAPI) => {
+  async (id: number, thunkAPI) => {
     try {
-      const response = await adminApi.getTradingPairsRequest();
+      const response = await adminApi.getTradingPairsRequest(id);
 
       return {
         tradingPairs: response.data.list,

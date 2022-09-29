@@ -204,11 +204,13 @@ export const composeFormSchema = <K extends FormFieldNames>(fields: K[]): AnyObj
     exportDate: Yup.string(),
 
     ///inflow
-    transactionType: Yup.string(),
-    coinName: Yup.string(),
-    amount: Yup.string(),
-    time: Yup.string(),
-    fees: Yup.string(),
+    transactionType: Yup.string().required('* Choose Transaction type to finish adding record'),
+    coinName: Yup.string().required('* Choose Coin name to finish adding record'),
+    amount: Yup.string().required('* Enter API key to finish adding account'),
+    time: Yup.string().required('* Choose Time to finish adding record'),
+    fees: Yup.string().required('* Enter Fees  to finish adding record'),
+    id: Yup.string(),
+    api: Yup.string(),
   };
 
   const schema = fields.reduce(

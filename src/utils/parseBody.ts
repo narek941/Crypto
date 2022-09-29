@@ -61,11 +61,12 @@ const parseInflowBody = (body: any, api: '4' | '2' | '3') => ({
   coin: {
     id: Number(body?.coinName),
   },
-  api: platformType[api || '4'],
+  api: body.api || platformType[api || '4'],
   type: body?.transactionType,
   transactionFee: Number(body?.fees),
   amount: Number(body?.amount),
   createdAt: moment(body?.time).toISOString(),
+  id: body?.id && body?.id,
 });
 
 const parseBody = {

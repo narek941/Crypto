@@ -73,6 +73,30 @@
   font-size: 13px !important;
   line-height: 16px !important;
   border-color: var(--collapse-table-border) !important;
+
+  &__actions {
+    gap: 16px !important;
+    cursor: pointer;
+    color: var(--font);
+    @extend %flex-center;
+
+    &__chart,
+    &__setting {
+      path {
+        fill: var(--icon-secondary-selected);
+      }
+    }
+    &__dots {
+      width: 12px;
+      height: 12px;
+
+      background-color: #9a99a6;
+      border-radius: 50%;
+    }
+  }
+  &__last {
+    max-width: 80px;
+  }
 }
 .inner {
   padding: var(--table-padding);
@@ -131,14 +155,4 @@
   path {
     fill: var(--icon-selected) !important;
   }
-}
-
-.dots {
-  width: 12px;
-  height: 12px;
-  position: absolute;
-  background-color: #9a99a6;
-  right: 23px;
-  top: calc(50% - 6px);
-  border-radius: 50%;
 }

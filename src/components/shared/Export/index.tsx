@@ -188,6 +188,7 @@ const Export = ({ className, text = 'export', callback }: IExport): JSX.Element 
                 label={t('enter_name')}
                 className={styles.export__popup__name__input}
                 labelClassName={styles.export__popup__name__title}
+                placeholder='Enter name'
               />
             </div>
             <h3 className={styles.export__popup__subtitle}>{t('choose_date')}</h3>

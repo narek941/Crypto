@@ -77,6 +77,17 @@ const TableAccountBody = ({
         [styles.table__body__row__ceil__actions__bin__span_last]: isLastItem,
       });
 
+      const renderStatus = () => {
+        switch (syncStatus) {
+          case 'IMPORTING':
+            return 'SYNCING';
+          case 'STATS_GENERATION':
+            return 'STATS';
+          default:
+            return status;
+        }
+      };
+
       return (
         <TableRow
           className={styles.table__body__row}
@@ -118,7 +129,7 @@ const TableAccountBody = ({
             {Number(statistics?.currentOpenProfitInPercent)}
           </TableCell>
           <TableCell className={styles.table__body__row__ceil} align='left'>
-            {Number(statistics?.currentOpenProfitInBaseCurrency)
+            {Number(statistics?.earnedCapitalInBaseCurrency)
               ? Number(statistics?.earnedCapitalInBaseCurrency).toFixed(8)
               : 0}{' '}
             {baseCurrency.name}
@@ -135,7 +146,7 @@ const TableAccountBody = ({
             {baseCurrency.name}
           </TableCell>
           <TableCell className={styles.table__body__row__ceil} align='left'>
-            {status}
+            {renderStatus()}
           </TableCell>
           <TableCell className={styles.table__body__row__ceil} align='left'>
             {statistics?.numberDailyTransactions}

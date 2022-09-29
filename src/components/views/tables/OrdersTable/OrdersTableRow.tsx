@@ -63,7 +63,7 @@ const OrdersTableRow = ({ row }: any): JSX.Element => {
           {moment(row.creationTime).format('DD.MM.YYYY HH:mm:ss')}
         </TableCell>
         <TableCell align='left' className={styles.ceil}>
-          {row?.coinsPair?.name}
+          {row?.symbol}
         </TableCell>
         <TableCell align='left' className={styles.ceil}>
           {row.side}

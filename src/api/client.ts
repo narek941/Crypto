@@ -31,12 +31,19 @@ client.interceptors.response.use(
   (response: any) => {
     return response;
   },
+
   (error: any) => {
-    if (error.response?.status === 401) {
-      store.dispatch(authActions.signOut());
-    }
-    if (error.response?.status === 403) {
-      store.dispatch(authActions.userInfoRequest({}));
+    const token =
+      BrowserStorageService.get(BrowserStorageKeys.AccessToken) ||
+      BrowserStorageService.get(BrowserStorageKeys.AccessToken, { session: true });
+
+    if (token) {
+      if (error.response?.status === 401) {
+        store.dispatch(authActions.signOut());
+      }
+      if (error.response?.status === 403) {
+        store.dispatch(authActions.userInfoRequest({}));
+      }
     }
 
     return Promise.reject(error);

@@ -49,7 +49,7 @@ const AddAccountForm = ({ onClick, isEditable = false }: IAddAccount) => {
             wrongCurrencyAlert: wallets && wallets[0].alertTriggers.wrongCurrencyAlertRequired,
           }
         : {
-            baseCurrency: 516,
+            baseCurrency: 521,
             refreshInterval: '3m',
             maxDrawdown: '20',
             maxPosition: 20,

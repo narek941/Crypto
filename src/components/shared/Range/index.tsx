@@ -38,7 +38,7 @@ const RangeSwipe = React.forwardRef(
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [firstInput, setFirstInput] = useState<any>(Number(min));
     const [secondInput, setSecondInput] = useState<any>(Number(max));
-
+    const [defaultRangeValue, setDefaultRangeValue] = useState<any>([Number(min), Number(max)]);
     const headerClass = classNames(styles.header, { [styles.header__open]: isOpen });
     const modalClass = classNames(styles.modal, { [styles.modal__open]: isOpen });
     const textClass = classNames(styles.header__input, {
@@ -91,6 +91,7 @@ const RangeSwipe = React.forwardRef(
     const handleRangeChange = ({ target }: any) => {
       setFirstInput(NaN);
       setSecondInput(NaN);
+      setDefaultRangeValue(null);
       onChange(target.value);
     };
 
@@ -101,6 +102,7 @@ const RangeSwipe = React.forwardRef(
     const handleClear = (event?: React.FormEvent<HTMLElement>) => {
       event?.stopPropagation();
       onChange(['', '']);
+      setDefaultRangeValue([min, max]);
       callback && callback(filterName, null);
     };
 
@@ -115,6 +117,10 @@ const RangeSwipe = React.forwardRef(
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [closed]);
+
+    useEffect(() => {
+      setDefaultRangeValue([min, max]);
+    }, [min, max]);
 
     useOnClickOutside(customRef, handleSubmit);
 
@@ -156,7 +162,7 @@ const RangeSwipe = React.forwardRef(
             </div>
             <div className={styles.slider}>
               <Slider
-                value={value}
+                value={defaultRangeValue || value}
                 {...rest}
                 id={name}
                 ref={ref}

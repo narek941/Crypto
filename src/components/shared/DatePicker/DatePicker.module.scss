@@ -72,3 +72,12 @@
     }
   }
 }
+.error {
+  border-color: var(--danger) !important;
+
+  &__text {
+    margin-top: 4px;
+    color: var(--danger);
+    @extend %text-14;
+  }
+}

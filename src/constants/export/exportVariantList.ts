@@ -8,8 +8,8 @@ const exportVariantList = [
   },
   {
     id: 2,
-    type: ExportType.cvc,
-    label: 'CVC',
+    type: ExportType.csv,
+    label: 'CSV',
   },
 ];
 

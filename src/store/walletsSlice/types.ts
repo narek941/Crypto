@@ -106,6 +106,7 @@ export interface IWalletInflowResponse {
   createdAt: StringOrNull;
   deletedAt: StringOrNull;
   id: number;
+  api: string;
   insertTime: StringOrNull;
   network: StringOrNull;
   status: StringOrNull;

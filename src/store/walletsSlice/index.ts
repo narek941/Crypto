@@ -166,6 +166,9 @@ const walletsSlice = createSlice({
       state.openOrders.filter.skip = 0;
       state.openOrders.filter.filter = action.payload;
     });
+    builder.addCase(walletsThunks.clearError, (state) => {
+      state.error = null;
+    });
     builder.addMatcher(
       isAnyOf(
         walletsThunks.getWalletOrders.pending,
@@ -173,6 +176,9 @@ const walletsSlice = createSlice({
         walletsThunks.getWalletSummary.pending,
         walletsThunks.getWalletOpenOrders.pending,
         walletsThunks.getWalletOrderTrades.pending,
+        walletsThunks.createManualInflow.pending,
+        walletsThunks.updateManualInflow.pending,
+        walletsThunks.deleteManualInflow.pending,
       ),
       extraReducers.pendingReducer,
     );
@@ -181,6 +187,10 @@ const walletsSlice = createSlice({
       isAnyOf(
         walletsThunks.getWalletOrders.rejected,
         walletsThunks.getWalletInflow.rejected,
+        walletsThunks.createManualInflow.rejected,
+        walletsThunks.updateManualInflow.rejected,
+        walletsThunks.deleteManualInflow.rejected,
+
         walletsThunks.getWalletSummary.rejected,
         walletsThunks.getWalletOpenOrders.rejected,
         walletsThunks.getWalletOrderTrades.rejected,

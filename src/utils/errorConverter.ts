@@ -4,7 +4,8 @@ export const errorConverter = (message: string): string => {
       return 'Your account has been blocked';
     case 'Unauthorized':
       return '* Incorrect email or password';
-
+    case 'SYNC_NOT_FINISHED':
+      return 'Synchronization of account is not finished yet...';
     default:
       return message;
   }
@@ -19,5 +20,17 @@ export const parseAddUserError = (message: string): string | undefined | Record<
     } else {
       return message;
     }
+  }
+};
+
+export const parsePlatformName = (message: string): string => {
+  if (message == 'Binance') {
+    return 'Binance';
+  } else if (message == 'BINANCE_FUTURES_USDTM') {
+    return 'Binance USDT-M';
+  } else if (message == 'BINANCE_FUTURES_COINM') {
+    return 'Binance COIN-M';
+  } else {
+    return message;
   }
 };
