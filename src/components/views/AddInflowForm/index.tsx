@@ -23,6 +23,7 @@ const AddInflowForm = ({ onClick, handleClose, id }: IAddInflow) => {
   const { list } = useAppSelector(walletsSelectors.selectInflow);
   const currentInflow = list?.find((item) => id === item?.id);
   !coins.length && dispatch(adminActions.getCoins());
+  const walletError = useAppSelector(walletsSelectors.selectWalletsError);
 
   const addInflowFormDefaultValues = useMemo(
     () =>
@@ -36,13 +37,7 @@ const AddInflowForm = ({ onClick, handleClose, id }: IAddInflow) => {
             api: currentInflow?.api,
             id: currentInflow?.id,
           }
-        : {
-            transactionType: -1,
-            coinName: -1,
-            amount: '',
-            fees: '',
-            time: '',
-          },
+        : {},
     [currentInflow, id],
   );
 
@@ -59,7 +54,6 @@ const AddInflowForm = ({ onClick, handleClose, id }: IAddInflow) => {
         <FormGroup className={styles.signIn__form__group}>
           <>
             <p className={styles.signIn__form__group__header}>{headerText}</p>
-
             <Controller
               control={formMethods.control}
               name={addInflowFormFields.transactionType.name as keyof AddInflowFormShape}
@@ -73,7 +67,6 @@ const AddInflowForm = ({ onClick, handleClose, id }: IAddInflow) => {
                 />
               )}
             />
-
             <Controller
               control={formMethods.control}
               name={addInflowFormFields.coinName.name as keyof AddInflowFormShape}
@@ -88,7 +81,6 @@ const AddInflowForm = ({ onClick, handleClose, id }: IAddInflow) => {
                 />
               )}
             />
-
             <Input
               error={formMethods.formState.errors.amount?.message}
               {...addInflowFormFields.amount}
@@ -109,10 +101,12 @@ const AddInflowForm = ({ onClick, handleClose, id }: IAddInflow) => {
                     formMethods={formMethods}
                     {...addInflowFormFields.time}
                     months={1}
+                    error={formMethods.formState.errors.time?.message}
                   />
                 )}
               />
             </div>
+            {walletError && <div className={styles.error}>{walletError.message}</div>}
 
             <div className={styles.signIn__form__group__edit}>
               <Button

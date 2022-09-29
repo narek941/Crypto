@@ -4,7 +4,8 @@ export const errorConverter = (message: string): string => {
       return 'Your account has been blocked';
     case 'Unauthorized':
       return '* Incorrect email or password';
-
+    case 'SYNC_NOT_FINISHED':
+      return 'Synchronization of account is not finished yet...';
     default:
       return message;
   }

@@ -1,8 +1,10 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { AxiosError } from 'axios';
 
 import { Slice } from 'types';
 import { walletsApi } from 'api';
 import { ITableFilter } from 'types/api';
+import { errorConverter } from 'utils/errorConverter';
 
 export const getWalletOpenOrders = createAsyncThunk(
   `${Slice.Wallets}/open-orders`,
@@ -232,18 +234,20 @@ export const getOpenOrdersFilterValues = createAsyncThunk(
 export const createManualInflow = createAsyncThunk(
   `${Slice.Wallets}/:walletId/inflow-outflow`,
   async (credentials: any, thunkAPI) => {
+    const { walletId, ...restCredentials } = credentials;
     try {
-      const { walletId, ...restCredentials } = credentials;
-
       const response = await walletsApi.createManualInflowRequest(walletId, restCredentials);
+      return response;
+    } catch (error) {
+      const err = error as AxiosError<any>;
+      return thunkAPI.rejectWithValue({
+        error: errorConverter(err.response?.data),
+      });
+    } finally {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       const { filter } = thunkAPI.getState().wallets.inflow;
       await thunkAPI.dispatch(getWalletInflow({ walletId, ...filter })).unwrap();
-
-      return response;
-    } catch {
-      return thunkAPI.rejectWithValue({ error: '* Incorrect' });
     }
   },
 );
@@ -251,22 +255,24 @@ export const createManualInflow = createAsyncThunk(
 export const updateManualInflow = createAsyncThunk(
   `${Slice.Wallets}/:walletId/inflow-outflow:id`,
   async (credentials: any, thunkAPI) => {
+    const { walletId, recordId, ...restCredentials } = credentials;
     try {
-      const { walletId, recordId, ...restCredentials } = credentials;
-
       const response = await walletsApi.updateManualInflowRequest(
         recordId,
         walletId,
         restCredentials,
       );
+      return response;
+    } catch (error) {
+      const err = error as AxiosError<any>;
+      return thunkAPI.rejectWithValue({
+        error: errorConverter(err.response?.data),
+      });
+    } finally {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       const { filter } = thunkAPI.getState().wallets.inflow;
       await thunkAPI.dispatch(getWalletInflow({ walletId, ...filter })).unwrap();
-
-      return response;
-    } catch {
-      return thunkAPI.rejectWithValue({ error: '* Incorrect' });
     }
   },
 );
@@ -274,18 +280,21 @@ export const updateManualInflow = createAsyncThunk(
 export const deleteManualInflow = createAsyncThunk(
   `${Slice.Wallets}/:walletId/inflow-outflow:id/delete`,
   async (credentials: any, thunkAPI) => {
+    const { walletId, id } = credentials;
     try {
-      const { walletId, id } = credentials;
-
       const response = await walletsApi.deleteManualInflowRequest(id, walletId);
+
+      return response;
+    } catch (error) {
+      const err = error as AxiosError<any>;
+      return thunkAPI.rejectWithValue({
+        error: errorConverter(err.response?.data),
+      });
+    } finally {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       const { filter } = thunkAPI.getState().wallets.inflow;
       await thunkAPI.dispatch(getWalletInflow({ walletId, ...filter })).unwrap();
-
-      return response;
-    } catch {
-      return thunkAPI.rejectWithValue({ error: '* Incorrect' });
     }
   },
 );
@@ -301,3 +310,4 @@ export const inflowFilterClear = createAction<Partial<ITableFilter>>('inflowFilt
 export const openOrdersFilterClear = createAction<Partial<ITableFilter>>('openOrdersFilterClear');
 export const orderTradesFilterClear = createAction<Partial<ITableFilter>>('orderTradesFilterClear');
 export const recordsFilterClear = createAction<Partial<ITableFilter>>('recordsFilterClear');
+export const clearError = createAction('clearError');

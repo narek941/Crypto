@@ -11,10 +11,12 @@ import { useOnClickOutside, useWindowSize } from 'hooks';
 import { ArrowLeft, ArrowRight, CalendarIcon, CloseIcon } from 'assets/icons';
 import { useRect } from 'hooks/useRect';
 
+import Typography from '../Typography';
+
 import styles from './DatePicker.module.scss';
 
 const DatePicker = React.forwardRef<any, any>(
-  ({ placeholder, formMethods, name, label, field, labelClassName, tooltip }, ref: any) => {
+  ({ placeholder, formMethods, name, label, field, labelClassName, tooltip, error }, ref: any) => {
     const { t } = useTranslation();
     const customRef = useRef<HTMLDivElement>(null);
     const [openCalendar, setOpenCalendar] = useState<boolean>(false);
@@ -78,6 +80,11 @@ const DatePicker = React.forwardRef<any, any>(
           {value && <CloseIcon onClick={handleClear} />}
           <CalendarIcon />
         </div>
+        {error && (
+          <Typography type='Small' className={styles.error__text}>
+            {error}
+          </Typography>
+        )}
         <div className={calendarWrapperClass}>
           <Calendar
             className={styles.calendar__inner}
