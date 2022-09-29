@@ -12,7 +12,7 @@ import FormGroup from 'components/forms/FormGroup';
 import FormWrapper from 'components/forms/FormWrapper';
 import { AccountTypeOptions } from 'utils/filterHelper';
 import MultipleSelect from 'components/shared/MultipleSelect';
-import { usersSelectors } from 'store/usersSlice';
+import { usersActions, usersSelectors } from 'store/usersSlice';
 import { accountsActions, accountsSelectors } from 'store/accountsSlice';
 import { RoleType } from 'types/api';
 
@@ -23,6 +23,8 @@ import { addUserFormFields, addSchemaKeys } from './fields';
 const AddUserForm = ({ onClick, isEditable = false }: IAddUser) => {
   const { t } = useTranslation();
   const userErrors = useSelector(usersSelectors.selectUsersError);
+  const userAdminErrors = useSelector(adminSelectors.selectAdminError);
+
   const accountList = useSelector(accountsSelectors.selectAllAccountList);
   const dispatch = useAppDispatch();
 
@@ -30,6 +32,9 @@ const AddUserForm = ({ onClick, isEditable = false }: IAddUser) => {
     if (!accountList.length) {
       dispatch(accountsActions.getAllAccounts());
     }
+    return () => {
+      dispatch(usersActions.clearError());
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -84,13 +89,21 @@ const AddUserForm = ({ onClick, isEditable = false }: IAddUser) => {
             </p>
 
             <Input
-              error={formMethods.formState.errors.name?.message || userErrors?.name}
+              error={
+                formMethods.formState.errors.name?.message ||
+                userErrors?.name ||
+                userAdminErrors?.name
+              }
               {...addUserFormFields.name}
               {...formMethods.register('name')}
             />
 
             <Input
-              error={formMethods.formState.errors.email?.message || userErrors?.email}
+              error={
+                formMethods.formState.errors.email?.message ||
+                userErrors?.email ||
+                userAdminErrors?.email
+              }
               {...addUserFormFields.email}
               {...formMethods.register('email')}
             />

@@ -148,6 +148,9 @@ const Table = ({
 
   const handleClose = () => {
     setOpen(false);
+    return () => {
+      dispatch(accountsActions.removeAccountById());
+    };
   };
 
   const handleBlock = useCallback(

@@ -23,6 +23,9 @@ const usersSlice = createSlice({
       state.loading = false;
       state.error = null;
     });
+    builder.addCase(usersThunks.clearError, (state) => {
+      state.error = null;
+    });
 
     builder.addMatcher(isAnyOf(usersThunks.addNewUser.pending), extraReducers.pendingReducer);
 

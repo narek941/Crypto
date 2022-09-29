@@ -47,6 +47,8 @@ const AddAccountForm = ({ onClick, isEditable = false }: IAddAccount) => {
             maxPosition: wallets && wallets[0].alertTriggers.maxPositionSize,
             stopLossOrder: wallets && wallets[0].alertTriggers.stopLossOrderRequired,
             wrongCurrencyAlert: wallets && wallets[0].alertTriggers.wrongCurrencyAlertRequired,
+            alertTriggers: wallets && wallets[0].alertTriggers.id,
+            walletId: wallets && wallets[0].id,
           }
         : {
             baseCurrency: 521,

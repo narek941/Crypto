@@ -245,7 +245,7 @@ const TradingViewChart = ({
           }
           shiftedCoordinate = Math.max(
             0,
-            Math.min(ref.current.clientWidth - toolTipWidth, shiftedCoordinate),
+            Math.min(ref.current.clientWidth - toolTipWidth - 60, shiftedCoordinate),
           );
           var coordinateY =
             coordinate - toolTipHeight - toolTipMargin > 0
@@ -258,6 +258,7 @@ const TradingViewChart = ({
                   ),
                 );
           toolTip.style.display = 'block';
+
           toolTip.style.padding = '12px';
           toolTip.style.left = shiftedCoordinate + 'px';
           toolTip.style.top = coordinateY + 'px';

@@ -104,6 +104,7 @@ const Select = React.forwardRef(
     };
 
     const handleSelect = (selectedItem: string | number) => {
+      // eslint-disable-next-line no-console
       setFilteredOption(sortedOption);
       onChange(selectedItem);
       if (!callback) {
@@ -129,9 +130,7 @@ const Select = React.forwardRef(
     };
 
     const handleClearSearch = () => {
-      !currentOption && onChange('');
-
-      setFilteredOption(sortedOption);
+      !currentOption && onChange(null);
     };
 
     const handleClear = (event?: React.FormEvent<HTMLElement>) => {
@@ -184,9 +183,9 @@ const Select = React.forwardRef(
             </div>
             <div className={optionClass}>
               <div className={styles.select__option__select_container}>
-                {filteredOption.map((item, index) => (
+                {filteredOption.map((item) => (
                   <div
-                    key={index}
+                    key={item?.value}
                     role='button'
                     onClick={() => handleSelect(item.value)}
                     className={classNames(styles.select__option__item, {

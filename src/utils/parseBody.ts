@@ -3,36 +3,53 @@ import moment from 'moment';
 
 import { platformType } from './filterHelper';
 
-const parseAccountBody = (body: any, tradingPairs: any): any => ({
-  testnet: false,
-  status: 'ACTIVE',
-  name: body.name.trim(),
-  // startCapitalInBaseCurrency: body.startCapital,
-  baseCurrency: {
-    id: body.baseCurrency,
-  },
-  allowedCurrencies: filterAllowedCurrency(body?.allowedPairs, tradingPairs).allowedCurrencies,
-  wallets: [
-    {
-      platform: {
-        id: body.exchange,
-      },
-      apiKey: body.apiKey,
-      apiSecret: body.apiSecret,
-      refreshInterval: body.refreshInterval,
-      alertTriggers: {
-        maxDrawDown: Number(body.maxDrawdown),
-        maxPositionSize: body.maxPosition,
-        maxRiskPosition: body.maxRisk,
-        longTradeAllowed: true,
-        shortTradeAllowed: true,
-        stopLossOrderRequired: body.stopLossOrder,
-      },
+const parseAccountBody = (body: any, tradingPairs: any): any => {
+  const alertTrigger = {
+    maxDrawDown: Number(body.maxDrawdown),
+    maxPositionSize: body.maxPosition,
+    maxRiskPosition: body.maxRisk,
+    longTradeAllowed: true,
+    shortTradeAllowed: true,
+    stopLossOrderRequired: body.stopLossOrder,
+  };
+  const alertTriggerWithId = {
+    maxDrawDown: Number(body.maxDrawdown),
+    maxPositionSize: body.maxPosition,
+    maxRiskPosition: body.maxRisk,
+    longTradeAllowed: true,
+    shortTradeAllowed: true,
+    stopLossOrderRequired: body.stopLossOrder,
+    id: body?.alertTriggers,
+  };
+  const wallet = {
+    platform: {
+      id: body.exchange,
     },
-  ],
-  alertsDestinations: body.alertsDestinations,
-  allowedPairs: filterAllowedCurrency(body?.allowedPairs, tradingPairs).allowedPairs,
-});
+    apiKey: body.apiKey,
+    apiSecret: body.apiSecret,
+    refreshInterval: body.refreshInterval,
+    alertTriggers: body?.alertTriggers ? alertTriggerWithId : alertTrigger,
+  };
+
+  const walletWithId = {
+    id: body?.walletId,
+    ...wallet,
+  };
+
+  return {
+    testnet: false,
+    status: 'ACTIVE',
+    name: body.name.trim(),
+    // startCapitalInBaseCurrency: body.startCapital,
+    baseCurrency: {
+      id: body.baseCurrency,
+    },
+    allowedCurrencies: filterAllowedCurrency(body?.allowedPairs, tradingPairs).allowedCurrencies,
+    wallets: [body?.walletsId ? walletWithId : wallet],
+    alertsDestinations: body.alertsDestinations,
+    allowedPairs: filterAllowedCurrency(body?.allowedPairs, tradingPairs).allowedPairs,
+  };
+};
 
 const filterAllowedCurrency = (data: any, tradingPairs: any) => {
   const allowedPairs: any[] = [];
