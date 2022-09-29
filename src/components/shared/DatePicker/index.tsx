@@ -55,15 +55,15 @@ const DatePicker = React.forwardRef<any, any>(
 
     const handleChange = (data: any) => {
       setValue(data);
-      // eslint-disable-next-line no-console
-      console.log(data, 'sss');
       formMethods.setValue(name, data.toString());
+      handleCloseCalendar();
     };
     const handleCloseCalendar = () => setOpenCalendar(false);
 
     const handleClear = (e?: React.FormEvent<SVGSVGElement>) => {
       e?.stopPropagation();
-      formMethods.reset(name);
+      setValue(null);
+      formMethods.setValue(name, '');
     };
 
     useOnClickOutside(customRef, handleCloseCalendar);

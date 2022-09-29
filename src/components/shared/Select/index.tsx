@@ -128,6 +128,12 @@ const Select = React.forwardRef(
       setFilteredOption(newOption);
     };
 
+    const handleClearSearch = () => {
+      !currentOption && onChange('');
+
+      setFilteredOption(sortedOption);
+    };
+
     const handleClear = (event?: React.FormEvent<HTMLElement>) => {
       event?.stopPropagation();
       onChange('');
@@ -159,6 +165,7 @@ const Select = React.forwardRef(
                   name={name}
                   className={inputClass}
                   onChange={handleSearch}
+                  onBlur={handleClearSearch}
                   placeholder={placeholder}
                   autoComplete='none'
                   readOnly={sortedOption.length < 1}

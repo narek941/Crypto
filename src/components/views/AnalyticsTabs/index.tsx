@@ -65,7 +65,7 @@ const AnalyticsTabs = (): JSX.Element => {
     if (!isOpen) {
       dispatch(walletsActions.clearError());
     }
-  }, [isOpen]);
+  }, [dispatch, isOpen]);
 
   const handleInflowSubmit = async (body: any) => {
     const credentials = parseBody.parseInflowBody(body, walletId);
