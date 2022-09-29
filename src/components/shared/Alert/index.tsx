@@ -63,7 +63,12 @@ const Alert = ({
   };
 
   return (
-    <div className={popUpClasses}>
+    <div
+      className={popUpClasses}
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
+    >
       <div className={styles.popup}>
         <p className={styles.popup__header}>
           {!actionIsDone && !isActionIsDone ? renderText().question : renderText().answer}

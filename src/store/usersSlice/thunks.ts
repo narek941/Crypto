@@ -1,5 +1,5 @@
 import { AxiosError } from 'axios';
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 
 import { Slice } from 'types';
 import { parseAddUserError } from 'utils/errorConverter';
@@ -34,3 +34,4 @@ export const addNewUser = createAsyncThunk(
     }
   },
 );
+export const clearError = createAction('clearUsersError');
