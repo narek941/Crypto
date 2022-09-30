@@ -45,4 +45,5 @@ export interface ISelectGroup {
   leftInputName?: string;
   rightInputName?: string;
   index?: number;
+  viewOnly?: boolean;
 }

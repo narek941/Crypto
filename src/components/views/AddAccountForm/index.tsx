@@ -1,9 +1,11 @@
 import { useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
-import { useForm } from 'hooks';
+import { useAppSelector, useForm } from 'hooks';
 import FormWrapper from 'components/forms/FormWrapper';
 import { accountsSelectors } from 'store/accountsSlice';
+import { authSelectors } from 'store/authSlice';
+import { RoleType } from 'types/api';
 
 import Wallet from './FormGroups/Wallet';
 import { addAccountSchemaKeys } from './fields';
@@ -14,6 +16,8 @@ import TradeSetting from './FormGroups/TradeSetting';
 import { AddAccountFormShape, AllowedPairsProps, IAddAccount } from './types';
 
 const AddAccountForm = ({ onClick, isEditable = false }: IAddAccount) => {
+  const role = useAppSelector(authSelectors.selectRole);
+
   const { name, allowedPairs, alertsDestinations, wallets, baseCurrency, allowedCurrencies } =
     useSelector(accountsSelectors.selectAccountById);
   const accountTradingPairs = allowedPairs?.map((item: AllowedPairsProps) => item?.tradingPair);
@@ -87,11 +91,11 @@ const AddAccountForm = ({ onClick, isEditable = false }: IAddAccount) => {
 
   return (
     <FormWrapper {...{ formMethods }} onSubmit={handleSubmit(onClick)}>
-      <BaseSetting formMethods={formMethods} />
-      <Wallet formMethods={formMethods} />
-      <TradeSetting formMethods={formMethods} />
+      <BaseSetting formMethods={formMethods} viewOnly={role !== RoleType.ADMIN} />
+      <Wallet formMethods={formMethods} viewOnly={role !== RoleType.ADMIN} />
+      <TradeSetting formMethods={formMethods} viewOnly={role !== RoleType.ADMIN} />
       <TradeLimit formMethods={formMethods} />
-      <FormAction formMethods={formMethods} />
+      <FormAction formMethods={formMethods} viewOnly={role !== RoleType.ADMIN} />
     </FormWrapper>
   );
 };

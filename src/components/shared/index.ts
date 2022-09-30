@@ -17,6 +17,7 @@ export { default as LinkButton } from './LinkButton';
 export { default as TableSearch } from './TableSearch';
 export { default as PublicRoute } from './PublicRoute';
 export { default as ToggleSwitch } from './ToggleSwitch';
+export { default as AccessWrapper } from './AccessWrapper';
 export { default as ScrollWrapper } from './ScrollWrapper';
 export { default as ExternalImage } from './ExternalImage';
 export { default as ProtectedRoute } from './ProtectedRoute';

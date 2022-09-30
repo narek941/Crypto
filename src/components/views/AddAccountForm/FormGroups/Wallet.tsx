@@ -1,7 +1,7 @@
 import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { Input, Select } from 'components';
+import { AccessWrapper, Input, Select } from 'components';
 import FormGroup from 'components/forms/FormGroup';
 import { useAppSelector } from 'hooks';
 import { adminSelectors } from 'store/adminSlice';
@@ -11,7 +11,7 @@ import { addAccountFormFields } from '../fields';
 import { AddAccountFormShape } from '../types';
 import styles from '../AddAccountForm.module.scss';
 
-const AddAccountForm = ({ formMethods }: any) => {
+const AddAccountForm = ({ formMethods, viewOnly = false }: any) => {
   const { t } = useTranslation();
   const { list } = useAppSelector(adminSelectors.selectExchange);
   const exchangeOptions = createOptions(list);
@@ -31,21 +31,25 @@ const AddAccountForm = ({ formMethods }: any) => {
               withAction={false}
               error={formMethods.formState.errors.exchange?.message}
               withClear={false}
+              viewOnly={viewOnly}
               options={exchangeOptions}
-              transformLabel={true}
             />
           )}
         />
-        <Input
-          {...addAccountFormFields.apiKey}
-          {...formMethods.register('apiKey')}
-          error={formMethods.formState.errors.apiKey?.message}
-        />
-        <Input
-          {...addAccountFormFields.apiSecret}
-          {...formMethods.register('apiSecret')}
-          error={formMethods.formState.errors.apiSecret?.message}
-        />
+        <AccessWrapper>
+          <>
+            <Input
+              {...addAccountFormFields.apiKey}
+              {...formMethods.register('apiKey')}
+              error={formMethods.formState.errors.apiKey?.message}
+            />
+            <Input
+              {...addAccountFormFields.apiSecret}
+              {...formMethods.register('apiSecret')}
+              error={formMethods.formState.errors.apiSecret?.message}
+            />
+          </>
+        </AccessWrapper>
         <Controller
           control={formMethods.control}
           {...formMethods.register('refreshInterval')}
@@ -58,6 +62,7 @@ const AddAccountForm = ({ formMethods }: any) => {
               error={formMethods.formState.errors.refreshInterval?.message}
               withClear={false}
               numeric={true}
+              viewOnly={viewOnly}
             />
           )}
         />

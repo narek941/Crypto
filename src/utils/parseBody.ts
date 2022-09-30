@@ -10,6 +10,7 @@ const parseAccountBody = (body: any, tradingPairs: any): any => {
     maxRiskPosition: body.maxRisk,
     longTradeAllowed: true,
     shortTradeAllowed: true,
+    wrongCurrencyAlertRequired: body.wrongCurrencyAlert,
     stopLossOrderRequired: body.stopLossOrder,
   };
   const alertTriggerWithId = {

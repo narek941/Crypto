@@ -2,16 +2,13 @@ import classNames from 'classnames';
 import { useEffect, useState } from 'react';
 import { Tooltip } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { AddAccountIcon, FilterIcon } from 'assets/icons';
-import { Alert, LinkButton, Tab } from 'components';
+import { AccessWrapper, Alert, LinkButton, Tab } from 'components';
 import AccountsFilters from 'components/views/filters/AccountsFilters';
 import UsersFilters from 'components/views/filters/UsersFilters';
 import AlertsFilters from 'components/views/filters/AlertsFilters';
-import { RoleType } from 'types/api';
-import { authSelectors } from 'store/authSlice';
 import accountsTab from 'constants/tabs/accounts';
 import { accountsActions } from 'store/accountsSlice';
 import { useAppDispatch } from 'hooks';
@@ -25,7 +22,6 @@ const TableToolbar = ({ linkText, linkTo, action }: ITableToolbarProps): JSX.Ele
   const { t } = useTranslation();
   const [filterVisible, setFilterVisible] = useState(false);
   const text = `+ ADD NEW ${linkText}`;
-  const role = useSelector(authSelectors.selectRole);
   const dispatch = useAppDispatch();
   const toolbarClasses = classNames(styles.toolbar, {
     [styles.toolbar_noLink]: !linkTo,
@@ -58,8 +54,6 @@ const TableToolbar = ({ linkText, linkTo, action }: ITableToolbarProps): JSX.Ele
     const platformId =
       accountsTab?.find((item: any) => searchParams?.get('tab') == item?.id)?.platformId || 1;
     dispatch(accountsActions.platformUpdate({ platform: platformId }));
-    // dispatch(accountsActions.accountsFilterUpdate({ filter: { platformId } }));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams.get('tab')]);
 
   const renderFilter = () => {
@@ -95,7 +89,9 @@ const TableToolbar = ({ linkText, linkTo, action }: ITableToolbarProps): JSX.Ele
         <>
           {action && linkTo && (
             <div className={styles.toolbar__link}>
-              {role === RoleType.ADMIN && <LinkButton to={linkTo}>{text}</LinkButton>}
+              <AccessWrapper>
+                <LinkButton to={linkTo}>{text}</LinkButton>
+              </AccessWrapper>
             </div>
           )}
         </>
@@ -108,10 +104,12 @@ const TableToolbar = ({ linkText, linkTo, action }: ITableToolbarProps): JSX.Ele
       <div className={toolbarClasses}>
         {renderTab()}
         <div className={styles.toolbar__filter}>
-          {role === RoleType.ADMIN && linkTo && action === ActionType.ACCOUNTS && (
-            <div role='button' onClick={() => handleCreateAccount(linkTo)}>
-              <AddAccountIcon className={styles.addAccount} />
-            </div>
+          {linkTo && action === ActionType.ACCOUNTS && (
+            <AccessWrapper>
+              <div role='button' onClick={() => handleCreateAccount(linkTo)}>
+                <AddAccountIcon className={styles.addAccount} />
+              </div>
+            </AccessWrapper>
           )}
 
           <Tooltip followCursor={true} placement='bottom' title={t('filters')}>
