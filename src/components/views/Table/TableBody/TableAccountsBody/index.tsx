@@ -83,6 +83,8 @@ const TableAccountBody = ({
             return 'SYNCING';
           case 'STATS_GENERATION':
             return 'STATS';
+          case 'IMPORT_DONE':
+            return 'Import done';
           default:
             return status;
         }
