@@ -13,13 +13,8 @@ const parseAccountBody = (body: any, tradingPairs: any): any => {
     stopLossOrderRequired: body.stopLossOrder,
   };
   const alertTriggerWithId = {
-    maxDrawDown: Number(body.maxDrawdown),
-    maxPositionSize: body.maxPosition,
-    maxRiskPosition: body.maxRisk,
-    longTradeAllowed: true,
-    shortTradeAllowed: true,
-    stopLossOrderRequired: body.stopLossOrder,
     id: body?.alertTriggers,
+    ...alertTrigger,
   };
   const wallet = {
     platform: {
@@ -45,7 +40,7 @@ const parseAccountBody = (body: any, tradingPairs: any): any => {
       id: body.baseCurrency,
     },
     allowedCurrencies: filterAllowedCurrency(body?.allowedPairs, tradingPairs).allowedCurrencies,
-    wallets: [body?.walletsId ? walletWithId : wallet],
+    wallets: [body?.walletId ? walletWithId : wallet],
     alertsDestinations: body.alertsDestinations,
     allowedPairs: filterAllowedCurrency(body?.allowedPairs, tradingPairs).allowedPairs,
   };
