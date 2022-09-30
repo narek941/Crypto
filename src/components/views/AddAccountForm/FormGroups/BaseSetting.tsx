@@ -11,7 +11,7 @@ import { AddAccountFormShape } from '../types';
 import { addAccountFormFields } from '../fields';
 import styles from '../AddAccountForm.module.scss';
 
-const BaseSetting = ({ formMethods }: any) => {
+const BaseSetting = ({ formMethods, viewOnly = false }: any) => {
   const coins = useAppSelector(adminSelectors.selectCoins);
   const coinOptions = createOptions(coins);
   const { t } = useTranslation();
@@ -24,6 +24,7 @@ const BaseSetting = ({ formMethods }: any) => {
           {...addAccountFormFields.name}
           {...formMethods.register('name')}
           error={formMethods.formState.errors.name?.message}
+          viewOnly={viewOnly}
         />
         {!!coinOptions.length && (
           <Controller
@@ -38,6 +39,7 @@ const BaseSetting = ({ formMethods }: any) => {
                 error={formMethods.formState.errors.baseCurrency?.message}
                 options={coinOptions}
                 withClear={false}
+                viewOnly={viewOnly}
               />
             )}
           />

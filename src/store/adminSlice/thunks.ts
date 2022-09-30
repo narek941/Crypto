@@ -4,6 +4,7 @@ import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { Slice } from 'types';
 import { adminApi } from 'api';
 import { ITableFilter } from 'types/api';
+import { parseAddUserError } from 'utils/errorConverter';
 
 import { accountsActions } from '../accountsSlice';
 
@@ -157,7 +158,7 @@ export const updateUserEmail = createAsyncThunk(
       return response.data;
     } catch (exception) {
       const error = exception as AxiosError<{ message: any }>;
-      return thunkAPI.rejectWithValue({ error: { email: error.response?.data.message[0] } });
+      return thunkAPI.rejectWithValue({ error: parseAddUserError(error.response?.data.message) });
     }
   },
 );

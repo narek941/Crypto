@@ -16,22 +16,23 @@ const Select = React.forwardRef(
       id,
       name,
       error,
+      label,
+      value,
+      onBlur,
+      closed,
+      tooltip,
+      callback,
+      onChange,
       className,
-      color = 'default',
+      filterName,
       placeholder,
       options = [],
-      onChange,
-      onBlur,
-      value,
-      label,
-      transformLabel = false,
-      callback,
-      filterName,
-      withAction = false,
-      withClear = true,
-      closed,
       numeric = false,
-      tooltip,
+      withClear = true,
+      viewOnly = false,
+      color = 'default',
+      withAction = false,
+      transformLabel = false,
       ...props
     }: ISelect,
     ref: ForwardedRef<HTMLInputElement>,
@@ -89,7 +90,7 @@ const Select = React.forwardRef(
     const selectClass: string = classNames(selectClassName);
 
     const openDropdown = () => {
-      setIsOpen(true);
+      !viewOnly && setIsOpen(true);
     };
 
     const closeDropdown = () => {
@@ -167,7 +168,7 @@ const Select = React.forwardRef(
                   onBlur={handleClearSearch}
                   placeholder={placeholder}
                   autoComplete='none'
-                  readOnly={sortedOption.length < 1}
+                  readOnly={sortedOption.length < 1 || viewOnly}
                   defaultValue={props.defaultValue}
                   value={value ? currentOption?.label : ''}
                 />

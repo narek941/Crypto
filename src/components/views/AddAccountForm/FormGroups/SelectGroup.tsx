@@ -4,7 +4,7 @@ import { Tooltip } from '@mui/material';
 
 import { BinIcon } from 'assets/icons';
 import { useAppSelector } from 'hooks';
-import { Input, Select } from 'components';
+import { AccessWrapper, Input, Select } from 'components';
 import { adminSelectors } from 'store/adminSlice';
 import { createOptions } from 'utils/createOptions';
 
@@ -16,10 +16,11 @@ const SelectGroup = ({
   removePair,
   id,
   index,
-  secondInput = 'select',
   formMethods,
   leftInputName,
   rightInputName,
+  viewOnly = false,
+  secondInput = 'select',
 }: ISelectGroup) => {
   const coins = useAppSelector(adminSelectors.selectCoins);
   // const tradingPairs = useAppSelector(adminSelectors.selectTradingPairs);
@@ -53,6 +54,7 @@ const SelectGroup = ({
                   withAction={false}
                   error={errorPair?.[`${index}`]?.[`${leftInputName}`]?.id?.message ? true : false}
                   withClear={false}
+                  viewOnly={viewOnly}
                 />
               )}
             />
@@ -67,6 +69,7 @@ const SelectGroup = ({
                   className={styles.item}
                   withAction={false}
                   withClear={false}
+                  viewOnly={viewOnly}
                   error={
                     errorPair?.[`${index}`]?.[`${rightInputName}`]?.id?.message ||
                     errorPair?.[`${index}`]?.[`${leftInputName}`]?.id?.message
@@ -128,9 +131,11 @@ const SelectGroup = ({
             />
           </>
         )}
-        <Tooltip followCursor={true} placement='bottom' title='Delete'>
-          <BinIcon onClick={() => removePair(id)} className={styles.bin} />
-        </Tooltip>
+        <AccessWrapper>
+          <Tooltip followCursor={true} placement='bottom' title='Delete'>
+            <BinIcon onClick={() => removePair(id)} className={styles.bin} />
+          </Tooltip>
+        </AccessWrapper>
       </div>
       {formMethods.formState.errors && (
         <div>

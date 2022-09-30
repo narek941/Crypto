@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { SubmitHandler } from 'react-hook-form';
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import { Routes } from 'types';
@@ -10,8 +10,6 @@ import { AddAccountForm } from 'components';
 import { adminActions, adminSelectors } from 'store/adminSlice';
 import { accountsActions, accountsSelectors } from 'store/accountsSlice';
 import { AddAccountFormShape } from 'components/views/AddAccountForm/types';
-import { authSelectors } from 'store/authSlice';
-import { RoleType } from 'types/api';
 
 import styles from './AddNewAccount.module.scss';
 
@@ -20,7 +18,6 @@ const AddNewAccount: React.FC = () => {
   const dispatch = useAppDispatch();
   const { id: accountId } = useParams();
   const id = Number(accountId);
-  const role = useSelector(authSelectors.selectRole);
   const tradingPairs = useAppSelector(adminSelectors.selectTradingPairs);
   const { totalCount } = useAppSelector(adminSelectors.selectExchange);
 
@@ -54,9 +51,9 @@ const AddNewAccount: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (role && role !== RoleType.ADMIN) {
-    return <Navigate to={Routes.Accounts} replace />;
-  }
+  // if (role && role !== RoleType.ADMIN) {
+  //   return <Navigate to={Routes.Accounts} replace />;
+  // }
 
   return (
     <div className={styles.container}>

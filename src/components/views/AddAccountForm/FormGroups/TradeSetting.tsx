@@ -1,14 +1,14 @@
-/* eslint-disable no-console */
 import { useFieldArray } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import FormGroup from 'components/forms/FormGroup';
+import { AccessWrapper } from 'components';
 
 import styles from '../AddAccountForm.module.scss';
 
 import SelectGroup from './SelectGroup';
 
-const TradeSetting = ({ formMethods }: any) => {
+const TradeSetting = ({ formMethods, viewOnly = false }: any) => {
   const { t } = useTranslation();
 
   const initialPair = {
@@ -58,6 +58,7 @@ const TradeSetting = ({ formMethods }: any) => {
       key={id}
       id={id}
       index={index}
+      viewOnly={viewOnly}
       leftInputName='from'
       rightInputName='to'
       formMethods={formMethods}
@@ -73,24 +74,28 @@ const TradeSetting = ({ formMethods }: any) => {
           <p className={styles.form__section__item__subtitle}>{t('allowed_pairs')}</p>
 
           {renderPairs}
-          <div role='button' onClick={addPair} className={styles.form__section__item__add_button}>
-            + {t('add_pair')}
-          </div>
+          <AccessWrapper>
+            <div role='button' onClick={addPair} className={styles.form__section__item__add_button}>
+              + {t('add_pair')}
+            </div>
+          </AccessWrapper>
         </>
       </FormGroup>
-      <FormGroup className={styles.form__section}>
-        <>
-          <div className={styles.form__header}>{t('accounts_alerts_destination')}</div>
-          {renderAlerts}
-          <div
-            role='button'
-            onClick={addDestination}
-            className={styles.form__section__item__add_button}
-          >
-            + {t('add_destination')}
-          </div>
-        </>
-      </FormGroup>
+      <AccessWrapper>
+        <FormGroup className={styles.form__section}>
+          <>
+            <div className={styles.form__header}>{t('accounts_alerts_destination')}</div>
+            {renderAlerts}
+            <div
+              role='button'
+              onClick={addDestination}
+              className={styles.form__section__item__add_button}
+            >
+              + {t('add_destination')}
+            </div>
+          </>
+        </FormGroup>
+      </AccessWrapper>
     </>
   );
 };

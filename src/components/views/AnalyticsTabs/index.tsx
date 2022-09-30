@@ -30,7 +30,9 @@ import styles from './AnalyticsTabs.module.scss';
 import { TabType } from './types';
 
 const AnalyticsTabs = (): JSX.Element => {
-  const { openPortal, closePortal, isOpen, Portal } = usePortal();
+  const { openPortal, closePortal, isOpen, Portal } = usePortal({
+    closeOnEsc: true,
+  });
   const accountByID = useAppSelector(accountsSelectors.selectAccountById);
   const authRole = useAppSelector(authSelectors.selectRole);
 

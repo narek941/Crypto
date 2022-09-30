@@ -32,6 +32,7 @@ const Input = React.forwardRef<any, IInputProps>(
       className = '',
       defaultValue,
       labelClassName,
+      viewOnly = false,
       innerClassName = '',
       haveRightIcon = false,
       isDisabledError = false,
@@ -105,6 +106,7 @@ const Input = React.forwardRef<any, IInputProps>(
                 defaultValue={defaultValue}
                 autoComplete='off'
                 disabled={disabled}
+                readOnly={viewOnly}
                 className={inputClasses}
                 placeholder={placeholder}
                 onChange={onChange}

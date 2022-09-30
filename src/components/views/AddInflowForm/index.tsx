@@ -1,8 +1,14 @@
 import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useMemo } from 'react';
+import { useMemo, useRef } from 'react';
 
-import { useAppDispatch, useAppSelector, useForm } from 'hooks';
+import {
+  useAppDispatch,
+  useAppSelector,
+  useForm,
+  useLockBodyScroll,
+  useOnClickOutside,
+} from 'hooks';
 import { Button, Input, Select } from 'components';
 import FormGroup from 'components/forms/FormGroup';
 import FormWrapper from 'components/forms/FormWrapper';
@@ -18,12 +24,15 @@ import { addInflowFormFields, addInflowSchemaKeys } from './fields';
 const AddInflowForm = ({ onClick, handleClose, id }: IAddInflow) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const ref = useRef(null);
   const coins = useAppSelector(adminSelectors.selectCoins);
   const coinsOptions = createOptions(coins);
   const { list } = useAppSelector(walletsSelectors.selectInflow);
   const currentInflow = list?.find((item) => id === item?.id);
   !coins.length && dispatch(adminActions.getCoins());
   const walletError = useAppSelector(walletsSelectors.selectWalletsError);
+  useLockBodyScroll();
+  useOnClickOutside(ref, handleClose);
 
   const addInflowFormDefaultValues = useMemo(
     () =>
@@ -49,7 +58,7 @@ const AddInflowForm = ({ onClick, handleClose, id }: IAddInflow) => {
   });
 
   return (
-    <>
+    <div ref={ref}>
       <FormWrapper {...{ formMethods }} onSubmit={handleSubmit(onClick)}>
         <FormGroup className={styles.signIn__form__group}>
           <>
@@ -129,7 +138,7 @@ const AddInflowForm = ({ onClick, handleClose, id }: IAddInflow) => {
           </>
         </FormGroup>
       </FormWrapper>
-    </>
+    </div>
   );
 };
 
