@@ -94,7 +94,7 @@ const AddAccountForm = ({ onClick, isEditable = false }: IAddAccount) => {
       <BaseSetting formMethods={formMethods} viewOnly={role !== RoleType.ADMIN} />
       <Wallet formMethods={formMethods} viewOnly={role !== RoleType.ADMIN} />
       <TradeSetting formMethods={formMethods} viewOnly={role !== RoleType.ADMIN} />
-      <TradeLimit formMethods={formMethods} />
+      <TradeLimit formMethods={formMethods} viewOnly={role !== RoleType.ADMIN} />
       <FormAction formMethods={formMethods} viewOnly={role !== RoleType.ADMIN} />
     </FormWrapper>
   );

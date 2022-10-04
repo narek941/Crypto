@@ -1,0 +1,20 @@
+export interface ICapitalChartLimit {
+  maxCurrentCapitalInBaseCurrency: string | number;
+  maxCurrentOpenProfitInBaseCurrency: string | number;
+  maxCurrentOpenProfitInPercent: string | number;
+  maxEarnedCapitalInBaseCurrency: string | number;
+  maxEarnedCapitalInPercent: string | number;
+  maxNumberDailyTransactions: string | number;
+  maxProductivityInPercent: string | number;
+  maxRefreshDate: string | number;
+  maxStatsStartCapitalInBaseCurrency: string | number;
+  minCurrentCapitalInBaseCurrency: string | number;
+  minCurrentOpenProfitInBaseCurrency: string | number;
+  minCurrentOpenProfitInPercent: string | number;
+  minEarnedCapitalInBaseCurrency: string | number;
+  minEarnedCapitalInPercent: string | number;
+  minNumberDailyTransactions: string | number;
+  minProductivityInPercent: string | number;
+  minRefreshDate: string | number;
+  minStatsStartCapitalInBaseCurrency: string | number;
+}

@@ -23,11 +23,15 @@ const TradingViewChart = ({
   width,
   field2,
   baseCurrency,
+  minValue = 0,
+  maxValue = 432174.38960156,
   className,
 }) => {
   const ref = useRef();
   const [chartCreated, setChartCreated] = useState(false);
   const dataPrev = usePrevious(data);
+  // eslint-disable-next-line no-console
+  console.log(minValue, maxValue, 'capitalChartLimit');
 
   const formattedData = useMemo(
     () =>
@@ -40,7 +44,6 @@ const TradingViewChart = ({
     [data, field, timeField],
   );
   // adjust the scale based on the type of chart
-  const topScale = type === CHART_TYPES.AREA ? 0.32 : 0.2;
   const darkMode = useAppSelector(authSelectors.selectIsDarkMode);
   const textColor = darkMode ? 'white' : 'black';
   const linesColor = darkMode ? 'rgba(255, 255, 255, 0.12)' : 'rgba(33, 33, 33, 0.16)';
@@ -65,7 +68,7 @@ const TradingViewChart = ({
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [darkMode]);
+  }, [darkMode, minValue, maxValue]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const darkOptions = {
@@ -77,7 +80,7 @@ const TradingViewChart = ({
     },
     rightPriceScale: {
       scaleMargins: {
-        top: topScale,
+        top: 0.1,
         bottom: 0,
       },
       borderVisible: false,
@@ -98,6 +101,11 @@ const TradingViewChart = ({
         color: 'rgba(197, 203, 206, 0.5)',
         visible: false,
       },
+    },
+    handleScale: false,
+    axisPressedMouseMove: false,
+    priceScale: {
+      borderVisible: false,
     },
     crosshair: {
       horzLine: {
@@ -127,7 +135,7 @@ const TradingViewChart = ({
     },
     rightPriceScale: {
       scaleMargins: {
-        top: topScale,
+        top: 0.1,
         bottom: 0,
       },
       borderVisible: false,
@@ -148,6 +156,11 @@ const TradingViewChart = ({
         color: 'rgba(197, 203, 206, 0.5)',
         visible: false,
       },
+    },
+    handleScale: false,
+    axisPressedMouseMove: false,
+    priceScale: {
+      borderVisible: false,
     },
     crosshair: {
       horzLine: {
@@ -177,6 +190,15 @@ const TradingViewChart = ({
         lineColor: '#009688',
         lineWidth: 2,
         crosshairMarkerBackgroundColor: textColor,
+
+        // autoscaleInfoProvider: () => {
+        //   return {
+        //     priceRange: {
+        //       minValue: minValue,
+        //       maxValue: maxValue,
+        //     },
+        //   };
+        // },
       });
 
       series.setData(formattedData);

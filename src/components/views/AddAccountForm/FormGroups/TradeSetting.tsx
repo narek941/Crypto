@@ -33,11 +33,11 @@ const TradeSetting = ({ formMethods, viewOnly = false }: any) => {
   });
 
   const addPair = () => {
-    append(initialPair);
+    !viewOnly && append(initialPair);
   };
 
   const addDestination = () => {
-    appendAlertsDestinations(initialDestination);
+    !viewOnly && appendAlertsDestinations(initialDestination);
   };
 
   const renderAlerts = alertsDestinationsFields.map(({ id }, index) => (
@@ -86,13 +86,15 @@ const TradeSetting = ({ formMethods, viewOnly = false }: any) => {
           <>
             <div className={styles.form__header}>{t('accounts_alerts_destination')}</div>
             {renderAlerts}
-            <div
-              role='button'
-              onClick={addDestination}
-              className={styles.form__section__item__add_button}
-            >
-              + {t('add_destination')}
-            </div>
+            <AccessWrapper>
+              <div
+                role='button'
+                onClick={addDestination}
+                className={styles.form__section__item__add_button}
+              >
+                + {t('add_destination')}
+              </div>
+            </AccessWrapper>
           </>
         </FormGroup>
       </AccessWrapper>

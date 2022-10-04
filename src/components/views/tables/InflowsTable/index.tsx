@@ -21,13 +21,12 @@ import InflowsTableRow from './InflowsTableRow';
 import styles from './InflowsTable.module.scss';
 
 const InflowsTable = ({ filterVisible, handleAddInflow }: any) => {
+  const dispatch = useAppDispatch();
   const accountById = useSelector(accountsSelectors.selectAccountById);
   const { filter, list, totalCount } = useSelector(walletsSelectors.selectInflow);
   const walletId = accountById?.wallets?.length && accountById.wallets[0]?.id;
   const [open, setOpen] = useState(false);
   const [delID, setID] = useState<number | null>(null);
-
-  const dispatch = useAppDispatch();
 
   const handleChangePage = (_event: unknown, newPage: number) => {
     dispatch(inflowFilterUpdate({ skip: Number(newPage) * filter.take }));

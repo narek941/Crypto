@@ -15,6 +15,7 @@ import {
   WalletsTable,
   OrdersHistoryTable,
   AnalyticsAlertTable,
+  Alert,
 } from 'components';
 import { AddInflowIcon, FilterIcon } from 'assets/icons';
 import { accountsActions, accountsSelectors } from 'store/accountsSlice';
@@ -36,7 +37,7 @@ const AnalyticsTabs = (): JSX.Element => {
   const accountByID = useAppSelector(accountsSelectors.selectAccountById);
   const authRole = useAppSelector(authSelectors.selectRole);
 
-  const walletId = accountByID?.wallets?.[0]?.id;
+  const walletId = accountByID?.wallets?.[0]?.platform?.id;
   const dispatch = useAppDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
   const [openFilter, setOpenFilter] = useState<boolean>(false);
@@ -44,6 +45,7 @@ const AnalyticsTabs = (): JSX.Element => {
 
   const walletError = useAppSelector(walletsSelectors.selectWalletsError);
   const isLoading = useAppSelector(walletsSelectors.selectLoading);
+  const [openAlert, setOpenAlert] = useState(false);
 
   const { t } = useTranslation();
 
@@ -57,6 +59,8 @@ const AnalyticsTabs = (): JSX.Element => {
   };
 
   const handleFilter = () => setOpenFilter(!openFilter);
+
+  const handleCloseAlert = () => setOpenAlert(false);
 
   const handleAddInflow = (e: any, id?: any) => {
     setRecordId(id);
@@ -84,6 +88,13 @@ const AnalyticsTabs = (): JSX.Element => {
         ).unwrap();
     !isLoading && isNull(walletError) && closePortal();
   };
+  useEffect(() => {
+    if (walletError?.message === 'SYNC_NOT_FINISHED') {
+      closePortal();
+      setOpenAlert(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [walletError]);
 
   useEffect(() => {
     setOpenFilter(false);
@@ -141,6 +152,14 @@ const AnalyticsTabs = (): JSX.Element => {
         </div>
         {renderTable()}
       </TableContainer>
+
+      <Alert
+        open={openAlert}
+        type='SYNCING_INFLOW'
+        handleClose={handleCloseAlert}
+        isActionIsDone={true}
+      />
+
       {isOpen && (
         <Portal>
           <div className={styles.portal}>

@@ -266,6 +266,21 @@ export const getAccountAlertsFilterValues = createAsyncThunk(
   },
 );
 
+export const getAccountCapitalChartDataLimit = createAsyncThunk(
+  `${Slice.Accounts}/:id/daily-account-statistics-values`,
+  async (id: number, thunkAPI) => {
+    try {
+      const response = await accountsApi.accountCapitalChartLimitRequest(id);
+
+      return {
+        data: response.data,
+      };
+    } catch {
+      return thunkAPI.rejectWithValue({ error: '* Incorrect' });
+    }
+  },
+);
+
 export const getAccountsFilterValues = createAsyncThunk(
   `${Slice.Accounts}/accounts/list/filter-values`,
   async (id: number, thunkAPI) => {
@@ -280,7 +295,6 @@ export const getAccountsFilterValues = createAsyncThunk(
     }
   },
 );
-
 export const accountsFilterUpdate = createAction<Partial<ITableFilter>>('accountsFilter');
 
 export const accountsFilterClear = createAction<Partial<ITableFilter>>('accountsFilterClear');

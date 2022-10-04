@@ -1,0 +1,15 @@
+.calendar {
+  position: relative;
+  width: 100%;
+  @extend %flex-column;
+  gap: 6px;
+
+  &__label {
+    color: var(--font);
+    @extend %text-14;
+  }
+
+  &__picker {
+    padding: 0;
+  }
+}

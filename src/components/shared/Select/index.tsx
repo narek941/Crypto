@@ -68,7 +68,7 @@ const Select = React.forwardRef(
 
     const dropClass: string = classNames(styles.select__dropdown, {
       [styles.select__dropdown__open]: isOpen && sortedOption.length >= 1,
-      [styles.select__dropdown__disable]: sortedOption.length < 1,
+      [styles.select__dropdown__disable]: viewOnly || sortedOption.length < 1,
     });
 
     const optionClass: string = classNames(styles.select__option, {

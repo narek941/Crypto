@@ -17,13 +17,13 @@ const DualSelect = React.forwardRef(
   ({
     name,
     closed,
-    tooltip = null,
     callback,
     filterName,
     formMethods,
     placeholder,
     firstOptions,
     secondOptions,
+    tooltip = null,
     singleFilterName,
   }: IDualSelect): JSX.Element => {
     const { t } = useTranslation();

@@ -14,6 +14,7 @@ import { BrowserStorageKeys, BrowserStorageService } from 'services';
 import { TabType } from 'components/views/AnalyticsTabs/types';
 
 import styles from './AccountsAnalytics.module.scss';
+import { ICapitalChartLimit } from './types';
 
 const AccountsAnalytics = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -23,6 +24,7 @@ const AccountsAnalytics = (): JSX.Element => {
   const windowSize = useWindowSize();
 
   const [isLoading, setIsLoading] = useState(true);
+  const [capitalChartLimit, setCapitalChartLimit] = useState<ICapitalChartLimit>();
 
   const accountById = useAppSelector(accountsSelectors.selectAccountById);
   const accountAssetsChartData = useAppSelector(accountsSelectors.selectAccountAssetChartData);
@@ -72,6 +74,10 @@ const AccountsAnalytics = (): JSX.Element => {
         await dispatch(accountsActions.getAccountById(convertedId)).unwrap();
         await dispatch(accountsActions.getAccountCapitalChartData(convertedId)).unwrap();
         await dispatch(accountsActions.getAccountTradingPairsChartData(convertedId)).unwrap();
+        const { data } = await dispatch(
+          accountsActions.getAccountsFilterValues(convertedId),
+        ).unwrap();
+        setCapitalChartLimit(data);
         setIsLoading(false);
         await dispatch(accountsActions.getAccountSummary(convertedId)).unwrap();
         await dispatch(adminActions.getCoins()).unwrap();
@@ -156,6 +162,8 @@ const AccountsAnalytics = (): JSX.Element => {
                 timeField='snapshotDate'
                 field='currentCapitalInBaseCurrency'
                 width={canvasWidth}
+                minValue={Number(capitalChartLimit?.minCurrentCapitalInBaseCurrency)}
+                maxValue={Number(capitalChartLimit?.maxCurrentCapitalInBaseCurrency)}
                 type='AREA'
                 baseCurrency={accountById?.baseCurrency?.name}
               />
@@ -172,6 +180,8 @@ const AccountsAnalytics = (): JSX.Element => {
                 type='AREA'
                 baseCurrency='%'
                 field2='earnedCapitalInBaseCurrency'
+                minValue={Number(capitalChartLimit?.minEarnedCapitalInPercent)}
+                maxValue={Number(capitalChartLimit?.maxEarnedCapitalInPercent)}
               />
             </div>
           </div>
