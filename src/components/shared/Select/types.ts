@@ -17,6 +17,7 @@ export interface ISelect {
   error: ErrorType;
   color?: ColorType;
   options: Option[];
+  dualCallback: any;
   className?: string;
   multiple?: boolean;
   filterName?: string;

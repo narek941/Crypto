@@ -23,8 +23,8 @@ const TradingViewChart = ({
   width,
   field2,
   baseCurrency,
-  minValue = 0,
-  maxValue = 432174.38960156,
+  minValue,
+  maxValue,
   className,
 }) => {
   const ref = useRef();

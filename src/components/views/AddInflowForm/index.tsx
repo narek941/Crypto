@@ -114,7 +114,7 @@ const AddInflowForm = ({ onClick, handleClose, id }: IAddInflow) => {
                 )}
               />
             </div>
-            <div className={styles.item}>
+            {/* <div className={styles.item}>
               <Controller
                 control={formMethods.control}
                 name={addInflowFormFields.time.name as any}
@@ -127,7 +127,7 @@ const AddInflowForm = ({ onClick, handleClose, id }: IAddInflow) => {
                   />
                 )}
               />
-            </div>
+            </div> */}
             {/* {walletError && <div className={styles.error}>{walletError.message}</div>} */}
 
             <div className={styles.signIn__form__group__edit}>

@@ -43,23 +43,23 @@ export const addInflowFormFields: FormField<keyof AddInflowFormShape> = {
     placeholder: 'Select transaction date',
   },
 
-  time: {
-    name: 'time',
-    id: 'addInflow.time',
-    label: 'Time',
-    placeholder: 'Select transaction time',
-  },
+  // time: {
+  //   name: 'time',
+  //   id: 'addInflow.time',
+  //   label: 'Time',
+  //   placeholder: 'Select transaction time',
+  // },
   id: {
-    name: 'time',
-    id: 'addInflow.time',
-    label: 'Time',
-    placeholder: 'Select transaction date and time',
+    name: 'id',
+    id: 'addInflow.id',
+    label: 'id',
+    placeholder: 'Select transaction date and id',
   },
   api: {
-    name: 'time',
-    id: 'addInflow.time',
-    label: 'Time',
-    placeholder: 'Select transaction date and time',
+    name: 'api',
+    id: 'addInflow.api',
+    label: 'api',
+    placeholder: 'Select transaction date and api',
   },
 };
 

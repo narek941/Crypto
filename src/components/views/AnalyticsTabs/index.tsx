@@ -31,9 +31,7 @@ import styles from './AnalyticsTabs.module.scss';
 import { TabType } from './types';
 
 const AnalyticsTabs = (): JSX.Element => {
-  const { openPortal, closePortal, isOpen, Portal } = usePortal({
-    closeOnEsc: true,
-  });
+  const { Portal } = usePortal();
   const accountByID = useAppSelector(accountsSelectors.selectAccountById);
   const authRole = useAppSelector(authSelectors.selectRole);
 
@@ -42,6 +40,7 @@ const AnalyticsTabs = (): JSX.Element => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [openFilter, setOpenFilter] = useState<boolean>(false);
   const [recordId, setRecordId] = useState<number | undefined>();
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const walletError = useAppSelector(walletsSelectors.selectWalletsError);
   const isLoading = useAppSelector(walletsSelectors.selectLoading);
@@ -64,7 +63,7 @@ const AnalyticsTabs = (): JSX.Element => {
 
   const handleAddInflow = (e: any, id?: any) => {
     setRecordId(id);
-    isOpen ? closePortal(e) : openPortal(e);
+    isOpen ? setIsOpen(false) : setIsOpen(true);
   };
 
   useEffect(() => {
@@ -86,14 +85,13 @@ const AnalyticsTabs = (): JSX.Element => {
       : await dispatch(
           walletsActions.createManualInflow({ walletId: walletId, ...credentials }),
         ).unwrap();
-    !isLoading && isNull(walletError) && closePortal();
+    !isLoading && isNull(walletError) && setIsOpen(false);
   };
   useEffect(() => {
     if (walletError?.message === 'SYNC_NOT_FINISHED') {
-      closePortal();
+      setIsOpen(false);
       setOpenAlert(true);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [walletError]);
 
   useEffect(() => {
@@ -161,10 +159,14 @@ const AnalyticsTabs = (): JSX.Element => {
       />
 
       {isOpen && (
-        <Portal>
+        <Portal isOpen={isOpen}>
           <div className={styles.portal}>
             <div className={styles.portal__inner}>
-              <AddInflowForm onClick={handleInflowSubmit} handleClose={closePortal} id={recordId} />
+              <AddInflowForm
+                onClick={handleInflowSubmit}
+                handleClose={() => setIsOpen(false)}
+                id={recordId}
+              />
             </div>
           </div>
         </Portal>

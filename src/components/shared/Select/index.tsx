@@ -27,6 +27,7 @@ const Select = React.forwardRef(
       filterName,
       placeholder,
       options = [],
+      dualCallback,
       numeric = false,
       withClear = true,
       viewOnly = false,
@@ -132,6 +133,7 @@ const Select = React.forwardRef(
 
     const handleClearSearch = () => {
       !currentOption && onChange(null);
+      value === '' && dualCallback();
     };
 
     const handleClear = (event?: React.FormEvent<HTMLElement>) => {

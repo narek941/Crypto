@@ -1,6 +1,6 @@
 import React from 'react';
 import { TextField } from '@mui/material';
-import { TimePicker } from '@mui/x-date-pickers';
+import { MobileTimePicker } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
@@ -23,9 +23,10 @@ const TimePickerComponent = React.forwardRef<any, any>(
           {label}
         </label>
         <LocalizationProvider dateAdapter={AdapterMoment}>
-          <TimePicker
+          <MobileTimePicker
             className={styles.calendar__picker}
             // closeOnSelect={true}
+
             value={value}
             inputRef={ref}
             onChange={(value: any, keyboardInputValue?: string) => {
