@@ -26,13 +26,12 @@ const AddInflowForm = ({ onClick, handleClose, id }: IAddInflow) => {
   const dispatch = useAppDispatch();
   const ref = useRef(null);
   const coins = useAppSelector(adminSelectors.selectCoins);
-  const coinsOptions = createOptions(coins);
   const { list } = useAppSelector(walletsSelectors.selectInflow);
   const currentInflow = list?.find((item) => id === item?.id);
   !coins.length && dispatch(adminActions.getCoins());
-  const walletError = useAppSelector(walletsSelectors.selectWalletsError);
+  const coinsOptions = createOptions(coins);
   useLockBodyScroll();
-  useOnClickOutside(ref, handleClose);
+  useOnClickOutside(ref, () => {});
 
   const addInflowFormDefaultValues = useMemo(
     () =>
@@ -42,7 +41,7 @@ const AddInflowForm = ({ onClick, handleClose, id }: IAddInflow) => {
             coinName: currentInflow?.coin?.id,
             amount: currentInflow?.amount,
             fees: currentInflow?.transactionFee,
-            time: currentInflow?.createdAt && new Date(currentInflow?.createdAt),
+            date: currentInflow?.createdAt && new Date(currentInflow?.createdAt),
             api: currentInflow?.api,
             id: currentInflow?.id,
           }
@@ -103,19 +102,33 @@ const AddInflowForm = ({ onClick, handleClose, id }: IAddInflow) => {
             <div className={styles.item}>
               <Controller
                 control={formMethods.control}
-                name={addInflowFormFields.time.name as any}
+                name={addInflowFormFields.date.name as any}
                 render={(field: any) => (
                   <DatePicker
                     field={field}
                     formMethods={formMethods}
-                    {...addInflowFormFields.time}
+                    {...addInflowFormFields.date}
                     months={1}
-                    error={formMethods.formState.errors.time?.message}
+                    error={formMethods.formState.errors.date?.message}
                   />
                 )}
               />
             </div>
-            {walletError && <div className={styles.error}>{walletError.message}</div>}
+            {/* <div className={styles.item}>
+              <Controller
+                control={formMethods.control}
+                name={addInflowFormFields.time.name as any}
+                render={(field: any) => (
+                  <TimePickerComponent
+                    {...field}
+                    formMethods={formMethods}
+                    {...addInflowFormFields.time}
+                    error={formMethods.formState.errors.time?.message}
+                  />
+                )}
+              />
+            </div> */}
+            {/* {walletError && <div className={styles.error}>{walletError.message}</div>} */}
 
             <div className={styles.signIn__form__group__edit}>
               <Button

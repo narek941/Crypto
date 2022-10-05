@@ -15,7 +15,7 @@ const AddAccountForm = ({ formMethods, viewOnly = false }: any) => {
   const { t } = useTranslation();
   const { list } = useAppSelector(adminSelectors.selectExchange);
   const exchangeOptions = createOptions(list);
-
+  const error = useAppSelector(adminSelectors.selectAdminError);
   return (
     <FormGroup className={styles.form__section}>
       <>
@@ -41,12 +41,12 @@ const AddAccountForm = ({ formMethods, viewOnly = false }: any) => {
             <Input
               {...addAccountFormFields.apiKey}
               {...formMethods.register('apiKey')}
-              error={formMethods.formState.errors.apiKey?.message}
+              error={formMethods.formState.errors.apiKey?.message || error?.apiKey}
             />
             <Input
               {...addAccountFormFields.apiSecret}
               {...formMethods.register('apiSecret')}
-              error={formMethods.formState.errors.apiSecret?.message}
+              error={formMethods.formState.errors.apiSecret?.message || error?.apiSecret}
             />
           </>
         </AccessWrapper>

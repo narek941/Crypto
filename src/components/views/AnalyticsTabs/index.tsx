@@ -15,6 +15,7 @@ import {
   WalletsTable,
   OrdersHistoryTable,
   AnalyticsAlertTable,
+  Alert,
 } from 'components';
 import { AddInflowIcon, FilterIcon } from 'assets/icons';
 import { accountsActions, accountsSelectors } from 'store/accountsSlice';
@@ -30,20 +31,20 @@ import styles from './AnalyticsTabs.module.scss';
 import { TabType } from './types';
 
 const AnalyticsTabs = (): JSX.Element => {
-  const { openPortal, closePortal, isOpen, Portal } = usePortal({
-    closeOnEsc: true,
-  });
+  const { Portal } = usePortal();
   const accountByID = useAppSelector(accountsSelectors.selectAccountById);
   const authRole = useAppSelector(authSelectors.selectRole);
 
-  const walletId = accountByID?.wallets?.[0]?.id;
+  const walletId = accountByID?.wallets?.[0]?.platform?.id;
   const dispatch = useAppDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
   const [openFilter, setOpenFilter] = useState<boolean>(false);
   const [recordId, setRecordId] = useState<number | undefined>();
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const walletError = useAppSelector(walletsSelectors.selectWalletsError);
   const isLoading = useAppSelector(walletsSelectors.selectLoading);
+  const [openAlert, setOpenAlert] = useState(false);
 
   const { t } = useTranslation();
 
@@ -58,9 +59,11 @@ const AnalyticsTabs = (): JSX.Element => {
 
   const handleFilter = () => setOpenFilter(!openFilter);
 
+  const handleCloseAlert = () => setOpenAlert(false);
+
   const handleAddInflow = (e: any, id?: any) => {
     setRecordId(id);
-    isOpen ? closePortal(e) : openPortal(e);
+    isOpen ? setIsOpen(false) : setIsOpen(true);
   };
 
   useEffect(() => {
@@ -82,8 +85,14 @@ const AnalyticsTabs = (): JSX.Element => {
       : await dispatch(
           walletsActions.createManualInflow({ walletId: walletId, ...credentials }),
         ).unwrap();
-    !isLoading && isNull(walletError) && closePortal();
+    !isLoading && isNull(walletError) && setIsOpen(false);
   };
+  useEffect(() => {
+    if (walletError?.message === 'SYNC_NOT_FINISHED') {
+      setIsOpen(false);
+      setOpenAlert(true);
+    }
+  }, [walletError]);
 
   useEffect(() => {
     setOpenFilter(false);
@@ -141,11 +150,23 @@ const AnalyticsTabs = (): JSX.Element => {
         </div>
         {renderTable()}
       </TableContainer>
+
+      <Alert
+        open={openAlert}
+        type='SYNCING_INFLOW'
+        handleClose={handleCloseAlert}
+        isActionIsDone={true}
+      />
+
       {isOpen && (
-        <Portal>
+        <Portal isOpen={isOpen}>
           <div className={styles.portal}>
             <div className={styles.portal__inner}>
-              <AddInflowForm onClick={handleInflowSubmit} handleClose={closePortal} id={recordId} />
+              <AddInflowForm
+                onClick={handleInflowSubmit}
+                handleClose={() => setIsOpen(false)}
+                id={recordId}
+              />
             </div>
           </div>
         </Portal>

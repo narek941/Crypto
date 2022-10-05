@@ -27,6 +27,7 @@ const Select = React.forwardRef(
       filterName,
       placeholder,
       options = [],
+      dualCallback,
       numeric = false,
       withClear = true,
       viewOnly = false,
@@ -68,7 +69,7 @@ const Select = React.forwardRef(
 
     const dropClass: string = classNames(styles.select__dropdown, {
       [styles.select__dropdown__open]: isOpen && sortedOption.length >= 1,
-      [styles.select__dropdown__disable]: sortedOption.length < 1,
+      [styles.select__dropdown__disable]: viewOnly || sortedOption.length < 1,
     });
 
     const optionClass: string = classNames(styles.select__option, {
@@ -132,6 +133,7 @@ const Select = React.forwardRef(
 
     const handleClearSearch = () => {
       !currentOption && onChange(null);
+      value === '' && dualCallback();
     };
 
     const handleClear = (event?: React.FormEvent<HTMLElement>) => {

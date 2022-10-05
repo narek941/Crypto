@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { Switch } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-import { AccessWrapper, Button } from 'components';
+import { Button } from 'components';
 import FormGroup from 'components/forms/FormGroup';
 import { Routes } from 'types';
 
@@ -27,27 +27,27 @@ const FormAction = ({ formMethods, viewOnly = false }: any) => {
     <FormGroup>
       <>
         <div className={styles.form__action}>
-          <AccessWrapper>
-            <>
-              <div className={styles.form__action__item}>
-                <p className={firstCheckboxTextClass}>{t('stop_loss_order')}</p>
-                <Switch
-                  {...addAccountFormFields.stopLossOrder}
-                  {...formMethods.register('stopLossOrder')}
-                  checked={firstCheckbox}
-                />
-              </div>
-              <div className={styles.form__action__item}>
-                <p className={secondCheckboxTextClass}>{t('wrong_currency_alert')}</p>
-                <Switch
-                  className={styles.switch}
-                  {...addAccountFormFields.wrongCurrencyAlert}
-                  {...formMethods.register('wrongCurrencyAlert')}
-                  checked={secondCheckbox}
-                />
-              </div>
-            </>
-          </AccessWrapper>
+          <>
+            <div className={styles.form__action__item}>
+              <p className={firstCheckboxTextClass}>{t('stop_loss_order')}</p>
+              <Switch
+                {...addAccountFormFields.stopLossOrder}
+                {...formMethods.register('stopLossOrder')}
+                checked={firstCheckbox}
+                disabled={viewOnly}
+              />
+            </div>
+            <div className={styles.form__action__item}>
+              <p className={secondCheckboxTextClass}>{t('wrong_currency_alert')}</p>
+              <Switch
+                className={styles.switch}
+                {...addAccountFormFields.wrongCurrencyAlert}
+                {...formMethods.register('wrongCurrencyAlert')}
+                checked={secondCheckbox}
+                disabled={viewOnly}
+              />
+            </div>
+          </>
           <div className={styles.form__buttons}>
             <Link to={Routes.Accounts} className={styles.form__buttons__cancel}>
               {t('cancel')}

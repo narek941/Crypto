@@ -95,6 +95,7 @@ const DatePicker = React.forwardRef<any, any>(
             next2Label={null}
             prev2Label={null}
             inputRef={ref}
+            maxDate={new Date()}
             showNeighboringMonth={false}
           />
         </div>

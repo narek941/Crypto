@@ -434,6 +434,12 @@
   width: 32px !important;
   height: 32px !important;
   padding: 0 !important;
+
+  &:disabled {
+    color: var(--placeholder) !important;
+    pointer-events: none !important;
+    background-color: var(--background) !important;
+  }
 }
 
 .react-calendar__tile:enabled:hover,
@@ -461,4 +467,20 @@
 }
 .react-calendar__month-view__days__day--neighboringMonth {
   display: none !important;
+}
+
+.react-calendar__navigation__arrow {
+  &:disabled,
+  &:hover {
+    background-color: var(--background) !important;
+  }
+}
+.MuiInputBase {
+  &-adornedEnd {
+    padding: 7px 11px !important;
+  }
+  &-inputAdornedEnd {
+    padding: 0 !important;
+    color: var(--font) !important;
+  }
 }

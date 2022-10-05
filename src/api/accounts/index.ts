@@ -52,3 +52,6 @@ export const accountPerformanceChartRequest = (id: number) =>
   client.get(`/accounts/${id}/daily-wallets-statistics`);
 
 export const getAllAccountsRequest = () => client.get(`/accounts/list`);
+
+export const accountCapitalChartLimitRequest = (id: number) =>
+  client.get(`/accounts/${id}/daily-account-statistics-values`);

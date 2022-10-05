@@ -30,7 +30,7 @@ const SelectGroup = ({
   const errorDestination = formMethods.formState.errors?.alertsDestinations;
   const type = isString(currentAlertDestination?.type)
     ? currentAlertDestination?.type
-    : currentAlertDestination?.type.value;
+    : currentAlertDestination?.type?.value;
   const isEmailInput = type === 'EMAIL';
 
   const isOneOfValue = type === 'EMAIL' || type === 'SMS' || type === 'TELEGRAM';
@@ -92,6 +92,7 @@ const SelectGroup = ({
                   withAction={false}
                   withClear={false}
                   className={styles.item}
+                  viewOnly={viewOnly}
                   error={
                     errorDestination?.[`${index}`]?.[`${leftInputName}`]?.message ||
                     errorDestination?.[`${index}`]?.phoneNumber?.message
@@ -115,6 +116,7 @@ const SelectGroup = ({
                   className={styles.item}
                   innerClassName={styles.input}
                   type={isEmailInput ? 'email' : 'tel'}
+                  viewOnly={viewOnly}
                   {...addAccountFormFields.alertsDestinations}
                   placeholder={
                     !isOneOfValue ? '' : isEmailInput ? 'Enter Email' : 'Enter Mobile Number'

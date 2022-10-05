@@ -19,12 +19,13 @@ export const addNewAccount = createAsyncThunk(
       };
     } catch (exception) {
       const error = exception as AxiosError<{ message: any }>;
-      if (error.message === 'WRONG_KEYS') {
+
+      if (error.response?.data.message === 'WRONG_KEYS') {
         return thunkAPI.rejectWithValue({
-          error: { apiKey: '', apiSecret: error.response?.data.message[0] },
+          error: { apiSecret: 'Invalid API keys', apiKey: true },
         });
       } else {
-        return thunkAPI.rejectWithValue({ error: error.response?.data.message[0] });
+        return thunkAPI.rejectWithValue({ error: error.response?.data.message });
       }
     }
   },

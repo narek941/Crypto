@@ -4,7 +4,8 @@ export type AddInflowFormShape = {
   transactionType?: any;
   coinName?: any;
   amount?: any;
-  time?: any;
+  // time?: any;
+  date?: any;
   fees?: any;
   api?: any;
   id?: any;

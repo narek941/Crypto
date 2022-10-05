@@ -8,7 +8,9 @@ const Chart = ({
   field,
   title,
   width,
+  minValue,
   subTitle,
+  maxValue,
   timeField,
   baseCurrency,
   field2,
@@ -26,6 +28,8 @@ const Chart = ({
           field2={field2}
           width={width}
           type={type}
+          minValue={minValue}
+          maxValue={maxValue}
           baseCurrency={baseCurrency}
           className={styles.tooltip}
         />

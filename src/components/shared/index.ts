@@ -22,3 +22,4 @@ export { default as ScrollWrapper } from './ScrollWrapper';
 export { default as ExternalImage } from './ExternalImage';
 export { default as ProtectedRoute } from './ProtectedRoute';
 export { default as MultipleSelect } from './MultipleSelect';
+export { default as TimePickerComponent } from './TimePicker';

@@ -33,7 +33,7 @@ const parseAccountBody = (body: any, tradingPairs: any): any => {
   };
 
   return {
-    testnet: false,
+    testnet: true,
     status: 'ACTIVE',
     name: body.name.trim(),
     // startCapitalInBaseCurrency: body.startCapital,
@@ -70,15 +70,15 @@ const filterAllowedCurrency = (data: any, tradingPairs: any) => {
   return { allowedPairs, allowedCurrencies };
 };
 
-const parseInflowBody = (body: any, api: '4' | '2' | '3') => ({
+const parseInflowBody = (body: any, api: '1' | '2' | '3') => ({
   coin: {
     id: Number(body?.coinName),
   },
-  api: body.api || platformType[api || '4'],
+  api: body.api || platformType[api || '1'],
   type: body?.transactionType,
   transactionFee: Number(body?.fees),
   amount: Number(body?.amount),
-  createdAt: moment(body?.time).toISOString(),
+  createdAt: moment(body?.date).toISOString(),
   id: body?.id && body?.id,
 });
 

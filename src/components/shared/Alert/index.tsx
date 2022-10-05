@@ -21,7 +21,7 @@ const Alert = ({
     switch (type) {
       case 'DELETE':
         return {
-          question: 'Are you sure you want to delete this user?',
+          question: 'Are you sure you want to delete this account?',
           answer: `You successfully deleted account!`,
         };
       case 'DELETE_INFLOW':
@@ -37,6 +37,10 @@ const Alert = ({
       case 'SYNCING':
         return {
           answer: `Synchronization of account is not finished yet...`,
+        };
+      case 'SYNCING_INFLOW':
+        return {
+          answer: `Statistics calculation is in progress...`,
         };
       case 'SYNCING_ADD':
         return {

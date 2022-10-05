@@ -13,6 +13,7 @@ export type FormFieldNames =
   | 'password'
   | 'exportDateEnd'
   | 'exportDateStart'
+  | 'date'
   | 'exportDate'
   | 'selectFee'
   | 'apiSecret'

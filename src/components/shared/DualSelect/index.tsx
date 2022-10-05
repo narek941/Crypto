@@ -17,13 +17,13 @@ const DualSelect = React.forwardRef(
   ({
     name,
     closed,
-    tooltip = null,
     callback,
     filterName,
     formMethods,
     placeholder,
     firstOptions,
     secondOptions,
+    tooltip = null,
     singleFilterName,
   }: IDualSelect): JSX.Element => {
     const { t } = useTranslation();
@@ -61,6 +61,16 @@ const DualSelect = React.forwardRef(
         }
       }
       handleClose();
+    };
+    const firstSelectCallback = () => {
+      filterName && callback(filterName, null);
+    };
+    const secondSelectCallback = () => {
+      if (selectPairStart) {
+        singleFilterName && callback(singleFilterName, null);
+      } else {
+        filterName && callback(filterName, null);
+      }
     };
 
     const handleClear = (event?: React.FormEvent<SVGSVGElement>) => {
@@ -124,6 +134,7 @@ const DualSelect = React.forwardRef(
                       withAction={false}
                       defaultValue={'BTC'}
                       options={sortedFirstOptions}
+                      dualCallback={firstSelectCallback}
                     />
                   )}
                 ></Controller>
@@ -140,6 +151,7 @@ const DualSelect = React.forwardRef(
                       withAction={false}
                       defaultValue={'BTC'}
                       options={sortedSecondOptions}
+                      dualCallback={secondSelectCallback}
                     />
                   )}
                 ></Controller>
