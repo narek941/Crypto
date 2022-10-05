@@ -35,7 +35,9 @@ const AnalyticsTabs = (): JSX.Element => {
   const accountByID = useAppSelector(accountsSelectors.selectAccountById);
   const authRole = useAppSelector(authSelectors.selectRole);
 
-  const walletId = accountByID?.wallets?.[0]?.platform?.id;
+  const platformId = accountByID?.wallets?.[0]?.platform?.id;
+  const walletId = accountByID?.wallets?.[0]?.id;
+
   const dispatch = useAppDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
   const [openFilter, setOpenFilter] = useState<boolean>(false);
@@ -73,7 +75,7 @@ const AnalyticsTabs = (): JSX.Element => {
   }, [dispatch, isOpen]);
 
   const handleInflowSubmit = async (body: any) => {
-    const credentials = parseBody.parseInflowBody(body, walletId);
+    const credentials = parseBody.parseInflowBody(body, platformId);
     recordId
       ? await dispatch(
           walletsActions.updateManualInflow({
