@@ -6,7 +6,9 @@ export const addNewAccountRequest = (credentials: any) =>
 export const updateAccountRequest = (accountId: string, credentials: any) =>
   client.put(`/admin/accounts/${accountId}`, credentials);
 
-export const usersListRequest = (params: any) => client.get('/admin/users', { params });
+// export const usersListRequest = (params: any) => client.get('/admin/users', { params }); ////real data
+
+export const usersListRequest = (params: any) => client.get('users', { params }); ////fake data
 
 export const blockUserRequest = (id: number) => client.put(`/admin/users/${id}/block`);
 

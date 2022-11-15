@@ -52,32 +52,32 @@ export const updateAccount = createAsyncThunk(
     }
   },
 );
+///////Real data
+// export const getUsersList = createAsyncThunk(
+//   `${Slice.Admin}/users`,
+//   async (
+//     credentials: {
+//       skip: number;
+//       take: number;
+//       sort: string;
+//       order: string;
+//       search: string;
+//       filter: any;
+//     },
+//     thunkAPI,
+//   ) => {
+//     try {
+//       const response = await adminApi.usersListRequest(credentials);
 
-export const getUsersList = createAsyncThunk(
-  `${Slice.Admin}/users`,
-  async (
-    credentials: {
-      skip: number;
-      take: number;
-      sort: string;
-      order: string;
-      search: string;
-      filter: any;
-    },
-    thunkAPI,
-  ) => {
-    try {
-      const response = await adminApi.usersListRequest(credentials);
-
-      return {
-        list: response.data.list,
-        totalCount: response.data.totalCount,
-      };
-    } catch {
-      return thunkAPI.rejectWithValue({ error: '* Incorrect' });
-    }
-  },
-);
+//       return {
+//         list: response.data.list,
+//         totalCount: response.data.totalCount,
+//       };
+//     } catch {
+//       return thunkAPI.rejectWithValue({ error: '* Incorrect' });
+//     }
+//   },
+// );
 
 export const blockUser = createAsyncThunk(
   `${Slice.Admin}/users/block`,
@@ -324,13 +324,35 @@ export const getExchangeList = createAsyncThunk(`${Slice.Admin}/exchange`, async
     return thunkAPI.rejectWithValue({ error: '* Incorrect' });
   }
 });
+/////Fake real start
 
+// export const getSyncStatus = createAsyncThunk(
+//   `${Slice.Admin}/accounts/is-accounts-sync`,
+//   async (_, thunkAPI) => {
+//     try {
+//       const response = await adminApi.getSyncStatusRequest();
+//       // eslint-disable-next-line no-console
+//       return {
+//         isSynced: response.data,
+//       };
+//     } catch {
+//       return thunkAPI.rejectWithValue({ error: '* Incorrect' });
+//     }
+//   },
+// );
+
+/////real data end
+
+export const removeUserById = createAction('removeUserByID');
+export const userFilterClear = createAction<Partial<ITableFilter>>('userFilterClear');
+export const usersFilterUpdate = createAction<Partial<ITableFilter>>('usersFilter');
+
+/////Fake data start
 export const getSyncStatus = createAsyncThunk(
-  `${Slice.Admin}/accounts/is-accounts-sync`,
+  `${Slice.Admin}/is-accounts-sync`,
   async (_, thunkAPI) => {
     try {
-      const response = await adminApi.getSyncStatusRequest();
-      // eslint-disable-next-line no-console
+      const response = { data: false };
       return {
         isSynced: response.data,
       };
@@ -340,6 +362,29 @@ export const getSyncStatus = createAsyncThunk(
   },
 );
 
-export const removeUserById = createAction('removeUserByID');
-export const userFilterClear = createAction<Partial<ITableFilter>>('userFilterClear');
-export const usersFilterUpdate = createAction<Partial<ITableFilter>>('usersFilter');
+export const getUsersList = createAsyncThunk(
+  `${Slice.Admin}/users`,
+  async (
+    credentials: {
+      skip: number;
+      take: number;
+      sort: string;
+      order: string;
+      search: string;
+      filter: any;
+    },
+    thunkAPI,
+  ) => {
+    try {
+      const response = await adminApi.usersListRequest(credentials);
+
+      return {
+        list: response.data.list,
+        totalCount: response.data.totalCount,
+      };
+    } catch {
+      return thunkAPI.rejectWithValue({ error: '* Incorrect' });
+    }
+  },
+);
+/////Fake data end

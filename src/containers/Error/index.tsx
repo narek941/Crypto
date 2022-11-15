@@ -25,7 +25,8 @@ const Error: React.FC = () => {
     <div className={styles.wrapper}>
       <div className={styles.header}>
         <Link to={Routes.Login} className={styles.copyright}>
-          <LogoIcon />
+          {/* <LogoIcon /> */}
+          Logo
         </Link>
       </div>
       <div className={styles.error}>

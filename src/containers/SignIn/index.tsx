@@ -23,7 +23,8 @@ const SignIn: React.FC = () => {
       <div className={styles.signIn}>
         <div className={firstInnerClassNames}>
           <div className={styles.header}>
-            <LogoIcon />
+            {/* <LogoIcon /> */}
+            Logo
           </div>
           <div className={styles.signIn__item}>
             <h1 className={styles.signIn__item__title}>{t('welcome')}</h1>

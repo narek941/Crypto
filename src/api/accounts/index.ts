@@ -7,9 +7,14 @@ import { IExportParams } from 'types/api';
 export const accountListRequest = (params: AxiosRequestConfig['params']) =>
   client.get('/accounts', { params });
 
-export const accountByIdRequest = (userID: number) => client.get(`/accounts/${userID}`);
+// export const accountByIdRequest = (userID: number) => client.get(`/accounts/${userID}`); /// Real data
+// export const accountSummaryRequest = (id: number) => client.get(`/accounts/${id}/summary`); /// Real data
 
-export const accountSummaryRequest = (id: number) => client.get(`/accounts/${id}/summary`);
+/////FAKE DATA start
+export const accountByIdRequest = (userID: number) => client.get(`/accountsByID`);
+export const accountSummaryRequest = (id: number) => client.get(`/summary`);
+
+/////FAKE DATA END
 
 export const accountListForViewer = () => client.get(`/accounts/list`);
 
@@ -43,7 +48,8 @@ export const accountAssetChartRequest = (id: number) =>
   client.get(`/accounts/${id}/assets-chart-data`);
 
 export const accountTradingPairsChartRequest = (id: number) =>
-  client.get(`/accounts/${id}/trading-pairs-chart-data`);
+  // client.get(`/accounts/${id}/trading-pairs-chart-data`); //Real data
+  client.get(`/trading-pairs-chart-data`); ///Fake data
 
 export const accountCapitalChartRequest = (id: number) =>
   client.get(`/accounts/${id}/daily-account-statistics`);

@@ -7,53 +7,54 @@ import { ExportType } from 'components/shared/Export/types';
 
 import { ITableFilter, IPlatform, IPlatformApi } from './../../types/api/index';
 import { exportThunkType } from './types';
+///Real data start
+// export const getAccountList = createAsyncThunk(
+//   `${Slice.Accounts}/accounts`,
+//   async (
+//     credentials: {
+//       skip: number;
+//       take: number;
+//       sort: string;
+//       order: string;
+//       search: string;
+//       filter: any;
+//     },
+//     thunkAPI,
+//   ) => {
+//     try {
+//       const response = await accountsApi.accountListRequest({
+//         ...credentials,
+//         filter: {
+//           ...credentials.filter,
+//           platformId: (thunkAPI.getState() as RootState).accounts.accountByIdPlatform,
+//         },
+//       });
 
-export const getAccountList = createAsyncThunk(
-  `${Slice.Accounts}/accounts`,
-  async (
-    credentials: {
-      skip: number;
-      take: number;
-      sort: string;
-      order: string;
-      search: string;
-      filter: any;
-    },
-    thunkAPI,
-  ) => {
-    try {
-      const response = await accountsApi.accountListRequest({
-        ...credentials,
-        filter: {
-          ...credentials.filter,
-          platformId: (thunkAPI.getState() as RootState).accounts.accountByIdPlatform,
-        },
-      });
+//       return {
+//         list: response.data.list,
+//         totalCount: response.data.totalCount,
+//       };
+//     } catch {
+//       return thunkAPI.rejectWithValue({ error: '* Incorrect' });
+//     }
+//   },
+// );
 
-      return {
-        list: response.data.list,
-        totalCount: response.data.totalCount,
-      };
-    } catch {
-      return thunkAPI.rejectWithValue({ error: '* Incorrect' });
-    }
-  },
-);
+// export const getAccountById = createAsyncThunk(
+//   `${Slice.Accounts}/accounts/id`,
+//   async (userID: number, thunkAPI) => {
+//     try {
+//       const response = await accountsApi.accountByIdRequest(userID);
 
-export const getAccountById = createAsyncThunk(
-  `${Slice.Accounts}/accounts/id`,
-  async (userID: number, thunkAPI) => {
-    try {
-      const response = await accountsApi.accountByIdRequest(userID);
-
-      return {
-        account: response.data,
-      };
-    } catch {
-      return thunkAPI.rejectWithValue({ error: '* Incorrect' });
-    }
-  },
-);
+//       return {
+//         account: response.data,
+//       };
+//     } catch {
+//       return thunkAPI.rejectWithValue({ error: '* Incorrect' });
+//     }
+//   },
+// );
+///Real data End
 
 export const getAccountSummary = createAsyncThunk(
   `${Slice.Accounts}/accounts/id/summary`,
@@ -69,6 +70,7 @@ export const getAccountSummary = createAsyncThunk(
     }
   },
 );
+
 
 export const getAccountTradesList = createAsyncThunk(
   `${Slice.Accounts}/account-trades`,
@@ -148,20 +150,23 @@ export const getAccountAssetsChartData = createAsyncThunk(
   },
 );
 
-export const getAccountTradingPairsChartData = createAsyncThunk(
-  `${Slice.Accounts}/accounts/id/trading-pairs-chart-data`,
-  async (id: number, thunkAPI) => {
-    try {
-      const response = await accountsApi.accountTradingPairsChartRequest(id);
+////Real data Start
 
-      return {
-        chart: response.data,
-      };
-    } catch {
-      return thunkAPI.rejectWithValue({ error: '* Incorrect' });
-    }
-  },
-);
+// export const getAccountTradingPairsChartData = createAsyncThunk(
+//   `${Slice.Accounts}/accounts/id/trading-pairs-chart-data`,
+//   async (id: number, thunkAPI) => {
+//     try {
+//       const response = await accountsApi.accountTradingPairsChartRequest(id);
+
+//       return {
+//         chart: response.data,
+//       };
+//     } catch {
+//       return thunkAPI.rejectWithValue({ error: '* Incorrect' });
+//     }
+//   },
+// );
+////Real data End
 
 export const getAccountCapitalChartData = createAsyncThunk(
   `${Slice.Accounts}/accounts/:id/daily-account-statistics`,
@@ -319,3 +324,73 @@ export const platformUpdate = createAction<Partial<IPlatform>>('accountsPlatform
 export const platformApiTypeUpdate = createAction<Partial<IPlatformApi>>('accountsPlatformApi');
 
 export const removeAccountById = createAction('removeAccountByID');
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////Fake Data Start
+
+export const getAccountList = createAsyncThunk(
+  `${Slice.Accounts}/accounts`,
+  async (
+    credentials: {
+      skip: number;
+      take: number;
+      sort: string;
+      order: string;
+      search: string;
+      filter: any;
+    },
+    thunkAPI,
+  ) => {
+    try {
+      const response = await accountsApi.accountListRequest({
+        ...credentials,
+        filter: {
+          ...credentials.filter,
+          platformId: (thunkAPI.getState() as RootState).accounts.accountByIdPlatform,
+        },
+      });
+
+      return {
+        list: response.data.list,
+        totalCount: response.data.totalCount,
+      };
+    } catch {
+      return thunkAPI.rejectWithValue({ error: '* Incorrect' });
+    }
+  },
+);
+
+export const getAccountById = createAsyncThunk(
+  `${Slice.Accounts}/accounts/id`,
+  async (userID: number, thunkAPI) => {
+    try {
+      const response = await accountsApi.accountByIdRequest(userID);
+
+      return {
+        account: response.data,
+      };
+    } catch {
+      return thunkAPI.rejectWithValue({ error: '* Incorrect' });
+    }
+  },
+);
+
+export const getAccountTradingPairsChartData = createAsyncThunk(
+  `${Slice.Accounts}/accounts/id/trading-pairs-chart-data`,
+  async (id: number, thunkAPI) => {
+    try {
+      const response = await accountsApi.accountTradingPairsChartRequest(id);
+
+      return {
+        chart: response.data,
+      };
+    } catch {
+      return thunkAPI.rejectWithValue({ error: '* Incorrect' });
+    }
+  },
+);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////Fake Data END

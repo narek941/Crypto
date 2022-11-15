@@ -80,6 +80,7 @@ const Sidebar: React.FC = () => {
       <div className={burgerClasses}>
         <BurgerIcon onClick={handleDrawer} />
         <LogoIcon />
+        {/* Logo */}
       </div>
       <div className={styles.divider} />
       <>{renderList}</>
